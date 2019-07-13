@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RDCEP: US energy infrastructure</title>
+  {% assets 'css_main' %}
+    <link rel=stylesheet href={{ ASSET_URL }}>
+  {% endassets %}
+</head>
+<body>
+<div class=wrap>
+{% block body %}
+  <header>
+  {% block header %}
+    <h1>US energy infrastructure.<br>
+    Center for robust decision-making in climate and energy policy.<br>
+    University of Chicago.</h1>
+  {% endblock %}
+  </header>
+  <main>
+  {% block main %}
+  {% endblock %}
+  </main>
+  <footer>
+  {% block footer %}
+  {% endblock %}
+  </footer>
+  {% block bodyjs %}
+  {% endblock %}
+{% endblock %}
+</div>
+</body>
+</html>

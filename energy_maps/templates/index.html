@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <div class="main map coal"></div>
+  <div class="main map gas_oil"></div>
+  <div class="main map power ff"></div>
+  <div class="main map power nff"></div>
+{% endblock %}
+
+{% block bodyjs %}
+
+  <script>
+    let SCALE = {{ scale or 'false' }};
+  </script>
+
+  {% assets 'js_d3' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  {% assets 'js_bigfucker' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+
+{% endblock %}
