@@ -2,6 +2,14 @@
 
 {% block main %}
   <div class="main map coal"></div>
+  <!-- Map Builder UI -->
+  <div>
+    <span>Create a custom map:</span>
+    <input id="cb-rrmap" type="checkbox" class="checkbox" value="rrmap" ><label>Railroad Map</label>
+    <input id="cb-coal" type="checkbox" class="checkbox" value="coal" ><label>Coal</label>
+    <button id="clear" class="button">Clear</button>
+  </div>
+  <!--/ Map Builder UI -->
   <a id=download download=coal.png>
     <button type=button onClick=download()>Download</button>
   </a>
@@ -18,6 +26,7 @@
   {% assets 'js_coal' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 
   <script>
+
   function download() {
     let download = document.getElementById('download');
     let image = document.getElementById('mapcanvas')
