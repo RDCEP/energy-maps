@@ -13,6 +13,13 @@ def index():
         index=True,
     )
 
+@main_views.route('/builder')
+@main_views.route('/builder/<float:scale>')
+def builder(scale='false'):
+    return render_template(
+        'builder.html',
+        scale=scale,
+    )
 
 @main_views.route('/coal')
 @main_views.route('/coal/<float:scale>')
