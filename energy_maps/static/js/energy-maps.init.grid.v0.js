@@ -14,27 +14,48 @@
   const ctx = canvas.node().getContext('2d');
   ctx.LineCap = 'round';
 
-  Promise.all([
-    d3.json(fmap),
-    d3.json(fmapfill)
-  ]).then(function(files) {
-    draw_land(ctx, files);
-  }).then(function() {
+  function draw_base_map() {
+    Promise.all([
+      d3.json(fmap),
+      d3.json(fmapfill)
+    ]).then(function(files) {
+      draw_land(ctx, files);
+    }).then(function() {
+      grid_legend(ctx);
+    });
+  }
+
+  function draw_grid_map() {
     Promise.all([
       d3.json(gridmap),
     ]).then(function(files) {
       draw_grid(ctx, files);
-      // draw_grid2(ctx, files);
-    }).then(function() {
-      Promise.all([
-        d3.json(fmap),
-        d3.json(fmapfill)
-      ]).then(function(files) {
-        draw_land(ctx, files, true);
-      });
-    });
-  }).then(function() {
-    grid_legend(ctx);
-  });
+    })
+  }
+
+  draw_base_map();
+  draw_grid_map();
+  // Promise.all([
+  //   d3.json(fmap),
+  //   d3.json(fmapfill)
+  // ]).then(function(files) {
+  //   draw_land(ctx, files);
+  // }).then(function() {
+  //   Promise.all([
+  //     d3.json(gridmap),
+  //   ]).then(function(files) {
+  //     draw_grid(ctx, files);
+  //     // draw_grid2(ctx, files);
+  //   }).then(function() {
+  //     Promise.all([
+  //       d3.json(fmap),
+  //       d3.json(fmapfill)
+  //     ]).then(function(files) {
+  //       draw_land(ctx, files, true);
+  //     });
+  //   });
+  // }).then(function() {
+  //   grid_legend(ctx);
+  // });
 
 })();
