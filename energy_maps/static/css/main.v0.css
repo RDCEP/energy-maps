@@ -5,6 +5,33 @@
 p, h1, h2, h3, h4, h5, h6 {
   font-size: 1em; }
 
+.wrapper {
+  position: relative;
+}
+
+/* .main.map.builder {
+
+} */
+
+.map.layer {
+  position: absolute;
+  top: 0;
+}
+
+.canvas.gas-well {
+  position: absolute;
+  top: 0;
+  /* background-color: #cccccc;
+  opacity: 0.1; */
+}
+
+.canvas.fossil-fuel-plant {
+  position: absolute;
+  top: 0;
+  /* background-color: #da99cf;
+  opacity: 0.3; */
+}
+
 .wrap {
   width: 80%;
   margin: 0 auto; }
