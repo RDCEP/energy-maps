@@ -157,6 +157,13 @@
    * ####################################################
    */
 
+   /** Create a canvas element and drawing context for a map layer */
+  //  function create_canvas_context(layer_class) {
+  //    let canvas_element = d3.select(`.map.layer.canvas.${layer_class}`);
+  //    let context = canvas_element.node().getContext("2d");
+  //    context.LineCap = "round";
+  //  }
+
    /** @description A canvas element for the oil pipelines, attached to div "map layer canvas oil-pipeline" */
   let oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
   let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
