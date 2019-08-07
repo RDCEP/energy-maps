@@ -16,6 +16,12 @@
 
   // Wells
   /** @type {string} */
+  /** @description Sets the path for the first group of gas wells */
+  const wells_gas1 = "/static/csv/wells_gas1.csv";
+  /** @type {string} */
+  /** @description Sets the path for the second group of gas wells */
+  const wells_gas2 = "/static/csv/wells_gas2.csv";
+  /** @type {string} */
   /** @description Sets the path for the first mixed group of wells */
   const wells1 = "/static/csv/Wells1.csv";
   /** @type {string} */
@@ -157,6 +163,11 @@
    * ####################################################
    */
 
+  /** @description A canvas element for the gas wells, attached to div "map layer canvas gas-well" */
+  let gas_well = d3.select(".map.layer.canvas.gas-well");
+  let ctx_gas_well = gas_well.node().getContext("2d");
+  ctx_gas_well .LineCap = "round";
+
   /** @description A canvas element for the gas pipelines, attached to div "map layer canvas gas-pipeline" */
   let gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
   let ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
@@ -202,6 +213,45 @@
   let grid = d3.select(".map.layer.canvas.electrical-grid");
   let ctx_grid = grid.node().getContext("2d");
   ctx_grid.LineCap = "round";
+
+  /**
+   * Create the gas well layer.
+   * TODO: solve foreach console error in draw_gas_wells() under funcs.wells..js
+   */
+  function layer_gas_well() {
+    Promise.all([d3.csv(wells_gas1)])
+      .then(function(files) {
+        draw_gas_wells(ctx_gas_well, files);
+      })
+      .then(function() {
+        Promise.all([d3.csv(wells_gas2)]).then(function(files) {
+          draw_gas_wells(ctx_gas_well, files);
+        });
+      });
+  }
+
+  const gas_well_check = d3.select(".checkbox.gas-well");
+  let gas_well_counter = 0;
+  gas_well_check.on("change", function() {
+    gas_well_counter++;
+    if (gas_well_counter % 2 == 0) {
+      gas_well.remove();
+      console.log(`gas-well counter is even, value of ${gas_well_counter}`);
+      d3.select(".map.layer.gas-well")
+        .append("canvas")
+        .attr("class", "map layer canvas gas-well")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (gas_well_counter > 1) {
+          gas_well = d3.select(".map.layer.canvas.gas-well");
+          ctx_gas_well = gas_well.node().getContext("2d");
+          ctx_gas_well.LineCap = "round";
+        }
+        console.log(`gas well counter is odd, value of ${gas_well_counter}`);
+        layer_gas_well();
+    }
+  });
 
   /**
    * Create the gas pipeline layer.
