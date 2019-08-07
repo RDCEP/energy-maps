@@ -162,6 +162,11 @@
   let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
   ctx_oil_pipeline.LineCap = "round";
 
+  /** @description A canvas element for the oil product pipelines, attached to div "map layer canvas oil-pipeline" */
+  let oil_prod_pipeline = d3.select(".map.layer.canvas.oil-product-pipeline");
+  let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
+  ctx_oil_prod_pipeline.LineCap = "round";
+
   /** @description A canvas element for the coal mines, attached to div "map layer canvas coal-mine" */
   let coalmines = d3.select(".map.layer.canvas.coal-mine");
   let ctx_coalmines = coalmines.node().getContext("2d");
@@ -193,9 +198,7 @@
    */
   function layer_oil_pipeline() {
     Promise.all([
-      d3.json('/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson'),
-      // d3.json('/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson'),
-      // d3.json('/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson')
+      d3.json('/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson')
     ]).then(function(files) {
       draw_pipes(ctx_oil_pipeline, files);
     })
@@ -221,6 +224,40 @@
         }
         console.log(`oil pipeline counter is odd, value of ${oil_pipeline_counter}`);
         layer_oil_pipeline();
+    }
+  });
+
+  /**
+   * Create the oil product pipeline layer.
+   */
+  function layer_oil_prod_pipeline() {
+    Promise.all([
+      d3.json('/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson')
+    ]).then(function(files) {
+      draw_pipes(ctx_oil_prod_pipeline, files);
+    })
+  }
+
+  const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
+  let oil_prod_pipeline_counter = 0;
+  oil_prod_pipeline_check.on("change", function() {
+    oil_prod_pipeline_counter++;
+    if (oil_prod_pipeline_counter % 2 == 0) {
+      oil_prod_pipeline.remove();
+      console.log(`oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`);
+      d3.select(".map.layer.oil-product-pipeline")
+        .append("canvas")
+        .attr("class", "map layer canvas oil-prod-pipeline")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (oil_prod_pipeline_counter > 1) {
+          oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
+          ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
+          ctx_oil_prod_pipeline.LineCap = "round";
+        }
+        console.log(`oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`);
+        layer_oil_prod_pipeline();
     }
   });
 
