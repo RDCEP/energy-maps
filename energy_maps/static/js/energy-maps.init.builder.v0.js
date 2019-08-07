@@ -221,11 +221,11 @@
   function layer_gas_well() {
     Promise.all([d3.csv(wells_gas1)])
       .then(function(files) {
-        draw_gas_wells(ctx_gas_well, files);
+        draw_all_wells(ctx_gas_well, files);
       })
       .then(function() {
         Promise.all([d3.csv(wells_gas2)]).then(function(files) {
-          draw_gas_wells(ctx_gas_well, files);
+          draw_all_wells(ctx_gas_well, files);
         });
       });
   }
