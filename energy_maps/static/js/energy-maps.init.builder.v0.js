@@ -172,6 +172,11 @@
   let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
   ctx_oil_prod_pipeline.LineCap = "round";
 
+  /** @description A canvas element for the oil refineries, attached to div "map layer canvas oil-refinery" */
+  let oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
+  let ctx_oil_refinery = oil_refinery.node().getContext("2d");
+  ctx_oil_refinery.LineCap = "round";
+
   /** @description A canvas element for the coal mines, attached to div "map layer canvas coal-mine" */
   let coalmines = d3.select(".map.layer.canvas.coal-mine");
   let ctx_coalmines = coalmines.node().getContext("2d");
@@ -297,6 +302,40 @@
         }
         console.log(`oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`);
         layer_oil_prod_pipeline();
+    }
+  });
+
+  /**
+   * Create the oil product pipeline layer.
+   */
+
+  function layer_oil_refinery() {
+    Promise.all([d3.json('/static/json/Petroleum_Refineries_US_2015.geojson')
+      ]).then(function(files) {
+        draw_refining(ctx_oil_refinery, files);
+    });
+  }
+
+  const oil_refinery_check = d3.select(".checkbox.oil-refinery");
+  let oil_refinery_counter = 0;
+  oil_refinery_check.on("change", function() {
+    oil_refinery_counter++;
+    if (oil_refinery_counter % 2 == 0) {
+      oil_refinery.remove();
+      console.log(`oil-refinery counter is even, value of ${oil_refinery_counter}`);
+      d3.select(".map.layer.oil-refinery")
+        .append("canvas")
+        .attr("class", "map layer canvas oil-refinery")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (oil_refinery_counter > 1) {
+          oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
+          ctx_oil_refinery= oil_refinery.node().getContext("2d");
+          ctx_oil_refinery.LineCap = "round";
+        }
+        console.log(`oil refinery counter is odd, value of ${oil_refinery_counter}`);
+        layer_oil_refinery();
     }
   });
 
