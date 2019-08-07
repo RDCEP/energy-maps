@@ -194,6 +194,16 @@
   let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
   ctx_oil_prod_pipeline.LineCap = "round";
 
+  /** @description A canvas element for the gas processing, attached to div "map layer canvas gas-processing" */
+  let gas_processing = d3.select(".map.layer.canvas.gas-processing");
+  let ctx_gas_processing = gas_processing.node().getContext("2d");
+  ctx_gas_processing.LineCap = "round";
+
+  /** @description A canvas element for the gas storage, attached to div "map layer canvas gas-storage" */
+  let gas_storage = d3.select(".map.layer.canvas.gas-storage");
+  let ctx_gas_storage = gas_storage.node().getContext("2d");
+  ctx_gas_storage.LineCap = "round";
+
   /** @description A canvas element for the oil refineries, attached to div "map layer canvas oil-refinery" */
   let oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
   let ctx_oil_refinery = oil_refinery.node().getContext("2d");
@@ -405,7 +415,77 @@
   });
 
   /**
-   * Create the oil product pipeline layer.
+   * Create the gas processing layer.
+   */
+
+  function layer_processing() {
+    Promise.all([
+      d3.csv("/static/csv/nproc.csv")
+    ]).then(function(files) {
+      draw_processing(ctx_gas_processing, files);
+    });
+  }
+
+  const gas_processing_check = d3.select(".checkbox.gas-processing");
+  let gas_processing_counter = 0;
+  gas_processing_check.on("change", function() {
+    gas_processing_counter++;
+    if (gas_processing_counter % 2 == 0) {
+      gas_processing.remove();
+      console.log(`gas-processing counter is even, value of ${gas_processing_counter}`);
+      d3.select(".map.layer.gas-processing")
+        .append("canvas")
+        .attr("class", "map layer canvas gas-processing")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (gas_processing_counter > 1) {
+          gas_processing = d3.select(".map.layer.canvas.gas-processing");
+          ctx_gas_processing = gas_processing.node().getContext("2d");
+          ctx_gas_processing.LineCap = "round";
+        }
+        console.log(`gas processing counter is odd, value of ${gas_processing_counter}`);
+        layer_processing();
+    }
+  });
+
+   /**
+   * Create the gas storage layer.
+   */
+
+  function layer_storage() {
+    Promise.all([
+      d3.csv("/static/csv/nstor.csv")
+    ]).then(function(files) {
+      draw_gas_storage(ctx_gas_storage, files);
+    });
+  }
+
+  const gas_storage_check = d3.select(".checkbox.gas-storage");
+  let gas_storage_counter = 0;
+  gas_storage_check.on("change", function() {
+    gas_storage_counter++;
+    if (gas_storage_counter % 2 == 0) {
+      gas_storage.remove();
+      console.log(`gas-storage counter is even, value of ${gas_storage_counter}`);
+      d3.select(".map.layer.gas-storage")
+        .append("canvas")
+        .attr("class", "map layer canvas gas-storage")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (gas_storage_counter > 1) {
+          gas_storage = d3.select(".map.layer.canvas.gas-storage");
+          ctx_gas_storage = gas_storage.node().getContext("2d");
+          ctx_gas_storage.LineCap = "round";
+        }
+        console.log(`gas storage counter is odd, value of ${gas_storage_counter}`);
+        layer_storage();
+    }
+  });
+
+  /**
+   * Create the oil refinery layer.
    */
 
   function layer_oil_refinery() {

@@ -72,9 +72,35 @@
       });
   }
 
-  function layer_oil_well() {}
+  function layer_oil_well() {
+    Promise.all([d3.csv(wells_oil1)])
+      .then(function(files) {
+        draw_gas_wells(ctx, files);
+      })
+      .then(function() {
+        Promise.all([d3.csv(wells_oil2)]).then(function(files) {
+          draw_gas_wells(ctx, files);
+        });
+      });
+  }
 
   function layer_offshore_well() {}
+
+  function layer_processing() {
+    Promise.all([
+      d3.csv("/static/csv/nproc.csv")
+    ]).then(function(files) {
+      draw_processing(ctx, files);
+    });
+  }
+
+  function layer_storage() {
+    Promise.all([
+      d3.csv("/static/csv/nstor.csv")
+    ]).then(function(files) {
+      draw_gas_storage(ctx, files);
+    });
+  }
 
   draw_base_map();
 
