@@ -157,6 +157,11 @@
    * ####################################################
    */
 
+  /** @description A canvas element for the gas pipelines, attached to div "map layer canvas gas-pipeline" */
+  let gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
+  let ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
+  ctx_gas_pipeline.LineCap = "round";
+
    /** @description A canvas element for the oil pipelines, attached to div "map layer canvas oil-pipeline" */
   let oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
   let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
@@ -192,6 +197,40 @@
   let grid = d3.select(".map.layer.canvas.electrical-grid");
   let ctx_grid = grid.node().getContext("2d");
   ctx_grid.LineCap = "round";
+
+  /**
+   * Create the gas pipeline layer.
+   */
+  function layer_gas_pipeline() {
+    Promise.all([
+      d3.json('/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson')
+    ]).then(function(files) {
+      draw_pipes(ctx_gas_pipeline, files);
+    })
+  }
+
+  const gas_pipeline_check = d3.select(".checkbox.gas-pipeline");
+  let gas_pipeline_counter = 0;
+  gas_pipeline_check.on("change", function() {
+    gas_pipeline_counter++;
+    if (gas_pipeline_counter % 2 == 0) {
+      gas_pipeline.remove();
+      console.log(`gas-pipeline counter is even, value of ${gas_pipeline_counter}`);
+      d3.select(".map.layer.gas-pipeline")
+        .append("canvas")
+        .attr("class", "map layer canvas gas-pipeline")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (gas_pipeline_counter > 1) {
+          gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
+          ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
+          ctx_gas_pipeline.LineCap = "round";
+        }
+        console.log(`gas pipeline counter is odd, value of ${gas_pipeline_counter}`);
+        layer_gas_pipeline();
+    }
+  });
 
   /**
    * Create the oil pipeline layer.
