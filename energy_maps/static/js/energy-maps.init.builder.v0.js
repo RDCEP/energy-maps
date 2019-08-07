@@ -22,6 +22,12 @@
   /** @description Sets the path for the second group of gas wells */
   const wells_gas2 = "/static/csv/wells_gas2.csv";
   /** @type {string} */
+  /** @description Sets the path for the first group of oil wells */
+  const wells_oil1 = "/static/csv/wells_oil1.csv";
+  /** @type {string} */
+  /** @description Sets the path for the second group of oil wells */
+  const wells_oil2 = "/static/csv/wells_oil2.csv";
+  /** @type {string} */
   /** @description Sets the path for the first mixed group of wells */
   const wells1 = "/static/csv/Wells1.csv";
   /** @type {string} */
@@ -166,7 +172,12 @@
   /** @description A canvas element for the gas wells, attached to div "map layer canvas gas-well" */
   let gas_well = d3.select(".map.layer.canvas.gas-well");
   let ctx_gas_well = gas_well.node().getContext("2d");
-  ctx_gas_well .LineCap = "round";
+  ctx_gas_well.LineCap = "round";
+
+  /** @description A canvas element for the oil wells, attached to div "map layer canvas oil-well" */
+  let oil_well = d3.select(".map.layer.canvas.oil-well");
+  let ctx_oil_well = oil_well.node().getContext("2d");
+  ctx_oil_well.LineCap = "round";
 
   /** @description A canvas element for the gas pipelines, attached to div "map layer canvas gas-pipeline" */
   let gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
@@ -250,6 +261,44 @@
         }
         console.log(`gas well counter is odd, value of ${gas_well_counter}`);
         layer_gas_well();
+    }
+  });
+
+  /**
+   * Create the oil well layer.
+   */
+  function layer_oil_well() {
+    Promise.all([d3.csv(wells_oil1)])
+      .then(function(files) {
+        draw_all_wells(ctx_oil_well, files);
+      })
+      .then(function() {
+        Promise.all([d3.csv(wells_oil2)]).then(function(files) {
+          draw_all_wells(ctx_oil_well, files);
+        });
+      });
+  }
+
+  const oil_well_check = d3.select(".checkbox.oil-well");
+  let oil_well_counter = 0;
+  oil_well_check.on("change", function() {
+    oil_well_counter++;
+    if (oil_well_counter % 2 == 0) {
+      oil_well.remove();
+      console.log(`oil-well counter is even, value of ${oil_well_counter}`);
+      d3.select(".map.layer.oil-well")
+        .append("canvas")
+        .attr("class", "map layer canvas oil-well")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+        if (oil_well_counter > 1) {
+          oil_well = d3.select(".map.layer.canvas.oil-well");
+          ctx_oil_well = oil_well.node().getContext("2d");
+          ctx_oil_well.LineCap = "round";
+        }
+        console.log(`oil well counter is odd, value of ${oil_well_counter}`);
+        layer_oil_well();
     }
   });
 
