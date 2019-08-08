@@ -60,4 +60,13 @@ p, h1, h2, h3, h4, h5, h6 {
   .feature.dot.plant {
     fill: #cccccc; }
 
+#spinner {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 4em;
+  height: 4em;
+  z-index: 1000;
+}
+
 /*# sourceMappingURL=main.v0.css.map */

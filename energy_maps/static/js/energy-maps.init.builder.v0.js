@@ -74,6 +74,20 @@
 
   // ######## Canvas Map Layers ######## //
 
+  // Loading
+  let spinner = document.getElementById("spinner");
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+  /** @description display the loading spinner for user set time in milliseconds */
+  const load = async (time) => {
+    // show the spinner
+    spinner.style.display = 'block';
+    await sleep(time);
+    // hide the spinner
+    spinner.style.display = 'none';
+  }
+
   /** @description An array of keys for canvases{}.  */
   let layers = [
     "gas-well",
@@ -161,6 +175,7 @@
       .then(function() {
         coal_legend(ctx);
       });
+      
     console.log("draw base map");
   }
 
@@ -271,6 +286,7 @@
         }
         console.log(`gas well counter is odd, value of ${gas_well_counter}`);
         layer_gas_well();
+        load(2000);
     }
   });
 
@@ -309,6 +325,7 @@
         }
         console.log(`oil well counter is odd, value of ${oil_well_counter}`);
         layer_oil_well();
+        load(2000);
     }
   });
 
@@ -343,6 +360,7 @@
         }
         console.log(`gas pipeline counter is odd, value of ${gas_pipeline_counter}`);
         layer_gas_pipeline();
+        load(1000);
     }
   });
 
@@ -565,7 +583,7 @@
     });
     console.log("Layer rrmap");
   }
-
+  
   const rrmap_check = d3.select(".checkbox.railroad");
   let rrmap_counter = 0;
   rrmap_check.on("change", function() {
@@ -586,6 +604,7 @@
         }
         console.log(`railroad counter is odd, value of ${rrmap_counter}`);
         layer_rrmap();
+        load(2000);
     }
   });
 
@@ -619,6 +638,7 @@
         }
         console.log(`nff counter is odd, value of ${nff_counter}`);
         layer_nff();
+        load(300);
     }
   });
   
@@ -653,6 +673,7 @@
         }
         console.log(`ff counter is odd, value of ${ff_counter}`);
         layer_ff();
+        load(300);
     }
   });
 
@@ -687,6 +708,7 @@
         }
         console.log(`grid counter is odd, value of ${grid_counter}`);
         layer_grid();
+        load(5000);
     }
   });
 
