@@ -255,6 +255,8 @@
   let ctx_grid = grid.node().getContext("2d");
   ctx_grid.LineCap = "round";
 
+  // Below is commented out to test generalized layer function generator
+
   /**
    * Create the gas well layer.
    * TODO: solve foreach console error in draw_gas_wells() under funcs.wells..js
@@ -737,20 +739,29 @@
   /*
    Generalized function form nate
    */
-
+  /** @description an object containing counters for each layer checkbox */
   let counters = {};
+  // Set counter of each layer to zero
   for (let i = 0; i < layers.length; ++i) {
     counters[layers[i]] = 0;
   }
+  /** @description an object containing the names of functions for each layer */
   let layer_funcs = {};
+  // Should the next line be iterating through layer_funcs.length of layers.length? layer_funcs.length hasn't been set yet, has it?
   for (let i = 0; i < layer_funcs.length; ++i) {
     layer_funcs[layers[i]] = `layer_${layers[i].replace('-', '_')}`;
   }
 
+  // Do we need to call const checks as a function somewhere?
+  /** @description Toggle layer functionality on checkbox change event */  
   const checks = d3.selectall('.checkbox').on('change', function() {
+    // Attach a new canvas based on the checkbox's data-layer attribute
     let layer = d3.select(this).attr('data-layer');
     let canvas = d3.select(`.map.layer.canvas.${layer}`);
+    // Increase the counter of the current layer
     counters[layer]++;
+    // If the counter is even, checkbox is in off state.
+    // Destroy the canvas element and replace it with a new one
     if (counters[layer] % 2 === 0) {
       canvas.remove();
       console.log(`${layer} counter is even, value of ${counters[layer]}`);
@@ -760,9 +771,13 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
+      // If the checkbox has been clicked before, the layer and is turned back on,
+      // Add a new context since the old one was destroyed.
       if (counters[layer] > 1) {
           canvas.node().getContext("2d").LineCap = "round";
         }
+        // If the checkbox is in the on state, 
+        // call the relevant layer function and show the loading spinner.
         console.log(`${layer} counter is odd, value of ${counters[layer]}`);
         window["functionName"](layer_funcs[layer])();
         load(2000);
