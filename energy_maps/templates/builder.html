@@ -1,49 +1,60 @@
-{% extends 'base.html' %}
-
-{% block main %}
-
-  <div class="map wrapper">
-    <div class="main map builder">
-      <div id="spinner" style="display: none;">
-        <img id="spinner" src="../static/images/spinner.gif" alt="loading"/>
-      </div>
-    </div>
-    <div class="map composite"></div>
-    
-    <!-- Layer divs render here -->
-    
-    <!-- Map Builder UI -->
-    <div class="options">
-      <span><strong>Create a custom map:</strong></span>
-    </div>
-    <!--/ Map Builder UI -->
-    
-    <a id=download download=custom-map.png>
-      <button type=button onClick=download()>Download</button>
-    </a>
+{% extends 'base.html' %} {% block header %}
+  <h1>
+    US energy infrastructure.<br />
+    Center for robust decision-making in climate and energy policy.<br />
+    University of Chicago.
+  </h1>
+  <!-- Map Builder UI -->
+  
+  <span>
+      <strong>Create a custom map:</strong>
+      <a id="download" download="custom-map.png">
+          <button type="button" onClick="download()">Download</button>
+        </a>
+    </span>
+  <div class="options">
+    <!-- Checkboxes render here -->
   </div>
   
-{% endblock %}
+  <!--/ Map Builder UI -->
 
-{% block bodyjs %}
+{% endblock %} {% block main %}
 
-  <script>
-    let SCALE = {{ scale }};
-  </script>
+<div class="map wrapper">
+  <div class="main map builder">
+    <div id="spinner" style="display: none;">
+      <img id="spinner" src="../static/images/spinner.gif" alt="loading" />
+    </div>
+  </div>
+  <div class="map composite"></div>
 
-  {% assets 'js_d3' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-  <script src="https://unpkg.com/topojson-client@3"></script>
-  {% assets 'js_bigfucker' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  <!-- Layer divs render here -->
 
-  <script>
 
+  
+</div>
+
+{% endblock %} {% block bodyjs %}
+
+<script>
+  let SCALE = {{ scale }};
+</script>
+
+{% assets 'js_d3' %}<script src="{{ ASSET_URL }}"></script
+>{% endassets %}
+<script src="https://unpkg.com/topojson-client@3"></script>
+{% assets 'js_bigfucker' %}<script src="{{ ASSET_URL }}"></script
+>{% endassets %}
+
+<script>
   function download() {
-    let download = document.getElementById('download');
-    let image = document.getElementById('mapcanvas')
-      .toDataURL('image/png')
-      .replace('image/png', 'image/octet-stream');
-    download.setAttribute('href', image);
+    let download = document.getElementById("download");
+    let image = document
+      .getElementById("mapcanvas")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
   }
-  </script>
+</script>
 
 {% endblock %}
