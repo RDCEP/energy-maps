@@ -174,11 +174,7 @@
     Promise.all([d3.json(fmap), d3.json(fmapfill)])
       .then(function(files) {
         draw_land(ctx, files);
-      })
-      .then(function() {
-        coal_legend(ctx);
       });
-      
     console.log("draw base map");
   }
 
