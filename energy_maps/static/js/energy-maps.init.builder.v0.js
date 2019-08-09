@@ -92,27 +92,30 @@
   let layers = [
     "gas-well",
     "oil-well",
-    "off-shore-well",
     "gas-pipeline",
     "oil-pipeline",
     "oil-product-pipeline",
     "gas-processing",
-    "gas-storage",
     "oil-refinery",
     "railroad",
     "coal-mine",
+    "non-fossil-fuel-plant",
+    "fossil-fuel-plant",
+    "electrical-grid"
+  ];
+
+  let unimplemented_layers = [
+    "off-shore-well",
+    "gas-storage",
     "natural-gas-plant",
     "petroleum-plant",
     "coal-plant",
-    "non-fossil-fuel-plant",
     "solar-plant",
     "wind-plant",
     "hydro-plant",
     "nuclear-plant",
     "geothermal-plant",
-    "fossil-fuel-plant",
-    "electrical-grid"
-  ];
+  ]
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
   let canvases = {};
@@ -215,9 +218,9 @@
   ctx_gas_processing.LineCap = "round";
 
   /** @description A canvas element for the gas storage, attached to div "map layer canvas gas-storage" */
-  let gas_storage = d3.select(".map.layer.canvas.gas-storage");
-  let ctx_gas_storage = gas_storage.node().getContext("2d");
-  ctx_gas_storage.LineCap = "round";
+  // let gas_storage = d3.select(".map.layer.canvas.gas-storage");
+  // let ctx_gas_storage = gas_storage.node().getContext("2d");
+  // ctx_gas_storage.LineCap = "round";
 
   /** @description A canvas element for the oil refineries, attached to div "map layer canvas oil-refinery" */
   let oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
@@ -471,36 +474,36 @@
    * Create the gas storage layer.
    */
 
-  function layer_storage() {
-    Promise.all([
-      d3.csv("/static/csv/nstor.csv")
-    ]).then(function(files) {
-      draw_gas_storage(ctx_gas_storage, files);
-    });
-  }
+  // function layer_storage() {
+  //   Promise.all([
+  //     d3.csv("/static/csv/nstor.csv")
+  //   ]).then(function(files) {
+  //     draw_gas_storage(ctx_gas_storage, files);
+  //   });
+  // }
 
-  const gas_storage_check = d3.select(".checkbox.gas-storage");
-  let gas_storage_counter = 0;
-  gas_storage_check.on("change", function() {
-    gas_storage_counter++;
-    if (gas_storage_counter % 2 == 0) {
-      gas_storage.remove();
-      console.log(`gas-storage counter is even, value of ${gas_storage_counter}`);
-      d3.select(".map.layer.gas-storage")
-        .append("canvas")
-        .attr("class", "map layer canvas gas-storage")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (gas_storage_counter > 1) {
-          gas_storage = d3.select(".map.layer.canvas.gas-storage");
-          ctx_gas_storage = gas_storage.node().getContext("2d");
-          ctx_gas_storage.LineCap = "round";
-        }
-        console.log(`gas storage counter is odd, value of ${gas_storage_counter}`);
-        layer_storage();
-    }
-  });
+  // const gas_storage_check = d3.select(".checkbox.gas-storage");
+  // let gas_storage_counter = 0;
+  // gas_storage_check.on("change", function() {
+  //   gas_storage_counter++;
+  //   if (gas_storage_counter % 2 == 0) {
+  //     gas_storage.remove();
+  //     console.log(`gas-storage counter is even, value of ${gas_storage_counter}`);
+  //     d3.select(".map.layer.gas-storage")
+  //       .append("canvas")
+  //       .attr("class", "map layer canvas gas-storage")
+  //       .attr("width", width + SCALE * 400)
+  //       .attr("height", height);
+  //   } else {
+  //       if (gas_storage_counter > 1) {
+  //         gas_storage = d3.select(".map.layer.canvas.gas-storage");
+  //         ctx_gas_storage = gas_storage.node().getContext("2d");
+  //         ctx_gas_storage.LineCap = "round";
+  //       }
+  //       console.log(`gas storage counter is odd, value of ${gas_storage_counter}`);
+  //       layer_storage();
+  //   }
+  // });
 
   /**
    * Create the oil refinery layer.

@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 
 {% block main %}
+
   <div class="map wrapper">
-    <div id="spinner" style="display: none;">
-      <img id="spinner" src="../static/images/spinner.gif" alt="loading"/>
+    <div class="main map builder">
+      <div id="spinner" style="display: none;">
+        <img id="spinner" src="../static/images/spinner.gif" alt="loading"/>
+      </div>
     </div>
-    <div class="main map builder"></div>
-    <div class="map composite"> </div>
-    <!-- Layer divs -->
+    <div class="map composite"></div>
+    
+    <!-- Layer divs render here -->
+    
+    <!-- Map Builder UI -->
+    <div class="options">
+      <span><strong>Create a custom map:</strong></span>
+    </div>
+    <!--/ Map Builder UI -->
+    
+    <a id=download download=custom-map.png>
+      <button type=button onClick=download()>Download</button>
+    </a>
   </div>
-  <!-- Map Builder UI -->
-  <div class="options">
-    <span><strong>Create a custom map:</strong></span>
-    <br>
-    <!-- <button class="button clear">Clear</button> -->
-  </div>
-  <!--/ Map Builder UI -->
-  <br>
-  <a id=download download=custom-map.png>
-    <button type=button onClick=download()>Download</button>
-  </a>
+  
 {% endblock %}
 
 {% block bodyjs %}
