@@ -143,7 +143,9 @@
       .text(`${layers[i]}`)
       .append("input")
       .attr("type", "checkbox")
-      .attr("class", `checkbox ${layers[i]}`);
+      .attr("class", `checkbox ${layers[i]}`)
+      .attr('data-layer', `${layers[i]}`)
+    ;
   }
 
   console.log(
@@ -731,4 +733,40 @@
   // ######## Initializing Behavior ######## //
 
   draw_base_map();
+
+  /*
+   Generalized function form nate
+   */
+
+  let counters = {};
+  for (let i = 0; i < layers.length; ++i) {
+    counters[layers[i]] = 0;
+  }
+  let layer_funcs = {};
+  for (let i = 0; i < layer_funcs.length; ++i) {
+    layer_funcs[layers[i]] = `layer_${layers[i].replace('-', '_')}`;
+  }
+
+  const checks = d3.selectall('.checkbox').on('change', function() {
+    let layer = d3.select(this).attr('data-layer');
+    let canvas = d3.select(`.map.layer.canvas.${layer}`);
+    counters[layer]++;
+    if (counters[layer] % 2 === 0) {
+      canvas.remove();
+      console.log(`${layer} counter is even, value of ${counters[layer]}`);
+      d3.select(`.map.layer.${layer}`)
+        .append('canvas')
+        .attr("class", `map layer canvas ${layer}`)
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+    } else {
+      if (counters[layer] > 1) {
+          canvas.node().getContext("2d").LineCap = "round";
+        }
+        console.log(`${layer} counter is odd, value of ${counters[layer]}`);
+        window["functionName"](layer_funcs[layer])();
+        load(2000);
+    }
+  });
+
 })();
