@@ -71,7 +71,7 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
         draw_power_plant(ctx, xy, color, +d.properties.total_cap);
       }
     });
-  plants_legend(ctx, nff);
+  // plants_legend(ctx, nff);
 };
 
 const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
