@@ -168,7 +168,7 @@
   /** TODO: Move draw_base_map() to .builder.funcs.js and see
    * if you can get it to reach this file. Didn't work last time.  */
   /**
-   * Draw the base map and legend
+   * Draw the base map.
    */
   function draw_base_map() {
     Promise.all([d3.json(fmap), d3.json(fmapfill)])
@@ -541,9 +541,7 @@
    */
   function layer_coalmines() {
     Promise.all([d3.csv(mines)]).then(function(files) {
-      draw_coal_mines(ctx_coalmines, files).then(function() {
-        coal_legend(ctx);
-      });
+      draw_coal_mines(ctx_coalmines, files)
     });
     console.log("layer coal mines");
   }
@@ -681,9 +679,7 @@
    */
   function layer_grid() {
     Promise.all([d3.json(gridmap)]).then(function(files) {
-      draw_grid(ctx_grid, files).then(function() {
-        grid_legend(ctx);
-      });
+      draw_grid(ctx_grid, files)
     });
   }
 
