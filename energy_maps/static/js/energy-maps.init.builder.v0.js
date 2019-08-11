@@ -771,7 +771,9 @@
       //   .attr("class", `map layer canvas ${layer}`)
       //   .attr("width", width + SCALE * 400)
       //   .attr("height", height);
-      contexts[layer].fillStyle = 'white';
+
+      // This needs to be transparent. Another dumb mistake.
+      contexts[layer].fillStyle = 'rgba(255, 255, 255, 0)';
       contexts[layer].rect(0, 0, canvases[layer].attr('width'),
         canvases[layer].attr('height'));
       contexts[layer].fill();
