@@ -31,6 +31,7 @@
  *
  * @param {power_plant_geojson[]} queued_data
  */
+// TODO: Add argument to specify which plants to draw
 const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
   console.log('draw_power_plants');
 

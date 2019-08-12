@@ -1,5 +1,6 @@
 
-
+// TODO: Make separate functions for gas, oil, product pipelines.
+// TODO: Call separate functions for gas, oil, product pipelines from draw_pipes().
 const draw_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
 
@@ -91,6 +92,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 
 };
 
+// TODO: Make separate functions for processing and storage.
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
 

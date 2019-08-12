@@ -4,6 +4,7 @@
  * @param {Object} ctx
  * @param {coal_mine[]} queued_data
  */
+// TODO: Add argument to specify which voltages to draw
 const draw_grid = function draw_railroads(ctx, queued_data) {
   console.log('draw_grid');
 
