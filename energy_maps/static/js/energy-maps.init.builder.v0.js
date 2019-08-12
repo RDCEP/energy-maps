@@ -135,6 +135,10 @@
     console.log(`<div map layer ${layers[i]}> created!`);
 
     contexts[layers[i]] = canvases[layers[i]].node().getContext("2d");
+
+    // set lineCap = 'round' in this loop
+    contexts[layers[i]].lineCap = 'round';
+
     console.log(contexts[i]); // currently displaying 'undefined'
 
     checkboxes[layers[i]] = d3
@@ -189,290 +193,83 @@
    * ####################################################
    */
 
-  /** @description A canvas element for the gas wells, attached to div "map layer canvas gas-well" */
-  let gas_well = d3.select(".map.layer.canvas.gas-well");
-  let ctx_gas_well = gas_well.node().getContext("2d");
-  ctx_gas_well.LineCap = "round";
-
-  /** @description A canvas element for the oil wells, attached to div "map layer canvas oil-well" */
-  let oil_well = d3.select(".map.layer.canvas.oil-well");
-  let ctx_oil_well = oil_well.node().getContext("2d");
-  ctx_oil_well.LineCap = "round";
-
-  /** @description A canvas element for the gas pipelines, attached to div "map layer canvas gas-pipeline" */
-  let gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
-  let ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
-  ctx_gas_pipeline.LineCap = "round";
-
-   /** @description A canvas element for the oil pipelines, attached to div "map layer canvas oil-pipeline" */
-  let oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
-  let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
-  ctx_oil_pipeline.LineCap = "round";
-
-  /** @description A canvas element for the oil product pipelines, attached to div "map layer canvas oil-pipeline" */
-  let oil_prod_pipeline = d3.select(".map.layer.canvas.oil-product-pipeline");
-  let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
-  ctx_oil_prod_pipeline.LineCap = "round";
-
-  /** @description A canvas element for the gas processing, attached to div "map layer canvas gas-processing" */
-  let gas_processing = d3.select(".map.layer.canvas.gas-processing");
-  let ctx_gas_processing = gas_processing.node().getContext("2d");
-  ctx_gas_processing.LineCap = "round";
-
-  /** @description A canvas element for the gas storage, attached to div "map layer canvas gas-storage" */
-  // let gas_storage = d3.select(".map.layer.canvas.gas-storage");
-  // let ctx_gas_storage = gas_storage.node().getContext("2d");
-  // ctx_gas_storage.LineCap = "round";
-
-  /** @description A canvas element for the oil refineries, attached to div "map layer canvas oil-refinery" */
-  let oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
-  let ctx_oil_refinery = oil_refinery.node().getContext("2d");
-  ctx_oil_refinery.LineCap = "round";
-
-  /** @description A canvas element for the coal mines, attached to div "map layer canvas coal-mine" */
-  let coalmines = d3.select(".map.layer.canvas.coal-mine");
-  let ctx_coalmines = coalmines.node().getContext("2d");
-  ctx_coalmines.LineCap = "round";
-
-  /** @description A canvas element for the railroad map, attached to div "map layer canvas railroad" */
-  let railroad = d3.select(".map.layer.canvas.railroad");
-  let ctx_railroad = railroad.node().getContext("2d");
-  ctx_railroad.LineCap = "round";
-
-  /** @description A canvas element for the non-fossil-fuel plants, attached to div "map layer canvas non-fossil-fuel-plant" */
-  let nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
-  /** @description A drawing context for the non-fossil-fuel plants, attached to canvas "map layer non-fossil-fuel-plant" */
-  let ctx_nffplant = nffplant.node().getContext("2d");
-  ctx_nffplant.LineCap = "round";
-
-  /** @description A canvas element for the fossil-fuel plants, attached to div "map layer canvas fossil-fuel-plant" */
-  let ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
-  let ctx_ffplant = ffplant.node().getContext("2d");
-  ctx_ffplant.LineCap = "round";
-
-  /** @description A canvas element for the electrical grid, attached to div "map layer canvas electrical-grid" */
-  let grid = d3.select(".map.layer.canvas.electrical-grid");
-  let ctx_grid = grid.node().getContext("2d");
-  ctx_grid.LineCap = "round";
-
   // Below is commented out to test generalized layer function generator
 
   /**
    * Create the gas well layer.
    * TODO: solve foreach console error in draw_gas_wells() under funcs.wells..js
    */
-  function layer_gas_well() {
+  function layer_gas_well(ctx) {
     Promise.all([d3.csv(wells_gas1)])
       .then(function(files) {
-        draw_all_wells(ctx_gas_well, files);
+        draw_all_wells(ctx, files);
       })
       .then(function() {
         Promise.all([d3.csv(wells_gas2)]).then(function(files) {
-          draw_all_wells(ctx_gas_well, files);
+          draw_all_wells(ctx, files);
         });
       });
   }
 
-  const gas_well_check = d3.select(".checkbox.gas-well");
-  let gas_well_counter = 0;
-  gas_well_check.on("change", function() {
-    gas_well_counter++;
-    if (gas_well_counter % 2 == 0) {
-      gas_well.remove();
-      console.log(`gas-well counter is even, value of ${gas_well_counter}`);
-      d3.select(".map.layer.gas-well")
-        .append("canvas")
-        .attr("class", "map layer canvas gas-well")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (gas_well_counter > 1) {
-          gas_well = d3.select(".map.layer.canvas.gas-well");
-          ctx_gas_well = gas_well.node().getContext("2d");
-          ctx_gas_well.LineCap = "round";
-        }
-        console.log(`gas well counter is odd, value of ${gas_well_counter}`);
-        layer_gas_well();
-        load(2000);
-    }
-  });
 
   /**
    * Create the oil well layer.
    */
-  function layer_oil_well() {
+  function layer_oil_well(ctx) {
     Promise.all([d3.csv(wells_oil1)])
       .then(function(files) {
-        draw_all_wells(ctx_oil_well, files);
+        draw_all_wells(ctx, files);
       })
       .then(function() {
         Promise.all([d3.csv(wells_oil2)]).then(function(files) {
-          draw_all_wells(ctx_oil_well, files);
+          draw_all_wells(ctx, files);
         });
       });
   }
 
-  const oil_well_check = d3.select(".checkbox.oil-well");
-  let oil_well_counter = 0;
-  oil_well_check.on("change", function() {
-    oil_well_counter++;
-    if (oil_well_counter % 2 == 0) {
-      oil_well.remove();
-      console.log(`oil-well counter is even, value of ${oil_well_counter}`);
-      d3.select(".map.layer.oil-well")
-        .append("canvas")
-        .attr("class", "map layer canvas oil-well")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (oil_well_counter > 1) {
-          oil_well = d3.select(".map.layer.canvas.oil-well");
-          ctx_oil_well = oil_well.node().getContext("2d");
-          ctx_oil_well.LineCap = "round";
-        }
-        console.log(`oil well counter is odd, value of ${oil_well_counter}`);
-        layer_oil_well();
-        load(2000);
-    }
-  });
-
   /**
    * Create the gas pipeline layer.
    */
-  function layer_gas_pipeline() {
+  function layer_gas_pipeline(ctx) {
     Promise.all([
       d3.json('/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson')
     ]).then(function(files) {
-      draw_pipes(ctx_gas_pipeline, files);
+      draw_pipes(ctx, files);
     })
   }
-
-  const gas_pipeline_check = d3.select(".checkbox.gas-pipeline");
-  let gas_pipeline_counter = 0;
-  gas_pipeline_check.on("change", function() {
-    gas_pipeline_counter++;
-    if (gas_pipeline_counter % 2 == 0) {
-      gas_pipeline.remove();
-      console.log(`gas-pipeline counter is even, value of ${gas_pipeline_counter}`);
-      d3.select(".map.layer.gas-pipeline")
-        .append("canvas")
-        .attr("class", "map layer canvas gas-pipeline")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (gas_pipeline_counter > 1) {
-          gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
-          ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
-          ctx_gas_pipeline.LineCap = "round";
-        }
-        console.log(`gas pipeline counter is odd, value of ${gas_pipeline_counter}`);
-        layer_gas_pipeline();
-        load(1000);
-    }
-  });
 
   /**
    * Create the oil pipeline layer.
    */
-  function layer_oil_pipeline() {
+  function layer_oil_pipeline(ctx) {
     Promise.all([
       d3.json('/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson')
     ]).then(function(files) {
-      draw_pipes(ctx_oil_pipeline, files);
+      draw_pipes(ctx, files);
     })
   }
-
-  const oil_pipeline_check = d3.select(".checkbox.oil-pipeline");
-  let oil_pipeline_counter = 0;
-  oil_pipeline_check.on("change", function() {
-    oil_pipeline_counter++;
-    if (oil_pipeline_counter % 2 == 0) {
-      oil_pipeline.remove();
-      console.log(`oil-pipeline counter is even, value of ${oil_pipeline_counter}`);
-      d3.select(".map.layer.oil-pipeline")
-        .append("canvas")
-        .attr("class", "map layer canvas oil-pipeline")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (oil_pipeline_counter > 1) {
-          oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
-          ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
-          ctx_oil_pipeline.LineCap = "round";
-        }
-        console.log(`oil pipeline counter is odd, value of ${oil_pipeline_counter}`);
-        layer_oil_pipeline();
-    }
-  });
 
   /**
    * Create the oil product pipeline layer.
    */
-  function layer_oil_prod_pipeline() {
+  function layer_oil_prod_pipeline(ctx) {
     Promise.all([
       d3.json('/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson')
     ]).then(function(files) {
-      draw_pipes(ctx_oil_prod_pipeline, files);
+      draw_pipes(ctx, files);
     })
   }
-
-  const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
-  let oil_prod_pipeline_counter = 0;
-  oil_prod_pipeline_check.on("change", function() {
-    oil_prod_pipeline_counter++;
-    if (oil_prod_pipeline_counter % 2 == 0) {
-      oil_prod_pipeline.remove();
-      console.log(`oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`);
-      d3.select(".map.layer.oil-product-pipeline")
-        .append("canvas")
-        .attr("class", "map layer canvas oil-prod-pipeline")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (oil_prod_pipeline_counter > 1) {
-          oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
-          ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
-          ctx_oil_prod_pipeline.LineCap = "round";
-        }
-        console.log(`oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`);
-        layer_oil_prod_pipeline();
-    }
-  });
 
   /**
    * Create the gas processing layer.
    */
-
-  function layer_processing() {
+  function layer_processing(ctx) {
     Promise.all([
       d3.csv("/static/csv/nproc.csv")
     ]).then(function(files) {
-      draw_processing(ctx_gas_processing, files);
+      draw_processing(ctx, files);
     });
   }
-
-  const gas_processing_check = d3.select(".checkbox.gas-processing");
-  let gas_processing_counter = 0;
-  gas_processing_check.on("change", function() {
-    gas_processing_counter++;
-    if (gas_processing_counter % 2 == 0) {
-      gas_processing.remove();
-      console.log(`gas-processing counter is even, value of ${gas_processing_counter}`);
-      d3.select(".map.layer.gas-processing")
-        .append("canvas")
-        .attr("class", "map layer canvas gas-processing")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (gas_processing_counter > 1) {
-          gas_processing = d3.select(".map.layer.canvas.gas-processing");
-          ctx_gas_processing = gas_processing.node().getContext("2d");
-          ctx_gas_processing.LineCap = "round";
-        }
-        console.log(`gas processing counter is odd, value of ${gas_processing_counter}`);
-        layer_processing();
-    }
-  });
 
    /**
    * Create the gas storage layer.
@@ -513,211 +310,68 @@
    * Create the oil refinery layer.
    */
 
-  function layer_oil_refinery() {
+  function layer_oil_refinery(ctx) {
     Promise.all([d3.json('/static/json/Petroleum_Refineries_US_2015.geojson')
       ]).then(function(files) {
-        draw_refining(ctx_oil_refinery, files);
+        draw_refining(ctx, files);
     });
   }
-
-  const oil_refinery_check = d3.select(".checkbox.oil-refinery");
-  let oil_refinery_counter = 0;
-  oil_refinery_check.on("change", function() {
-    oil_refinery_counter++;
-    if (oil_refinery_counter % 2 == 0) {
-      oil_refinery.remove();
-      console.log(`oil-refinery counter is even, value of ${oil_refinery_counter}`);
-      d3.select(".map.layer.oil-refinery")
-        .append("canvas")
-        .attr("class", "map layer canvas oil-refinery")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (oil_refinery_counter > 1) {
-          oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
-          ctx_oil_refinery= oil_refinery.node().getContext("2d");
-          ctx_oil_refinery.LineCap = "round";
-        }
-        console.log(`oil refinery counter is odd, value of ${oil_refinery_counter}`);
-        layer_oil_refinery();
-    }
-  });
 
   /**
    * Create the coal mine layer.
    * TODO: Ensure that the railroads always appear below the mines
    */
-  function layer_coalmines() {
+  function layer_coalmines(ctx) {
     Promise.all([d3.csv(mines)]).then(function(files) {
-      draw_coal_mines(ctx_coalmines, files).then(function() {
+      draw_coal_mines(ctx, files).then(function() {
         coal_legend(ctx);
       });
     });
     console.log("layer coal mines");
   }
 
-  // TODO: Generalize this into a function
-  const coal_check = d3.select(".checkbox.coal-mine");
-  let coal_counter = 0;
-  coal_check.on("change", function() {
-    coal_counter++;
-    if (coal_counter % 2 == 0) {
-      console.log(`coal counter is even, value of ${coal_counter}`);
-      coalmines.remove();
-      d3.select(".map.layer.coal-mine")
-        .append("canvas")
-        .attr("class", "map layer canvas coal-mine")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (coal_counter > 1) {
-          coalmines = d3.select(".map.layer.canvas.coal-mine");
-          ctx_coalmines = coalmines.node().getContext("2d");
-          ctx_coalmines.LineCap = "round";
-        }
-        console.log(`coal counter is odd, value of ${coal_counter}`);
-        layer_coalmines();
-    }
-  });
-
   /**
    * Create the railroad map layer.
    * TODO: Ensure that the railroads always appear below the mines
    */
-  function layer_rrmap() {
+  function layer_rrmap(ctx) {
     Promise.all([d3.json(rrmap)]).then(function(files) {
-      draw_railroads(ctx_railroad, files);
+      draw_railroads(ctx, files);
     });
     console.log("Layer rrmap");
   }
   
-  const rrmap_check = d3.select(".checkbox.railroad");
-  let rrmap_counter = 0;
-  rrmap_check.on("change", function() {
-    rrmap_counter++;
-    if (rrmap_counter % 2 == 0) {
-      console.log(`rrmap counter is even, value of ${rrmap_counter}`);
-      railroad.remove();
-      d3.select(".map.layer.railroad")
-        .append("canvas")
-        .attr("class", "map layer canvas railroad")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (rrmap_counter > 1) {
-          railroad = d3.select(".map.layer.canvas.railroad");
-          ctx_railroad = railroad.node().getContext("2d");
-          ctx_railroad.LineCap = "round";
-        }
-        console.log(`railroad counter is odd, value of ${rrmap_counter}`);
-        layer_rrmap();
-        load(2000);
-    }
-  });
-
   /**
    * Create the non-fossil-fuel plant layer.
    */
-  function layer_nff() {
+  function layer_nff(ctx) {
     Promise.all([d3.json('/static/json/PowerPlants_US_2014Aug_R.geojson')])
     .then(function(files) {
-      draw_nff_plants(ctx_nffplant, files);
+      draw_nff_plants(ctx, files);
     })
   }
 
-  const nff_check = d3.select(".checkbox.non-fossil-fuel-plant");
-  let nff_counter = 0;
-  nff_check.on("change", function() {
-    nff_counter++;
-    if (nff_counter % 2 == 0) {
-      console.log(`nff counter is even, value of ${nff_counter}`);
-      nffplant.remove();
-      d3.select(".map.layer.non-fossil-fuel-plant")
-        .append("canvas")
-        .attr("class", "map layer canvas non-fossil-fuel-plant")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (nff_counter > 1) {
-          nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
-          ctx_nffplant = nffplant.node().getContext("2d");
-          ctx_nffplant.LineCap = "round";
-        }
-        console.log(`nff counter is odd, value of ${nff_counter}`);
-        layer_nff();
-        load(300);
-    }
-  });
-  
   /**
    * Create the fossil-fuel plant layer.
    */
-  function layer_ff() {
+  function layer_ff(ctx) {
     Promise.all([
       d3.json("/static/json/PowerPlants_US_2014Aug_R.geojson")
     ]).then(function(files) {
-      draw_ff_plants(ctx_ffplant, files);
+      draw_ff_plants(ctx, files);
     });
   }
-
-  const ff_check = d3.select(".checkbox.fossil-fuel-plant");
-  let ff_counter = 0;
-  ff_check.on("change", function() {
-    ff_counter++;
-    if (ff_counter % 2 == 0) {
-      console.log(`ff counter is even, value of ${ff_counter}`);
-      ffplant.remove();
-      d3.select(".map.layer.fossil-fuel-plant")
-        .append("canvas")
-        .attr("class", "map layer canvas fossil-fuel-plant")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (ff_counter > 1) {
-          ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
-          ctx_ffplant = ffplant.node().getContext("2d");
-          ctx_ffplant.LineCap = "round";
-        }
-        console.log(`ff counter is odd, value of ${ff_counter}`);
-        layer_ff();
-        load(300);
-    }
-  });
 
   /**
    * Create the electrical grid layer.
    */
-  function layer_grid() {
+  function layer_grid(ctx) {
     Promise.all([d3.json(gridmap)]).then(function(files) {
-      draw_grid(ctx_grid, files).then(function() {
+      draw_grid(ctx, files).then(function() {
         grid_legend(ctx);
       });
     });
   }
-
-  const grid_check = d3.select(".checkbox.electrical-grid");
-  let grid_counter = 0;
-  grid_check.on("change", function() {
-    grid_counter++;
-    if (grid_counter % 2 == 0) {
-      console.log(`grid counter is even, value of ${grid_counter}`);
-      grid.remove();
-      d3.select(".map.layer.electrical-grid")
-        .append("canvas")
-        .attr("class", "map layer canvas electrical-grid")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-    } else {
-        if (grid_counter > 1) {
-          grid = d3.select(".map.layer.canvas.electrical-grid");
-          ctx_grid = grid.node().getContext("2d");
-          ctx_grid.LineCap = "round";
-        }
-        console.log(`grid counter is odd, value of ${grid_counter}`);
-        layer_grid();
-        load(5000);
-    }
-  });
 
   // Toggle function
   /**
@@ -788,7 +442,8 @@
         // If the checkbox is in the on state, 
         // call the relevant layer function and show the loading spinner.
         console.log(`${layer} counter is odd, value of ${counters[layer]}`);
-        window["functionName"](layer_funcs[layer])();
+        // This call was wrong in the past commits
+        window[layer_funcs[layer]](contexts[layer]);
         load(2000);
     }
   });
