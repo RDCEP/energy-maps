@@ -117,13 +117,15 @@
     "geothermal-plant"
   ];
 
-  let oil_pipeline_val = 170_000_000_000;
-  let coalmine_val = 57_000_000_000;
   let gas_well_val = 1_713_000_000_000;
   let oil_well_val = 1_713_000_000_000;
   let gas_pipeline_val = 940_000_000_000;
+  let oil_pipeline_val = 170_000_000_000;
+  let oil_prod_pipeline_val = 456357;
+  let gas_processing_val = 34534;
   let oil_refinery_val = 373_000_000_000;
   let railroad_val = 137_000_000_000;
+  let coalmine_val = 57_000_000_000;
   let nff_val = 1_156_000_000_000;
   let ff_val = 1_645_000_000_000;
   let electrical_grid_val = 2946_000_000_000;
@@ -133,8 +135,8 @@
     oil_well_val, // oil well
     gas_pipeline_val, // gas pipeline
     oil_pipeline_val, // oil pipeline
-    4, // oil prod pipeline
-    0, // gas processing
+    oil_prod_pipeline_val, // oil prod pipeline
+    gas_processing_val, // gas processing
     oil_refinery_val, // oil refinery
     railroad_val, // railroad
     coalmine_val, // coal mine
@@ -144,6 +146,28 @@
   ];
 
   let asset_total = [0];
+  let asset_total_sum;
+
+  function increment_asset_total(value) {
+    asset_total.push(value);
+    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
+    document.getElementById(
+      "asset-totals"
+    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+  }
+
+  function decrement_asset_total(value) {
+    for (let i in asset_total) {
+      if (asset_total[i] == value) {
+        asset_total.splice(i, 1)
+        break
+      }
+    }
+    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
+    document.getElementById(
+      "asset-totals"
+    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+  }
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
   let canvases = {};
@@ -305,6 +329,7 @@
         .attr("class", "map layer canvas gas-well")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(gas_well_val);
     } else {
       if (gas_well_counter > 1) {
         gas_well = d3.select(".map.layer.canvas.gas-well");
@@ -314,6 +339,8 @@
       console.log(`gas well counter is odd, value of ${gas_well_counter}`);
       layer_gas_well();
       load(2000);
+      console.log(gas_well_val);
+      increment_asset_total(gas_well_val);
     }
   });
 
@@ -344,6 +371,7 @@
         .attr("class", "map layer canvas oil-well")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(oil_well_val);
     } else {
       if (oil_well_counter > 1) {
         oil_well = d3.select(".map.layer.canvas.oil-well");
@@ -353,6 +381,8 @@
       console.log(`oil well counter is odd, value of ${oil_well_counter}`);
       layer_oil_well();
       load(2000);
+      console.log(oil_well_val);
+      increment_asset_total(oil_well_val);
     }
   });
 
@@ -381,6 +411,7 @@
         .attr("class", "map layer canvas gas-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(gas_pipeline_val);
     } else {
       if (gas_pipeline_counter > 1) {
         gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
@@ -392,6 +423,8 @@
       );
       layer_gas_pipeline();
       load(1000);
+      console.log(gas_pipeline_val);
+      increment_asset_total(gas_pipeline_val);
     }
   });
 
@@ -420,6 +453,7 @@
         .attr("class", "map layer canvas oil-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(oil_pipeline_val)
     } else {
       if (oil_pipeline_counter > 1) {
         oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
@@ -430,6 +464,8 @@
         `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
       );
       layer_oil_pipeline();
+      console.log(oil_pipeline_val);
+      increment_asset_total(oil_pipeline_val);
     }
   });
 
@@ -460,6 +496,7 @@
         .attr("class", "map layer canvas oil-prod-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(oil_prod_pipeline_val);
     } else {
       if (oil_prod_pipeline_counter > 1) {
         oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
@@ -470,6 +507,8 @@
         `oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`
       );
       layer_oil_prod_pipeline();
+      console.log(oil_prod_pipeline_val);
+      increment_asset_total(oil_prod_pipeline_val);
     }
   });
 
@@ -497,6 +536,7 @@
         .attr("class", "map layer canvas gas-processing")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(gas_processing_val);
     } else {
       if (gas_processing_counter > 1) {
         gas_processing = d3.select(".map.layer.canvas.gas-processing");
@@ -507,6 +547,8 @@
         `gas processing counter is odd, value of ${gas_processing_counter}`
       );
       layer_processing();
+      console.log(gas_processing_val);
+      increment_asset_total(gas_processing_val);
     }
   });
 
@@ -571,6 +613,7 @@
         .attr("class", "map layer canvas oil-refinery")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(oil_refinery_val)
     } else {
       if (oil_refinery_counter > 1) {
         oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
@@ -581,6 +624,8 @@
         `oil refinery counter is odd, value of ${oil_refinery_counter}`
       );
       layer_oil_refinery();
+      console.log(oil_refinery_val);
+      increment_asset_total(oil_refinery_val);
     }
   });
 
@@ -619,35 +664,8 @@
       layer_coalmines();
       console.log(coalmine_val);
       increment_asset_total(coalmine_val);
-      // asset_total.push(coalmine_val);
-      // let asset_total_sum = asset_total.reduce((total, amount) => total + amount)
-      // document.getElementById("asset-totals").innerHTML = `Asset totals: ${asset_total_sum}`
-      // increment_asset_total();
-      // document.getElementById("asset-totals").innerHTML += ` ${coalmine_val}`
     }
   });
-
-  let asset_total_sum;
-  function increment_asset_total(value) {
-    asset_total.push(value);
-    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
-    document.getElementById(
-      "asset-totals"
-    ).innerHTML = `Asset totals: ${asset_total_sum}`;
-  }
-
-  function decrement_asset_total(value) {
-    for (let i in asset_total) {
-      if (asset_total[i] == value) {
-        asset_total.splice(i, 1)
-        break
-      }
-    }
-    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
-    document.getElementById(
-      "asset-totals"
-    ).innerHTML = `Asset totals: ${asset_total_sum}`;
-  }
 
   /**
    * Create the railroad map layer.
@@ -672,6 +690,7 @@
         .attr("class", "map layer canvas railroad")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(railroad_val);
     } else {
       if (rrmap_counter > 1) {
         railroad = d3.select(".map.layer.canvas.railroad");
@@ -681,6 +700,8 @@
       console.log(`railroad counter is odd, value of ${rrmap_counter}`);
       layer_rrmap();
       load(2000);
+      console.log(railroad_val);
+      increment_asset_total(railroad_val);
     }
   });
 
@@ -707,6 +728,7 @@
         .attr("class", "map layer canvas non-fossil-fuel-plant")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+        decrement_asset_total(nff_val)
     } else {
       if (nff_counter > 1) {
         nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
@@ -716,6 +738,8 @@
       console.log(`nff counter is odd, value of ${nff_counter}`);
       layer_nff();
       load(300);
+      console.log(nff_val);
+      increment_asset_total(nff_val);
     }
   });
 
@@ -742,6 +766,7 @@
         .attr("class", "map layer canvas fossil-fuel-plant")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+        decrement_asset_total(ff_val);
     } else {
       if (ff_counter > 1) {
         ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
@@ -751,6 +776,8 @@
       console.log(`ff counter is odd, value of ${ff_counter}`);
       layer_ff();
       load(300);
+      console.log(ff_val);
+      increment_asset_total(ff_val);
     }
   });
 
@@ -775,6 +802,7 @@
         .attr("class", "map layer canvas electrical-grid")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
+      decrement_asset_total(electrical_grid_val)
     } else {
       if (grid_counter > 1) {
         grid = d3.select(".map.layer.canvas.electrical-grid");
@@ -784,6 +812,8 @@
       console.log(`grid counter is odd, value of ${grid_counter}`);
       layer_grid();
       load(5000);
+      console.log(electrical_grid_val);
+      increment_asset_total(electrical_grid_val);
     }
   });
 
