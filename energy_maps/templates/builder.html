@@ -1,26 +1,27 @@
-{% extends 'base.html' %} 
-{% block header %}
-  <h1>
-    US energy infrastructure.<br />
-    Center for robust decision-making in climate and energy policy.<br />
-    University of Chicago.
-  </h1>
-  <!-- Map Builder UI -->
-  
-  <span>
-      <strong>Create a custom map:</strong>
-      <a id="download" download="custom-map.png">
-          <button type="button" onClick="download()">Download</button>
-        </a>
-    </span>
-  <div class="options">
-    <!-- Checkboxes render here -->
-  </div>
-  
-  <!--/ Map Builder UI -->
+{% extends 'base.html' %} {% block header %}
 
-{% endblock %} 
-{% block main %}
+<h1>
+  US energy infrastructure.<br />
+  Center for robust decision-making in climate and energy policy.<br />
+  University of Chicago.
+</h1>
+
+<!-- Map Builder UI -->
+<p><strong>Create a custom map:</strong></p>
+<div><p id="asset-totals">Asset Totals:</p></div>
+
+<div class="options">
+  <!-- Checkboxes render here -->
+</div>
+<span>
+  <!-- <span id="">Asset Totals:</span> -->
+  <a id="download" download="custom-map.png">
+    <button type="button" onClick="download()">Download</button>
+  </a>
+</span>
+<!--/ Map Builder UI -->
+
+{% endblock %} {% block main %}
 
 <div class="map wrapper">
   <div class="main map builder">
@@ -31,13 +32,9 @@
   <div class="map composite"></div>
 
   <!-- Layer divs render here -->
-
-
-  
 </div>
 
-{% endblock %} 
-{% block bodyjs %}
+{% endblock %} {% block bodyjs %}
 
 <script>
   let SCALE = {{ scale }};
@@ -49,7 +46,7 @@
 
 {% endassets %}
 
-<script src="https://unpkg.com/topojson-client@3"> </script>
+<script src="https://unpkg.com/topojson-client@3"></script>
 
 {% assets 'js_bigfucker' %}
 
