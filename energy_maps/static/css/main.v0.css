@@ -70,3 +70,33 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 /*# sourceMappingURL=main.v0.css.map */
+
+
+/* Stuff from sankey site */
+
+.title.container {
+  border-top: 2px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
+  position: relative; }
+  .title.container img {
+    height: 40px;
+    position: relative;
+    top: 5px; }
+  .title.container svg {
+    position: absolute; }
+  .title.container .title {
+    font-size: 1em;
+    fill: black; }
+    .title.container .title .unit {
+      font-size: 0.7em;
+      font-weight: bold; }
+    .title.container .title .year {
+      font-size: 2.1em;
+      font-weight: bold;
+      clear: left;
+      letter-spacing: 0.05em;
+      font-variant-numeric: tabular-nums; }
+  .title.container .citation, .title.container .affiliation {
+    font-family: Fieldwork-HumThin, Futura, sans-serif;
+    font-size: 0.9em;
+    fill: #b2b2b2; }

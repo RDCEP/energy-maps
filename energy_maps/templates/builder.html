@@ -1,12 +1,18 @@
 {% extends 'base.html' %} {% block header %}
 
-<h1>
+<div class="title container" style="width: 1200px; height: 50px;">
+    <img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;">
+    
+</div>
+<!-- <h1>
   US energy infrastructure.<br />
   Center for robust decision-making in climate and energy policy.<br />
   University of Chicago.
-</h1>
+</!-->
 
 <!-- Map Builder UI -->
+<div> 
+<p>US energy infrastructure. Center for robust decision-making in climate and energy policy. University of Chicago.</p>
 <p><strong>Create a custom map:</strong></p>
 <div id="asset-totals"><p>Asset Totals:</p></div>
 
@@ -19,6 +25,7 @@
     <button type="button" onClick="download()">Download</button>
   </a>
 </span>
+</div>
 <!--/ Map Builder UI -->
 
 {% endblock %} {% block main %}
