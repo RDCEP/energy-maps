@@ -76,17 +76,17 @@
 
   // Loading
   let spinner = document.getElementById("spinner");
-  const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
+  const sleep = milliseconds => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  };
   /** @description display the loading spinner for user set time in milliseconds */
-  const load = async (time) => {
+  const load = async time => {
     // show the spinner
-    spinner.style.display = 'block';
+    spinner.style.display = "block";
     await sleep(time);
     // hide the spinner
-    spinner.style.display = 'none';
-  }
+    spinner.style.display = "none";
+  };
 
   /** @description An array of keys for canvases{}.  */
   let layers = [
@@ -114,23 +114,24 @@
     "wind-plant",
     "hydro-plant",
     "nuclear-plant",
-    "geothermal-plant",
-  ]
-  let oil_pipeline_val = 170_000_000_000
-  let coalmine_val = 57_000_000_000
-  let gas_well_val = 1_713_000_000_000
-  let oil_well_val = 1_713_000_000_000
-  let gas_pipeline_val = 940_000_000_000
-  let oil_refinery_val = 373_000_000_000
-  let railroad_val = 137_000_000_000
-  let nff_val = 1_156_000_000_000
-  let ff_val = 1_645_000_000_000
-  let electrical_grid_val = 2946_000_000_000 
+    "geothermal-plant"
+  ];
+
+  let oil_pipeline_val = 170_000_000_000;
+  let coalmine_val = 57_000_000_000;
+  let gas_well_val = 1_713_000_000_000;
+  let oil_well_val = 1_713_000_000_000;
+  let gas_pipeline_val = 940_000_000_000;
+  let oil_refinery_val = 373_000_000_000;
+  let railroad_val = 137_000_000_000;
+  let nff_val = 1_156_000_000_000;
+  let ff_val = 1_645_000_000_000;
+  let electrical_grid_val = 2946_000_000_000;
 
   let asset_values = [
     gas_well_val, // gas well
     oil_well_val, // oil well
-    gas_pipeline_val , // gas pipeline
+    gas_pipeline_val, // gas pipeline
     oil_pipeline_val, // oil pipeline
     4, // oil prod pipeline
     0, // gas processing
@@ -138,9 +139,11 @@
     railroad_val, // railroad
     coalmine_val, // coal mine
     nff_val, // non fossil fuel plant
-    ff_val , // fossil fuel plant
+    ff_val, // fossil fuel plant
     electrical_grid_val // electrical grid
-  ]
+  ];
+
+  let asset_total = [0];
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
   let canvases = {};
@@ -197,10 +200,9 @@
    * Draw the base map.
    */
   function draw_base_map() {
-    Promise.all([d3.json(fmap), d3.json(fmapfill)])
-      .then(function(files) {
-        draw_land(ctx, files);
-      });
+    Promise.all([d3.json(fmap), d3.json(fmapfill)]).then(function(files) {
+      draw_land(ctx, files);
+    });
     console.log("draw base map");
   }
 
@@ -224,7 +226,7 @@
   let ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
   ctx_gas_pipeline.LineCap = "round";
 
-   /** @description A canvas element for the oil pipelines, attached to div "map layer canvas oil-pipeline" */
+  /** @description A canvas element for the oil pipelines, attached to div "map layer canvas oil-pipeline" */
   let oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
   let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
   ctx_oil_pipeline.LineCap = "round";
@@ -304,14 +306,14 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (gas_well_counter > 1) {
-          gas_well = d3.select(".map.layer.canvas.gas-well");
-          ctx_gas_well = gas_well.node().getContext("2d");
-          ctx_gas_well.LineCap = "round";
-        }
-        console.log(`gas well counter is odd, value of ${gas_well_counter}`);
-        layer_gas_well();
-        load(2000);
+      if (gas_well_counter > 1) {
+        gas_well = d3.select(".map.layer.canvas.gas-well");
+        ctx_gas_well = gas_well.node().getContext("2d");
+        ctx_gas_well.LineCap = "round";
+      }
+      console.log(`gas well counter is odd, value of ${gas_well_counter}`);
+      layer_gas_well();
+      load(2000);
     }
   });
 
@@ -343,14 +345,14 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (oil_well_counter > 1) {
-          oil_well = d3.select(".map.layer.canvas.oil-well");
-          ctx_oil_well = oil_well.node().getContext("2d");
-          ctx_oil_well.LineCap = "round";
-        }
-        console.log(`oil well counter is odd, value of ${oil_well_counter}`);
-        layer_oil_well();
-        load(2000);
+      if (oil_well_counter > 1) {
+        oil_well = d3.select(".map.layer.canvas.oil-well");
+        ctx_oil_well = oil_well.node().getContext("2d");
+        ctx_oil_well.LineCap = "round";
+      }
+      console.log(`oil well counter is odd, value of ${oil_well_counter}`);
+      layer_oil_well();
+      load(2000);
     }
   });
 
@@ -359,10 +361,10 @@
    */
   function layer_gas_pipeline() {
     Promise.all([
-      d3.json('/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson')
+      d3.json("/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson")
     ]).then(function(files) {
       draw_pipes(ctx_gas_pipeline, files);
-    })
+    });
   }
 
   const gas_pipeline_check = d3.select(".checkbox.gas-pipeline");
@@ -371,21 +373,25 @@
     gas_pipeline_counter++;
     if (gas_pipeline_counter % 2 == 0) {
       gas_pipeline.remove();
-      console.log(`gas-pipeline counter is even, value of ${gas_pipeline_counter}`);
+      console.log(
+        `gas-pipeline counter is even, value of ${gas_pipeline_counter}`
+      );
       d3.select(".map.layer.gas-pipeline")
         .append("canvas")
         .attr("class", "map layer canvas gas-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (gas_pipeline_counter > 1) {
-          gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
-          ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
-          ctx_gas_pipeline.LineCap = "round";
-        }
-        console.log(`gas pipeline counter is odd, value of ${gas_pipeline_counter}`);
-        layer_gas_pipeline();
-        load(1000);
+      if (gas_pipeline_counter > 1) {
+        gas_pipeline = d3.select(".map.layer.canvas.gas-pipeline");
+        ctx_gas_pipeline = gas_pipeline.node().getContext("2d");
+        ctx_gas_pipeline.LineCap = "round";
+      }
+      console.log(
+        `gas pipeline counter is odd, value of ${gas_pipeline_counter}`
+      );
+      layer_gas_pipeline();
+      load(1000);
     }
   });
 
@@ -394,10 +400,10 @@
    */
   function layer_oil_pipeline() {
     Promise.all([
-      d3.json('/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson')
+      d3.json("/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson")
     ]).then(function(files) {
       draw_pipes(ctx_oil_pipeline, files);
-    })
+    });
   }
 
   const oil_pipeline_check = d3.select(".checkbox.oil-pipeline");
@@ -406,20 +412,24 @@
     oil_pipeline_counter++;
     if (oil_pipeline_counter % 2 == 0) {
       oil_pipeline.remove();
-      console.log(`oil-pipeline counter is even, value of ${oil_pipeline_counter}`);
+      console.log(
+        `oil-pipeline counter is even, value of ${oil_pipeline_counter}`
+      );
       d3.select(".map.layer.oil-pipeline")
         .append("canvas")
         .attr("class", "map layer canvas oil-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (oil_pipeline_counter > 1) {
-          oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
-          ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
-          ctx_oil_pipeline.LineCap = "round";
-        }
-        console.log(`oil pipeline counter is odd, value of ${oil_pipeline_counter}`);
-        layer_oil_pipeline();
+      if (oil_pipeline_counter > 1) {
+        oil_pipeline = d3.select(".map.layer.canvas.oil-pipeline");
+        ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
+        ctx_oil_pipeline.LineCap = "round";
+      }
+      console.log(
+        `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
+      );
+      layer_oil_pipeline();
     }
   });
 
@@ -428,10 +438,12 @@
    */
   function layer_oil_prod_pipeline() {
     Promise.all([
-      d3.json('/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson')
+      d3.json(
+        "/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson"
+      )
     ]).then(function(files) {
       draw_pipes(ctx_oil_prod_pipeline, files);
-    })
+    });
   }
 
   const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
@@ -440,20 +452,24 @@
     oil_prod_pipeline_counter++;
     if (oil_prod_pipeline_counter % 2 == 0) {
       oil_prod_pipeline.remove();
-      console.log(`oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`);
+      console.log(
+        `oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`
+      );
       d3.select(".map.layer.oil-product-pipeline")
         .append("canvas")
         .attr("class", "map layer canvas oil-prod-pipeline")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (oil_prod_pipeline_counter > 1) {
-          oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
-          ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
-          ctx_oil_prod_pipeline.LineCap = "round";
-        }
-        console.log(`oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`);
-        layer_oil_prod_pipeline();
+      if (oil_prod_pipeline_counter > 1) {
+        oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
+        ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
+        ctx_oil_prod_pipeline.LineCap = "round";
+      }
+      console.log(
+        `oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`
+      );
+      layer_oil_prod_pipeline();
     }
   });
 
@@ -462,9 +478,7 @@
    */
 
   function layer_processing() {
-    Promise.all([
-      d3.csv("/static/csv/nproc.csv")
-    ]).then(function(files) {
+    Promise.all([d3.csv("/static/csv/nproc.csv")]).then(function(files) {
       draw_processing(ctx_gas_processing, files);
     });
   }
@@ -475,24 +489,28 @@
     gas_processing_counter++;
     if (gas_processing_counter % 2 == 0) {
       gas_processing.remove();
-      console.log(`gas-processing counter is even, value of ${gas_processing_counter}`);
+      console.log(
+        `gas-processing counter is even, value of ${gas_processing_counter}`
+      );
       d3.select(".map.layer.gas-processing")
         .append("canvas")
         .attr("class", "map layer canvas gas-processing")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (gas_processing_counter > 1) {
-          gas_processing = d3.select(".map.layer.canvas.gas-processing");
-          ctx_gas_processing = gas_processing.node().getContext("2d");
-          ctx_gas_processing.LineCap = "round";
-        }
-        console.log(`gas processing counter is odd, value of ${gas_processing_counter}`);
-        layer_processing();
+      if (gas_processing_counter > 1) {
+        gas_processing = d3.select(".map.layer.canvas.gas-processing");
+        ctx_gas_processing = gas_processing.node().getContext("2d");
+        ctx_gas_processing.LineCap = "round";
+      }
+      console.log(
+        `gas processing counter is odd, value of ${gas_processing_counter}`
+      );
+      layer_processing();
     }
   });
 
-   /**
+  /**
    * Create the gas storage layer.
    */
 
@@ -532,9 +550,10 @@
    */
 
   function layer_oil_refinery() {
-    Promise.all([d3.json('/static/json/Petroleum_Refineries_US_2015.geojson')
-      ]).then(function(files) {
-        draw_refining(ctx_oil_refinery, files);
+    Promise.all([
+      d3.json("/static/json/Petroleum_Refineries_US_2015.geojson")
+    ]).then(function(files) {
+      draw_refining(ctx_oil_refinery, files);
     });
   }
 
@@ -544,20 +563,24 @@
     oil_refinery_counter++;
     if (oil_refinery_counter % 2 == 0) {
       oil_refinery.remove();
-      console.log(`oil-refinery counter is even, value of ${oil_refinery_counter}`);
+      console.log(
+        `oil-refinery counter is even, value of ${oil_refinery_counter}`
+      );
       d3.select(".map.layer.oil-refinery")
         .append("canvas")
         .attr("class", "map layer canvas oil-refinery")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (oil_refinery_counter > 1) {
-          oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
-          ctx_oil_refinery= oil_refinery.node().getContext("2d");
-          ctx_oil_refinery.LineCap = "round";
-        }
-        console.log(`oil refinery counter is odd, value of ${oil_refinery_counter}`);
-        layer_oil_refinery();
+      if (oil_refinery_counter > 1) {
+        oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
+        ctx_oil_refinery = oil_refinery.node().getContext("2d");
+        ctx_oil_refinery.LineCap = "round";
+      }
+      console.log(
+        `oil refinery counter is odd, value of ${oil_refinery_counter}`
+      );
+      layer_oil_refinery();
     }
   });
 
@@ -567,7 +590,7 @@
    */
   function layer_coalmines() {
     Promise.all([d3.csv(mines)]).then(function(files) {
-      draw_coal_mines(ctx_coalmines, files)
+      draw_coal_mines(ctx_coalmines, files);
     });
     console.log("layer coal mines");
   }
@@ -584,18 +607,47 @@
         .append("canvas")
         .attr("class", "map layer canvas coal-mine")
         .attr("width", width + SCALE * 400)
-        .attr("height", height); 
+        .attr("height", height);
+      decrement_asset_total(coalmine_val);
     } else {
-        if (coal_counter > 1) {
-          coalmines = d3.select(".map.layer.canvas.coal-mine");
-          ctx_coalmines = coalmines.node().getContext("2d");
-          ctx_coalmines.LineCap = "round";
-        }
-        console.log(`coal counter is odd, value of ${coal_counter}`);
-        layer_coalmines();
-        console.log(coalmine_val)
+      if (coal_counter > 1) {
+        coalmines = d3.select(".map.layer.canvas.coal-mine");
+        ctx_coalmines = coalmines.node().getContext("2d");
+        ctx_coalmines.LineCap = "round";
+      }
+      console.log(`coal counter is odd, value of ${coal_counter}`);
+      layer_coalmines();
+      console.log(coalmine_val);
+      increment_asset_total(coalmine_val);
+      // asset_total.push(coalmine_val);
+      // let asset_total_sum = asset_total.reduce((total, amount) => total + amount)
+      // document.getElementById("asset-totals").innerHTML = `Asset totals: ${asset_total_sum}`
+      // increment_asset_total();
+      // document.getElementById("asset-totals").innerHTML += ` ${coalmine_val}`
     }
   });
+
+  let asset_total_sum;
+  function increment_asset_total(value) {
+    asset_total.push(value);
+    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
+    document.getElementById(
+      "asset-totals"
+    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+  }
+
+  function decrement_asset_total(value) {
+    for (let i in asset_total) {
+      if (asset_total[i] == value) {
+        asset_total.splice(i, 1)
+        break
+      }
+    }
+    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
+    document.getElementById(
+      "asset-totals"
+    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+  }
 
   /**
    * Create the railroad map layer.
@@ -607,7 +659,7 @@
     });
     console.log("Layer rrmap");
   }
-  
+
   const rrmap_check = d3.select(".checkbox.railroad");
   let rrmap_counter = 0;
   rrmap_check.on("change", function() {
@@ -621,14 +673,14 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (rrmap_counter > 1) {
-          railroad = d3.select(".map.layer.canvas.railroad");
-          ctx_railroad = railroad.node().getContext("2d");
-          ctx_railroad.LineCap = "round";
-        }
-        console.log(`railroad counter is odd, value of ${rrmap_counter}`);
-        layer_rrmap();
-        load(2000);
+      if (rrmap_counter > 1) {
+        railroad = d3.select(".map.layer.canvas.railroad");
+        ctx_railroad = railroad.node().getContext("2d");
+        ctx_railroad.LineCap = "round";
+      }
+      console.log(`railroad counter is odd, value of ${rrmap_counter}`);
+      layer_rrmap();
+      load(2000);
     }
   });
 
@@ -636,10 +688,11 @@
    * Create the non-fossil-fuel plant layer.
    */
   function layer_nff() {
-    Promise.all([d3.json('/static/json/PowerPlants_US_2014Aug_R.geojson')])
-    .then(function(files) {
+    Promise.all([
+      d3.json("/static/json/PowerPlants_US_2014Aug_R.geojson")
+    ]).then(function(files) {
       draw_nff_plants(ctx_nffplant, files);
-    })
+    });
   }
 
   const nff_check = d3.select(".checkbox.non-fossil-fuel-plant");
@@ -655,17 +708,17 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (nff_counter > 1) {
-          nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
-          ctx_nffplant = nffplant.node().getContext("2d");
-          ctx_nffplant.LineCap = "round";
-        }
-        console.log(`nff counter is odd, value of ${nff_counter}`);
-        layer_nff();
-        load(300);
+      if (nff_counter > 1) {
+        nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
+        ctx_nffplant = nffplant.node().getContext("2d");
+        ctx_nffplant.LineCap = "round";
+      }
+      console.log(`nff counter is odd, value of ${nff_counter}`);
+      layer_nff();
+      load(300);
     }
   });
-  
+
   /**
    * Create the fossil-fuel plant layer.
    */
@@ -690,14 +743,14 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (ff_counter > 1) {
-          ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
-          ctx_ffplant = ffplant.node().getContext("2d");
-          ctx_ffplant.LineCap = "round";
-        }
-        console.log(`ff counter is odd, value of ${ff_counter}`);
-        layer_ff();
-        load(300);
+      if (ff_counter > 1) {
+        ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
+        ctx_ffplant = ffplant.node().getContext("2d");
+        ctx_ffplant.LineCap = "round";
+      }
+      console.log(`ff counter is odd, value of ${ff_counter}`);
+      layer_ff();
+      load(300);
     }
   });
 
@@ -706,7 +759,7 @@
    */
   function layer_grid() {
     Promise.all([d3.json(gridmap)]).then(function(files) {
-      draw_grid(ctx_grid, files)
+      draw_grid(ctx_grid, files);
     });
   }
 
@@ -723,14 +776,14 @@
         .attr("width", width + SCALE * 400)
         .attr("height", height);
     } else {
-        if (grid_counter > 1) {
-          grid = d3.select(".map.layer.canvas.electrical-grid");
-          ctx_grid = grid.node().getContext("2d");
-          ctx_grid.LineCap = "round";
-        }
-        console.log(`grid counter is odd, value of ${grid_counter}`);
-        layer_grid();
-        load(5000);
+      if (grid_counter > 1) {
+        grid = d3.select(".map.layer.canvas.electrical-grid");
+        ctx_grid = grid.node().getContext("2d");
+        ctx_grid.LineCap = "round";
+      }
+      console.log(`grid counter is odd, value of ${grid_counter}`);
+      layer_grid();
+      load(5000);
     }
   });
 
