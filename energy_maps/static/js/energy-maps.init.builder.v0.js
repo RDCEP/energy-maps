@@ -116,6 +116,31 @@
     "nuclear-plant",
     "geothermal-plant",
   ]
+  let oil_pipeline_val = 170_000_000_000
+  let coalmine_val = 57_000_000_000
+  let gas_well_val = 1_713_000_000_000
+  let oil_well_val = 1_713_000_000_000
+  let gas_pipeline_val = 940_000_000_000
+  let oil_refinery_val = 373_000_000_000
+  let railroad_val = 137_000_000_000
+  let nff_val = 1_156_000_000_000
+  let ff_val = 1_645_000_000_000
+  let electrical_grid_val = 2946_000_000_000 
+
+  let asset_values = [
+    gas_well_val, // gas well
+    oil_well_val, // oil well
+    gas_pipeline_val , // gas pipeline
+    oil_pipeline_val, // oil pipeline
+    4, // oil prod pipeline
+    0, // gas processing
+    oil_refinery_val, // oil refinery
+    railroad_val, // railroad
+    coalmine_val, // coal mine
+    nff_val, // non fossil fuel plant
+    ff_val , // fossil fuel plant
+    electrical_grid_val // electrical grid
+  ]
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
   let canvases = {};
@@ -143,7 +168,8 @@
       .text(`${layers[i]}`)
       .append("input")
       .attr("type", "checkbox")
-      .attr("class", `checkbox ${layers[i]}`);
+      .attr("class", `checkbox ${layers[i]}`)
+      .attr("data-assetvalue", asset_values[i]);
   }
 
   console.log(
@@ -558,7 +584,7 @@
         .append("canvas")
         .attr("class", "map layer canvas coal-mine")
         .attr("width", width + SCALE * 400)
-        .attr("height", height);
+        .attr("height", height); 
     } else {
         if (coal_counter > 1) {
           coalmines = d3.select(".map.layer.canvas.coal-mine");
@@ -567,6 +593,7 @@
         }
         console.log(`coal counter is odd, value of ${coal_counter}`);
         layer_coalmines();
+        console.log(coalmine_val)
     }
   });
 
