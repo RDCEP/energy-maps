@@ -12,12 +12,8 @@
   /** @description Sets the fill for the base map */
   const fmapfill = "../static/json/gz_2010_us_040_00_20m.json";
 
-  // The `layers` object will hold all information about counters,
-  // canvases, contexts, data files, etc.
   const layers = {
-    // TODO: Oil and gas wells are contained in multiple files. Would need
-    // to rework the promises if we need to loop through an array of
-    // files rather than loading a single file.
+    // TODO: Oil and gas wells are contained in multiple files.
     railroads: {
       func: draw_railroads,
       file: d3.json('../static/json/railrdl020.geojson')
@@ -114,18 +110,14 @@
 
   };
 
-  // Loop through each property in the `layers` object
   for (let layer in layers) {
     if (layers.hasOwnProperty(layer)) {
-      // If the layer has an inactive property, no matter its value, ignore it
       if (layer.hasOwnProperty('inactive')) {
         if (layer.inactive) {
           continue;
         }
       }
-      // Set counter to 0
       layers[layer].counter = 0;
-      // Create canvas
       layers[layer].canvas = d3
         .select(".map.wrapper")
         .append("div")
@@ -134,11 +126,8 @@
         .attr("class", `map layer canvas ${layers[i]}`)
         .attr("width", width + SCALE * 400)
         .attr("height", height);
-      // Create context
       layers[layer].context = layers[layer].canvas.node().getContext('2d');
-      // Set lineCap
       layers[layer].context.lineCap = 'round';
-      // Create checkbox
       d3
         .select('.options')
         .append('label')
@@ -147,7 +136,7 @@
         .attr('type', 'checkbox')
         .attr('class', `checkbox ${layer}`)
         .attr('data-layer', `${layer}`)
-      ;
+    ;
     }
   }
 
@@ -243,13 +232,12 @@
         // If the checkbox is in the on state, 
         // call the relevant layer function and show the loading spinner.
         console.log(`${layer} counter is odd, value of ${layers[layer].counter}`);
-
+        // This call was wrong in the past commits
         Promise.all([
           layers[layer].file
         ]).then(function(files) {
           layers[layer].func(layers[layer].context, files);
         });
-
         load(2000);
     }
   });
