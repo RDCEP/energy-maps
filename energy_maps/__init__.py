@@ -20,6 +20,11 @@ assets.register('js_d3',
                        'js/vendors/d3-queue/d3-queue.min.js',
                        filters='jsmin',
                        output='gen/js_d3.js'))
+assets.register('js_numeral',
+                Bundle('js/vendors/numeral-js/min/numeral.min.js',
+'                       js/vendors/numeral-js/min/locales.min.js',
+                       filters='jsmin',
+                       output='gen/js_numeral.js'))
 assets.register('js_builder',
                 Bundle('js/energy-maps.globals.v0.js',
                        'js/energy-maps.funcs.v0.js',

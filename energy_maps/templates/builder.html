@@ -1,49 +1,82 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block header %}
 
-{% block main %}
+<div class="title container" style="width: 1200px; height: 50px;">
+    <img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;">
+    
+</div>
+<!-- <h1>
+  US energy infrastructure.<br />
+  Center for robust decision-making in climate and energy policy.<br />
+  University of Chicago.
+</!-->
 
-  <div class="map wrapper">
-    <div class="main map builder">
-      <div id="spinner" style="display: none;">
-        <img id="spinner" src="../static/images/spinner.gif" alt="loading"/>
-      </div>
+<!-- Map Builder UI -->
+<div> 
+<h1>US energy infrastructure. Chen, Weisbach, Matteson, Brizius, Moyer, 2019</h1>
+<h1>Center for robust decision-making in climate and energy policy. University of Chicago.</h1>
+<p>Create a custom map:</p>
+<div id="asset-totals"><p>Asset Totals:</p></div>
+
+<div class="options">
+  <!-- Checkboxes render here -->
+</div>
+<span>
+  <!-- <span id="">Asset Totals:</span> -->
+  <a id="download" download="custom-map.png">
+    <button type="button" onClick="download()">Download</button>
+  </a>
+</span>
+</div>
+<!--/ Map Builder UI -->
+
+{% endblock %} {% block main %}
+
+<div class="map wrapper">
+  <div class="main map builder">
+    <div id="spinner" style="display: none;">
+      <img id="spinner" src="../static/images/spinner.gif" alt="loading" />
     </div>
-    <div class="map composite"></div>
-    
-    <!-- Layer divs render here -->
-    
-    <!-- Map Builder UI -->
-    <div class="options">
-      <span><strong>Create a custom map:</strong></span>
-    </div>
-    <!--/ Map Builder UI -->
-    
-    <a id=download download=custom-map.png>
-      <button type=button onClick=download()>Download</button>
-    </a>
   </div>
-  
-{% endblock %}
+  <div class="map composite"></div>
 
-{% block bodyjs %}
+  <!-- Layer divs render here -->
+</div>
 
-  <script>
-    let SCALE = {{ scale }};
-  </script>
+{% endblock %} {% block bodyjs %}
 
-  {% assets 'js_d3' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-  <script src="https://unpkg.com/topojson-client@3"></script>
-  {% assets 'js_bigfucker' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+<script>
+  let SCALE = {{ scale }};
+</script>
 
-  <script>
+{% assets 'js_d3' %}
 
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+{% assets 'js_numeral' %}
+
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+<script src="https://unpkg.com/topojson-client@3"></script>
+
+{% assets 'js_bigfucker' %}
+
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+<script>
   function download() {
-    let download = document.getElementById('download');
-    let image = document.getElementById('mapcanvas')
-      .toDataURL('image/png')
-      .replace('image/png', 'image/octet-stream');
-    download.setAttribute('href', image);
+    let download = document.getElementById("download");
+    let image = document
+      .getElementById("mapcanvas")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
   }
-  </script>
+</script>
 
 {% endblock %}
