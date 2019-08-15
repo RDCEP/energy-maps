@@ -1,17 +1,21 @@
 * {
   font-size: 1em;
-  font-family: Arial, sans-serif; }
+  font-family: Arial, sans-serif;
+}
 
-p, h1, h2, h3, h4, h5, h6 {
-  font-size: 1em; }
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1em;
+}
 
 .wrapper {
   position: relative;
 }
-
-/* .main.map.builder {
-
-} */
 
 .map.layer {
   position: absolute;
@@ -19,7 +23,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .canvas.gas-well {
-  position: absolute;
+  position: relative;
   top: 0;
   /* background-color: #cccccc;
   opacity: 0.1; */
@@ -32,33 +36,45 @@ p, h1, h2, h3, h4, h5, h6 {
   opacity: 0.3; */
 }
 
+/* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up 
+on the index page */
 .wrap {
   width: 80%;
-  margin: 0 auto; }
-  .wrap img {
-    width: 100%;
-    display: block; }
+  margin: 0 auto;
+}
+.wrap img {
+  width: 100%;
+  display: block;
+}
 
 .layer {
-  fill: none; }
+  fill: none;
+}
 
 .boundary.ocean {
-  fill: white; }
+  fill: white;
+}
 .boundary.land {
-  fill: #eeeeee; }
+  fill: #eeeeee;
+}
 
 .feature.pipe {
   stroke-width: 0.5;
-  fill: none; }
-  .feature.pipe.oil {
-    stroke: #222222; }
-  .feature.pipe.gas {
-    stroke: cornflowerblue; }
+  fill: none;
+}
+.feature.pipe.oil {
+  stroke: #222222;
+}
+.feature.pipe.gas {
+  stroke: cornflowerblue;
+}
 .feature.dot {
   stroke: none;
-  fill: #000000; }
-  .feature.dot.plant {
-    fill: #cccccc; }
+  fill: #000000;
+}
+.feature.dot.plant {
+  fill: #cccccc;
+}
 
 #spinner {
   position: absolute;
@@ -71,32 +87,40 @@ p, h1, h2, h3, h4, h5, h6 {
 
 /*# sourceMappingURL=main.v0.css.map */
 
-
 /* Stuff from sankey site */
 
 .title.container {
   border-top: 2px solid #b2b2b2;
   border-bottom: 1px solid #b2b2b2;
-  position: relative; }
-  .title.container img {
-    height: 40px;
-    position: relative;
-    top: 5px; }
-  .title.container svg {
-    position: absolute; }
-  .title.container .title {
+  position: relative;
+}
+.title.container img {
+  height: 40px;
+  position: relative;
+  top: 5px;
+}
+.title section {
+  /* height: 40px; */
+  position: relative;
+  /* left: 20%; */
+  left: 15em;
+  bottom: 60%;
+}
+/* .title.container svg {
+    position: absolute; } */
+/* .title.container .title {
     font-size: 1em;
-    fill: black; }
-    .title.container .title .unit {
+    fill: black; } */
+/* .title.container .title .unit {
       font-size: 0.7em;
-      font-weight: bold; }
-    .title.container .title .year {
+      font-weight: bold; } */
+/* .title.container .title .year {
       font-size: 2.1em;
       font-weight: bold;
       clear: left;
       letter-spacing: 0.05em;
-      font-variant-numeric: tabular-nums; }
-  .title.container .citation, .title.container .affiliation {
+      font-variant-numeric: tabular-nums; } */
+/* .title.container .citation, .title.container .affiliation {
     font-family: Fieldwork-HumThin, Futura, sans-serif;
     font-size: 0.9em;
-    fill: #b2b2b2; }
+    fill: #b2b2b2; } */
