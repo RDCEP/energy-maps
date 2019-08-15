@@ -188,6 +188,7 @@
   for (let i = 0; i < layers.length; i++) {
     canvases[layers[i]] = d3
       .select(".map.wrapper")
+      // .select(".main.map.builder")
       .append("div")
       .attr("class", `map layer ${layers[i]}`)
       .append("canvas")

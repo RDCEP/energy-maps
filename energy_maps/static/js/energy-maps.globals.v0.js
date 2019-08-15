@@ -1,11 +1,17 @@
 const fill_screen = false;
 
-let width = 2000 * SCALE;
+// vvv Original width and scale definitions vvv
+// let width = 2000 * SCALE;
 
-if (!SCALE) {
-  width = screen.width;
-  SCALE = width / 2000;
-}
+// if (!SCALE) {
+//   width = screen.width;
+//   SCALE = width / 2000;
+// }
+// ^^^ end original width and scale definitions ^^^
+
+// alter the width variable below to change the scale of the map if you need to make UI adjustments
+SCALE = 1;
+let width = 850 * SCALE;
 
 const height = width / 2;
 const padding = {top: 10, right: 10, bottom: 50, left: 50};

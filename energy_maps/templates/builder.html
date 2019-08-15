@@ -2,30 +2,14 @@
 
 <div class="title container" style="width: 1200px; height: 50px;">
     <img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;">
-    
+    <section class="headline"><i>A Physical Inventory of the U.S. Energy System,</i> Chen, Weisbach, Matteson, Brizius, Moyer, 2019</section>
+    <section class="headline">University of Chicago. Center for Robust Decision-making on Climate and Energy Policy.</section>
 </div>
-<!-- <h1>
-  US energy infrastructure.<br />
-  Center for robust decision-making in climate and energy policy.<br />
-  University of Chicago.
-</!-->
 
 <!-- Map Builder UI -->
 <div> 
-<h1>US energy infrastructure. Chen, Weisbach, Matteson, Brizius, Moyer, 2019</h1>
-<h1>Center for robust decision-making in climate and energy policy. University of Chicago.</h1>
-<p>Create a custom map:</p>
-<div id="asset-totals"><p>Asset Totals:</p></div>
-
-<div class="options">
-  <!-- Checkboxes render here -->
-</div>
-<span>
-  <!-- <span id="">Asset Totals:</span> -->
-  <a id="download" download="custom-map.png">
-    <button type="button" onClick="download()">Download</button>
-  </a>
-</span>
+  <div id="asset-totals"><p>Asset Totals:</p></div>
+  
 </div>
 <!--/ Map Builder UI -->
 
@@ -38,8 +22,20 @@
     </div>
   </div>
   <div class="map composite"></div>
-
+  <p>Create a custom map:</p>
+  <div class="options">
+    <!-- Checkboxes render here -->
+  </div>
+  <span>
+    <!-- <span id="">Asset Totals:</span> -->
+    <a id="download" download="custom-map.png">
+      <button type="button" onClick="download()">Download</button>
+    </a>
+  </span>
   <!-- Layer divs render here -->
+  <footer>
+    <img class="master-legend" src="../static/images/master-legend.png"/>
+  </footer>
 </div>
 
 {% endblock %} {% block bodyjs %}
