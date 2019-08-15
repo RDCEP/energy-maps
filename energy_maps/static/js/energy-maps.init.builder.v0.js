@@ -159,7 +159,7 @@
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}`;
+    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}</p>`;
   }
   /** Remove asset value of deactivated layers
    * TODO: Format precision based on value.
@@ -176,7 +176,7 @@
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}`;
+    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}</p>`;
   }
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
