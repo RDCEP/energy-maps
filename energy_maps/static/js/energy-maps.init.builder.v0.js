@@ -144,18 +144,28 @@
     ff_val, // fossil fuel plant
     electrical_grid_val // electrical grid
   ];
-
+  /** @description an array containing the asset value of all active layers */
   let asset_total = [0];
+  /** @description the total sum of asset values for all active layers */
   let asset_total_sum;
 
+  /** Add total asset value of all active layers
+   * TODO: Format precision based on value.
+   * Some are displaying an ugly format like "45.000 T." 
+   * Three trailing zeroes is not cute
+    */
   function increment_asset_total(value) {
     asset_total.push(value);
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+    ).innerHTML = `Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}`;
   }
-
+  /** Remove asset value of deactivated layers
+   * TODO: Format precision based on value.
+   * Some are displaying an ugly format like "45.000 T." 
+   * Three trailing zeroes is not cute
+   */
   function decrement_asset_total(value) {
     for (let i in asset_total) {
       if (asset_total[i] == value) {
@@ -166,7 +176,7 @@
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `Asset totals: ${asset_total_sum}`;
+    ).innerHTML = `Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}`;
   }
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
