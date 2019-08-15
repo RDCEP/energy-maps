@@ -36,6 +36,11 @@ h6 {
   opacity: 0.3; */
 }
 
+.master-legend {
+  /* max-width: 50%;
+  max-height: auto; */
+}
+
 /* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up 
 on the index page */
 .wrap {
@@ -106,21 +111,3 @@ on the index page */
   left: 15em;
   bottom: 60%;
 }
-/* .title.container svg {
-    position: absolute; } */
-/* .title.container .title {
-    font-size: 1em;
-    fill: black; } */
-/* .title.container .title .unit {
-      font-size: 0.7em;
-      font-weight: bold; } */
-/* .title.container .title .year {
-      font-size: 2.1em;
-      font-weight: bold;
-      clear: left;
-      letter-spacing: 0.05em;
-      font-variant-numeric: tabular-nums; } */
-/* .title.container .citation, .title.container .affiliation {
-    font-family: Fieldwork-HumThin, Futura, sans-serif;
-    font-size: 0.9em;
-    fill: #b2b2b2; } */

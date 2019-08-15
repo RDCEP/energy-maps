@@ -9,16 +9,7 @@
 <!-- Map Builder UI -->
 <div> 
   <div id="asset-totals"><p>Asset Totals:</p></div>
-  <p>Create a custom map:</p>
-  <div class="options">
-    <!-- Checkboxes render here -->
-  </div>
-  <span>
-    <!-- <span id="">Asset Totals:</span> -->
-    <a id="download" download="custom-map.png">
-      <button type="button" onClick="download()">Download</button>
-    </a>
-  </span>
+  
 </div>
 <!--/ Map Builder UI -->
 
@@ -31,10 +22,19 @@
     </div>
   </div>
   <div class="map composite"></div>
-
+  <p>Create a custom map:</p>
+  <div class="options">
+    <!-- Checkboxes render here -->
+  </div>
+  <span>
+    <!-- <span id="">Asset Totals:</span> -->
+    <a id="download" download="custom-map.png">
+      <button type="button" onClick="download()">Download</button>
+    </a>
+  </span>
   <!-- Layer divs render here -->
   <footer>
-    <img src="../static/images/master-legend.png"/>
+    <img class="master-legend" src="../static/images/master-legend.png"/>
   </footer>
 </div>
 
