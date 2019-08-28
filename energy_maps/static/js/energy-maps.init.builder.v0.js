@@ -1,6 +1,9 @@
 (function() {
   "use strict";
 
+  // Write all data files to local storage
+  
+
   // ######## Path Variables ######## //
 
   // Path Group: Base map
