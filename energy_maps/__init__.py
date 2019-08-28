@@ -22,7 +22,6 @@ assets.register('js_d3',
                        output='gen/js_d3.js'))
 assets.register('js_numeral',
                 Bundle('js/vendors/numeral-js/min/numeral.min.js',
-'                       js/vendors/numeral-js/min/locales.min.js',
                        filters='jsmin',
                        output='gen/js_numeral.js'))
 assets.register('js_builder',
