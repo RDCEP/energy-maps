@@ -584,15 +584,6 @@
   /**
    * Create the oil refinery layer.
    */
-
-  function layer_oil_refinery() {
-    Promise.all([
-      d3.json(petroleum_refineries)
-    ]).then(function(files) {
-      draw_refining(ctx_oil_refinery, files);
-    });
-  }
-
   const oil_refinery_check = d3.select(".checkbox.oil-refinery");
   let oil_refinery_counter = 0;
   oil_refinery_check.on("change", function() {
@@ -617,7 +608,6 @@
       console.log(
         `oil refinery counter is odd, value of ${oil_refinery_counter}`
       );
-      // layer_oil_refinery();
       draw_json_layer(petroleum_refineries, draw_refining, ctx_oil_refinery);
       console.log(oil_refinery_val);
       increment_asset_total(oil_refinery_val);
@@ -666,13 +656,6 @@
    * Create the railroad map layer.
    * TODO: Ensure that the railroads always appear below the mines
    */
-  function layer_rrmap() {
-    Promise.all([d3.json(rrmap)]).then(function(files) {
-      draw_railroads(ctx_railroad, files);
-    });
-    console.log("Layer rrmap");
-  }
-
   const rrmap_check = d3.select(".checkbox.railroad");
   let rrmap_counter = 0;
   rrmap_check.on("change", function() {
@@ -693,7 +676,7 @@
         ctx_railroad.LineCap = "round";
       }
       console.log(`railroad counter is odd, value of ${rrmap_counter}`);
-      layer_rrmap();
+      draw_json_layer(rrmap, draw_railroads, ctx_railroad);
       load(2000);
       console.log(railroad_val);
       increment_asset_total(railroad_val);
