@@ -47,8 +47,8 @@
   /** @description Sets the path for the crude oil pipelines */
   const crude_oil_pipelines =
     "/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson";
-  /** @description Sets the path for the petroleum product pipelines */
-  const petroleum_product_pipelines =
+  /** @description Sets the path for the oil product pipelines */
+  const oil_product_pipelines =
     "/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson";
   /** @description Sets the path for the inter-intrastate natural gas pipelines */
   const natural_gas_pipelines =
@@ -56,6 +56,9 @@
   /** @description Sets the path for the petroleum refineries */
   const petroleum_refineries =
     "/static/json/Petroleum_Refineries_US_2015.geojson";
+  /** @description Sets the path for the gas processing facilities */
+  const gas_processing_path = 
+  "/static/csv/nproc.csv";
 
   // Path Group: Coal
 
@@ -405,7 +408,7 @@
    */
   function layer_gas_pipeline() {
     Promise.all([
-      d3.json("/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson")
+      d3.json(natural_gas_pipelines)
     ]).then(function(files) {
       draw_pipes(ctx_gas_pipeline, files);
     });
@@ -447,7 +450,7 @@
    */
   function layer_oil_pipeline() {
     Promise.all([
-      d3.json("/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson")
+      d3.json(crude_oil_pipelines)
     ]).then(function(files) {
       draw_pipes(ctx_oil_pipeline, files);
     });
@@ -488,9 +491,7 @@
    */
   function layer_oil_prod_pipeline() {
     Promise.all([
-      d3.json(
-        "/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson"
-      )
+      d3.json(oil_product_pipelines)
     ]).then(function(files) {
       draw_pipes(ctx_oil_prod_pipeline, files);
     });
@@ -531,7 +532,7 @@
    */
 
   function layer_processing() {
-    Promise.all([d3.csv("/static/csv/nproc.csv")]).then(function(files) {
+    Promise.all([d3.csv(gas_processing_path)]).then(function(files) {
       draw_processing(ctx_gas_processing, files);
     });
   }
@@ -607,7 +608,7 @@
 
   function layer_oil_refinery() {
     Promise.all([
-      d3.json("/static/json/Petroleum_Refineries_US_2015.geojson")
+      d3.json(petroleum_refineries)
     ]).then(function(files) {
       draw_refining(ctx_oil_refinery, files);
     });
@@ -724,7 +725,7 @@
    */
   function layer_nff() {
     Promise.all([
-      d3.json("/static/json/PowerPlants_US_2014Aug_R.geojson")
+      d3.json(power_plants)
     ]).then(function(files) {
       draw_nff_plants(ctx_nffplant, files);
     });
@@ -762,7 +763,7 @@
    */
   function layer_ff() {
     Promise.all([
-      d3.json("/static/json/PowerPlants_US_2014Aug_R.geojson")
+      d3.json(power_plants)
     ]).then(function(files) {
       draw_ff_plants(ctx_ffplant, files);
     });
