@@ -402,7 +402,7 @@
     }
   });
 
-  /** Create the oil pipeline layer
+  /** Create the oil pipeline and oil product pipeline layers
    * TODO: Consolidate with product pipeline
    */
   const oil_pipeline_check = d3.select(".checkbox.oil-pipeline");
@@ -430,44 +430,45 @@
         `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
       );
       draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
+      draw_json_layer(oil_product_pipelines, draw_pipes, ctx_oil_pipeline);
       console.log(oil_pipeline_val);
       increment_asset_total(oil_pipeline_val);
     }
   });
 
+  // Held in case we disaggregate the oil pipeline from the oil product pipeline
   /**
    * Create the oil product pipeline layer.
-   * TODO: Consolidate with product pipeline
    */
-  const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
-  let oil_prod_pipeline_counter = 0;
-  oil_prod_pipeline_check.on("change", function() {
-    oil_prod_pipeline_counter++;
-    if (oil_prod_pipeline_counter % 2 == 0) {
-      oil_prod_pipeline.remove();
-      console.log(
-        `oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`
-      );
-      d3.select(".map.layer.oil-product-pipeline")
-        .append("canvas")
-        .attr("class", "map layer canvas oil-prod-pipeline")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-      decrement_asset_total(oil_prod_pipeline_val);
-    } else {
-      if (oil_prod_pipeline_counter > 1) {
-        oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
-        ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
-        ctx_oil_prod_pipeline.LineCap = "round";
-      }
-      console.log(
-        `oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`
-      );
-      draw_json_layer(oil_product_pipelines, draw_pipes, ctx_oil_prod_pipeline);
-      console.log(oil_prod_pipeline_val);
-      increment_asset_total(oil_prod_pipeline_val);
-    }
-  });
+  // const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
+  // let oil_prod_pipeline_counter = 0;
+  // oil_prod_pipeline_check.on("change", function() {
+  //   oil_prod_pipeline_counter++;
+  //   if (oil_prod_pipeline_counter % 2 == 0) {
+  //     oil_prod_pipeline.remove();
+  //     console.log(
+  //       `oil-prod-pipeline counter is even, value of ${oil_prod_pipeline_counter}`
+  //     );
+  //     d3.select(".map.layer.oil-product-pipeline")
+  //       .append("canvas")
+  //       .attr("class", "map layer canvas oil-prod-pipeline")
+  //       .attr("width", width + SCALE * 400)
+  //       .attr("height", height);
+  //     decrement_asset_total(oil_prod_pipeline_val);
+  //   } else {
+  //     if (oil_prod_pipeline_counter > 1) {
+  //       oil_prod_pipeline = d3.select(".map.layer.canvas.oil-prod-pipeline");
+  //       ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
+  //       ctx_oil_prod_pipeline.LineCap = "round";
+  //     }
+  //     console.log(
+  //       `oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`
+  //     );
+  //     draw_json_layer(oil_product_pipelines, draw_pipes, ctx_oil_prod_pipeline);
+  //     console.log(oil_prod_pipeline_val);
+  //     increment_asset_total(oil_prod_pipeline_val);
+  //   }
+  // });
 
   /**
    * Create the gas processing layer.
