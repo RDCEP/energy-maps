@@ -159,19 +159,22 @@
    * TODO: Format precision based on value.
    * Some are displaying an ugly format like "45.000 T." 
    * Three trailing zeroes is not cute
-    */
-  function increment_asset_total(value) {
-    asset_total.push(value);
+   */
+  function calc_asset_total_sum() {
+    // use Array.reduce() as an accumulator to add up all values in the array
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}</p>`;
+    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()} of 10.5 T shown.</p>`;
   }
-  /** Remove asset value of deactivated layers
-   * TODO: Format precision based on value.
-   * Some are displaying an ugly format like "45.000 T." 
-   * Three trailing zeroes is not cute
-   */
+
+  /** Add the passed value to the asset total array and compute the new value */
+  function increment_asset_total(value) {
+    asset_total.push(value);
+    calc_asset_total_sum();
+  }
+
+  /** Remove the passed value from the asset total array and compute the new value */
   function decrement_asset_total(value) {
     for (let i in asset_total) {
       if (asset_total[i] == value) {
@@ -179,10 +182,7 @@
         break
       }
     }
-    asset_total_sum = asset_total.reduce((total, amount) => total + amount);
-    document.getElementById(
-      "asset-totals"
-    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()}</p>`;
+    calc_asset_total_sum();
   }
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
