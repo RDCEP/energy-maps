@@ -449,14 +449,26 @@
 
   /**
    * Create the oil pipeline layer.
+   * TODO: Consolidate with product pipeline
    */
-  function layer_oil_pipeline() {
+  // function layer_oil_pipeline() {
+  //   Promise.all([
+  //     d3.json(crude_oil_pipelines)
+  //   ]).then(function(files) {
+  //     draw_pipes(ctx_oil_pipeline, files);
+  //   });
+  // }
+
+  function draw_json_layer(path, draw_function, context) {
     Promise.all([
-      d3.json(crude_oil_pipelines)
+      d3.json(path)
     ]).then(function(files) {
-      draw_pipes(ctx_oil_pipeline, files);
-    });
+      draw_function(context, files)
+    })
   }
+
+  // draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
+  
 
   const oil_pipeline_check = d3.select(".checkbox.oil-pipeline");
   let oil_pipeline_counter = 0;
@@ -482,7 +494,8 @@
       console.log(
         `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
       );
-      layer_oil_pipeline();
+      // layer_oil_pipeline();
+      draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
       console.log(oil_pipeline_val);
       increment_asset_total(oil_pipeline_val);
     }
@@ -490,6 +503,7 @@
 
   /**
    * Create the oil product pipeline layer.
+   * TODO: Consolidate with product pipeline
    */
   function layer_oil_prod_pipeline() {
     Promise.all([
