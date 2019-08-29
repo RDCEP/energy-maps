@@ -686,14 +686,6 @@
   /**
    * Create the non-fossil-fuel plant layer.
    */
-  function layer_nff() {
-    Promise.all([
-      d3.json(power_plants)
-    ]).then(function(files) {
-      draw_nff_plants(ctx_nffplant, files);
-    });
-  }
-
   const nff_check = d3.select(".checkbox.non-fossil-fuel-plant");
   let nff_counter = 0;
   nff_check.on("change", function() {
@@ -714,7 +706,7 @@
         ctx_nffplant.LineCap = "round";
       }
       console.log(`nff counter is odd, value of ${nff_counter}`);
-      layer_nff();
+      draw_json_layer(power_plants, draw_nff_plants, ctx_nffplant);
       load(300);
       console.log(nff_val);
       increment_asset_total(nff_val);
