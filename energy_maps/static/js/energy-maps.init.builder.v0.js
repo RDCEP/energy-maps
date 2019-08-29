@@ -100,7 +100,6 @@
     "oil-well",
     "gas-pipeline",
     "oil-pipeline",
-    "oil-product-pipeline",
     "gas-processing",
     "oil-refinery",
     "railroad",
@@ -111,6 +110,7 @@
   ];
 
   let unimplemented_layers = [
+    "oil-product-pipeline",
     "off-shore-well",
     "gas-storage",
     "natural-gas-plant",
@@ -238,10 +238,11 @@
   let ctx_oil_pipeline = oil_pipeline.node().getContext("2d");
   ctx_oil_pipeline.LineCap = "round";
 
+  // Held in case we separate the oil pipelines and oil product pipelines again.
   /** @description A canvas element for the oil product pipelines, attached to div "map layer canvas oil-pipeline" */
-  let oil_prod_pipeline = d3.select(".map.layer.canvas.oil-product-pipeline");
-  let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
-  ctx_oil_prod_pipeline.LineCap = "round";
+  // let oil_prod_pipeline = d3.select(".map.layer.canvas.oil-product-pipeline");
+  // let ctx_oil_prod_pipeline = oil_prod_pipeline.node().getContext("2d");
+  // ctx_oil_prod_pipeline.LineCap = "round";
 
   /** @description A canvas element for the gas processing, attached to div "map layer canvas gas-processing" */
   let gas_processing = d3.select(".map.layer.canvas.gas-processing");
