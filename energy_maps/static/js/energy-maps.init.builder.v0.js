@@ -155,7 +155,8 @@
   /** @description the total sum of asset values for all active layers */
   let asset_total_sum;
 
-  /** Add total asset value of all active layers
+  /** Add total asset value of all active layers.
+   * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
    * TODO: Format precision based on value.
    * Some are displaying an ugly format like "45.000 T." 
    * Three trailing zeroes is not cute
@@ -165,7 +166,8 @@
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `<p>Asset totals: ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()} of 10.5 T shown.</p>`;
+    // ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()} of $10.5 T shown.</p>`;
+    ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.00a').toUpperCase()} of $10.5T shown.</p>`;
   }
 
   /** Add the passed value to the asset total array and compute the new value */
