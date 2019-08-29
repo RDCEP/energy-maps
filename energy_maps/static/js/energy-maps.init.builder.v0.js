@@ -150,42 +150,6 @@
     ff_val, // fossil fuel plant
     electrical_grid_val // electrical grid
   ];
-  // /** @description an array containing the asset value of all active layers */
-  // let asset_total = [0];
-  // /** @description the total sum of asset values for all active layers */
-  // let asset_total_sum;
-
-  // /** Add total asset value of all active layers.
-  //  * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
-  //  * TODO: Format precision based on value.
-  //  * Some are displaying an ugly format like "45.000 T." 
-  //  * Three trailing zeroes is not cute
-  //  */
-  // function calc_asset_total_sum() {
-  //   // use Array.reduce() as an accumulator to add up all values in the array
-  //   asset_total_sum = asset_total.reduce((total, amount) => total + amount);
-  //   document.getElementById(
-  //     "asset-totals"
-  //   // ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()} of $10.5 T shown.</p>`;
-  //   ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.00a').toUpperCase()} of $10.5T shown.</p>`;
-  // }
-
-  // /** Add the passed value to the asset total array and compute the new value */
-  // function increment_asset_total(value) {
-  //   asset_total.push(value);
-  //   calc_asset_total_sum();
-  // }
-
-  // /** Remove the passed value from the asset total array and compute the new value */
-  // function decrement_asset_total(value) {
-  //   for (let i in asset_total) {
-  //     if (asset_total[i] == value) {
-  //       asset_total.splice(i, 1)
-  //       break
-  //     }
-  //   }
-  //   calc_asset_total_sum();
-  // }
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
   let canvases = {};
@@ -322,7 +286,6 @@
 
   /**
    * Create the gas well layer.
-   * TODO: solve foreach console error in draw_gas_wells() under funcs.wells..js
    */
   function layer_gas_well() {
     Promise.all([d3.csv(wells_gas1)])
@@ -509,13 +472,6 @@
   /**
    * Create the gas processing layer.
    */
-
-  function layer_processing() {
-    Promise.all([d3.csv(gas_processing_path)]).then(function(files) {
-      draw_processing(ctx_gas_processing, files);
-    });
-  }
-
   const gas_processing_check = d3.select(".checkbox.gas-processing");
   let gas_processing_counter = 0;
   gas_processing_check.on("change", function() {
@@ -540,7 +496,7 @@
       console.log(
         `gas processing counter is odd, value of ${gas_processing_counter}`
       );
-      layer_processing();
+      draw_csv_layer(gas_processing_path, draw_processing, ctx_gas_processing);
       console.log(gas_processing_val);
       increment_asset_total(gas_processing_val);
     }

@@ -9,6 +9,15 @@ function draw_json_layer(path, draw_function, context) {
     console.log(`draw json layer`);
   }  
 
+function draw_csv_layer(path, draw_function, context) {
+    Promise.all([
+        d3.csv(path)
+    ]).then(function(files) {
+        draw_function(context, files)
+    });
+    console.log(`draw csv layer`);
+}
+
 /** @description an array that contains the asset value of all active layers */
 let asset_total = [0];
 /** @description the total sum of asset values for all active layers */
