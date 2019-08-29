@@ -617,7 +617,8 @@
       console.log(
         `oil refinery counter is odd, value of ${oil_refinery_counter}`
       );
-      layer_oil_refinery();
+      // layer_oil_refinery();
+      draw_json_layer(petroleum_refineries, draw_refining, ctx_oil_refinery);
       console.log(oil_refinery_val);
       increment_asset_total(oil_refinery_val);
     }
