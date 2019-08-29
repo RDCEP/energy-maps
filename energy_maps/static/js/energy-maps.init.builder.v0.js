@@ -716,14 +716,6 @@
   /**
    * Create the fossil-fuel plant layer.
    */
-  function layer_ff() {
-    Promise.all([
-      d3.json(power_plants)
-    ]).then(function(files) {
-      draw_ff_plants(ctx_ffplant, files);
-    });
-  }
-
   const ff_check = d3.select(".checkbox.fossil-fuel-plant");
   let ff_counter = 0;
   ff_check.on("change", function() {
@@ -744,7 +736,7 @@
         ctx_ffplant.LineCap = "round";
       }
       console.log(`ff counter is odd, value of ${ff_counter}`);
-      layer_ff();
+      draw_json_layer(power_plants, draw_ff_plants, ctx_ffplant);
       load(300);
       console.log(ff_val);
       increment_asset_total(ff_val);
@@ -754,12 +746,6 @@
   /**
    * Create the electrical grid layer.
    */
-  function layer_grid() {
-    Promise.all([d3.json(gridmap)]).then(function(files) {
-      draw_grid(ctx_grid, files);
-    });
-  }
-
   const grid_check = d3.select(".checkbox.electrical-grid");
   let grid_counter = 0;
   grid_check.on("change", function() {
@@ -780,7 +766,7 @@
         ctx_grid.LineCap = "round";
       }
       console.log(`grid counter is odd, value of ${grid_counter}`);
-      layer_grid();
+      draw_json_layer(gridmap, draw_grid, ctx_grid);
       load(5000);
       console.log(electrical_grid_val);
       increment_asset_total(electrical_grid_val);
