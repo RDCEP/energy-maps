@@ -6,4 +6,5 @@ function draw_json_layer(path, draw_function, context) {
     ]).then(function(files) {
       draw_function(context, files)
     })
+    console.log(`draw json layer`);
   }  

@@ -408,7 +408,6 @@
   /**
    * Create the gas pipeline layer.
    */
-
   const gas_pipeline_check = d3.select(".checkbox.gas-pipeline");
   let gas_pipeline_counter = 0;
   gas_pipeline_check.on("change", function() {
