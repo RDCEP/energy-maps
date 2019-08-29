@@ -408,13 +408,6 @@
   /**
    * Create the gas pipeline layer.
    */
-  function layer_gas_pipeline() {
-    Promise.all([
-      d3.json(natural_gas_pipelines)
-    ]).then(function(files) {
-      draw_pipes(ctx_gas_pipeline, files);
-    });
-  }
 
   const gas_pipeline_check = d3.select(".checkbox.gas-pipeline");
   let gas_pipeline_counter = 0;
@@ -440,36 +433,16 @@
       console.log(
         `gas pipeline counter is odd, value of ${gas_pipeline_counter}`
       );
-      layer_gas_pipeline();
+      draw_json_layer(natural_gas_pipelines, draw_pipes, ctx_gas_pipeline)
       load(1000);
       console.log(gas_pipeline_val);
       increment_asset_total(gas_pipeline_val);
     }
   });
 
-  /**
-   * Create the oil pipeline layer.
+  /** Create the oil pipeline layer
    * TODO: Consolidate with product pipeline
    */
-  // function layer_oil_pipeline() {
-  //   Promise.all([
-  //     d3.json(crude_oil_pipelines)
-  //   ]).then(function(files) {
-  //     draw_pipes(ctx_oil_pipeline, files);
-  //   });
-  // }
-
-  function draw_json_layer(path, draw_function, context) {
-    Promise.all([
-      d3.json(path)
-    ]).then(function(files) {
-      draw_function(context, files)
-    })
-  }
-
-  // draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
-  
-
   const oil_pipeline_check = d3.select(".checkbox.oil-pipeline");
   let oil_pipeline_counter = 0;
   oil_pipeline_check.on("change", function() {
@@ -494,7 +467,6 @@
       console.log(
         `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
       );
-      // layer_oil_pipeline();
       draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
       console.log(oil_pipeline_val);
       increment_asset_total(oil_pipeline_val);
