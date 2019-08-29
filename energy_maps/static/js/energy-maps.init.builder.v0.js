@@ -476,14 +476,6 @@
    * Create the oil product pipeline layer.
    * TODO: Consolidate with product pipeline
    */
-  function layer_oil_prod_pipeline() {
-    Promise.all([
-      d3.json(oil_product_pipelines)
-    ]).then(function(files) {
-      draw_pipes(ctx_oil_prod_pipeline, files);
-    });
-  }
-
   const oil_prod_pipeline_check = d3.select(".checkbox.oil-product-pipeline");
   let oil_prod_pipeline_counter = 0;
   oil_prod_pipeline_check.on("change", function() {
@@ -508,7 +500,7 @@
       console.log(
         `oil product pipeline counter is odd, value of ${oil_prod_pipeline_counter}`
       );
-      layer_oil_prod_pipeline();
+      draw_json_layer(oil_product_pipelines, draw_pipes, ctx_oil_prod_pipeline);
       console.log(oil_prod_pipeline_val);
       increment_asset_total(oil_prod_pipeline_val);
     }
