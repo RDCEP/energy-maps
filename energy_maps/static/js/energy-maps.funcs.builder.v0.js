@@ -1,19 +1,19 @@
 /** Draw a layer to the screen. 
  * Pass the data from a JSON file through a drawing function out to a canvas context. */
-function draw_json_layer(path, draw_function, context) {
+function draw_json_layer(path, draw_function, ctx) {
     Promise.all([
       d3.json(path)
     ]).then(function(files) {
-      draw_function(context, files)
+      draw_function(ctx, files)
     })
     console.log(`draw json layer`);
   }  
 
-function draw_csv_layer(path, draw_function, context) {
+function draw_csv_layer(path, draw_function, ctx) {
     Promise.all([
         d3.csv(path)
     ]).then(function(files) {
-        draw_function(context, files)
+        draw_function(ctx, files)
     });
     console.log(`draw csv layer`);
 }
@@ -31,7 +31,6 @@ let asset_total_sum;
     asset_total_sum = asset_total.reduce((total, amount) => total + amount);
     document.getElementById(
       "asset-totals"
-    // ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.000 a').toUpperCase()} of $10.5 T shown.</p>`;
     ).innerHTML = `<p>Asset totals: Approximately ${numeral(asset_total_sum).format('$0.00a').toUpperCase()} of $10.5T shown.</p>`;
   }
 

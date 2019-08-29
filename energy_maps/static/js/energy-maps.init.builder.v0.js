@@ -572,16 +572,7 @@
 
   /**
    * Create the coal mine layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
-  function layer_coalmines() {
-    Promise.all([d3.csv(mines)]).then(function(files) {
-      draw_coal_mines(ctx_coalmines, files);
-    });
-    console.log("layer coal mines");
-  }
-
-  // TODO: Generalize this into a function
   const coal_check = d3.select(".checkbox.coal-mine");
   let coal_counter = 0;
   coal_check.on("change", function() {
@@ -602,7 +593,7 @@
         ctx_coalmines.LineCap = "round";
       }
       console.log(`coal counter is odd, value of ${coal_counter}`);
-      layer_coalmines();
+      draw_csv_layer(mines, draw_coal_mines, ctx_coalmines);
       console.log(coalmine_val);
       increment_asset_total(coalmine_val);
     }
@@ -610,7 +601,6 @@
 
   /**
    * Create the railroad map layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
   const rrmap_check = d3.select(".checkbox.railroad");
   let rrmap_counter = 0;
