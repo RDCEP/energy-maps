@@ -123,7 +123,7 @@
     "geothermal-plant"
   ];
 
-  let gas_well_val = 1_059_000_000; // 1,059 B -- US only
+  let gas_well_val = 1_059_000_000; // 1.06B || 1,059 B -- US only
   let oil_well_val = 654_000_000_000; // 654 B
   let gas_pipeline_val = 940_000_000_000; // 940 B
   let oil_pipeline_val = 170_000_000_000; // 170 B
@@ -132,9 +132,9 @@
   let oil_refinery_val = 373_000_000_000; // 373 B
   let railroad_val = 137_000_000_000; // `137 B *` Needs an asterisk because this is 1/3 of the value of the freight railway shown
   let coalmine_val = 57_000_000_000; // 57 B
-  let nff_val = 1_156_000_000_000; // 1,156 B -- Break this into nuclear, hydro, wind, solar , etc. when we have layers separate
-  let ff_val = 1_645_000_000_000; // 1,645 B Break this into coal, oil, and gas when we have layers separate
-  let electrical_grid_val = 2_946_000_000_000; // 2,946 B
+  let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
+  let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
+  let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
 
   let asset_values = [
     gas_well_val, // gas well
