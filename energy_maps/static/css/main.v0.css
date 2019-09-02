@@ -90,6 +90,11 @@ on the index page */
   z-index: 1000;
 }
 
+#asset-totals {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+}
+
 /*# sourceMappingURL=main.v0.css.map */
 
 /* Stuff from sankey site */
