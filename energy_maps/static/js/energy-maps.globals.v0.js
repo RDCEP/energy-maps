@@ -36,7 +36,9 @@ const viz = {
       dark: 'rgba(0, 0, 0, 1)',
       width: .66 * SCALE
     },
-    scale: .9 * SCALE,
+    scale: .3 * SCALE,
+    // vvv Old Scale vvv
+    // scale: .9 * SCALE,
   },
   wells: {
     gas: 'rgba(0, 191, 255, .5)',
@@ -53,12 +55,16 @@ const viz = {
       stroke: 'rgba(255, 255, 255, 1)',
       width: SCALE
     },
-    scale: SCALE / 90
+    scale: SCALE / 190
+    // vvv Old scale vvv
+    // scale: SCALE / 90
   },
   process: {
     oil_refinery: {
       fill: 'rgba(60, 179, 113, .7)',
-      size: .015 * SCALE
+      size: .008 * SCALE
+      // vvv Old scale vvv
+      // size: .015 * SCALE
     },
     gas_storage: {
       fill: 'rgb(45, 45, 45, .9)',
@@ -66,7 +72,9 @@ const viz = {
     },
     gas_process: {
       fill: 'rgba(0, 0, 139, .5)',
-      size: 4 * SCALE
+      size: 3 * SCALE
+      // vvv Old scale vvv
+      // size: 4 * SCALE
     },
     stroke: {
       light: 'rgba(255, 255, 255, 1)',
