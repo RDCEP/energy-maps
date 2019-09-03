@@ -62,7 +62,7 @@ const viz = {
   process: {
     oil_refinery: {
       fill: 'rgba(60, 179, 113, .7)',
-      size: .008 * SCALE
+      size: .006 * SCALE 
       // vvv Old scale vvv
       // size: .015 * SCALE
     },
@@ -72,7 +72,7 @@ const viz = {
     },
     gas_process: {
       fill: 'rgba(0, 0, 139, .5)',
-      size: 3 * SCALE
+      size: 1.5 * SCALE
       // vvv Old scale vvv
       // size: 4 * SCALE
     },
