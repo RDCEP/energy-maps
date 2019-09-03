@@ -1,7 +1,7 @@
 
 
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
-  console.log('draw_pipes');
+  console.log('draw_gas_pipes');
 
   let pipe_data = queued_data[0];
   const path = get_path(ctx);
@@ -15,27 +15,18 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   ctx.setLineDash([]);
 }
 
-const draw_pipes = function draw_pipes(ctx, queued_data) {
+const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
 
-  let o_pipe = queued_data[0];
-  let op_pipe = queued_data[1];
-  let g_pipe = queued_data[2];
+  let oil_pipe_data = queued_data[0];
+  let oil_prod_pipe_data = queued_data[1];
   const path = get_path(ctx);
-
-  // Gas pipeline
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = viz.transport.gas.stroke;
-  ctx.lineWidth = viz.transport.gas.width;
-  ctx.beginPath();
-  path(g_pipe);
-  ctx.stroke();
 
   // Oil pipeline
   ctx.strokeStyle = viz.transport.oil.stroke;
   ctx.lineWidth = viz.transport.oil.width;
   ctx.beginPath();
-  path(o_pipe);
+  path(oil_pipe_data);
   ctx.stroke();
   ctx.lineWidth = viz.transport.oil_product.width;
   ctx.strokeStyle = viz.transport.oil_product.stroke;
@@ -43,7 +34,7 @@ const draw_pipes = function draw_pipes(ctx, queued_data) {
                    viz.transport.oil_product.dash +
                    2 * viz.transport.oil_product.width]);
   ctx.beginPath();
-  path(op_pipe);
+  path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
 

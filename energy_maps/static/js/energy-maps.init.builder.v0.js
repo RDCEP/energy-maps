@@ -431,8 +431,8 @@
       console.log(
         `oil pipeline counter is odd, value of ${oil_pipeline_counter}`
       );
-      draw_json_layer(crude_oil_pipelines, draw_pipes, ctx_oil_pipeline);
-      draw_json_layer(oil_product_pipelines, draw_pipes, ctx_oil_pipeline);
+      draw_json_layer(crude_oil_pipelines, draw_oil_pipes, ctx_oil_pipeline);
+      draw_json_layer(oil_product_pipelines, draw_oil_pipes, ctx_oil_pipeline);
       console.log(oil_pipeline_val);
       increment_asset_total(oil_pipeline_val);
     }
