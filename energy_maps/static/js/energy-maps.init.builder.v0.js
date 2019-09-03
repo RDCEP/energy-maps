@@ -396,7 +396,8 @@
       console.log(
         `gas pipeline counter is odd, value of ${gas_pipeline_counter}`
       );
-      draw_json_layer(natural_gas_pipelines, draw_pipes, ctx_gas_pipeline)
+      draw_json_layer(natural_gas_pipelines, draw_gas_pipes, ctx_gas_pipeline)
+      // why no params for draw pipes method?
       load(1000);
       console.log(gas_pipeline_val);
       increment_asset_total(gas_pipeline_val);

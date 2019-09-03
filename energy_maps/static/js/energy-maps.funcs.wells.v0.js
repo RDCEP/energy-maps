@@ -1,5 +1,20 @@
 
 
+const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
+  console.log('draw_pipes');
+
+  let pipe_data = queued_data[0];
+  const path = get_path(ctx);
+
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = viz.transport.gas.stroke;
+  ctx.lineWidth = viz.transport.gas.width;
+  ctx.beginPath();
+  path(pipe_data)
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
 const draw_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
 
