@@ -182,6 +182,9 @@
     }
     else if (label_format.substring(label_format.length - 5) == 'plant') {
       label_format = `${label_format.replace(/-/g, ' ')}s`
+      if (label_format.substring(0,3) == 'non') {
+        label_format = `${label_format.replace(/non /, 'non-')}`
+      }
     }
     else if (label_format.substring(label_format.length - 4) == 'mine') {
       label_format = `${label_format.replace(/-/g, ' ')}s`
@@ -192,6 +195,9 @@
     else if (label_format.substring(label_format.length -1) == 'y') {
       label_format = `${label_format.replace(/-/g, ' ')}`;
       label_format = `${label_format.replace(/y/, 'ies')}`;
+    }
+    else if (label_format.substring(label_format.length - 10) == 'processing') {
+      label_format = `${label_format.replace(/-/g, ' ')} plants`;
     }
     else {
       label_format = `${label_format.replace(/-/g, ' ')}`
