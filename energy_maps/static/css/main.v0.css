@@ -36,10 +36,10 @@ h6 {
   opacity: 0.3; */
 }
 
-.master-legend {
+/* .master-legend { */
   /* max-width: 50%;
   max-height: auto; */
-}
+/* } */
 
 /* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up 
 on the index page */
@@ -81,6 +81,16 @@ on the index page */
   fill: #cccccc;
 }
 
+#asset-totals {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+}
+
+#browser-notice {
+  font-style: italic;
+  font-weight: bold;
+}
+
 #spinner {
   position: absolute;
   top: 45%;
@@ -88,11 +98,6 @@ on the index page */
   width: 4em;
   height: 4em;
   z-index: 1000;
-}
-
-#asset-totals {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.3rem;
 }
 
 /*# sourceMappingURL=main.v0.css.map */
