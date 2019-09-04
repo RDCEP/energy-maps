@@ -157,7 +157,8 @@
   let contexts = {};
   let checkboxes = {};
 
-  for (let i = 0; i < layers.length; i++) {
+  let lay = layers.length;
+  for (let i = 0; i < lay; i++) {
     canvases[layers[i]] = d3
       .select(".map.wrapper")
       // .select(".main.map.builder")
@@ -172,10 +173,34 @@
     contexts[layers[i]] = canvases[layers[i]].node().getContext("2d");
     console.log(contexts[i]); // currently displaying 'undefined'
 
+    let label_format = layers[i];
+    if (label_format.substring(label_format.length - 4) == 'well') {
+      label_format = `${label_format.replace(/-/g, ' ')}s`;
+    }
+    else if (label_format.substring(label_format.length - 8) == 'pipeline') {
+      label_format = `${label_format.replace(/-/g, ' ')}s`
+    }
+    else if (label_format.substring(label_format.length - 5) == 'plant') {
+      label_format = `${label_format.replace(/-/g, ' ')}s`
+    }
+    else if (label_format.substring(label_format.length - 4) == 'mine') {
+      label_format = `${label_format.replace(/-/g, ' ')}s`
+    }
+    else if (label_format.substring(label_format.length - 4) == 'road') {
+      label_format = `${label_format.replace(/-/g, ' ')}s`
+    }
+    else if (label_format.substring(label_format.length -1) == 'y') {
+      label_format = `${label_format.replace(/-/g, ' ')}`;
+      label_format = `${label_format.replace(/y/, 'ies')}`;
+    }
+    else {
+      label_format = `${label_format.replace(/-/g, ' ')}`
+    }
+
     checkboxes[layers[i]] = d3
       .select(".options")
       .append("label")
-      .text(`${layers[i]}`)
+      .text(`${label_format}`)
       .append("input")
       .attr("type", "checkbox")
       .attr("class", `checkbox ${layers[i]}`)
