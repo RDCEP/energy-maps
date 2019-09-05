@@ -42,7 +42,9 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
     fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
   }
 
-  wells.features
+  wells.features.filter(function(d) {
+      return fuels.indexOf(d.properties.primary_fu) > -1;
+    })
     .forEach(function(d) {
       let xy = projection(d.geometry.coordinates);
       draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
@@ -66,7 +68,7 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
           case 'GEO': color = viz.plants.geo; break;
           case 'NUC': color = viz.plants.nuclear; break;
           default:
-            color =  'rgba(255, 255, 255, 1)';  break;
+            color =  'rgba(255, 255, 255, 0)';  break;
         }
         draw_power_plant(ctx, xy, color, +d.properties.total_cap);
       }
