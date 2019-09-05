@@ -15,15 +15,22 @@ h6 {
 
 label {
   padding-right: 1%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .options {
   width: 800px;
+  /* font-size: 105%; */
 }
 
 .options > span {
   padding-right: 1%;
 }
+
+/* a > button {
+  float: right;
+  margin-right: 55%;
+} */
 
 .wrapper {
   position: relative;
