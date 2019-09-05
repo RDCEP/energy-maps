@@ -64,6 +64,11 @@ on the index page */
   display: block;
 }
 
+/* Hack for an updated legend */
+.master-legend {
+  width: auto!important;
+}
+
 .layer {
   fill: none;
 }
