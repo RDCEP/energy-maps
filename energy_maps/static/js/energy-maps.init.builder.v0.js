@@ -205,6 +205,7 @@
 
     checkboxes[layers[i]] = d3
       .select(".options")
+      .insert("span")
       .append("label")
       .text(`${label_format}`)
       .append("input")
