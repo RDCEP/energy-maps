@@ -90,6 +90,11 @@ on the index page */
   font-style: italic;
 }
 
+#builder-headline {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+}
+
 #spinner {
   position: absolute;
   top: 45%;
