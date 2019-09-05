@@ -20,21 +20,14 @@ label {
 
 .options {
   width: 800px;
-  /* font-size: 105%; */
 }
 
 .options > span {
-  /*padding-right: 1%;*/
   background-color: #d4d4d4;
   display: inline-block;
   margin: .25em;
   padding: .25em;
 }
-
-/* a > button {
-  float: right;
-  margin-right: 55%;
-} */
 
 .wrapper {
   position: relative;
@@ -48,15 +41,11 @@ label {
 .canvas.gas-well {
   position: relative;
   top: 0;
-  /* background-color: #cccccc;
-  opacity: 0.1; */
 }
 
 .canvas.fossil-fuel-plant {
   position: absolute;
   top: 0;
-  /* background-color: #da99cf;
-  opacity: 0.3; */
 }
 
 /* .master-legend { */
