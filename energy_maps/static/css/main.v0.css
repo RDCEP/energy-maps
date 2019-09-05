@@ -83,7 +83,16 @@ on the index page */
 
 #asset-totals {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  width: 1200px; /* to make it match the width of the header. So that the
+  left positioning of the <p> within matches the alignment of the header.
+  Width should eventually be more responsive.
+  */
+}
+
+#asset-totals p {
+  position: relative;
+  left: 25%;
 }
 
 #browser-notice {
@@ -122,11 +131,11 @@ on the index page */
   position: absolute;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  line-height: 1.25em;
+  font-size: .9rem;
+  line-height: 1.2em;
   top: 0;
   left: 25%;
-  padding: 8px 0;
+  padding: .5em 0;
 }
 
 .title .headline2 {
