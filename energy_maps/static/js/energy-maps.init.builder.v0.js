@@ -207,7 +207,7 @@
       .select(".options")
       .insert("span")
       .append("label")
-      .text(`${label_format}`)
+      .text(`${label_format.replace(/ /g, '\u00A0').replace(/-/g, '\u2011')}\u00A0`)
       .append("input")
       .attr("type", "checkbox")
       .attr("class", `checkbox ${layers[i]}`)

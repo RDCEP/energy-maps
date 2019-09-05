@@ -24,7 +24,11 @@ label {
 }
 
 .options > span {
-  padding-right: 1%;
+  /*padding-right: 1%;*/
+  background-color: #d4d4d4;
+  display: inline-block;
+  margin: .25em;
+  padding: .25em;
 }
 
 /* a > button {
