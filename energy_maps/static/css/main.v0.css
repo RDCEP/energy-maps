@@ -13,6 +13,29 @@ h6 {
   font-size: 1em;
 }
 
+label {
+  padding-right: 1%;
+  font-family: 'Roboto', sans-serif;
+}
+
+.options {
+  width: 800px;
+  /* font-size: 105%; */
+}
+
+.options > span {
+  /*padding-right: 1%;*/
+  background-color: #d4d4d4;
+  display: inline-block;
+  margin: .25em;
+  padding: .25em;
+}
+
+/* a > button {
+  float: right;
+  margin-right: 55%;
+} */
+
 .wrapper {
   position: relative;
 }
