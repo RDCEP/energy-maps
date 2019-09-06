@@ -123,7 +123,7 @@
     "geothermal-plant"
   ];
 
-  let gas_well_val = 1_059_000_000; // 1.06B || 1,059 B -- US only
+  let gas_well_val = 1_059_000_000_000; // 1.06B || 1,059 B -- US only
   let oil_well_val = 654_000_000_000; // 654 B
   let gas_pipeline_val = 940_000_000_000; // 940 B
   let oil_pipeline_val = 170_000_000_000; // 170 B

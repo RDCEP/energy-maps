@@ -63,14 +63,18 @@ let asset_total_sum;
     /** @description A regular expression that matches '.01' followed by any other character (substitute 1 for any other number). Used to check for strings ending in ".01B" or ".01T"*/
     const REGEX_ONE_ZERO_ONE_POS = /[.]0\w\w/;
     const NUMBER_SCALE_SIGNIFIER = 1;
+    // Quick dirty fix -- couldn't display gas well format appropriately where it came from before just a few lines down, but this... works??
+    if (asset_total_sum == 1059000000000) {
+      asset_total_sum_display = "$1.06T "
+    }
     // Check if the number format is blacklisted. 
     if (REGEX_TWO_TRAILING_ZEROES.test(asset_total_sum_display.substring(asset_total_sum_display.length - UNWANTED_PRECISION)) || REGEX_ONE_POS_ONE_ZERO.test(asset_total_sum_display.substring(asset_total_sum_display.length - UNWANTED_PRECISION)) || REGEX_ONE_ZERO_ONE_POS.test(asset_total_sum_display.substring(asset_total_sum_display.length - UNWANTED_PRECISION))) {
       if (asset_total_sum_display.substring(asset_total_sum_display.length - NUMBER_SCALE_SIGNIFIER) == 'B') {
         asset_total_sum_display = asset_total_sum_display.slice(0, -4) + 'B';  
         // Can't get gas well to format as 1.06B without making it a special case... not without wrecking everything else
-        if (asset_total_sum == 1_059_000_000) {
-          asset_total_sum_display = "$1.06B"
-        }
+        // if (asset_total_sum == 1059000000000) {
+        //   asset_total_sum_display = "$1.06B"
+        // }
       }
       if (asset_total_sum_display.substring(asset_total_sum_display.length - NUMBER_SCALE_SIGNIFIER) == 'T') {
         asset_total_sum_display = asset_total_sum_display.slice(0, -4) + 'T';  
