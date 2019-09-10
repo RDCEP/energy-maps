@@ -85,12 +85,18 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
     if (xy === null) {
       return;
     } else {
-      if (d.class === 'Off') {
-        draw_off_well(ctx, xy);
-      } else if (d.oilgas === 'GAS') {
-        draw_well(ctx, xy, viz.wells.gas);
+      if (d.oilgas === 'GAS') {
+        if (d.class === 'Off') {
+          draw_off_well(ctx, xy, viz.wells.gas);
+        } else {
+          draw_well(ctx, xy, viz.wells.gas);
+        }
       } else {
-        draw_well(ctx, xy, viz.wells.oil);
+        if (d.class === 'Off') {
+          draw_off_well(ctx, xy, viz.wells.oil);
+        } else {
+          draw_well(ctx, xy, viz.wells.oil);
+        }
       }
     }
   });
@@ -178,8 +184,9 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.fill();
 };
 
-const draw_off_well = function draw_off_well(ctx, xy) {
-  ctx.strokeStyle = viz.wells.off;
+const draw_off_well = function draw_off_well(ctx, xy, color) {
+  // ctx.strokeStyle = viz.wells.off;
+  ctx.strokeStyle = color;
   ctx.lineWidth = viz.wells.stroke;
   ctx.beginPath();
   draw_x(ctx, xy, viz.wells.cross);
