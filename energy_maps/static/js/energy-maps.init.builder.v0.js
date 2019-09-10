@@ -106,7 +106,8 @@
     "coal-mine",
     "non-fossil-fuel-plant",
     "fossil-fuel-plant",
-    "electrical-grid"
+    "complete-electrical-grid",
+    "unavailable-kv"
   ];
 
   let unimplemented_layers = [
@@ -135,6 +136,7 @@
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
+  let unavailable_kv_val = 0; // 2.95T || 2,946 B
 
   let asset_values = [
     gas_well_val, // gas well
@@ -148,7 +150,8 @@
     coalmine_val, // coal mine
     nff_val, // non fossil fuel plant
     ff_val, // fossil fuel plant
-    electrical_grid_val // electrical grid
+    electrical_grid_val, // electrical grid
+    unavailable_kv_val // electrical grid class unavailable kv
   ];
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
@@ -312,10 +315,15 @@
   let ctx_ffplant = ffplant.node().getContext("2d");
   ctx_ffplant.LineCap = "round";
 
-  /** @description A canvas element for the electrical grid, attached to div "map layer canvas electrical-grid" */
-  let grid = d3.select(".map.layer.canvas.electrical-grid");
+  /** @description A canvas element for the electrical grid, attached to div "map layer canvas complete-electrical-grid" */
+  let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
   let ctx_grid = grid.node().getContext("2d");
   ctx_grid.LineCap = "round";
+
+  /** @description A canvas element for the unavailable kv layer of the electrical grid, attached to div "map layer canvas unavailable-kv" */
+  let unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
+  let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+  ctx_unavailable_kv.LineCap = "round";
 
   /**
    * Create the gas well layer.
@@ -727,30 +735,61 @@
   /**
    * Create the electrical grid layer.
    */
-  const grid_check = d3.select(".checkbox.electrical-grid");
+  const grid_check = d3.select(".checkbox.complete-electrical-grid");
   let grid_counter = 0;
   grid_check.on("change", function() {
     grid_counter++;
     if (grid_counter % 2 == 0) {
       console.log(`grid counter is even, value of ${grid_counter}`);
       grid.remove();
-      d3.select(".map.layer.electrical-grid")
+      d3.select(".map.layer.complete-electrical-grid")
         .append("canvas")
-        .attr("class", "map layer canvas electrical-grid")
+        .attr("class", "map layer canvas complete-electrical-grid")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
       decrement_asset_total(electrical_grid_val)
     } else {
       if (grid_counter > 1) {
-        grid = d3.select(".map.layer.canvas.electrical-grid");
+        grid = d3.select(".map.layer.canvas.complete-electrical-grid");
         ctx_grid = grid.node().getContext("2d");
         ctx_grid.LineCap = "round";
       }
       console.log(`grid counter is odd, value of ${grid_counter}`);
       draw_json_layer(gridmap, draw_grid, ctx_grid);
+      // draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_grid);
       load(5000);
       console.log(electrical_grid_val);
       increment_asset_total(electrical_grid_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid layer.
+   */
+  const unavailable_kv_check = d3.select(".checkbox.unavailable-kv");
+  let unavailable_kv_counter = 0;
+  unavailable_kv_check.on("change", function() {
+    unavailable_kv_counter++;
+    if (unavailable_kv_counter % 2 == 0) {
+      console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
+      unavailable_kv.remove();
+      d3.select(".map.layer.unavailable-kv")
+        .append("canvas")
+        .attr("class", "map layer canvas unavailable-kv")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(unavailable_kv_val)
+    } else {
+      if (unavailable_kv_counter > 1) {
+        unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
+        ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+        ctx_unavailable_kv.LineCap = "round";
+      }
+      console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
+      load(2000);
+      console.log(unavailable_kv_val);
+      increment_asset_total(unavailable_kv_val);
     }
   });
 
