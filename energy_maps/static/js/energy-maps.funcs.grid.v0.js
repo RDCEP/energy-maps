@@ -38,8 +38,18 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
 }
 
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
+  console.log('draw_grid_class_ac')
+
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+  
   // AC voltage classes
-  features = grid.features
+  let features = grid.features
     .filter(function(d) {
       // Sort voltage ratings in ascending order
       return classes.slice(1, classes.length-1).indexOf(d.properties.class) >= 0 ; })

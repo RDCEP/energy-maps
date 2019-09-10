@@ -107,7 +107,8 @@
     "non-fossil-fuel-plant",
     "fossil-fuel-plant",
     "complete-electrical-grid",
-    "unavailable-kv"
+    "unavailable-kv",
+    "ac-lines"
   ];
 
   let unimplemented_layers = [
@@ -136,7 +137,8 @@
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
-  let unavailable_kv_val = 0; // 2.95T || 2,946 B
+  let unavailable_kv_val = 0; // TBD
+  let ac_lines_val = 0; // TBD
 
   let asset_values = [
     gas_well_val, // gas well
@@ -151,7 +153,8 @@
     nff_val, // non fossil fuel plant
     ff_val, // fossil fuel plant
     electrical_grid_val, // electrical grid
-    unavailable_kv_val // electrical grid class unavailable kv
+    unavailable_kv_val, // electrical grid class unavailable kv
+    ac_lines_val // electrical grid class ac lines
   ];
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
@@ -324,6 +327,11 @@
   let unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
   let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
   ctx_unavailable_kv.LineCap = "round";
+
+  /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas ac-lines" */
+  let ac_lines = d3.select(".map.layer.canvas.ac-lines");
+  let ctx_ac_lines = ac_lines.node().getContext("2d");
+  ctx_ac_lines.LineCap = "round";
 
   /**
    * Create the gas well layer.
@@ -764,7 +772,7 @@
   });
 
   /**
-   * Create the electrical grid layer.
+   * Create the electrical grid class unavailable kv layer.
    */
   const unavailable_kv_check = d3.select(".checkbox.unavailable-kv");
   let unavailable_kv_counter = 0;
@@ -790,6 +798,36 @@
       load(2000);
       console.log(unavailable_kv_val);
       increment_asset_total(unavailable_kv_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid class ac lines layer.
+   */
+  const ac_lines_check = d3.select(".checkbox.ac-lines");
+  let ac_lines_counter = 0;
+  ac_lines_check.on("change", function() {
+    ac_lines_counter++;
+    if (ac_lines_counter % 2 == 0) {
+      console.log(`ac lines counter is even, value of ${ac_lines_counter}`);
+      ac_lines.remove();
+      d3.select(".map.layer.ac-lines")
+        .append("canvas")
+        .attr("class", "map layer canvas ac-lines")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(ac_lines_val)
+    } else {
+      if (ac_lines_counter > 1) {
+        ac_lines = d3.select(".map.layer.canvas.ac-lines");
+        ctx_ac_lines = ac_lines.node().getContext("2d");
+        ctx_ac_lines.LineCap = "round";
+      }
+      console.log(`ac lines counter is odd, value of ${ac_lines_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_ac, ctx_ac_lines);
+      load(2000);
+      console.log(ac_lines_val);
+      increment_asset_total(ac_lines_val);
     }
   });
 
