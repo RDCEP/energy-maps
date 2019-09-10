@@ -6,7 +6,7 @@ let classes = [
 ];
 
 /**
- * Draw grid on the electric grid infrastructure map.
+ * Draw grid class unavailable on the electric grid infrastructure map.
  * @param {Object} ctx
  * @param {coal_mine[]} queued_data
  */
@@ -35,6 +35,28 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
     ctx.stroke();
   }
 
+}
+
+const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
+  // AC voltage classes
+  features = grid.features
+    .filter(function(d) {
+      // Sort voltage ratings in ascending order
+      return classes.slice(1, classes.length-1).indexOf(d.properties.class) >= 0 ; })
+    .sort((a, b) => (a.properties.voltage > b.properties.voltage) ? 1 : -1);
+  feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    let voltage = features[i].properties.voltage;
+    let volt_class = features[i].properties.class;
+    tmp_grid.features = [features[i]];
+    let idx = classes.slice(1, classes.length-1).indexOf(volt_class);
+    ctx.lineWidth = viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (idx / ((classes.length - 1) / 2) -1 ))));
+    ctx.strokeStyle = viz.grid.palette[idx];
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
 }
 
 
