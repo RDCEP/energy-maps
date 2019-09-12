@@ -774,43 +774,43 @@
   /**
    * Create the electrical grid class unavailable kv layer.
    */
-  const unavailable_kv_label = "unavailable-kv";
-  // const draw_json_unavailable_kv = draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
-  let unavailable_kv_arg_obj = {
-    path: gridmap,
-    f: draw_grid_class_unavailable,
-    ctx: ctx_unavailable_kv
-  }
+  // const unavailable_kv_label = "unavailable-kv";
+  // // const draw_json_unavailable_kv = draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
+  // let unavailable_kv_arg_obj = {
+  //   path: gridmap,
+  //   f: draw_grid_class_unavailable,
+  //   ctx: ctx_unavailable_kv
+  // }
   
-  const unavailable_kv_load_time = 2000;
+  // const unavailable_kv_load_time = 2000;
 
-  create_layer(unavailable_kv_label, unavailable_kv, unavailable_kv_val, ctx_unavailable_kv, draw_json_layer, unavailable_kv_arg_obj);
-  // const unavailable_kv_check = d3.select(".checkbox.unavailable-kv");
-  // let unavailable_kv_counter = 0;
-  // unavailable_kv_check.on("change", function() {
-  //   unavailable_kv_counter++;
-  //   if (unavailable_kv_counter % 2 == 0) {
-  //     console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
-  //     unavailable_kv.remove();
-  //     d3.select(".map.layer.unavailable-kv")
-  //       .append("canvas")
-  //       .attr("class", "map layer canvas unavailable-kv")
-  //       .attr("width", width + SCALE * 400)
-  //       .attr("height", height);
-  //     decrement_asset_total(unavailable_kv_val)
-  //   } else {
-  //     if (unavailable_kv_counter > 1) {
-  //       unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
-  //       ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
-  //       ctx_unavailable_kv.LineCap = "round";
-  //     }
-  //     console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
-  //     draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
-  //     load(2000);
-  //     console.log(unavailable_kv_val);
-  //     increment_asset_total(unavailable_kv_val);
-  //   }
-  // });
+  // create_layer(unavailable_kv_label, unavailable_kv, unavailable_kv_val, ctx_unavailable_kv, draw_json_layer, unavailable_kv_arg_obj);
+  const unavailable_kv_check = d3.select(".checkbox.unavailable-kv");
+  let unavailable_kv_counter = 0;
+  unavailable_kv_check.on("change", function() {
+    unavailable_kv_counter++;
+    if (unavailable_kv_counter % 2 == 0) {
+      console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
+      unavailable_kv.remove();
+      d3.select(".map.layer.unavailable-kv")
+        .append("canvas")
+        .attr("class", "map layer canvas unavailable-kv")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(unavailable_kv_val)
+    } else {
+      if (unavailable_kv_counter > 1) {
+        unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
+        ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+        ctx_unavailable_kv.LineCap = "round";
+      }
+      console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
+      load(2000);
+      console.log(unavailable_kv_val);
+      increment_asset_total(unavailable_kv_val);
+    }
+  });
 
   /**
    * Create the electrical grid class ac lines layer.

@@ -1,22 +1,22 @@
 /** Draw a layer to the screen. 
  * Pass the data from a JSON file through a drawing function out to a canvas context. */
-// function draw_json_layer(path, draw_function, ctx) {
-//     Promise.all([
-//       d3.json(path)
-//     ]).then(function(files) {
-//       draw_function(ctx, files)
-//     })
-//     console.log(`draw json layer`);
-//   }  
+function draw_json_layer(path, draw_function, ctx) {
+    Promise.all([
+      d3.json(path)
+    ]).then(function(files) {
+      draw_function(ctx, files)
+    })
+    console.log(`draw json layer`);
+  }  
 
-function draw_json_layer(arg_obj) {
-  Promise.all([
-    d3.json(arg_obj.path)
-  ]).then(function(files) {
-    arg_obj.f(arg_obj.ctx, files)
-  }).then(function() {spinner.style.display = "none"})
-  console.log(`draw json layer`);
-}  
+// function draw_json_layer(arg_obj) {
+//   Promise.all([
+//     d3.json(arg_obj.path)
+//   ]).then(function(files) {
+//     arg_obj.f(arg_obj.ctx, files)
+//   }).then(function() {spinner.style.display = "none"})
+//   console.log(`draw json layer`);
+// }  
 
 function draw_csv_layer(path, draw_function, ctx) {
     Promise.all([
@@ -29,17 +29,17 @@ function draw_csv_layer(path, draw_function, ctx) {
 
 // Loading
 let spinner = document.getElementById("spinner");
-// const sleep = milliseconds => {
-//   return new Promise(resolve => setTimeout(resolve, milliseconds));
-// };
-// /** @description display the loading spinner for user set time in milliseconds */
-// const load = async time => {
-//   // show the spinner
-//   spinner.style.display = "block";
-//   await sleep(time);
-//   // hide the spinner
-//   spinner.style.display = "none";
-// };
+const sleep = milliseconds => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+/** @description display the loading spinner for user set time in milliseconds */
+const load = async time => {
+  // show the spinner
+  spinner.style.display = "block";
+  await sleep(time);
+  // hide the spinner
+  spinner.style.display = "none";
+};
 
 function create_layer(label, canvas, asset_value, ctx, draw_function, arg_obj) {
   checkbox = d3.select(`.checkbox.${label}`);
