@@ -108,7 +108,8 @@
     "fossil-fuel-plant",
     "complete-electrical-grid",
     "unavailable-kv",
-    "ac-lines"
+    "ac-lines",
+    "dc-lines"
   ];
 
   let unimplemented_layers = [
@@ -139,6 +140,7 @@
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 0; // TBD
+  let dc_lines_val = 0; // TBD
 
   let asset_values = [
     gas_well_val, // gas well
@@ -154,7 +156,8 @@
     ff_val, // fossil fuel plant
     electrical_grid_val, // electrical grid
     unavailable_kv_val, // electrical grid class unavailable kv
-    ac_lines_val // electrical grid class ac lines
+    ac_lines_val, // electrical grid class ac lines
+    dc_lines_val // electrical grid class dc lines
   ];
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
@@ -332,6 +335,11 @@
   let ac_lines = d3.select(".map.layer.canvas.ac-lines");
   let ctx_ac_lines = ac_lines.node().getContext("2d");
   ctx_ac_lines.LineCap = "round";
+
+  /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas dc-lines" */
+  let dc_lines = d3.select(".map.layer.canvas.dc-lines");
+  let ctx_dc_lines = dc_lines.node().getContext("2d");
+  ctx_dc_lines.LineCap = "round";
 
   /**
    * Create the gas well layer.
@@ -839,6 +847,36 @@
       load(2000);
       console.log(ac_lines_val);
       increment_asset_total(ac_lines_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid class ac lines layer.
+   */
+  const dc_lines_check = d3.select(".checkbox.dc-lines");
+  let dc_lines_counter = 0;
+  dc_lines_check.on("change", function() {
+    dc_lines_counter++;
+    if (dc_lines_counter % 2 == 0) {
+      console.log(`dc lines counter is even, value of ${dc_lines_counter}`);
+      dc_lines.remove();
+      d3.select(".map.layer.dc-lines")
+        .append("canvas")
+        .attr("class", "map layer canvas dc-lines")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(dc_lines_val)
+    } else {
+      if (dc_lines_counter > 1) {
+        dc_lines = d3.select(".map.layer.canvas.dc-lines");
+        ctx_dc_lines = dc_lines.node().getContext("2d");
+        ctx_dc_lines.LineCap = "round";
+      }
+      console.log(`dc lines counter is odd, value of ${dc_lines_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_dc, ctx_dc_lines);
+      load(2000);
+      console.log(dc_lines_val);
+      increment_asset_total(dc_lines_val);
     }
   });
 

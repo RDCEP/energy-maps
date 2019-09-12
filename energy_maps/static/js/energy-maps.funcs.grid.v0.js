@@ -69,6 +69,33 @@ const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   }
 }
 
+const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
+  console.log('draw_grid_class_dc')
+
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+
+  // DC voltage class
+  features = grid.features
+    .filter(function(d) {
+      return d.properties.class === classes[classes.length-1]; });
+  feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
+} 
+
 
 /**
  * Draw grid on the electric grid infrastructure map.
