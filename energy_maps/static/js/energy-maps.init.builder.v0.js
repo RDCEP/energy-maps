@@ -106,6 +106,7 @@
     "coal-mine",
     "non-fossil-fuel-plant",
     "fossil-fuel-plant",
+    "petroleum-plant",
     "complete-electrical-grid",
     "unavailable-kv",
     "ac-lines",
@@ -117,7 +118,7 @@
     "oil-product-pipeline", // Don't add until we have sufficient financial data
     "off-shore-well", // Must determine which dataset contains offshore wells
     "natural-gas-plant",
-    "petroleum-plant",
+    // "petroleum-plant",
     "coal-plant",
     "solar-plant",
     "wind-plant",
@@ -138,6 +139,7 @@
   let coalmine_val = 57_000_000_000; // 57 B
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
+  let pet_plant_val = 0;
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 0; // TBD
@@ -156,6 +158,7 @@
     coalmine_val, // coal mine
     nff_val, // non fossil fuel plant
     ff_val, // fossil fuel plant
+    pet_plant_val, // petroleum plant
     electrical_grid_val, // electrical grid
     unavailable_kv_val, // electrical grid class unavailable kv
     ac_lines_val, // electrical grid class ac lines
@@ -322,6 +325,11 @@
   let ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
   let ctx_ffplant = ffplant.node().getContext("2d");
   ctx_ffplant.LineCap = "round";
+
+  /** @description A canvas element for the petroluem plants, attached to div "map layer canvas petroleum-plant" */
+  let petplant = d3.select(".map.layer.canvas.petroleum-plant");
+  let ctx_pet_plant = petplant.node().getContext("2d");
+  ctx_pet_plant.LineCap = "round";
 
   /** @description A canvas element for the electrical grid, attached to div "map layer canvas complete-electrical-grid" */
   let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
@@ -750,6 +758,36 @@
       load(300);
       console.log(ff_val);
       increment_asset_total(ff_val);
+    }
+  });
+
+  /**
+   * Create the petroleum plant layer.
+   */
+  const pet_plant_check = d3.select(".checkbox.petroleum-plant");
+  let pet_plant_counter = 0;
+  pet_plant_check.on("change", function() {
+    pet_plant_counter++;
+    if (pet_plant_counter % 2 == 0) {
+      console.log(`pet plant counter is even, value of ${pet_plant_counter}`);
+      petplant.remove();
+      d3.select(".map.layer.petroleum-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas petroleum-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(pet_plant_val);
+    } else {
+      if (pet_plant_counter > 1) {
+        petplant = d3.select(".map.layer.canvas.petroleum-plant");
+        ctx_pet_plant = ffplant.node().getContext("2d");
+        ctx_pet_plant.LineCap = "round";
+      }
+      console.log(`pet plant counter is odd, value of ${pet_plant_counter}`);
+      draw_json_layer(power_plants, draw_petroleum_plants, ctx_pet_plant);
+      load(300);
+      console.log(pet_plant_val);
+      increment_asset_total(pet_plant_val);
     }
   });
 
