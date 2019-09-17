@@ -1,3 +1,4 @@
+
 /**
  * @typedef {Object} geojson_geometry
  * @property {String} type
@@ -31,6 +32,33 @@
  *
  * @param {power_plant_geojson[]} queued_data
  */
+
+
+const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
+  let set = 'PET';
+  console.log('draw_petroleum_plants');
+
+  let wells = queued_data[0];
+
+  let fuel = 'PET';
+  const path = get_path(ctx);
+
+  let tmp_wells = {type: 'FeatureCollection', features: []};
+  features = wells.features
+    .filter(function(d) {
+      return d.properties.primary_fu === set; 
+    });
+
+    feat_len = features.length;
+    for (let i = 0; i < feat_len; ++i) {
+      tmp_wells.features = [features[i]];
+      ctx.strokeStyle = 'black';
+      ctx.beginPath();
+      path(tmp_grid);
+      ctx.stroke();
+    }
+};
+
 const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
   console.log('draw_power_plants');
 
@@ -42,6 +70,31 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
     fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
   }
 
+  // Attempt at filtering by layer
+  // If you decide to bring this back in and make it work, 
+  // change method signature to draw_power_plants(ctx, queued_data, nff, set)
+
+  // if (set === fuels[0]) {
+  //   wells.features.filter(function(d) {
+  //     return fuels.indexOf(d.properties.primary_fu) == fuels[0];
+  //   })
+  //   .forEach(function(d) {
+  //     let xy = projection(d.geo.coordinates);
+  //     draw_power_plant(ctx, xy, iz.whit, +d.properties.total_cap);
+  //   });
+  //   wells.features
+  //     .filter(function(d) {
+  //       return fuels.indexOf(d.properties.primary_fu) == fuels[0];
+  //     }).forEach(function(d) {
+  //       let xy = projection(d.geometry.coordinates);
+  //       if (xy == null) {
+  //         //
+  //       } else {
+  //         let color = viz.plants.oil;
+  //         draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+  //       }
+  //     })
+  // }
   wells.features.filter(function(d) {
       return fuels.indexOf(d.properties.primary_fu) > -1;
     })
@@ -83,6 +136,10 @@ const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
 const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
   draw_power_plants(ctx, queued_data, true)
 };
+
+// const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
+//   draw_power_plants(ctx, queued_data, false)
+// };
 
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
