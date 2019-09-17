@@ -780,7 +780,7 @@
     } else {
       if (pet_plant_counter > 1) {
         petplant = d3.select(".map.layer.canvas.petroleum-plant");
-        ctx_pet_plant = ffplant.node().getContext("2d");
+        ctx_pet_plant = petplant.node().getContext("2d");
         ctx_pet_plant.LineCap = "round";
       }
       console.log(`pet plant counter is odd, value of ${pet_plant_counter}`);

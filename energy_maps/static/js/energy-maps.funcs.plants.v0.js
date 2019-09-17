@@ -35,28 +35,38 @@
 
 
 const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
-  let set = 'PET';
   console.log('draw_petroleum_plants');
+
+  let fuel = 'PET';
 
   let wells = queued_data[0];
 
-  let fuel = 'PET';
-  const path = get_path(ctx);
-
-  let tmp_wells = {type: 'FeatureCollection', features: []};
+  // Filter out all records whose primary fuel is petroleum 
+  // and draw their white layer
   features = wells.features
     .filter(function(d) {
-      return d.properties.primary_fu === set; 
+      return d.properties.primary_fu === fuel; 
+    })
+    .forEach(function(d) {
+      let xy = projection(d.geometry.coordinates);
+      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
     });
 
-    feat_len = features.length;
-    for (let i = 0; i < feat_len; ++i) {
-      tmp_wells.features = [features[i]];
-      ctx.strokeStyle = 'black';
-      ctx.beginPath();
-      path(tmp_grid);
-      ctx.stroke();
+  features = wells.features
+  .filter(function(d) {
+    return d.properties.primary_fu === fuel; 
+  })
+  .forEach(function(d) {
+    let xy = projection(d.geometry.coordinates);
+    if (xy === null) {
+      //
+    } else {
+      let color = 'black';
+      color = viz.plants.oil;
+      draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
+  });
+
 };
 
 const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
