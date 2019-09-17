@@ -113,9 +113,9 @@
   ];
 
   let unimplemented_layers = [
-    "oil-product-pipeline",
-    "off-shore-well",
     "gas-storage",
+    "oil-product-pipeline", // Don't add until we have sufficient financial data
+    "off-shore-well", // Must determine which dataset contains offshore wells
     "natural-gas-plant",
     "petroleum-plant",
     "coal-plant",
@@ -132,6 +132,7 @@
   let oil_pipeline_val = 170_000_000_000; // 170 B
   let oil_prod_pipeline_val = 0; // -- not specified separately - this is part of oil pipeline
   let gas_processing_val = 45_000_000_000; // 45 B
+  let gas_storage_val = 0; // TBA
   let oil_refinery_val = 373_000_000_000; // 373 B
   let railroad_val = 137_000_000_000; // `137 B *` Needs an asterisk because this is 1/3 of the value of the freight railway shown
   let coalmine_val = 57_000_000_000; // 57 B
@@ -149,6 +150,7 @@
     oil_pipeline_val, // oil pipeline
     oil_prod_pipeline_val, // oil prod pipeline
     gas_processing_val, // gas processing
+    gas_storage_val, // gas storage
     oil_refinery_val, // oil refinery
     railroad_val, // railroad
     coalmine_val, // coal mine
@@ -585,6 +587,7 @@
   //       .attr("class", "map layer canvas gas-storage")
   //       .attr("width", width + SCALE * 400)
   //       .attr("height", height);
+  //       decrement_asset_total(gas_storage_val);
   //   } else {
   //       if (gas_storage_counter > 1) {
   //         gas_storage = d3.select(".map.layer.canvas.gas-storage");
@@ -592,7 +595,9 @@
   //         ctx_gas_storage.LineCap = "round";
   //       }
   //       console.log(`gas storage counter is odd, value of ${gas_storage_counter}`);
-  //       layer_storage();
+  //       draw_csv_layer(gas_storage, draw_gas_storage, ctx_gas_storage);
+  //       console.log(gas_storage_val);
+  //       increment_asset_total(gas_storage_val);
   //   }
   // });
 
@@ -613,7 +618,7 @@
         .attr("class", "map layer canvas oil-refinery")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
-      decrement_asset_total(oil_refinery_val)
+      decrement_asset_total(oil_refinery_val);
     } else {
       if (oil_refinery_counter > 1) {
         oil_refinery = d3.select(".map.layer.canvas.oil-refinery");
