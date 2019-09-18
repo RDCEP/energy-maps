@@ -33,6 +33,39 @@
  * @param {power_plant_geojson[]} queued_data
  */
 
+// const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
+//   console.log('draw_single_plant');
+
+//   let fuel = fuel;
+//   let wells = queued_data[0];
+
+//   // Filter out all records based on primary fuel and draw their white layer
+//   features = wells.features
+//     .filter(function(d) {
+//       return d.properties.primary_fu === fuel; 
+//     })
+//     .forEach(function(d) {
+//       let xy = projection(d.geometry.coordinates);
+//       draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
+//     });
+//   // Draw the standard layer
+//   features = wells.features
+//   .filter(function(d) {
+//     return d.properties.primary_fu === fuel; 
+//   })
+//   .forEach(function(d) {
+//     let xy = projection(d.geometry.coordinates);
+//     if (xy === null) {
+//       //
+//     } else {
+//       let color = 'black';
+//       color = viz.plants.oil;
+//       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+//     }
+//   });
+
+// };
+
 
 const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
   console.log('draw_petroleum_plants');
@@ -46,17 +79,13 @@ const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
   features = wells.features
     .filter(function(d) {
       return d.properties.primary_fu === fuel; 
-    })
-    .forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
     });
+  features.forEach(function(d) {
+    let xy = projection(d.geometry.coordinates);
+    draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
+  });
 
-  features = wells.features
-  .filter(function(d) {
-    return d.properties.primary_fu === fuel; 
-  })
-  .forEach(function(d) {
+  features.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
     if (xy === null) {
       //
