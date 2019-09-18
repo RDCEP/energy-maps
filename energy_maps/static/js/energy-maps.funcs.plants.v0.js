@@ -56,13 +56,13 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       let color = 'black';
       switch(fuel) {
         case 'COAL': color = viz.plants.coal; break;
-        case 'NG': color = viz.plants.gas; break;
-        case 'PET': color = viz.plants.oil; break;
+        case 'GEO': color = viz.plants.geo; break;
         case 'HYC': color = viz.plants.hydro; break;
+        case 'NG': color = viz.plants.gas; break;
+        case 'NUC': color = viz.plants.nuclear; break;
+        case 'PET': color = viz.plants.oil; break;
         case 'SUN': color = viz.plants.solar; break;
         case 'WND': color = viz.plants.wind; break;
-        case 'GEO': color = viz.plants.geo; break;
-        case 'NUC': color = viz.plants.nuclear; break;
         default:
           color =  'rgba(255, 255, 255, 0)';  break;
       }

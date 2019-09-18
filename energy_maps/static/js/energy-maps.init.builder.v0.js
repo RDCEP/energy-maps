@@ -107,7 +107,13 @@
     "non-fossil-fuel-plant",
     "fossil-fuel-plant",
     "coal-plant",
+    "geothermal-plant",
+    "hydro-plant",
+    "natural-gas-plant",
+    "nuclear-plant",
     "petroleum-plant",
+    "solar-plant",
+    "wind-plant",
     "complete-electrical-grid",
     "unavailable-kv",
     "ac-lines",
@@ -118,14 +124,11 @@
     "gas-storage",
     "oil-product-pipeline", // Don't add until we have sufficient financial data
     "off-shore-well", // Must determine which dataset contains offshore wells
-    "natural-gas-plant",
-    // "petroleum-plant",
-    // "coal-plant",
-    "solar-plant",
-    "wind-plant",
-    "hydro-plant",
-    "nuclear-plant",
-    "geothermal-plant"
+    // "solar-plant",
+    // "wind-plant",
+    // "hydro-plant",
+    // "nuclear-plant",
+    // "geothermal-plant"
   ];
 
   let gas_well_val = 1_059_000_000_000; // 1.06B || 1,059 B -- US only
@@ -141,7 +144,13 @@
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
   let coal_plant_val = 0;
+  let geo_plant_val = 0;
+  let hydro_plant_val = 0;
+  let ng_plant_val = 0;
+  let nuclear_plant_val = 0;
   let pet_plant_val = 0;
+  let solar_plant_val = 0;
+  let wind_plant_val = 0;
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 0; // TBD
@@ -161,7 +170,13 @@
     nff_val,
     ff_val,
     coal_plant_val,
+    geo_plant_val,
+    hydro_plant_val,
+    ng_plant_val,
     pet_plant_val, 
+    nuclear_plant_val,
+    solar_plant_val,
+    wind_plant_val,
     electrical_grid_val, 
     unavailable_kv_val,
     ac_lines_val,
@@ -333,11 +348,41 @@
   let coalplant = d3.select(".map.layer.canvas.coal-plant");
   let ctx_coal_plant = coalplant.node().getContext("2d");
   ctx_coal_plant.LineCap = "round";
+
+  /** @description A canvas element for the geothermal plants, attached to div "map layer canvas geothermal-plant" */
+  let geoplant = d3.select(".map.layer.canvas.geothermal-plant");
+  let ctx_geo_plant = geoplant.node().getContext("2d");
+  ctx_geo_plant.LineCap = "round";
+
+  /** @description A canvas element for the hydro plants, attached to div "map layer canvas hydro-plant" */
+  let hydroplant = d3.select(".map.layer.canvas.hydro-plant");
+  let ctx_hydro_plant = hydroplant.node().getContext("2d");
+  ctx_hydro_plant.LineCap = "round";
+
+  /** @description A canvas element for the natural gas plants, attached to div "map layer canvas natural-gas-plant" */
+  let ngplant = d3.select(".map.layer.canvas.natural-gas-plant");
+  let ctx_ng_plant = ngplant.node().getContext("2d");
+  ctx_ng_plant.LineCap = "round";
+
+  /** @description A canvas element for the nuclear plants, attached to div "map layer canvas nuclear-plant" */
+  let nuclearplant = d3.select(".map.layer.canvas.nuclear-plant");
+  let ctx_nuclear_plant = nuclearplant.node().getContext("2d");
+  ctx_nuclear_plant.LineCap = "round";
   
   /** @description A canvas element for the petroluem plants, attached to div "map layer canvas petroleum-plant" */
   let petplant = d3.select(".map.layer.canvas.petroleum-plant");
   let ctx_pet_plant = petplant.node().getContext("2d");
   ctx_pet_plant.LineCap = "round";
+
+  /** @description A canvas element for the solar plants, attached to div "map layer canvas solar-plant" */
+  let solarplant = d3.select(".map.layer.canvas.solar-plant");
+  let ctx_solar_plant = solarplant.node().getContext("2d");
+  ctx_solar_plant.LineCap = "round";
+
+  /** @description A canvas element for the wind plants, attached to div "map layer canvas wind-plant" */
+  let windplant = d3.select(".map.layer.canvas.wind-plant");
+  let ctx_wind_plant = windplant.node().getContext("2d");
+  ctx_wind_plant.LineCap = "round";
 
   /** @description A canvas element for the electrical grid, attached to div "map layer canvas complete-electrical-grid" */
   let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
@@ -797,6 +842,37 @@
       load(300);
       console.log(coal_plant_val);
       increment_asset_total(coal_plant_val);
+    }
+  });
+
+  /**
+   * Create the natural gas plant layer.
+   */
+  const ng_plant_check = d3.select(".checkbox.natural-gas-plant");
+  let ng_plant_counter = 0;
+  ng_plant_check.on("change", function() {
+    ng_plant_counter++;
+    if (ng_plant_counter % 2 == 0) {
+      console.log(`natural gas plant counter is even, value of ${ng_plant_counter}`);
+      ngplant.remove();
+      d3.select(".map.layer.natural-gas-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas natural-gas-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(ng_plant_val);
+    } else {
+      if (ng_plant_counter > 1) {
+        ngplant = d3.select(".map.layer.canvas.natural-gas-plant");
+        ctx_ng_plant = ngplant.node().getContext("2d");
+        ctx_ng_plant.LineCap = "round";
+      }
+      console.log(`natural gas plant counter is odd, value of ${ng_plant_counter}`);
+      let fuel = 'NG';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_ng_plant);
+      load(300);
+      console.log(ng_plant_val);
+      increment_asset_total(ng_plant_val);
     }
   });
 
