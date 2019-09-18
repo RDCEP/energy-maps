@@ -846,6 +846,37 @@
   });
 
   /**
+   * Create the geothermal plant layer.
+   */
+  const geo_plant_check = d3.select(".checkbox.geothermal-plant");
+  let geo_plant_counter = 0;
+  geo_plant_check.on("change", function() {
+    geo_plant_counter++;
+    if (geo_plant_counter % 2 == 0) {
+      console.log(`geo plant counter is even, value of ${geo_plant_counter}`);
+      geoplant.remove();
+      d3.select(".map.layer.geothermal-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas geothermal-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(geo_plant_val);
+    } else {
+      if (geo_plant_counter > 1) {
+        geoplant = d3.select(".map.layer.canvas.geothermal-plant");
+        ctx_geo_plant = geoplant.node().getContext("2d");
+        ctx_geo_plant.LineCap = "round";
+      }
+      console.log(`geo plant counter is odd, value of ${geo_plant_counter}`);
+      let fuel = 'GEO';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_geo_plant);
+      load(300);
+      console.log(geo_plant_val);
+      increment_asset_total(geo_plant_val);
+    }
+  });
+
+  /**
    * Create the natural gas plant layer.
    */
   const ng_plant_check = d3.select(".checkbox.natural-gas-plant");
