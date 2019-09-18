@@ -106,6 +106,7 @@
     "coal-mine",
     "non-fossil-fuel-plant",
     "fossil-fuel-plant",
+    "coal-plant",
     "petroleum-plant",
     "complete-electrical-grid",
     "unavailable-kv",
@@ -119,7 +120,7 @@
     "off-shore-well", // Must determine which dataset contains offshore wells
     "natural-gas-plant",
     // "petroleum-plant",
-    "coal-plant",
+    // "coal-plant",
     "solar-plant",
     "wind-plant",
     "hydro-plant",
@@ -139,6 +140,7 @@
   let coalmine_val = 57_000_000_000; // 57 B
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
+  let coal_plant_val = 0;
   let pet_plant_val = 0;
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   let unavailable_kv_val = 0; // TBD
@@ -146,23 +148,24 @@
   let dc_lines_val = 0; // TBD
 
   let asset_values = [
-    gas_well_val, // gas well
-    oil_well_val, // oil well
-    gas_pipeline_val, // gas pipeline
-    oil_pipeline_val, // oil pipeline
-    oil_prod_pipeline_val, // oil prod pipeline
-    gas_processing_val, // gas processing
-    gas_storage_val, // gas storage
-    oil_refinery_val, // oil refinery
-    railroad_val, // railroad
-    coalmine_val, // coal mine
-    nff_val, // non fossil fuel plant
-    ff_val, // fossil fuel plant
-    pet_plant_val, // petroleum plant
-    electrical_grid_val, // electrical grid
-    unavailable_kv_val, // electrical grid class unavailable kv
-    ac_lines_val, // electrical grid class ac lines
-    dc_lines_val // electrical grid class dc lines
+    gas_well_val,
+    oil_well_val,
+    gas_pipeline_val,
+    oil_pipeline_val,
+    oil_prod_pipeline_val,
+    gas_processing_val,
+    gas_storage_val,
+    oil_refinery_val,
+    railroad_val,
+    coalmine_val,
+    nff_val,
+    ff_val,
+    coal_plant_val,
+    pet_plant_val, 
+    electrical_grid_val, 
+    unavailable_kv_val,
+    ac_lines_val,
+    dc_lines_val
   ];
 
   /** @description An object of layers mapped to canvas nodes. Used to dynamically generate map layer divs and attach their canvases. */
@@ -326,6 +329,11 @@
   let ctx_ffplant = ffplant.node().getContext("2d");
   ctx_ffplant.LineCap = "round";
 
+  /** @description A canvas element for the coal plants, attached to div "map layer canvas coal-plant" */
+  let coalplant = d3.select(".map.layer.canvas.coal-plant");
+  let ctx_coal_plant = coalplant.node().getContext("2d");
+  ctx_coal_plant.LineCap = "round";
+  
   /** @description A canvas element for the petroluem plants, attached to div "map layer canvas petroleum-plant" */
   let petplant = d3.select(".map.layer.canvas.petroleum-plant");
   let ctx_pet_plant = petplant.node().getContext("2d");
@@ -758,6 +766,37 @@
       load(300);
       console.log(ff_val);
       increment_asset_total(ff_val);
+    }
+  });
+
+  /**
+   * Create the coal plant layer.
+   */
+  const coal_plant_check = d3.select(".checkbox.coal-plant");
+  let coal_plant_counter = 0;
+  coal_plant_check.on("change", function() {
+    coal_plant_counter++;
+    if (coal_plant_counter % 2 == 0) {
+      console.log(`coal plant counter is even, value of ${coal_plant_counter}`);
+      coalplant.remove();
+      d3.select(".map.layer.coal-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas coal-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(coal_plant_val);
+    } else {
+      if (coal_plant_counter > 1) {
+        coalplant = d3.select(".map.layer.canvas.coal-plant");
+        ctx_coal_plant = coalplant.node().getContext("2d");
+        ctx_coal_plant.LineCap = "round";
+      }
+      console.log(`coal plant counter is odd, value of ${coal_plant_counter}`);
+      let fuel = 'COAL';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_coal_plant);
+      load(300);
+      console.log(coal_plant_val);
+      increment_asset_total(coal_plant_val);
     }
   });
 
