@@ -9,6 +9,15 @@ function draw_json_layer(path, draw_function, ctx) {
     console.log(`draw json layer`);
   }  
 
+  function draw_plant_json_layer(path, draw_function, fuel, ctx) {
+    Promise.all([
+      d3.json(path)
+    ]).then(function(files) {
+      draw_function(ctx, files, fuel)
+    })
+    console.log(`draw json layer`);
+  } 
+
 // function draw_json_layer(arg_obj) {
 //   Promise.all([
 //     d3.json(arg_obj.path)

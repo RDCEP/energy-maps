@@ -33,49 +33,12 @@
  * @param {power_plant_geojson[]} queued_data
  */
 
-// const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
-//   console.log('draw_single_plant');
-
-//   let fuel = fuel;
-//   let wells = queued_data[0];
-
-//   // Filter out all records based on primary fuel and draw their white layer
-//   features = wells.features
-//     .filter(function(d) {
-//       return d.properties.primary_fu === fuel; 
-//     })
-//     .forEach(function(d) {
-//       let xy = projection(d.geometry.coordinates);
-//       draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
-//     });
-//   // Draw the standard layer
-//   features = wells.features
-//   .filter(function(d) {
-//     return d.properties.primary_fu === fuel; 
-//   })
-//   .forEach(function(d) {
-//     let xy = projection(d.geometry.coordinates);
-//     if (xy === null) {
-//       //
-//     } else {
-//       let color = 'black';
-//       color = viz.plants.oil;
-//       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-//     }
-//   });
-
-// };
-
-
-const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
-  console.log('draw_petroleum_plants');
-
-  let fuel = 'PET';
+const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
+  console.log('draw_single_plant');
 
   let wells = queued_data[0];
 
-  // Filter out all records whose primary fuel is petroleum 
-  // and draw their white layer
+  // Filter out all records based on primary fuel and draw their white layer
   features = wells.features
     .filter(function(d) {
       return d.properties.primary_fu === fuel; 
@@ -84,14 +47,25 @@ const draw_petroleum_plants = function draw_petroleum_plants(ctx, queued_data) {
     let xy = projection(d.geometry.coordinates);
     draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
   });
-
+  // Draw the standard layer
   features.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
     if (xy === null) {
       //
     } else {
       let color = 'black';
-      color = viz.plants.oil;
+      switch(fuel) {
+        case 'COAL': color = viz.plants.coal; break;
+        case 'NG': color = viz.plants.gas; break;
+        case 'PET': color = viz.plants.oil; break;
+        case 'HYC': color = viz.plants.hydro; break;
+        case 'SUN': color = viz.plants.solar; break;
+        case 'WND': color = viz.plants.wind; break;
+        case 'GEO': color = viz.plants.geo; break;
+        case 'NUC': color = viz.plants.nuclear; break;
+        default:
+          color =  'rgba(255, 255, 255, 0)';  break;
+      }
       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
   });

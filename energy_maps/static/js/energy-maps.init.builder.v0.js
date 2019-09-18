@@ -784,7 +784,9 @@
         ctx_pet_plant.LineCap = "round";
       }
       console.log(`pet plant counter is odd, value of ${pet_plant_counter}`);
-      draw_json_layer(power_plants, draw_petroleum_plants, ctx_pet_plant);
+      // draw_json_layer(power_plants, draw_petroleum_plants, ctx_pet_plant);
+      let fuel = 'PET';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_pet_plant);
       load(300);
       console.log(pet_plant_val);
       increment_asset_total(pet_plant_val);
