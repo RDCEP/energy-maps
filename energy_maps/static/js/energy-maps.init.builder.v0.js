@@ -189,6 +189,9 @@
   let contexts = {};
   let checkboxes = {};
 
+  // Array for storing active layers
+  let active_layers = [];
+
   let lay = layers.length;
   for (let i = 0; i < lay; i++) {
     canvases[layers[i]] = d3
@@ -244,6 +247,8 @@
       .attr("type", "checkbox")
       .attr("class", `checkbox ${layers[i]}`)
       .attr("data-assetvalue", asset_values[i]);
+
+    active_layers.push([layers[i], false]);
   }
 
   console.log(
@@ -262,6 +267,29 @@
     .attr("height", height);
   const ctx = base_canvas.node().getContext("2d");
   ctx.LineCap = "round";
+
+  // Set legend canvas
+  let legend_canvas = d3
+    .select(".map.legend")
+    .append("canvas")
+    .attr("id", "legendcanvas")
+    .attr("width", width + SCALE * 400)
+    .attr("height", height);
+  let legend_ctx = legend_canvas.node().getContext("2d");
+  ctx.LineCap = "round";
+
+  const update_active_layers = function update_active_layers(layer, add) {
+    legend_ctx.clearRect(0, 0, width, height);
+    if (add) {
+      active_layers.filter(function(d) {
+        return d[0] === layer;
+      })[0][1] = true;
+    } else {
+      active_layers.filter(function(d) {
+        return d[0] === layer;
+      })[0][1] = false;
+    }
+  };
 
   // ######## Init Functions ######## //
 
@@ -425,6 +453,7 @@
     gas_well_counter++;
     if (gas_well_counter % 2 == 0) {
       gas_well.remove();
+      update_active_layers('gas-well', false);
       console.log(`gas-well counter is even, value of ${gas_well_counter}`);
       d3.select(".map.layer.gas-well")
         .append("canvas")
@@ -441,9 +470,11 @@
       console.log(`gas well counter is odd, value of ${gas_well_counter}`);
       layer_gas_well();
       load(2000);
+      update_active_layers('gas-well', true);
       console.log(gas_well_val);
       increment_asset_total(gas_well_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -467,6 +498,7 @@
     oil_well_counter++;
     if (oil_well_counter % 2 == 0) {
       oil_well.remove();
+      update_active_layers('oil-well', false);
       console.log(`oil-well counter is even, value of ${oil_well_counter}`);
       d3.select(".map.layer.oil-well")
         .append("canvas")
@@ -483,9 +515,11 @@
       console.log(`oil well counter is odd, value of ${oil_well_counter}`);
       layer_oil_well();
       load(2000);
+      update_active_layers('oil-well', true);
       console.log(oil_well_val);
       increment_asset_total(oil_well_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -497,6 +531,7 @@
     gas_pipeline_counter++;
     if (gas_pipeline_counter % 2 == 0) {
       gas_pipeline.remove();
+      update_active_layers('gas-pipeline', false);
       console.log(
         `gas-pipeline counter is even, value of ${gas_pipeline_counter}`
       );
@@ -518,9 +553,11 @@
       draw_json_layer(natural_gas_pipelines, draw_gas_pipes, ctx_gas_pipeline)
       // why no params for draw pipes method?
       load(1000);
+      update_active_layers('gas-pipeline', true);
       console.log(gas_pipeline_val);
       increment_asset_total(gas_pipeline_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /** Create the oil pipeline and oil product pipeline layers
@@ -532,6 +569,7 @@
     oil_pipeline_counter++;
     if (oil_pipeline_counter % 2 == 0) {
       oil_pipeline.remove();
+      update_active_layers('oil-pipeline', false);
       console.log(
         `oil-pipeline counter is even, value of ${oil_pipeline_counter}`
       );
@@ -552,9 +590,11 @@
       );
       draw_json_layer(crude_oil_pipelines, draw_oil_pipes, ctx_oil_pipeline);
       draw_json_layer(oil_product_pipelines, draw_oil_pipes, ctx_oil_pipeline);
+      update_active_layers('oil-pipeline', true);
       console.log(oil_pipeline_val);
       increment_asset_total(oil_pipeline_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   // Held in case we disaggregate the oil pipeline from the oil product pipeline
@@ -600,6 +640,7 @@
     gas_processing_counter++;
     if (gas_processing_counter % 2 == 0) {
       gas_processing.remove();
+      update_active_layers('gas-processing', false);
       console.log(
         `gas-processing counter is even, value of ${gas_processing_counter}`
       );
@@ -619,9 +660,11 @@
         `gas processing counter is odd, value of ${gas_processing_counter}`
       );
       draw_csv_layer(gas_processing_path, draw_processing, ctx_gas_processing);
+      update_active_layers('gas-processing', true);
       console.log(gas_processing_val);
       increment_asset_total(gas_processing_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -824,6 +867,7 @@
     if (coal_plant_counter % 2 == 0) {
       console.log(`coal plant counter is even, value of ${coal_plant_counter}`);
       coalplant.remove();
+      update_active_layers('coal-plant', false);
       d3.select(".map.layer.coal-plant")
         .append("canvas")
         .attr("class", "map layer canvas coal-plant")
@@ -840,9 +884,11 @@
       let fuel = 'COAL';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_coal_plant);
       load(300);
+      update_active_layers('coal-plant', true);
       console.log(coal_plant_val);
       increment_asset_total(coal_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -855,6 +901,7 @@
     if (geo_plant_counter % 2 == 0) {
       console.log(`geo plant counter is even, value of ${geo_plant_counter}`);
       geoplant.remove();
+      update_active_layers('geothermal-plant', false);
       d3.select(".map.layer.geothermal-plant")
         .append("canvas")
         .attr("class", "map layer canvas geothermal-plant")
@@ -871,9 +918,11 @@
       let fuel = 'GEO';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_geo_plant);
       load(300);
+      update_active_layers('geothermal-plant', true);
       console.log(geo_plant_val);
       increment_asset_total(geo_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -886,6 +935,7 @@
     if (hydro_plant_counter % 2 == 0) {
       console.log(`hydro plant counter is even, value of ${hydro_plant_counter}`);
       hydroplant.remove();
+      update_active_layers('hydro-plant', false);
       d3.select(".map.layer.hydro-plant")
         .append("canvas")
         .attr("class", "map layer canvas hydro-plant")
@@ -902,9 +952,11 @@
       let fuel = 'HYC';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_hydro_plant);
       load(300);
+      update_active_layers('hydro-plant', true);
       console.log(hydro_plant_val);
       increment_asset_total(hydro_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -917,6 +969,7 @@
     if (ng_plant_counter % 2 == 0) {
       console.log(`natural gas plant counter is even, value of ${ng_plant_counter}`);
       ngplant.remove();
+      update_active_layers('natural-gas-plant', false);
       d3.select(".map.layer.natural-gas-plant")
         .append("canvas")
         .attr("class", "map layer canvas natural-gas-plant")
@@ -933,9 +986,11 @@
       let fuel = 'NG';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_ng_plant);
       load(300);
+      update_active_layers('natural-gas-plant', true);
       console.log(ng_plant_val);
       increment_asset_total(ng_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -948,6 +1003,7 @@
     if (nuclear_plant_counter % 2 == 0) {
       console.log(`nuclear plant counter is even, value of ${nuclear_plant_counter}`);
       nuclearplant.remove();
+      update_active_layers('nuclear-plant', false);
       d3.select(".map.layer.nuclear-plant")
         .append("canvas")
         .attr("class", "map layer canvas nuclear-plant")
@@ -964,9 +1020,11 @@
       let fuel = 'NUC';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_nuclear_plant);
       load(300);
+      update_active_layers('nuclear-plant', true);
       console.log(nuclear_plant_val);
       increment_asset_total(nuclear_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -979,6 +1037,7 @@
     if (pet_plant_counter % 2 == 0) {
       console.log(`pet plant counter is even, value of ${pet_plant_counter}`);
       petplant.remove();
+      update_active_layers('petroleum-plant', false);
       d3.select(".map.layer.petroleum-plant")
         .append("canvas")
         .attr("class", "map layer canvas petroleum-plant")
@@ -996,9 +1055,11 @@
       let fuel = 'PET';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_pet_plant);
       load(300);
+      update_active_layers('petroleum-plant', true);
       console.log(pet_plant_val);
       increment_asset_total(pet_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -1011,6 +1072,7 @@
     if (solar_plant_counter % 2 == 0) {
       console.log(`solar plant counter is even, value of ${solar_plant_counter}`);
       solarplant.remove();
+      update_active_layers('solar-plant', false);
       d3.select(".map.layer.solar-plant")
         .append("canvas")
         .attr("class", "map layer canvas solar-plant")
@@ -1028,9 +1090,11 @@
       let fuel = 'SUN';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_solar_plant);
       load(300);
+      update_active_layers('solar-plant', true);
       console.log(solar_plant_val);
       increment_asset_total(solar_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -1043,6 +1107,7 @@
     if (wind_plant_counter % 2 == 0) {
       console.log(`wind plant counter is even, value of ${wind_plant_counter}`);
       windplant.remove();
+      update_active_layers('wind-plant', false);
       d3.select(".map.layer.wind-plant")
         .append("canvas")
         .attr("class", "map layer canvas wind-plant")
@@ -1060,9 +1125,11 @@
       let fuel = 'WND';
       draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_wind_plant);
       load(300);
+      update_active_layers('wind-plant', true);
       console.log(wind_plant_val);
       increment_asset_total(wind_plant_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
