@@ -4,12 +4,101 @@
   font-family: Arial, sans-serif
 p,h1,h2,h3,h4,h5,h6
   font-size: 1em
+/* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up on the index page */
 .wrap
-  width: 80%
+  width: 1200px
   margin: 0 auto
   img
     width: 100%
     display: block
+
+label
+  padding-right: 1%
+  font-family: 'Roboto', sans-serif
+.options
+  width: 100%
+  & > span
+    background-color: #d4d4d4
+    display: inline-block
+    margin: .25em
+    padding: .25em
+.wrapper
+  position: relative
+.map.layer
+  position: absolute
+  top: 0
+.canvas
+  &.gas-well
+    position: relative
+    top: 0
+  &.fossil-fuel-plant
+    position: absolute
+    top: 0
+
+/* Hack for an updated legend */
+.master-legend
+  width: auto!important
+
+.layer
+  fill: none
+
+#asset-totals
+  font-family: 'Roboto', sans-serif
+  font-size: 1rem
+  width: 1200px // to make it match the width of the header. So that the
+  // left positioning of the <p> within matches the alignment of the header.
+  // Width should eventually be more responsive.
+  p
+    position: relative
+    left: 25%
+#browser-notice
+  font-style: italic
+#builder-headline
+  font-family: 'Roboto', sans-serif
+  font-size: 1.3rem
+#spinner
+  position: absolute
+  top: 45%
+  left: 45%
+  width: 4em
+  height: 4em
+  z-index: 1000
+
+// Stuff from Sankey site
+.title
+  &.container
+    border-top: 2px solid #b2b2b2
+    border-bottom: 1px solid #b2b2b2
+    position: relative
+    width: 1200px
+    height: 50px
+    img
+      height: 40px
+      position: relative
+      top: 5px
+  .builder-link
+    position: absolute
+    left: 10%
+    padding: 8px 8px 0
+    text-align: center
+  .headline
+    position: absolute
+    font-weight: bold
+    font-family: 'Roboto', sans-serif
+    font-size: .9rem
+    line-height: 1.2em
+    top: 0
+    left: 25%
+    padding: .5em 0
+  .headline2
+    color: #b2b2b2
+    left: 50%
+    padding: 8px 0
+  .headline3
+    color: #b2b2b2
+    left: 72%
+    padding: 8px 0
+
 .layer
   fill: none
 .boundary
