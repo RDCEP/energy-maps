@@ -11,7 +11,7 @@ const fill_screen = false;
 
 // alter the width variable below to change the scale of the map if you need to make UI adjustments
 SCALE = 1;
-let width = 850 * SCALE;
+let width = 1200 * SCALE;
 
 const height = width / 2;
 const padding = {top: 10, right: 10, bottom: 50, left: 50};
@@ -160,8 +160,8 @@ const viz = {
 // create projection and path objects with which to draw geo objects
 
 const projection = d3.geoAlbersUsa()
-  .scale(width)
-  .translate([width / 2, height / 2]);
+  .scale(width*1.1)
+  .translate([width / 2.4, height / 2]);
 
 // const canvas = d3.select('.main.map')
 //   .append('canvas')
