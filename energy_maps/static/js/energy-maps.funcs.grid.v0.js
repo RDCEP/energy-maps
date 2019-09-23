@@ -37,6 +37,33 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
 
 }
 
+const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
+  console.log('electrical-grid-ac-lines-under-100-kv')
+
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+
+  // Class unavailable
+  let features = grid.features.filter(function(d) {
+    return d.properties.class === classes[1]; });
+  
+  let feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width;
+    ctx.strokeStyle = 'purple';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
+
+}
+
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   console.log('draw_grid_class_ac')
 
