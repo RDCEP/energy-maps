@@ -1002,6 +1002,70 @@
   });
 
   /**
+   * Create the solar plant layer.
+   */
+  const solar_plant_check = d3.select(".checkbox.solar-plant");
+  let solar_plant_counter = 0;
+  solar_plant_check.on("change", function() {
+    solar_plant_counter++;
+    if (solar_plant_counter % 2 == 0) {
+      console.log(`solar plant counter is even, value of ${solar_plant_counter}`);
+      solarplant.remove();
+      d3.select(".map.layer.solar-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas solar-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(solar_plant_val);
+    } else {
+      if (solar_plant_counter > 1) {
+        solarplant = d3.select(".map.layer.canvas.solar-plant");
+        ctx_solar_plant = solarplant.node().getContext("2d");
+        ctx_solar_plant.LineCap = "round";
+      }
+      console.log(`solar plant counter is odd, value of ${solar_plant_counter}`);
+      // draw_json_layer(power_plants, draw_solar_plants, ctx_pet_plant);
+      let fuel = 'SUN';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_solar_plant);
+      load(300);
+      console.log(solar_plant_val);
+      increment_asset_total(solar_plant_val);
+    }
+  });
+
+  /**
+   * Create the wind plant layer.
+   */
+  const wind_plant_check = d3.select(".checkbox.wind-plant");
+  let wind_plant_counter = 0;
+  wind_plant_check.on("change", function() {
+    wind_plant_counter++;
+    if (wind_plant_counter % 2 == 0) {
+      console.log(`wind plant counter is even, value of ${wind_plant_counter}`);
+      windplant.remove();
+      d3.select(".map.layer.wind-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas wind-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(wind_plant_val);
+    } else {
+      if (wind_plant_counter > 1) {
+        windplant = d3.select(".map.layer.canvas.wind-plant");
+        ctx_wind_plant = windplant.node().getContext("2d");
+        ctx_wind_plant.LineCap = "round";
+      }
+      console.log(`wind plant counter is odd, value of ${wind_plant_counter}`);
+      // draw_json_layer(power_plants, draw_wind_plants, ctx_pet_plant);
+      let fuel = 'WND';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_wind_plant);
+      load(300);
+      console.log(wind_plant_val);
+      increment_asset_total(wind_plant_val);
+    }
+  });
+
+  /**
    * Create the electrical grid layer.
    */
   const grid_check = d3.select(".checkbox.complete-electrical-grid");
