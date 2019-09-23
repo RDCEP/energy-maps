@@ -145,7 +145,7 @@
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
   let coal_plant_val = 0;
   let geo_plant_val = 0;
-  let hydro_plant_val = 0;
+  let hydro_plant_val = 0; // 597 B
   let ng_plant_val = 0;
   let nuclear_plant_val = 0;
   let pet_plant_val = 0;
@@ -877,6 +877,37 @@
   });
 
   /**
+   * Create the hydro plant layer.
+   */
+  const hyrdo_plant_check = d3.select(".checkbox.hydro-plant");
+  let hydro_plant_counter = 0;
+  hyrdo_plant_check.on("change", function() {
+    hydro_plant_counter++;
+    if (hydro_plant_counter % 2 == 0) {
+      console.log(`hydro plant counter is even, value of ${hydro_plant_counter}`);
+      hydroplant.remove();
+      d3.select(".map.layer.hydro-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas hydro-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(hydro_plant_val);
+    } else {
+      if (hydro_plant_counter > 1) {
+        hydroplant = d3.select(".map.layer.canvas.hydro-plant");
+        ctx_hydro_plant = hydroplant.node().getContext("2d");
+        ctx_hydro_plant.LineCap = "round";
+      }
+      console.log(`hydro plant counter is odd, value of ${hydro_plant_counter}`);
+      let fuel = 'HYC';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_hydro_plant);
+      load(300);
+      console.log(hydro_plant_val);
+      increment_asset_total(hydro_plant_val);
+    }
+  });
+
+  /**
    * Create the natural gas plant layer.
    */
   const ng_plant_check = d3.select(".checkbox.natural-gas-plant");
@@ -904,6 +935,37 @@
       load(300);
       console.log(ng_plant_val);
       increment_asset_total(ng_plant_val);
+    }
+  });
+
+  /**
+   * Create the nuclear plant layer.
+   */
+  const nuclear_plant_check = d3.select(".checkbox.nuclear-plant");
+  let nuclear_plant_counter = 0;
+  nuclear_plant_check.on("change", function() {
+    nuclear_plant_counter++;
+    if (nuclear_plant_counter % 2 == 0) {
+      console.log(`nuclear plant counter is even, value of ${nuclear_plant_counter}`);
+      nuclearplant.remove();
+      d3.select(".map.layer.nuclear-plant")
+        .append("canvas")
+        .attr("class", "map layer canvas nuclear-plant")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+        decrement_asset_total(nuclear_plant_val);
+    } else {
+      if (nuclear_plant_counter > 1) {
+        nuclearplant = d3.select(".map.layer.canvas.nuclear-plant");
+        ctx_nuclear_plant = nuclearplant.node().getContext("2d");
+        ctx_nuclear_plant.LineCap = "round";
+      }
+      console.log(`nuclear plant counter is odd, value of ${nuclear_plant_counter}`);
+      let fuel = 'NUC';
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_nuclear_plant);
+      load(300);
+      console.log(nuclear_plant_val);
+      increment_asset_total(nuclear_plant_val);
     }
   });
 
