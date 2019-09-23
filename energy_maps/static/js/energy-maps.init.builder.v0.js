@@ -104,8 +104,8 @@
     "oil-refinery",
     "railroad",
     "coal-mine",
-    "non-fossil-fuel-plant",
-    "fossil-fuel-plant",
+    // "non-fossil-fuel-plant",
+    // "fossil-fuel-plant",
     "coal-plant",
     "geothermal-plant",
     "hydro-plant",
@@ -333,16 +333,16 @@
   let ctx_railroad = railroad.node().getContext("2d");
   ctx_railroad.LineCap = "round";
 
-  /** @description A canvas element for the non-fossil-fuel plants, attached to div "map layer canvas non-fossil-fuel-plant" */
-  let nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
-  /** @description A drawing context for the non-fossil-fuel plants, attached to canvas "map layer non-fossil-fuel-plant" */
-  let ctx_nffplant = nffplant.node().getContext("2d");
-  ctx_nffplant.LineCap = "round";
+  // /** @description A canvas element for the non-fossil-fuel plants, attached to div "map layer canvas non-fossil-fuel-plant" */
+  // let nffplant = d3.select(".map.layer.canvas.non-fossil-fuel-plant");
+  // /** @description A drawing context for the non-fossil-fuel plants, attached to canvas "map layer non-fossil-fuel-plant" */
+  // let ctx_nffplant = nffplant.node().getContext("2d");
+  // ctx_nffplant.LineCap = "round";
 
-  /** @description A canvas element for the fossil-fuel plants, attached to div "map layer canvas fossil-fuel-plant" */
-  let ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
-  let ctx_ffplant = ffplant.node().getContext("2d");
-  ctx_ffplant.LineCap = "round";
+  // /** @description A canvas element for the fossil-fuel plants, attached to div "map layer canvas fossil-fuel-plant" */
+  // let ffplant = d3.select(".map.layer.canvas.fossil-fuel-plant");
+  // let ctx_ffplant = ffplant.node().getContext("2d");
+  // ctx_ffplant.LineCap = "round";
 
   /** @description A canvas element for the coal plants, attached to div "map layer canvas coal-plant" */
   let coalplant = d3.select(".map.layer.canvas.coal-plant");
