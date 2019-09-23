@@ -12,7 +12,7 @@ assets = Environment(app)
 
 
 assets.register('css_main',
-                Bundle('css/main.v0.css',
+                Bundle('sass/main.v0.css',
                        filters='cssmin',
                        output='gen/main.css'))
 assets.register('js_d3',
@@ -89,7 +89,7 @@ assets.register('js_bigfucker',
                        'js/energy-maps.funcs.grid.v0.js',
                        'js/energy-maps.funcs.plants.v0.js',
                        'js/energy-maps.funcs.wells.v0.js',
-                       'js/energy-maps.legends.v0.js',
+                       'js/energy-maps.legends.v1.js',
                        'js/energy-maps.init.builder.v0.js',
                        'js/energy-maps.init.coal.v0.js',
                        'js/energy-maps.init.grid.v0.js',
