@@ -114,10 +114,10 @@
     "petroleum-plant",
     "solar-plant",
     "wind-plant",
-    "complete-electrical-grid",
-    "unavailable-kv",
-    "ac-lines",
-    "dc-lines"
+    // "complete-electrical-grid",
+    "electrical-grid-unavailable-kv",
+    "electrical-grid-ac-lines",
+    "electrical-grid-dc-lines"
   ];
 
   let unimplemented_layers = [
@@ -385,22 +385,22 @@
   ctx_wind_plant.LineCap = "round";
 
   /** @description A canvas element for the electrical grid, attached to div "map layer canvas complete-electrical-grid" */
-  let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
-  let ctx_grid = grid.node().getContext("2d");
-  ctx_grid.LineCap = "round";
+  // let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
+  // let ctx_grid = grid.node().getContext("2d");
+  // ctx_grid.LineCap = "round";
 
-  /** @description A canvas element for the unavailable kv layer of the electrical grid, attached to div "map layer canvas unavailable-kv" */
-  let unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
+  /** @description A canvas element for the unavailable kv layer of the electrical grid, attached to div "map layer canvas electrical-grid-unavailable-kv" */
+  let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
   let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
   ctx_unavailable_kv.LineCap = "round";
 
-  /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas ac-lines" */
-  let ac_lines = d3.select(".map.layer.canvas.ac-lines");
+  /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-ac-lines" */
+  let ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
   let ctx_ac_lines = ac_lines.node().getContext("2d");
   ctx_ac_lines.LineCap = "round";
 
-  /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas dc-lines" */
-  let dc_lines = d3.select(".map.layer.canvas.dc-lines");
+  /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-dc-lines" */
+  let dc_lines = d3.select(".map.layer.canvas.electrical-grid-dc-lines");
   let ctx_dc_lines = dc_lines.node().getContext("2d");
   ctx_dc_lines.LineCap = "round";
 
@@ -1099,7 +1099,7 @@
   /**
    * Create the electrical grid class unavailable kv layer.
    */
-  // const unavailable_kv_label = "unavailable-kv";
+  // const unavailable_kv_label = "electrical-grid-unavailable-kv";
   // // const draw_json_unavailable_kv = draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
   // let unavailable_kv_arg_obj = {
   //   path: gridmap,
@@ -1110,22 +1110,22 @@
   // const unavailable_kv_load_time = 2000;
 
   // create_layer(unavailable_kv_label, unavailable_kv, unavailable_kv_val, ctx_unavailable_kv, draw_json_layer, unavailable_kv_arg_obj);
-  const unavailable_kv_check = d3.select(".checkbox.unavailable-kv");
+  const unavailable_kv_check = d3.select(".checkbox.electrical-grid-unavailable-kv");
   let unavailable_kv_counter = 0;
   unavailable_kv_check.on("change", function() {
     unavailable_kv_counter++;
     if (unavailable_kv_counter % 2 == 0) {
       console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
       unavailable_kv.remove();
-      d3.select(".map.layer.unavailable-kv")
+      d3.select(".map.layer.electrical-grid-unavailable-kv")
         .append("canvas")
-        .attr("class", "map layer canvas unavailable-kv")
+        .attr("class", "map layer canvas electrical-grid-unavailable-kv")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
       decrement_asset_total(unavailable_kv_val)
     } else {
       if (unavailable_kv_counter > 1) {
-        unavailable_kv = d3.select(".map.layer.canvas.unavailable-kv");
+        unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
         ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
         ctx_unavailable_kv.LineCap = "round";
       }
@@ -1140,22 +1140,22 @@
   /**
    * Create the electrical grid class ac lines layer.
    */
-  const ac_lines_check = d3.select(".checkbox.ac-lines");
+  const ac_lines_check = d3.select(".checkbox.electrical-grid-ac-lines");
   let ac_lines_counter = 0;
   ac_lines_check.on("change", function() {
     ac_lines_counter++;
     if (ac_lines_counter % 2 == 0) {
       console.log(`ac lines counter is even, value of ${ac_lines_counter}`);
       ac_lines.remove();
-      d3.select(".map.layer.ac-lines")
+      d3.select(".map.layer.electrical-grid-ac-lines")
         .append("canvas")
-        .attr("class", "map layer canvas ac-lines")
+        .attr("class", "map layer canvas electrical-grid-ac-lines")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
       decrement_asset_total(ac_lines_val)
     } else {
       if (ac_lines_counter > 1) {
-        ac_lines = d3.select(".map.layer.canvas.ac-lines");
+        ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
         ctx_ac_lines = ac_lines.node().getContext("2d");
         ctx_ac_lines.LineCap = "round";
       }
@@ -1170,22 +1170,22 @@
   /**
    * Create the electrical grid class ac lines layer.
    */
-  const dc_lines_check = d3.select(".checkbox.dc-lines");
+  const dc_lines_check = d3.select(".checkbox.electrical-grid-dc-lines");
   let dc_lines_counter = 0;
   dc_lines_check.on("change", function() {
     dc_lines_counter++;
     if (dc_lines_counter % 2 == 0) {
       console.log(`dc lines counter is even, value of ${dc_lines_counter}`);
       dc_lines.remove();
-      d3.select(".map.layer.dc-lines")
+      d3.select(".map.layer.electrical-grid-dc-lines")
         .append("canvas")
-        .attr("class", "map layer canvas dc-lines")
+        .attr("class", "map layer canvas electrical-grid-dc-lines")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
       decrement_asset_total(dc_lines_val)
     } else {
       if (dc_lines_counter > 1) {
-        dc_lines = d3.select(".map.layer.canvas.dc-lines");
+        dc_lines = d3.select(".map.layer.canvas.electrical-grid-dc-lines");
         ctx_dc_lines = dc_lines.node().getContext("2d");
         ctx_dc_lines.LineCap = "round";
       }
