@@ -1,7 +1,8 @@
 
 const update_legend = function update_legend(ctx, layers) {
 
-  const draw_well_legend = function draw_well_legend(ctx, x, y, color, text) {
+  const draw_well_legend = function draw_well_legend(
+    ctx, x, y, color, text) {
     console.log('well symbol');
     // Advance vertical increment
     y += 15 * SCALE;
@@ -197,8 +198,8 @@ const update_legend = function update_legend(ctx, layers) {
     
 
   for (let i = 0; i < layers.length; ++i) {
-    if (layers[i][1]) {
-      switch (layers[i][0]) {
+    if (layers[i].active) {
+      switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(
             ctx, x, y, viz.oil, 'Oil');
