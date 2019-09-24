@@ -178,9 +178,17 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
 };
 
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
-  ctx.beginPath();
+  r *= viz.process.oil_refinery.size;
   ctx.fillStyle = viz.process.oil_refinery.fill;
-  draw_circle(ctx, xy, viz.process.oil_refinery.size * r);
+  ctx.beginPath();
+  let a = Math.PI / 2;
+  let n = 6;
+  ctx.moveTo (xy[0] + r * Math.cos(a), xy[1] + r * Math.sin(a));
+  for (let i = 1; i <= n; ++i) {
+    ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / n),
+      xy[1] + r * Math.sin(a + i * 2 * Math.PI / n));
+  }
+  // draw_circle(ctx, xy, r);
   ctx.fill();
 };
 
