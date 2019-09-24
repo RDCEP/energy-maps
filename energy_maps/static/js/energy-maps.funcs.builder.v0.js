@@ -155,5 +155,5 @@ let asset_total_sum;
     }
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `<p>Asset totals: ${asset_total_sum_display} of $10.5T shown.</p>`;
+    ).innerHTML = `<p>Asset totals: ${asset_total_sum_display} of $9.8T shown.</p>`;
   }

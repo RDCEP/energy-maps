@@ -143,18 +143,18 @@
   let coalmine_val = 57_000_000_000; // 57 B
   let nff_val = 1_156_000_000_000; // 1.16T || 1,156 B -- (Break this into nuclear, hydro, wind, solar , etc. when we have layers separate)
   let ff_val = 1_645_000_000_000; // 1.65T || 1,645B (Break this into coal, oil, and gas when we have layers separate)
-  let coal_plant_val = 0;
-  let geo_plant_val = 0;
-  let hydro_plant_val = 0; // 597 B
-  let ng_plant_val = 0;
-  let nuclear_plant_val = 0;
-  let pet_plant_val = 0;
-  let solar_plant_val = 0;
-  let wind_plant_val = 0;
+  let coal_plant_val = 1_092_000_000_000; // $1092 B ($1100 B) -- currently displays as 1T, and only updates if something increases it by over 1B
+  let geo_plant_val = 22_000_000_000; // $22 B
+  let hydro_plant_val = 597_000_000_000; // 597 B
+  let ng_plant_val = 488_000_000_000 // $488 B ($490 B);
+  let nuclear_plant_val = 597_000_000_000 // $597 B ($600 B);
+  let pet_plant_val = 64_000_000_000// $64 B;
+  let solar_plant_val = 14_000_000_000; // $14 B
+  let wind_plant_val = 132_000_000_000; // $132 B ($130 B);
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   let unavailable_kv_val = 0; // TBD
-  let ac_lines_val = 0; // TBD
-  let dc_lines_val = 0; // TBD
+  let ac_lines_val = 2_238_000_000_000; // $2238 B ($2240 B); also includes substations
+  let dc_lines_val = 4_900_000_000; // $3.9 B ($4 B); 
 
   let asset_values = [
     gas_well_val,
