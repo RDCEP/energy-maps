@@ -115,7 +115,7 @@
     "solar-plant",
     "wind-plant",
     // "complete-electrical-grid",
-    "electrical-grid-unavailable-kv",
+    // "electrical-grid-unavailable-kv",
     "electrical-grid-ac-lines",
     "electrical-grid-dc-lines"
   ];
@@ -152,7 +152,7 @@
   let solar_plant_val = 14_000_000_000; // $14 B
   let wind_plant_val = 132_000_000_000; // $132 B ($130 B);
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
-  let unavailable_kv_val = 0; // TBD
+  // let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 2_238_000_000_000; // $2238 B ($2240 B); also includes substations
   let dc_lines_val = 4_900_000_000; // $3.9 B ($4 B); 
 
@@ -178,7 +178,7 @@
     solar_plant_val,
     wind_plant_val,
     electrical_grid_val, 
-    unavailable_kv_val,
+    // unavailable_kv_val,
     ac_lines_val,
     dc_lines_val
   ];
@@ -418,9 +418,9 @@
   // ctx_grid.LineCap = "round";
 
   /** @description A canvas element for the unavailable kv layer of the electrical grid, attached to div "map layer canvas electrical-grid-unavailable-kv" */
-  let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
-  let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
-  ctx_unavailable_kv.LineCap = "round";
+  // let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
+  // let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+  // ctx_unavailable_kv.LineCap = "round";
 
   /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-ac-lines" */
   let ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
@@ -1186,32 +1186,34 @@
   // const unavailable_kv_load_time = 2000;
 
   // create_layer(unavailable_kv_label, unavailable_kv, unavailable_kv_val, ctx_unavailable_kv, draw_json_layer, unavailable_kv_arg_obj);
-  const unavailable_kv_check = d3.select(".checkbox.electrical-grid-unavailable-kv");
-  let unavailable_kv_counter = 0;
-  unavailable_kv_check.on("change", function() {
-    unavailable_kv_counter++;
-    if (unavailable_kv_counter % 2 == 0) {
-      console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
-      unavailable_kv.remove();
-      d3.select(".map.layer.electrical-grid-unavailable-kv")
-        .append("canvas")
-        .attr("class", "map layer canvas electrical-grid-unavailable-kv")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-      decrement_asset_total(unavailable_kv_val)
-    } else {
-      if (unavailable_kv_counter > 1) {
-        unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
-        ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
-        ctx_unavailable_kv.LineCap = "round";
-      }
-      console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
-      draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
-      load(2000);
-      console.log(unavailable_kv_val);
-      increment_asset_total(unavailable_kv_val);
-    }
-  });
+
+  // ## this section below defines the most recently working way of drawing the unavailable kv layer independently
+  // const unavailable_kv_check = d3.select(".checkbox.electrical-grid-unavailable-kv");
+  // let unavailable_kv_counter = 0;
+  // unavailable_kv_check.on("change", function() {
+  //   unavailable_kv_counter++;
+  //   if (unavailable_kv_counter % 2 == 0) {
+  //     console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
+  //     unavailable_kv.remove();
+  //     d3.select(".map.layer.electrical-grid-unavailable-kv")
+  //       .append("canvas")
+  //       .attr("class", "map layer canvas electrical-grid-unavailable-kv")
+  //       .attr("width", width + SCALE * 400)
+  //       .attr("height", height);
+  //     decrement_asset_total(unavailable_kv_val)
+  //   } else {
+  //     if (unavailable_kv_counter > 1) {
+  //       unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
+  //       ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+  //       ctx_unavailable_kv.LineCap = "round";
+  //     }
+  //     console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
+  //     draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
+  //     load(2000);
+  //     console.log(unavailable_kv_val);
+  //     increment_asset_total(unavailable_kv_val);
+  //   }
+  // });
 
   /**
    * Create the electrical grid class ac lines layer.

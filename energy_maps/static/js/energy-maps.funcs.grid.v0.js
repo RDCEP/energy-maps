@@ -67,6 +67,23 @@ const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
     path(tmp_grid);
     ctx.stroke();
   }
+  
+  // unavailable 
+  console.log('draw_grid_class_unavailable')
+
+  tmp_grid = {type: 'FeatureCollection', features: []};
+
+  features = grid.features.filter(function(d) {
+    return d.properties.class === classes[0]; });
+
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width;
+    ctx.strokeStyle = 'white';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
 }
 
 const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
