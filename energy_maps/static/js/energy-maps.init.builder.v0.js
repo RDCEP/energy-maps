@@ -714,6 +714,7 @@
     oil_refinery_counter++;
     if (oil_refinery_counter % 2 == 0) {
       oil_refinery.remove();
+      update_active_layers('oil-refinery', false);
       console.log(
         `oil-refinery counter is even, value of ${oil_refinery_counter}`
       );
@@ -733,9 +734,11 @@
         `oil refinery counter is odd, value of ${oil_refinery_counter}`
       );
       draw_json_layer(petroleum_refineries, draw_refining, ctx_oil_refinery);
+      update_active_layers('oil-refinery', true);
       console.log(oil_refinery_val);
       increment_asset_total(oil_refinery_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -748,6 +751,7 @@
     if (coal_counter % 2 == 0) {
       console.log(`coal counter is even, value of ${coal_counter}`);
       coalmines.remove();
+      update_active_layers('coal-mine', false);
       d3.select(".map.layer.coal-mine")
         .append("canvas")
         .attr("class", "map layer canvas coal-mine")
@@ -762,9 +766,11 @@
       }
       console.log(`coal counter is odd, value of ${coal_counter}`);
       draw_csv_layer(mines, draw_coal_mines, ctx_coalmines);
+      update_active_layers('coal-mine', true);
       console.log(coalmine_val);
       increment_asset_total(coalmine_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -777,6 +783,7 @@
     if (rrmap_counter % 2 == 0) {
       console.log(`rrmap counter is even, value of ${rrmap_counter}`);
       railroad.remove();
+      update_active_layers('railroad', false);
       d3.select(".map.layer.railroad")
         .append("canvas")
         .attr("class", "map layer canvas railroad")
@@ -792,9 +799,11 @@
       console.log(`railroad counter is odd, value of ${rrmap_counter}`);
       draw_json_layer(rrmap, draw_railroads, ctx_railroad);
       load(2000);
+      update_active_layers('railroad', true);
       console.log(railroad_val);
       increment_asset_total(railroad_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -1214,6 +1223,7 @@
     if (ac_lines_counter % 2 == 0) {
       console.log(`ac lines counter is even, value of ${ac_lines_counter}`);
       ac_lines.remove();
+      update_active_layers('electrical-grid-ac-lines', false);
       d3.select(".map.layer.electrical-grid-ac-lines")
         .append("canvas")
         .attr("class", "map layer canvas electrical-grid-ac-lines")
@@ -1229,9 +1239,11 @@
       console.log(`ac lines counter is odd, value of ${ac_lines_counter}`);
       draw_json_layer(gridmap, draw_grid_class_ac, ctx_ac_lines);
       load(2000);
+      update_active_layers('electrical-grid-ac-lines', true);
       console.log(ac_lines_val);
       increment_asset_total(ac_lines_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   /**
@@ -1244,6 +1256,7 @@
     if (dc_lines_counter % 2 == 0) {
       console.log(`dc lines counter is even, value of ${dc_lines_counter}`);
       dc_lines.remove();
+      update_active_layers('electrical-grid-dc-lines', false);
       d3.select(".map.layer.electrical-grid-dc-lines")
         .append("canvas")
         .attr("class", "map layer canvas electrical-grid-dc-lines")
@@ -1259,9 +1272,11 @@
       console.log(`dc lines counter is odd, value of ${dc_lines_counter}`);
       draw_json_layer(gridmap, draw_grid_class_dc, ctx_dc_lines);
       load(2000);
+      update_active_layers('electrical-grid-dc-lines', true);
       console.log(dc_lines_val);
       increment_asset_total(dc_lines_val);
     }
+    update_legend(legend_ctx, active_layers);
   });
 
   // Toggle function
