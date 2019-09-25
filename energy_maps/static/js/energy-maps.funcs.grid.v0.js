@@ -77,6 +77,11 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
 
 }
 
+/**
+ * Draw grid class 100-200 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
 const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-100-200')
 
@@ -123,7 +128,7 @@ const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, que
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'purple';
+    ctx.strokeStyle = 'rgba(55, 126, 184)';
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
