@@ -29,7 +29,7 @@ const update_legend = function update_legend(ctx, layers) {
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
     ctx.font = `bold ${14 * SCALE}px Arial`;
-    ctx.fillText(`${text} offshore well`, offset + x, y);
+    ctx.fillText(`${text} offshore well`, text_offset + x, y);
     return y;
   };
 
