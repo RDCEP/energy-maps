@@ -115,7 +115,7 @@
     "solar-plant",
     "wind-plant",
     // "complete-electrical-grid",
-    "electrical-grid-unavailable-kv",
+    // "electrical-grid-unavailable-kv",
     "electrical-grid-ac-lines",
     "electrical-grid-ac-lines-under-100-kv",
     "electrical-grid-ac-lines-100-to-200-kV",
@@ -157,7 +157,7 @@
   let solar_plant_val = 14_000_000_000; // $14 B
   let wind_plant_val = 132_000_000_000; // $132 B ($130 B);
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
-  let unavailable_kv_val = 0; // TBD
+  // let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 2_238_000_000_000; // $2238 B ($2240 B); also includes substations
   let ac_lines_under_100_val = 0; // TBA
   let dc_lines_val = 4_900_000_000; // $3.9 B ($4 B); 
@@ -184,7 +184,7 @@
     solar_plant_val,
     wind_plant_val,
     electrical_grid_val, 
-    unavailable_kv_val,
+    // unavailable_kv_val,
     ac_lines_val,
     ac_lines_under_100_val,
     dc_lines_val
@@ -397,9 +397,9 @@
   // ctx_grid.LineCap = "round";
 
   /** @description A canvas element for the unavailable kv layer of the electrical grid, attached to div "map layer canvas electrical-grid-unavailable-kv" */
-  let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
-  let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
-  ctx_unavailable_kv.LineCap = "round";
+  // let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
+  // let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+  // ctx_unavailable_kv.LineCap = "round";
 
   /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-ac-lines" */
   let ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
@@ -1124,32 +1124,32 @@
   // const unavailable_kv_load_time = 2000;
 
   // create_layer(unavailable_kv_label, unavailable_kv, unavailable_kv_val, ctx_unavailable_kv, draw_json_layer, unavailable_kv_arg_obj);
-  const unavailable_kv_check = d3.select(".checkbox.electrical-grid-unavailable-kv");
-  let unavailable_kv_counter = 0;
-  unavailable_kv_check.on("change", function() {
-    unavailable_kv_counter++;
-    if (unavailable_kv_counter % 2 == 0) {
-      console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
-      unavailable_kv.remove();
-      d3.select(".map.layer.electrical-grid-unavailable-kv")
-        .append("canvas")
-        .attr("class", "map layer canvas electrical-grid-unavailable-kv")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-      decrement_asset_total(unavailable_kv_val)
-    } else {
-      if (unavailable_kv_counter > 1) {
-        unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
-        ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
-        ctx_unavailable_kv.LineCap = "round";
-      }
-      console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
-      draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
-      load(2000);
-      console.log(unavailable_kv_val);
-      increment_asset_total(unavailable_kv_val);
-    }
-  });
+  // const unavailable_kv_check = d3.select(".checkbox.electrical-grid-unavailable-kv");
+  // let unavailable_kv_counter = 0;
+  // unavailable_kv_check.on("change", function() {
+  //   unavailable_kv_counter++;
+  //   if (unavailable_kv_counter % 2 == 0) {
+  //     console.log(`unavailable kv counter is even, value of ${unavailable_kv_counter}`);
+  //     unavailable_kv.remove();
+  //     d3.select(".map.layer.electrical-grid-unavailable-kv")
+  //       .append("canvas")
+  //       .attr("class", "map layer canvas electrical-grid-unavailable-kv")
+  //       .attr("width", width + SCALE * 400)
+  //       .attr("height", height);
+  //     decrement_asset_total(unavailable_kv_val)
+  //   } else {
+  //     if (unavailable_kv_counter > 1) {
+  //       unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
+  //       ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
+  //       ctx_unavailable_kv.LineCap = "round";
+  //     }
+  //     console.log(`unavailable kv counter is odd, value of ${unavailable_kv_counter}`);
+  //     draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_unavailable_kv);
+  //     load(2000);
+  //     console.log(unavailable_kv_val);
+  //     increment_asset_total(unavailable_kv_val);
+  //   }
+  // });
 
   /**
    * Create the electrical grid class ac lines layer.
@@ -1182,14 +1182,14 @@
   });
 
   /**
-   * Create the electrical grid class ac lines under 100 kv layer.
+   * Create the electrical grid class ac lines under 100 layer.
    */
   const ac_lines_under_100_check = d3.select(".checkbox.electrical-grid-ac-lines-under-100-kv");
   let ac_lines_under_100_counter = 0;
   ac_lines_under_100_check.on("change", function() {
     ac_lines_under_100_counter++;
     if (ac_lines_under_100_counter % 2 == 0) {
-      console.log(`ac lines under 100 counter is even, value of ${ac_lines_under_100_counter}`);
+      console.log(`ac under 100 counter is even, value of ${ac_lines_under_100_counter}`);
       ac_lines_under_100.remove();
       d3.select(".map.layer.electrical-grid-ac-lines-under-100-kv")
         .append("canvas")
@@ -1203,7 +1203,8 @@
         ctx_ac_lines_under_100 = ac_lines_under_100.node().getContext("2d");
         ctx_ac_lines_under_100.LineCap = "round";
       }
-      console.log(`ac lines counter is odd, value of ${ac_lines_under_100_counter}`);
+      console.log(`ac under 100 counter is odd, value of ${ac_lines_under_100_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_unavailable, ctx_ac_lines_under_100);
       draw_json_layer(gridmap, draw_grid_class_ac_under_100, ctx_ac_lines_under_100);
       load(2000);
       console.log(ac_lines_under_100_val);
@@ -1211,8 +1212,9 @@
     }
   });
 
+  
   /**
-   * Create the electrical grid class ac lines layer.
+   * Create the electrical grid class dc lines layer.
    */
   const dc_lines_check = d3.select(".checkbox.electrical-grid-dc-lines");
   let dc_lines_counter = 0;

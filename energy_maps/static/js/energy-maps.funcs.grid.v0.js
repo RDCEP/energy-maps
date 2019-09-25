@@ -37,30 +37,30 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
 
 }
 
-// const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
-//   console.log('electrical-grid-ac-lines-under-100-kv')
+const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
+  console.log('electrical-grid-ac-lines-under-100-kv')
 
-//   let grid = queued_data[0];
+  let grid = queued_data[0];
 
-//   const path = get_path(ctx);
+  const path = get_path(ctx);
 
-//   let tmp_grid = {type: 'FeatureCollection', features: []};
+  let tmp_grid = {type: 'FeatureCollection', features: []};
 
-//   ctx.lineCap = 'round';
+  ctx.lineCap = 'round';
 
-//   // Class ac under 100
-//   let features = grid.features.filter(function(d) {
-//     return d.properties.class === classes[1]});
+  // Class ac under 100
+  let features = grid.features.filter(function(d) {
+    return d.properties.class === classes[1]});
 
-//   let feat_len = features.length;
-//   for (let i = 0; i < feat_len; ++i) {
-//     tmp_grid.features = [features[i]];
-//     ctx.lineWidth = viz.transport.rail.width;
-//     ctx.strokeStyle = 'purple';
-//     ctx.beginPath();
-//     path(tmp_grid);
-//     ctx.stroke();
-//   }
+  let feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width;
+    ctx.strokeStyle = 'purple';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
 
 // let features2 = grid.features.filter(function(d) {
 //   return d.properties.class === classes[2]});
@@ -75,7 +75,7 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
 //     ctx.stroke();
 //   }
 
-// }
+}
 
 const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-200-to-300-kv')
