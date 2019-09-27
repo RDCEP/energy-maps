@@ -147,13 +147,13 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
   ctx.lineCap = 'round';
 
   let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[3]; });
+    return d.properties.class === classes[4]; });
   
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'rgba(55, 126, 184)';
+    ctx.strokeStyle = 'rgba(255, 255, 51)';
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
