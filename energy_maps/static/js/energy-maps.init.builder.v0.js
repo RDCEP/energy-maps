@@ -122,7 +122,7 @@
     "electrical-grid-ac-lines-200-to-300-kV",
     "electrical-grid-ac-lines-345-kV",
     "electrical-grid-ac-lines-500-kV",
-    "electrical-grid-ac-lines-735+-kV",
+    "electrical-grid-ac-lines-735-kV",
     "electrical-grid-dc-lines"
   ];
 
@@ -165,6 +165,7 @@
   let ac_lines_200_300_val = 0; // TBA
   let ac_lines_345_val = 0; // TBA
   let ac_lines_500_val = 0; // TBA
+  let ac_lines_735_val = 0; // TBA
   let dc_lines_val = 4_900_000_000; // $3.9 B ($4 B); 
 
   let asset_values = [
@@ -196,6 +197,7 @@
     ac_lines_200_300_val,
     ac_lines_345_val,
     ac_lines_500_val,
+    ac_lines_735_val,
     dc_lines_val
   ];
 
@@ -444,6 +446,12 @@
   let ac_lines_500 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-500-kV");
   let ctx_ac_lines_500 = ac_lines_500.node().getContext("2d");
   ctx_ac_lines_500.LineCap = "round";
+
+  /** @description A canvas element for the ac lines 735 kv layer of the electrical grid, attached to div "map layer canvas 
+  electrical-grid-ac-lines-735-kv" */
+  let ac_lines_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-735-kV");
+  let ctx_ac_lines_735 = ac_lines_735.node().getContext("2d");
+  ctx_ac_lines_735.LineCap = "round";
 
   /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-dc-lines" */
   let dc_lines = d3.select(".map.layer.canvas.electrical-grid-dc-lines");
@@ -1363,6 +1371,37 @@
       load(2000);
       console.log(ac_lines_500_val);
       increment_asset_total(ac_lines_500_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid class ac lines 735 layer.
+   */
+
+  const ac_lines_735_check = d3.select(".checkbox.electrical-grid-ac-lines-735-kV");
+  let ac_lines_735_counter = 0;
+  ac_lines_735_check.on("change", function() {
+    ac_lines_735_counter++;
+    if (ac_lines_735_counter % 2 == 0) {
+      console.log(`ac 735 counter is even, value of ${ac_lines_735_counter}`);
+      ac_lines_735.remove();
+      d3.select(".map.layer.electrical-grid-ac-lines-735-kV")
+        .append("canvas")
+        .attr("class", "map layer canvas electrical-grid-ac-lines-735-kV")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(ac_lines_735_val)
+    } else {
+      if (ac_lines_735_counter > 1) {
+        ac_lines_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-735-kV");
+        ctx_ac_lines_735 = ac_lines_735.node().getContext("2d");
+        ctx_ac_lines_735.LineCap = "round";
+      }
+      console.log(`ac 735 counter is odd, value of ${ac_lines_735_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_ac_735, ctx_ac_lines_735);
+      load(2000);
+      console.log(ac_lines_735_val);
+      increment_asset_total(ac_lines_735_val);
     }
   });
 
