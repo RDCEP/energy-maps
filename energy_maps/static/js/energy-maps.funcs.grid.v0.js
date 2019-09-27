@@ -161,6 +161,32 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
 
 }
 
+const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data) {
+  console.log('electrical-grid-ac-lines-500-kV')
+
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+
+  let features = grid.features.filter(function(d) {
+    return d.properties.class === classes[5]; });
+  
+  let feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width;
+    ctx.strokeStyle = 'rgba(228, 26, 28)';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+  }
+
+}
+
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   console.log('draw_grid_class_ac')
 

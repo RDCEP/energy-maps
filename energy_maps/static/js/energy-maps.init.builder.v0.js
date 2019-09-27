@@ -439,6 +439,12 @@
   let ctx_ac_lines_345 = ac_lines_345.node().getContext("2d");
   ctx_ac_lines_345.LineCap = "round";
 
+  /** @description A canvas element for the ac lines 500 kv layer of the electrical grid, attached to div "map layer canvas 
+  electrical-grid-ac-lines-500-kv" */
+  let ac_lines_500 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-500-kV");
+  let ctx_ac_lines_500 = ac_lines_500.node().getContext("2d");
+  ctx_ac_lines_500.LineCap = "round";
+
   /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-dc-lines" */
   let dc_lines = d3.select(".map.layer.canvas.electrical-grid-dc-lines");
   let ctx_dc_lines = dc_lines.node().getContext("2d");
@@ -1326,6 +1332,37 @@
       load(2000);
       console.log(ac_lines_345_val);
       increment_asset_total(ac_lines_345_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid class ac lines 500 layer.
+   */
+
+  const ac_lines_500_check = d3.select(".checkbox.electrical-grid-ac-lines-500-kV");
+  let ac_lines_500_counter = 0;
+  ac_lines_500_check.on("change", function() {
+    ac_lines_500_counter++;
+    if (ac_lines_500_counter % 2 == 0) {
+      console.log(`ac 500 counter is even, value of ${ac_lines_500_counter}`);
+      ac_lines_500.remove();
+      d3.select(".map.layer.electrical-grid-ac-lines-500-kV")
+        .append("canvas")
+        .attr("class", "map layer canvas electrical-grid-ac-lines-500-kV")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(ac_lines_500_val)
+    } else {
+      if (ac_lines_500_counter > 1) {
+        ac_lines_500 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-500-kV");
+        ctx_ac_lines_500 = ac_lines_500.node().getContext("2d");
+        ctx_ac_lines_500.LineCap = "round";
+      }
+      console.log(`ac 500 counter is odd, value of ${ac_lines_500_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_ac_500, ctx_ac_lines_500);
+      load(2000);
+      console.log(ac_lines_500_val);
+      increment_asset_total(ac_lines_500_val);
     }
   });
 
