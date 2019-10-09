@@ -116,7 +116,6 @@
     "wind-plant",
     // "complete-electrical-grid",
     // "electrical-grid-unavailable-kv",
-    "electrical-grid-ac-lines",
     "electrical-grid-ac-lines-under-100-kv",
     "electrical-grid-ac-lines-100-to-300-kV",
     // "electrical-grid-ac-lines-100-to-200-kV",
@@ -417,11 +416,6 @@
   // let unavailable_kv = d3.select(".map.layer.canvas.electrical-grid-unavailable-kv");
   // let ctx_unavailable_kv = unavailable_kv.node().getContext("2d");
   // ctx_unavailable_kv.LineCap = "round";
-
-  /** @description A canvas element for the ac lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-ac-lines" */
-  let ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
-  let ctx_ac_lines = ac_lines.node().getContext("2d");
-  ctx_ac_lines.LineCap = "round";
 
   /** @description A canvas element for the ac lines under 100 kv layer of the electrical grid, attached to div "map layer canvas 
   electrical-grid-ac-lines-under-100-kv" */
@@ -1208,36 +1202,6 @@
   //     increment_asset_total(unavailable_kv_val);
   //   }
   // });
-
-  /**
-   * Create the electrical grid class ac lines layer.
-   */
-  const ac_lines_check = d3.select(".checkbox.electrical-grid-ac-lines");
-  let ac_lines_counter = 0;
-  ac_lines_check.on("change", function() {
-    ac_lines_counter++;
-    if (ac_lines_counter % 2 == 0) {
-      console.log(`ac lines counter is even, value of ${ac_lines_counter}`);
-      ac_lines.remove();
-      d3.select(".map.layer.electrical-grid-ac-lines")
-        .append("canvas")
-        .attr("class", "map layer canvas electrical-grid-ac-lines")
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-      decrement_asset_total(ac_lines_val)
-    } else {
-      if (ac_lines_counter > 1) {
-        ac_lines = d3.select(".map.layer.canvas.electrical-grid-ac-lines");
-        ctx_ac_lines = ac_lines.node().getContext("2d");
-        ctx_ac_lines.LineCap = "round";
-      }
-      console.log(`ac lines counter is odd, value of ${ac_lines_counter}`);
-      draw_json_layer(gridmap, draw_grid_class_ac, ctx_ac_lines);
-      load(2000);
-      console.log(ac_lines_val);
-      increment_asset_total(ac_lines_val);
-    }
-  });
 
   /**
    * Create the electrical grid class ac lines under 100 layer.
