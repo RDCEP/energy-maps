@@ -118,11 +118,13 @@
     // "electrical-grid-unavailable-kv",
     "electrical-grid-ac-lines",
     "electrical-grid-ac-lines-under-100-kv",
-    "electrical-grid-ac-lines-100-to-200-kV",
-    "electrical-grid-ac-lines-200-to-300-kV",
-    "electrical-grid-ac-lines-345-kV",
-    "electrical-grid-ac-lines-500-kV",
-    "electrical-grid-ac-lines-735-kV",
+    "electrical-grid-ac-lines-100-to-300-kV",
+    // "electrical-grid-ac-lines-100-to-200-kV",
+    // "electrical-grid-ac-lines-200-to-300-kV",
+    "electrical-grid-ac-lines-345-to-735-kV",
+    // "electrical-grid-ac-lines-345-kV",
+    // "electrical-grid-ac-lines-500-kV",
+    // "electrical-grid-ac-lines-735-kV",
     "electrical-grid-dc-lines"
   ];
 
@@ -160,13 +162,15 @@
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   // let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 2_238_000_000_000; // $2238 B ($2240 B); also includes substations
-  let ac_lines_under_100_val = 0; // TBA
-  let ac_lines_100_200_val = 0; // TBA
-  let ac_lines_200_300_val = 0; // TBA
-  let ac_lines_345_val = 0; // TBA
-  let ac_lines_500_val = 0; // TBA
-  let ac_lines_735_val = 0; // TBA
-  let dc_lines_val = 4_900_000_000; // $3.9 B ($4 B); 
+  let ac_lines_under_100_val = 102_000_000_000; // $102 B
+  let ac_lines_100_300_val = 167_000_000_000; // $167 B
+  // let ac_lines_100_200_val = 0; // TBA
+  // let ac_lines_200_300_val = 0; // TBA
+  let ac_lines_345_735_val = 137_000_000_000; // $137 B
+  // let ac_lines_345_val = 0; // TBA
+  // let ac_lines_500_val = 0; // TBA
+  // let ac_lines_735_val = 0; // TBA
+  let dc_lines_val = 4_000_000_000; // $3.9 B ($4 B); 
 
   let asset_values = [
     gas_well_val,
@@ -193,11 +197,13 @@
     // unavailable_kv_val,
     ac_lines_val,
     ac_lines_under_100_val,
-    ac_lines_100_200_val,
-    ac_lines_200_300_val,
-    ac_lines_345_val,
-    ac_lines_500_val,
-    ac_lines_735_val,
+    ac_lines_100_300_val,
+    // ac_lines_100_200_val,
+    // ac_lines_200_300_val,
+    ac_lines_345_735_val,
+    // ac_lines_345_val,
+    // ac_lines_500_val,
+    // ac_lines_735_val,
     dc_lines_val
   ];
 
@@ -423,35 +429,47 @@
   let ctx_ac_lines_under_100 = ac_lines_under_100.node().getContext("2d");
   ctx_ac_lines_under_100.LineCap = "round";
 
-  /** @description A canvas element for the ac lines 100-200 kv layer of the electrical grid, attached to div "map layer canvas 
-  electrical-grid-ac-lines-100-to-200-kv" */
-  let ac_lines_100_200 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-100-to-200-kV");
-  let ctx_ac_lines_100_200 = ac_lines_100_200.node().getContext("2d");
-  ctx_ac_lines_100_200.LineCap = "round";
+  /** @description A canvas element for the ac lines 100-300 kv layer of the electrical grid, attached to div "map layer canvas 
+  electrical-grid-ac-lines-100-to-300-kv" */
+  let ac_lines_100_300 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-100-to-300-kV");
+  let ctx_ac_lines_100_300 = ac_lines_100_300.node().getContext("2d");
+  ctx_ac_lines_100_300.LineCap = "round";
 
-  /** @description A canvas element for the ac lines 200-300 kv layer of the electrical grid, attached to div "map layer canvas 
-  electrical-grid-ac-lines-200-to-300-kv" */
-  let ac_lines_200_300 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-200-to-300-kV");
-  let ctx_ac_lines_200_300 = ac_lines_200_300.node().getContext("2d");
-  ctx_ac_lines_200_300.LineCap = "round";
+  // /** @description A canvas element for the ac lines 100-200 kv layer of the electrical grid, attached to div "map layer canvas 
+  // electrical-grid-ac-lines-100-to-200-kv" */
+  // let ac_lines_100_200 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-100-to-200-kV");
+  // let ctx_ac_lines_100_200 = ac_lines_100_200.node().getContext("2d");
+  // ctx_ac_lines_100_200.LineCap = "round";
 
-  /** @description A canvas element for the ac lines 345 kv layer of the electrical grid, attached to div "map layer canvas 
-  electrical-grid-ac-lines-345-kv" */
-  let ac_lines_345 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-345-kV");
-  let ctx_ac_lines_345 = ac_lines_345.node().getContext("2d");
-  ctx_ac_lines_345.LineCap = "round";
+  // /** @description A canvas element for the ac lines 200-300 kv layer of the electrical grid, attached to div "map layer canvas 
+  // electrical-grid-ac-lines-200-to-300-kv" */
+  // let ac_lines_200_300 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-200-to-300-kV");
+  // let ctx_ac_lines_200_300 = ac_lines_200_300.node().getContext("2d");
+  // ctx_ac_lines_200_300.LineCap = "round";
 
-  /** @description A canvas element for the ac lines 500 kv layer of the electrical grid, attached to div "map layer canvas 
-  electrical-grid-ac-lines-500-kv" */
-  let ac_lines_500 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-500-kV");
-  let ctx_ac_lines_500 = ac_lines_500.node().getContext("2d");
-  ctx_ac_lines_500.LineCap = "round";
+  /** @description A canvas element for the ac lines 345-to-735 kv layer of the electrical grid, attached to div "map layer canvas 
+  electrical-grid-ac-lines-345-to-735-kv" */
+  let ac_lines_345_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-345-to-735-kV");
+  let ctx_ac_lines_345_735 = ac_lines_345_735.node().getContext("2d");
+  ctx_ac_lines_345_735.LineCap = "round";
+  
+  // /** @description A canvas element for the ac lines 345 kv layer of the electrical grid, attached to div "map layer canvas 
+  // electrical-grid-ac-lines-345-kv" */
+  // let ac_lines_345 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-345-kV");
+  // let ctx_ac_lines_345 = ac_lines_345.node().getContext("2d");
+  // ctx_ac_lines_345.LineCap = "round";
 
-  /** @description A canvas element for the ac lines 735 kv layer of the electrical grid, attached to div "map layer canvas 
-  electrical-grid-ac-lines-735-kv" */
-  let ac_lines_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-735-kV");
-  let ctx_ac_lines_735 = ac_lines_735.node().getContext("2d");
-  ctx_ac_lines_735.LineCap = "round";
+  // /** @description A canvas element for the ac lines 500 kv layer of the electrical grid, attached to div "map layer canvas 
+  // electrical-grid-ac-lines-500-kv" */
+  // let ac_lines_500 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-500-kV");
+  // let ctx_ac_lines_500 = ac_lines_500.node().getContext("2d");
+  // ctx_ac_lines_500.LineCap = "round";
+
+  // /** @description A canvas element for the ac lines 735 kv layer of the electrical grid, attached to div "map layer canvas 
+  // electrical-grid-ac-lines-735-kv" */
+  // let ac_lines_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-735-kV");
+  // let ctx_ac_lines_735 = ac_lines_735.node().getContext("2d");
+  // ctx_ac_lines_735.LineCap = "round";
 
   /** @description A canvas element for the dc lines layer of the electrical grid, attached to div "map layer canvas electrical-grid-dc-lines" */
   let dc_lines = d3.select(".map.layer.canvas.electrical-grid-dc-lines");
@@ -1253,6 +1271,37 @@
   });
 
   /**
+   * Create the electrical grid class ac lines 100 to 300 layer.
+   */
+  const ac_lines_100_300_check = d3.select(".checkbox.electrical-grid-ac-lines-100-to-300-kV");
+  let ac_lines_100_300_counter = 0;
+  ac_lines_100_300_check.on("change", function() {
+    ac_lines_100_300_counter++;
+    if (ac_lines_100_300_counter % 2 == 0) {
+      console.log(`ac 100-300 counter is even, value of ${ac_lines_100_300_counter}`);
+      ac_lines_100_300.remove();
+      d3.select(".map.layer.electrical-grid-ac-lines-100-to-300-kV")
+        .append("canvas")
+        .attr("class", "map layer canvas electrical-grid-ac-lines-100-to-300-kV")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(ac_lines_100_300_val)
+    } else {
+      if (ac_lines_100_300_counter > 1) {
+        ac_lines_100_300 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-100-to-300-kV");
+        ctx_ac_lines_100_300 = ac_lines_100_300.node().getContext("2d");
+        ctx_ac_lines_100_300.LineCap = "round";
+      }
+      console.log(`ac 100-300 counter is odd, value of ${ac_lines_100_300_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_ac_100_200, ctx_ac_lines_100_300);
+      draw_json_layer(gridmap, draw_grid_class_ac_200_300, ctx_ac_lines_100_300);
+      load(2000);
+      console.log(ac_lines_100_300_val);
+      increment_asset_total(ac_lines_100_300_val);
+    }
+  });
+
+  /**
    * Create the electrical grid class ac lines 100 to 200 layer.
    */
   const ac_lines_100_200_check = d3.select(".checkbox.electrical-grid-ac-lines-100-to-200-kV");
@@ -1276,6 +1325,7 @@
       }
       console.log(`ac 100-200 counter is odd, value of ${ac_lines_100_200_counter}`);
       draw_json_layer(gridmap, draw_grid_class_ac_100_200, ctx_ac_lines_100_200);
+      draw_json_layer(gridmap, draw_grid_class_ac_200_300, ctx_ac_lines_200_300);
       load(2000);
       console.log(ac_lines_100_200_val);
       increment_asset_total(ac_lines_100_200_val);
@@ -1309,6 +1359,39 @@
       load(2000);
       console.log(ac_lines_200_300_val);
       increment_asset_total(ac_lines_200_300_val);
+    }
+  });
+
+  /**
+   * Create the electrical grid class ac lines 345-735 layer.
+   */
+
+  const ac_lines_345_735_check = d3.select(".checkbox.electrical-grid-ac-lines-345-to-735-kV");
+  let ac_lines_345_735_counter = 0;
+  ac_lines_345_735_check.on("change", function() {
+    ac_lines_345_735_counter++;
+    if (ac_lines_345_735_counter % 2 == 0) {
+      console.log(`ac 345 to 735 counter is even, value of ${ac_lines_345_735_counter}`);
+      ac_lines_345_735.remove();
+      d3.select(".map.layer.electrical-grid-ac-lines-345-to-735-kV")
+        .append("canvas")
+        .attr("class", "map layer canvas electrical-grid-ac-lines-345-to-735-kV")
+        .attr("width", width + SCALE * 400)
+        .attr("height", height);
+      decrement_asset_total(ac_lines_345_735_val)
+    } else {
+      if (ac_lines_345_735_counter > 1) {
+        ac_lines_345_735 = d3.select(".map.layer.canvas.electrical-grid-ac-lines-345-to-735-kV");
+        ctx_ac_lines_345_735 = ac_lines_345_735.node().getContext("2d");
+        ctx_ac_lines_345_735.LineCap = "round";
+      }
+      console.log(`ac 345 to 735 counter is odd, value of ${ac_lines_345_735_counter}`);
+      draw_json_layer(gridmap, draw_grid_class_ac_345, ctx_ac_lines_345_735);
+      draw_json_layer(gridmap, draw_grid_class_ac_500, ctx_ac_lines_345_735);
+      draw_json_layer(gridmap, draw_grid_class_ac_735, ctx_ac_lines_345_735);
+      load(2000);
+      console.log(ac_lines_345_735_val);
+      increment_asset_total(ac_lines_345_735_val);
     }
   });
 
