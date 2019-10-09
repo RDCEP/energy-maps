@@ -113,7 +113,7 @@
     "nuclear-plant",
     "petroleum-plant",
     "solar-plant",
-    "wind-plant",
+    "wind-farms",
     // "complete-electrical-grid",
     // "electrical-grid-unavailable-kv",
     "electrical-grid-ac-lines-under-100-kv",
@@ -130,12 +130,7 @@
   let unimplemented_layers = [
     "gas-storage",
     "oil-product-pipeline", // Don't add until we have sufficient financial data
-    "off-shore-well", // Must determine which dataset contains offshore wells
-    // "solar-plant",
-    // "wind-plant",
-    // "hydro-plant",
-    // "nuclear-plant",
-    // "geothermal-plant"
+    "off-shore-well" // Must determine which dataset contains offshore wells
   ];
 
   let gas_well_val = 1_059_000_000_000; // 1.06B || 1,059 B -- US only
@@ -157,7 +152,7 @@
   let nuclear_plant_val = 597_000_000_000 // $597 B ($600 B);
   let pet_plant_val = 64_000_000_000// $64 B;
   let solar_plant_val = 14_000_000_000; // $14 B
-  let wind_plant_val = 132_000_000_000; // $132 B ($130 B);
+  let wind_farm_val = 132_000_000_000; // $132 B ($130 B);
   let electrical_grid_val = 2_946_000_000_000; // 2.95T || 2,946 B
   // let unavailable_kv_val = 0; // TBD
   let ac_lines_val = 2_238_000_000_000; // $2238 B ($2240 B); also includes substations
@@ -191,7 +186,7 @@
     pet_plant_val, 
     nuclear_plant_val,
     solar_plant_val,
-    wind_plant_val,
+    wind_farm_val,
     electrical_grid_val, 
     // unavailable_kv_val,
     ac_lines_val,
@@ -402,10 +397,10 @@
   let ctx_solar_plant = solarplant.node().getContext("2d");
   ctx_solar_plant.LineCap = "round";
 
-  /** @description A canvas element for the wind plants, attached to div "map layer canvas wind-plant" */
-  let windplant = d3.select(".map.layer.canvas.wind-plant");
-  let ctx_wind_plant = windplant.node().getContext("2d");
-  ctx_wind_plant.LineCap = "round";
+  /** @description A canvas element for the wind farms, attached to div "map layer canvas wind-farms" */
+  let windfarms = d3.select(".map.layer.canvas.wind-farms");
+  let ctx_wind_farms = windfarms.node().getContext("2d");
+  ctx_wind_farms.LineCap = "round";
 
   /** @description A canvas element for the electrical grid, attached to div "map layer canvas complete-electrical-grid" */
   // let grid = d3.select(".map.layer.canvas.complete-electrical-grid");
@@ -1100,34 +1095,33 @@
   });
 
   /**
-   * Create the wind plant layer.
+   * Create the wind farms layer.
    */
-  const wind_plant_check = d3.select(".checkbox.wind-plant");
-  let wind_plant_counter = 0;
-  wind_plant_check.on("change", function() {
-    wind_plant_counter++;
-    if (wind_plant_counter % 2 == 0) {
-      console.log(`wind plant counter is even, value of ${wind_plant_counter}`);
-      windplant.remove();
-      d3.select(".map.layer.wind-plant")
+  const wind_farms_check = d3.select(".checkbox.wind-farms");
+  let wind_farms_counter = 0;
+  wind_farms_check.on("change", function() {
+    wind_farms_counter++;
+    if (wind_farms_counter % 2 == 0) {
+      console.log(`wind farms counter is even, value of ${wind_farms_counter}`);
+      windfarms.remove();
+      d3.select(".map.layer.wind-farms")
         .append("canvas")
-        .attr("class", "map layer canvas wind-plant")
+        .attr("class", "map layer canvas wind-farms")
         .attr("width", width + SCALE * 400)
         .attr("height", height);
-        decrement_asset_total(wind_plant_val);
+        decrement_asset_total(wind_farm_val);
     } else {
-      if (wind_plant_counter > 1) {
-        windplant = d3.select(".map.layer.canvas.wind-plant");
-        ctx_wind_plant = windplant.node().getContext("2d");
-        ctx_wind_plant.LineCap = "round";
+      if (wind_farms_counter > 1) {
+        windfarms = d3.select(".map.layer.canvas.wind-farms");
+        ctx_wind_farms = windfarms.node().getContext("2d");
+        ctx_wind_farms.LineCap = "round";
       }
-      console.log(`wind plant counter is odd, value of ${wind_plant_counter}`);
-      // draw_json_layer(power_plants, draw_wind_plants, ctx_pet_plant);
+      console.log(`wind farms counter is odd, value of ${wind_farms_counter}`);
       let fuel = 'WND';
-      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_wind_plant);
+      draw_plant_json_layer(power_plants, draw_single_plant, fuel, ctx_wind_farms);
       load(300);
-      console.log(wind_plant_val);
-      increment_asset_total(wind_plant_val);
+      console.log(wind_farm_val);
+      increment_asset_total(wind_farm_val);
     }
   });
 
