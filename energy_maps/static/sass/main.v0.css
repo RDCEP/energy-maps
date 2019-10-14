@@ -94,6 +94,26 @@ label {
   width: 1200px;
   height: 50px;
 }
+.title.container.nav {
+  border-top: 0px;
+  border-bottom: 0px;
+  padding-left: 70%;
+  height: 25px;
+}
+.title.container.nav span {
+  position: absolute;
+  left: 0;
+}
+.title.container.nav a {
+  padding-right: 2em;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.2em;
+  top: 0;
+  color: black;
+}
 .title.container img {
   height: 40px;
   position: relative;
@@ -108,22 +128,24 @@ label {
 .title .headline {
   position: absolute;
   font-weight: bold;
-  font-family: "Roboto", sans-serif;
-  font-size: 0.9rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
   line-height: 1.2em;
   top: 0;
   left: 25%;
-  padding: 0.5em 0;
+  padding: .5em 0;
 }
 .title .headline2 {
   color: #b2b2b2;
-  left: 50%;
+  left: 35%;
   padding: 8px 0;
+  font-size: .9rem;
 }
 .title .headline3 {
   color: #b2b2b2;
-  left: 72%;
+  left: 70%;
   padding: 8px 0;
+  font-size: .9rem;
 }
 
 .layer {
