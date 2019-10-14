@@ -97,12 +97,16 @@ label {
 .title.container.nav {
   border-top: 0px;
   border-bottom: 0px;
-  padding-left: 70%;
+  padding-left: 78%;
+  padding-top: 1%;
   height: 25px;
 }
 .title.container.nav span {
   position: absolute;
   left: 0;
+  color: #800000;
+  font-size: 25px;
+  bottom: 2px;
 }
 .title.container.nav a {
   padding-right: 2em;
