@@ -10,8 +10,18 @@
   /** @description Sets the fill for the base map */
   const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
 
+  const spinner = document.getElementById('spinner');
+  const show_spinner = function show_spinner() {
+    spinner.style.display = "block";
+  };
+  const hide_spinner = function hide_spinner() {
+    spinner.style.display = "none";
+  };
+
   // Set base map canvas
-  /** @description A canvas element for the base map, attached to div 'main map builder' with id='mapcanvas' */
+  /** @description A canvas element for the base map, attached to
+   *  <div class="main map builder" id="mapcanvas">
+   */
   const base_canvas = d3
     .select('.main.map.builder')
     .append('canvas')
@@ -22,7 +32,9 @@
   ctx.LineCap = 'round';
 
   function draw_base_map() {
-    Promise.all([d3.json(fmap), d3.json(fmapfill)]).then(function(files) {
+    Promise.all(
+      [d3.json(fmap), d3.json(fmapfill)]
+    ).then(function(files) {
       draw_land(ctx, files, false);
     });
     console.log('draw base map');
@@ -40,10 +52,16 @@
   
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
-      Promise.all(lyr.draw[i].src.map(x => d3.json(x)))
+      Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
+          console.log('show spinner');
+          show_spinner();
           lyr.draw[i].f(lyr.context, files);
-        });
+        })
+        // FIXME: this does not work. Spinner disappears too soon
+        .then(function() {
+          console.log('hide spinner');
+          hide_spinner(); });
     }
   };
 
@@ -53,53 +71,79 @@
     //  it assumes every row of data will be drawn---so no passing of
     //  the entire power plants file to draw only geothermal.
 
-    // {
-    //   name: 'gas-well',
-    //   value: 1_059_000_000_000, // 1.06B || 1,059 B -- US only}
-    //   src: [ '/static/csv/wells_gas1.csv',
-    //          '/static/csv/wells_gas2.csv' ], // FIXME: All data in JSON
-    //   f: draw_all_wells,
-    //   timer: 2000,
-    // },
-    // { name: 'oil-well',
-    //   value: 654_000_000_000, // 654 B
-    //   src: [ '/static/csv/wells_oil1.csv',
-    //          '/static/csv/wells_oil2.csv' ], // FIXME: All data in JSON
-    //   f: draw_all_wells,
-    // },
+    {
+      name: 'gas-well',
+      value: 1_059_000_000_000, // 1.06B || 1,059 B -- US only}
+      draw: [ {
+        f: draw_all_wells,
+        src: [ '/static/csv/wells_gas1.csv',
+               '/static/csv/wells_gas2.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ],
+    },
+    { name: 'oil-well',
+      value: 654_000_000_000, // 654 B
+      draw: [ {
+        f: draw_all_wells,
+        src: [ '/static/csv/wells_oil1.csv',
+               '/static/csv/wells_oil2.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ],
+    },
     { name: 'gas-pipeline',
       value: 940_000_000_000, // 940 B
       draw: [ {
-          f: draw_gas_pipes,
-          src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson']
-        }, ],
+        f: draw_gas_pipes,
+        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+        w: d3.json
+      }, ],
+
     },
     { name: 'oil-pipeline',
       value: 170_000_000_000, // 170 B (includes oil product pipelines)
       draw: [ {
         f: draw_oil_pipes,
-        src: [ '/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson', ]
+        src: [ '/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson', ],
+        w: d3.json
       }, {
         f: draw_oil_pipes,
-        src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ]
+        src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ],
+        w: d3.json
       }, ],
     },
-    // { name: 'gas-processing',
-    //   value: 45_000_000_000, // 45 B
-    //   src: [ '/static/csv/nproc.csv' ], // FIXME: All data in JSON
-    // },
-    // { name: 'oil-refinery',
-    //   value: 373_000_000_000, // 373 B
-    //   src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
-    // },
-    // { name: 'railroad',
-    //   value: 137_000_000_000, // `137 B *` Needs an asterisk because this is 1/3 of the value of the freight railway shown
-    //   src: [ '../static/json/railrdl020.geojson' ],
-    // },
-    // { name: 'coal-mine',
-    //   value: 57_000_000_000, // 57 B
-    //   src: [ '../static/csv/coal.csv' ], // FIXME: All data in JSON
-    // },
+    { name: 'gas-processing',
+      value: 45_000_000_000, // 45 B
+      draw: [ {
+        f: draw_processing,
+        src: [ '/static/csv/nproc.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ]
+    },
+    { name: 'oil-refinery',
+      value: 373_000_000_000, // 373 B
+      draw: [ {
+        f: draw_refining,
+        src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
+        w: d3.json
+      }]
+
+    },
+    { name: 'railroad',
+      value: 137_000_000_000, // `137 B *` Needs an asterisk because this is 1/3 of the value of the freight railway shown
+      draw: [ {
+        f: draw_railroads,
+        src: [ '/static/json/railrdl020.geojson' ],
+        w: d3.json
+      } ]
+    },
+    { name: 'coal-mine',
+      value: 57_000_000_000, // 57 B
+      draw: [ {
+        f: draw_coal_mines,
+        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ]
+    },
     // { name: 'coal-plant',
     //   value: 1_092_000_000_000, // $1092 B ($1100 B) -- currently displays as 1T, and only updates if something increases it by over 1B
     //   src: [  ], // FIXME: Need to separate power plants
@@ -165,7 +209,7 @@
     lyr.context = lyr.canvas.node().getContext('2d');
     lyr.context.lineCap = 'round';
 
-    console.log(lyr.context); // currently displaying 'undefined'
+    console.log(lyr.context);
 
     layers[i].checkbox = d3
       .select('.options')
