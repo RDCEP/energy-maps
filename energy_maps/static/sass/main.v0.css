@@ -1,0 +1,48 @@
+* {
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+}
+
+.wrap {
+  width: 80%;
+  margin: 0 auto;
+}
+.wrap img {
+  width: 100%;
+  display: block;
+}
+
+.layer {
+  fill: none;
+}
+
+.boundary.ocean {
+  fill: white;
+}
+.boundary.land {
+  fill: #eeeeee;
+}
+
+.feature.pipe {
+  stroke-width: 0.5;
+  fill: none;
+}
+.feature.pipe.oil {
+  stroke: #222222;
+}
+.feature.pipe.gas {
+  stroke: cornflowerblue;
+}
+.feature.dot {
+  stroke: none;
+  fill: #000000;
+}
+.feature.dot.plant {
+  fill: #cccccc;
+}
+
+/*# sourceMappingURL=main.v0.css.map */
