@@ -45,14 +45,20 @@
 
   // Pipelines
   /** @description Sets the path for the crude oil pipelines */
-  const crude_oil_pipelines =
-    "/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson";
+  // const crude_oil_pipelines =
+  //   "/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson";
+    const crude_oil_pipelines =
+  "static/json/crude-oil-pipelines-precision-trim.json";
   /** @description Sets the path for the oil product pipelines */
+  // const oil_product_pipelines =
+  //   "/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson";
   const oil_product_pipelines =
-    "/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson";
+    "/static/json/oil-prod-pipelines-precision-trim.json";
   /** @description Sets the path for the inter-intrastate natural gas pipelines */
-  const natural_gas_pipelines =
-    "/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson";
+  // const natural_gas_pipelines =
+  //   "/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson";
+    const natural_gas_pipelines =
+      "/static/json/natural-gas-interintrastate-precision-trim.json";
   /** @description Sets the path for the petroleum refineries */
   const petroleum_refineries =
     "/static/json/Petroleum_Refineries_US_2015.geojson";
