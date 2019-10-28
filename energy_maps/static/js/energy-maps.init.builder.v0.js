@@ -60,8 +60,10 @@
     const natural_gas_pipelines =
       "/static/json/natural-gas-interintrastate-precision-trim.json";
   /** @description Sets the path for the petroleum refineries */
+  // const petroleum_refineries =
+  //   "/static/json/Petroleum_Refineries_US_2015.geojson";
   const petroleum_refineries =
-    "/static/json/Petroleum_Refineries_US_2015.geojson";
+    "/static/json/petroleum-refineries-precision-trim.json";
   /** @description Sets the path for the gas processing facilities */
   const gas_processing_path = 
   "/static/csv/nproc.csv";
@@ -81,8 +83,11 @@
   /** @description Sets the path for the power plants */
   const power_plants = "/static/json/PowerPlants_US_2014Aug_R.geojson";
 
+  // const gridmap =
+  //   "../static/json/Electric_Power_Transmission_Lines_011s.geojson";
+
   const gridmap =
-    "../static/json/Electric_Power_Transmission_Lines_011s.geojson";
+    "../static/json/electric-power-transmission-lines-precision-trim.json";
 
   // ######## Canvas Map Layers ######## //
 
