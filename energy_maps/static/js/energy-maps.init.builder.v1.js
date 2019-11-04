@@ -1,8 +1,6 @@
 (function() {
   'use strict';
 
-  // Path Group: Base map
-
   /** @type {string} */
   /** @description Sets the path for the base map */
   const fmap = '../static/json/us-geojson.json';
@@ -66,148 +64,6 @@
   };
 
   let layers = [
-    // FIXME: The layers commented out will break this code.
-    //  This code assumes that all data is json (no csv). Further
-    //  it assumes every row of data will be drawn---so no passing of
-    //  the entire power plants file to draw only geothermal.
-
-    {
-      name: 'gas-well',
-      value: 1_059_000_000_000, // 1.06B || 1,059 B -- US only}
-      draw: [ {
-        f: draw_all_wells,
-        src: [ '/static/csv/wells_gas1.csv',
-               '/static/csv/wells_gas2.csv' ], // FIXME: All data in JSON
-        w: d3.csv
-      } ],
-    },
-    { name: 'oil-well',
-      value: 654_000_000_000, // 654 B
-      draw: [ {
-        f: draw_all_wells,
-        src: [ '/static/csv/wells_oil1.csv',
-               '/static/csv/wells_oil2.csv' ], // FIXME: All data in JSON
-        w: d3.csv
-      } ],
-    },
-    { name: 'gas-pipeline',
-      value: 940_000_000_000, // 940 B
-      draw: [ {
-        f: draw_gas_pipes,
-        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-        w: d3.json
-      }, ],
-
-    },
-    { name: 'oil-pipeline',
-      value: 170_000_000_000, // 170 B (includes oil product pipelines)
-      draw: [ {
-        f: draw_oil_pipes,
-        src: [ '/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson', ],
-        w: d3.json
-      }, {
-        f: draw_oil_pipes,
-        src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ],
-        w: d3.json
-      }, ],
-    },
-    { name: 'gas-processing',
-      value: 45_000_000_000, // 45 B
-      draw: [ {
-        f: draw_processing,
-        src: [ '/static/csv/nproc.csv' ], // FIXME: All data in JSON
-        w: d3.csv
-      } ]
-    },
-    { name: 'oil-refinery',
-      value: 373_000_000_000, // 373 B
-      draw: [ {
-        f: draw_refining,
-        src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
-        w: d3.json
-      }]
-
-    },
-    { name: 'railroad',
-      value: 137_000_000_000, // `137 B *` Needs an asterisk because this is 1/3 of the value of the freight railway shown
-      draw: [ {
-        f: draw_railroads,
-        src: [ '/static/json/railrdl020.geojson' ],
-        w: d3.json
-      } ]
-    },
-    { name: 'coal-mine',
-      value: 57_000_000_000, // 57 B
-      draw: [ {
-        f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
-        w: d3.csv
-      } ]
-    },
-    { name: 'coal-plant',
-      value: 1_092_000_000_000, // $1092 B ($1100 B) -- currently displays as 1T, and only updates if something increases it by over 1B
-      draw: [ {
-        f: draw_coal_plants,
-        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'geothermal-plant',
-      value: 22_000_000_000, // $22 B
-      draw: [ {
-        f: draw_geo_plants,
-        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'hydro-plant',
-      value: 597_000_000_000, // 597 B
-      draw: [ {
-        f: draw_hydro_plants,
-        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'natural-gas-plant',
-      value: 488_000_000_000, // $488 B ($490 B)
-      draw: [ {
-        f: draw_ng_plants,
-        src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'nuclear-plant',
-      value: 597_000_000_000, // $597 B ($600 B)
-      draw: [ {
-        f: draw_nuclear_plants,
-        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        w: null,
-      } ]
-    },
-    { name: 'petroleum-plant',
-      value: 64_000_000_000, // $64 B
-      draw: [ {
-        f: draw_petro_plants,
-        src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'solar-plant',
-      value: 14_000_000_000, // $14 B
-      draw: [ {
-        f: draw_solar_plants,
-        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'wind-farms',
-      value: 132_000_000_000, // $132 B ($130 B)
-      draw: [ {
-        f: draw_wind_farms,
-        src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        w: d3.json,
-      } ]
-    },
     { name: 'electrical-grid-ac-lines-under-100-kv',
       value: 102_000_000_000,
       draw: [ {
@@ -239,7 +95,146 @@
         src: ['/static/json/elec_grid_split/grid-dc.json'],
         w: d3.json,
       } ]
-    }
+    },
+    {
+      name: 'gas-well',
+      value: 1_059_000_000_000,
+      draw: [ {
+        f: draw_all_wells,
+        src: [ '/static/csv/wells_gas1.csv',
+               '/static/csv/wells_gas2.csv' ],
+        w: d3.csv
+      } ],
+    },
+    { name: 'oil-well',
+      value: 654_000_000_000,
+      draw: [ {
+        f: draw_all_wells,
+        src: [ '/static/csv/wells_oil1.csv',
+               '/static/csv/wells_oil2.csv' ],
+        w: d3.csv
+      } ],
+    },
+    { name: 'gas-pipeline',
+      value: 940_000_000_000,
+      draw: [ {
+        f: draw_gas_pipes,
+        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+        w: d3.json
+      }, ],
+
+    },
+    { name: 'oil-pipeline',
+      value: 170_000_000_000,
+      draw: [ {
+        f: draw_oil_pipes,
+        src: [ '/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson', ],
+        w: d3.json
+      }, {
+        f: draw_oil_pipes,
+        src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ],
+        w: d3.json
+      }, ],
+    },
+    { name: 'gas-processing',
+      value: 45_000_000_000,
+      draw: [ {
+        f: draw_processing,
+        src: [ '/static/csv/nproc.csv' ],
+        w: d3.csv
+      } ]
+    },
+    { name: 'oil-refinery',
+      value: 373_000_000_000, // 373 B
+      draw: [ {
+        f: draw_refining,
+        src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
+        w: d3.json
+      }]
+
+    },
+    { name: 'railroad',
+      value: 137_000_000_000,
+      // `137 B *` Needs an asterisk because this is 1/3 of
+      // the value of the freight railway shown
+      draw: [ {
+        f: draw_railroads,
+        src: [ '/static/json/railrdl020.geojson' ],
+        w: d3.json
+      } ]
+    },
+    { name: 'coal-mine',
+      value: 57_000_000_000,
+      draw: [ {
+        f: draw_coal_mines,
+        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ]
+    },
+    { name: 'coal-plant',
+      value: 1_092_000_000_000,
+      draw: [ {
+        f: draw_coal_plants,
+        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'geothermal-plant',
+      value: 22_000_000_000,
+      draw: [ {
+        f: draw_geo_plants,
+        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'hydro-plant',
+      value: 597_000_000_000,
+      draw: [ {
+        f: draw_hydro_plants,
+        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'natural-gas-plant',
+      value: 488_000_000_000,
+      draw: [ {
+        f: draw_ng_plants,
+        src: ['/static/json/power_plants_split/power_plants-NG.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'nuclear-plant',
+      value: 597_000_000_000,
+      draw: [ {
+        f: draw_nuclear_plants,
+        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+        w: null,
+      } ]
+    },
+    { name: 'petroleum-plant',
+      value: 64_000_000_000,
+      draw: [ {
+        f: draw_petro_plants,
+        src: ['/static/json/power_plants_split/power_plants-PET.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'solar-plant',
+      value: 14_000_000_000,
+      draw: [ {
+        f: draw_solar_plants,
+        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'wind-farms',
+      value: 132_000_000_000,
+      draw: [ {
+        f: draw_wind_farms,
+        src: ['/static/json/power_plants_split/power_plants-WND.json'],
+        w: d3.json,
+      } ]
+    },
   ];
   
   let lay = layers.length;
