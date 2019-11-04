@@ -144,51 +144,102 @@
         w: d3.csv
       } ]
     },
-    // { name: 'coal-plant',
-    //   value: 1_092_000_000_000, // $1092 B ($1100 B) -- currently displays as 1T, and only updates if something increases it by over 1B
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'geothermal-plant',
-    //   value: 22_000_000_000, // $22 B
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'hydro-plant',
-    //   value: 597_000_000_000, // 597 B
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'natural-gas-plant',
-    //   value: 488_000_000_000, // $488 B ($490 B)
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'nuclear-plant',
-    //   value: 597_000_000_000, // $597 B ($600 B)
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'petroleum-plant',
-    //   value: 64_000_000_000, // $64 B
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'solar-plant',
-    //   value: 14_000_000_000, // $14 B
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // { name: 'wind-plant',
-    //   value: 132_000_000_000, // $132 B ($130 B)
-    //   src: [  ], // FIXME: Need to separate power plants
-    // },
-    // // { name: 'complete-electrical-grid' },
-    // { name: 'electrical-grid-unavailable-kv',
-    //   value: 2_946_000_000_000, // 2.95T || 2,946 B
-    //   src: [  ], // FIXME: Need to separate transmission grid
-    // },
-    // { name: 'electrical-grid-ac-lines',
-    //   value: 2_238_000_000_000, // $2238 B ($2240 B), also includes substations
-    //   src: [  ], // FIXME: Need to separate transmission grid
-    // },
-    // { name: 'electrical-grid-dc-lines',
-    //   value: 4_900_000_000, // $3.9 B ($4 B)
-    //   src: [  ], // FIXME: Need to separate transmission grid
-    // },
+    { name: 'coal-plant',
+      value: 1_092_000_000_000, // $1092 B ($1100 B) -- currently displays as 1T, and only updates if something increases it by over 1B
+      draw: [ {
+        f: draw_coal_plants,
+        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'geothermal-plant',
+      value: 22_000_000_000, // $22 B
+      draw: [ {
+        f: draw_geo_plants,
+        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'hydro-plant',
+      value: 597_000_000_000, // 597 B
+      draw: [ {
+        f: draw_hydro_plants,
+        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'natural-gas-plant',
+      value: 488_000_000_000, // $488 B ($490 B)
+      draw: [ {
+        f: draw_ng_plants,
+        src: ['/static/json/power_plants_split/power_plants-NG.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'nuclear-plant',
+      value: 597_000_000_000, // $597 B ($600 B)
+      draw: [ {
+        f: draw_nuclear_plants,
+        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+        w: null,
+      } ]
+    },
+    { name: 'petroleum-plant',
+      value: 64_000_000_000, // $64 B
+      draw: [ {
+        f: draw_petro_plants,
+        src: ['/static/json/power_plants_split/power_plants-PET.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'solar-plant',
+      value: 14_000_000_000, // $14 B
+      draw: [ {
+        f: draw_solar_plants,
+        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'wind-farms',
+      value: 132_000_000_000, // $132 B ($130 B)
+      draw: [ {
+        f: draw_wind_farms,
+        src: ['/static/json/power_plants_split/power_plants-WND.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'electrical-grid-ac-lines-under-100-kv',
+      value: 102_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_unk_and_under_100,
+        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'electrical-grid-ac-lines-100-to-300-kV',
+      value: 167_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_100_300,
+        src: ['/static/json/elec_grid_split/grid-100_300.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'electrical-grid-ac-lines-345-to-735-kV',
+      value: 137_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_345_735,
+        src: ['/static/json/elec_grid_split/grid-345_735.json'],
+        w: d3.json,
+      } ]
+    },
+    { name: 'electrical-grid-dc-lines',
+      value: 4_000_000_000,
+      draw: [ {
+        f: draw_grid_class_dc,
+        src: ['/static/json/elec_grid_split/grid-dc.json'],
+        w: d3.json,
+      } ]
+    }
   ];
   
   let lay = layers.length;
