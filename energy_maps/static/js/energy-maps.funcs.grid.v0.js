@@ -5,6 +5,22 @@ let classes = [
   'DC'
 ];
 
+const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
+  draw_grid_class_unavailable(ctx, queued_data);
+  draw_grid_class_ac_under_100(ctx, queued_data);
+};
+
+const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
+  draw_grid_class_ac_100_200(ctx, queued_data);
+  draw_grid_class_ac_200_300(ctx, queued_data);
+};
+
+const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
+  draw_grid_class_ac_345(ctx, queued_data);
+  draw_grid_class_ac_500(ctx, queued_data);
+  draw_grid_class_ac_735(ctx, queued_data);
+};
+
 /**
  * Draw grid class unavailable on the electric grid infrastructure map.
  * @param {Object} ctx
@@ -82,6 +98,7 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
  * @param {Object} ctx
  * @param {coal_mine[]} queued_data
  */
+
 const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-100-200')
 
