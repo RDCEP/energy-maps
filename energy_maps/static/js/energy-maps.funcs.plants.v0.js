@@ -171,3 +171,35 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   }
 };
 
+const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'COAL')
+};
+
+const draw_ng_plants = function draw_ng_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'NG')
+};
+
+const draw_petro_plants = function draw_petro_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'PET')
+};
+
+const draw_hydro_plants = function draw_hydro_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'HYC')
+};
+
+const draw_nuclear_plants = function draw_nuclear_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'NUC')
+};
+
+const draw_wind_farms = function draw_wind_farms(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'WND')
+};
+
+const draw_solar_plants = function draw_solar_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'SUN')
+};
+
+const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, 'GEO')
+};
+
