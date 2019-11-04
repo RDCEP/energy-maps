@@ -123,7 +123,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.fillStyle = viz.black;
     ctx.font = `bold ${14 * SCALE}px Arial`;
     y += 5 * SCALE;
-    ctx.fillText(`${text} power plant`, text_offset + x, y);
+    let plant_text = text == 'Wind' ? 'farm' : 'power plant';
+    ctx.fillText(`${text} ${plant_text}`, text_offset + x, y);
     return y;
   };
 
@@ -249,7 +250,7 @@ const update_legend = function update_legend(ctx, layers) {
         case 'solar-plant':
           y = draw_power_plant_legend(ctx, x, y, viz.plants.solar, 'Solar');
           break;
-        case 'wind-plant':
+        case 'wind-farms':
           y = draw_power_plant_legend(ctx, x, y, viz.plants.wind, 'Wind');
           break;
         case 'electrical-grid-unavailable-kv':
@@ -275,7 +276,7 @@ const update_legend = function update_legend(ctx, layers) {
   let draw_plants_legend = layers.filter(function(d) {
     return ["coal-plant", "geothermal-plant", "hydro-plant",
     "natural-gas-plant", "nuclear-plant", "petroleum-plant",
-    "solar-plant", "wind-plant",].indexOf(d[0]) > -1;
+    "solar-plant", "wind-farms",].indexOf(d[0]) > -1;
   }).length > 0;
   if (draw_plants_legend) {
     // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * viz.plants.scale);
