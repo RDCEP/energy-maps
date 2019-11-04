@@ -283,10 +283,51 @@ def prune_grid():
         f.write(json.dumps(j))
 
 
+def separate_plants():
+    import json
+
+    fuels = [
+        'COAL', 'NG', 'PET', 'HYC', 'SUN', 'WND', 'GEO', 'NUC',
+    ]
+    for fuel in fuels:
+        with open('../static/json/PowerPlants_US_2014Aug_R.geojson') as f:
+            j = json.loads(f.read())
+            new_json = j
+            j['features'] = [x for i, x in enumerate(j['features'])
+                             if j['features'][i]['properties']['primary_fu']
+                             == fuel]
+            for feature in j['features']:
+                feature['properties'] = {
+                    k: v for k, v in feature['properties'].items()
+                    if k in ['primary_fu', 'total_cap']}
+            with open('../static/json/power_plants-{}.json'.format(fuel), 'w') as w:
+                w.write(json.dumps(new_json))
+
+
+def separate_grids():
+    import json
+    import re
+
+    grids = {
+        'unk_under_100': ['NOT AVAILABLE', 'Under 100'],
+        '100_300': ['100-161', '220-287', ],
+        '345_735': ['345', '500', '735 and Above', ],
+        'dc': ['DC']
+    }
+    for k, v in grids.items():
+        with open('../static/json/Electric_Power_Transmission_Lines_011s.geojson') as f:
+            j = json.loads(f.read())
+            new_json = j
+            new_json['features'] = [
+                x for i, x in enumerate(j['features'])
+                if j['features'][i]['properties']['class'] in v]
+            with open('../static/json/elec_grid_split/grid-{}.json'.format(k), 'w') as w:
+                w.write(json.dumps(new_json))
+            # with open('../static/json/elec_grid_split/grid-{}.json'.format(k), 'w+') as n:
+            #     s = n.read()
+            #     s = re.sub(r'(\d+\.\d{2})\d*', '\1', s)
+            #     n.write(s)
+
+
 if __name__ == '__main__':
-    prune_grid()
-    # wells()
-    # path = '../static/csv/ng_proc.csv'
-    # path = '../static/csv/ng_Stor.csv'
-    # path = '../static/csv/o_ref.csv'
-    # print(foo(path))
+    separate_grids()
