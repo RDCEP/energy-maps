@@ -110,7 +110,7 @@ const viz = {
       'rgba(255, 149, 0)', // orange
       // 'rgba(213, 94, 0)', // vermilion
       'rgba(213, 113, 45)', // vermilion
-      // 'rgba(77, 175, 74)', // green
+      'rgba(77, 175, 74)', // green
       // 'rgba(228, 26, 28)', // red
       'rgba(228, 53, 5)', // red
     ],

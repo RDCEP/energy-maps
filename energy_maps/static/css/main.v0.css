@@ -145,6 +145,27 @@ on the index page */
   top: 5px;
 }
 
+.title.container.nav {
+  border-top: 0px;
+  border-bottom: 0px;
+  left: 55.5%;
+}
+
+#span-title {
+  
+}
+
+.title.container.nav a {
+  padding-right: 2em;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.2em;
+  top: 0;
+  color: black;
+}
+
 .title .builder-link {
   position: absolute;
   left: 10%;
@@ -156,7 +177,7 @@ on the index page */
   position: absolute;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
-  font-size: .9rem;
+  font-size: 1.5rem;
   line-height: 1.2em;
   top: 0;
   left: 25%;
@@ -165,12 +186,14 @@ on the index page */
 
 .title .headline2 {
   color: #b2b2b2;
-  left: 50%;
+  left: 35%;
   padding: 8px 0;
+  font-size: .9rem;
 }
 
 .title .headline3 {
   color: #b2b2b2;
-  left: 72%;
+  left: 70%;
   padding: 8px 0;
+  font-size: .9rem;
 }
