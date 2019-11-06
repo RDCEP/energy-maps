@@ -4,6 +4,9 @@
   font-family: Arial, sans-serif
 p,h1,h2,h3,h4,h5,h6
   font-size: 1em
+h4
+  margin: .5em 0
+  padding: 0
 /* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up on the index page */
 .wrap
   width: 1200px
@@ -15,15 +18,30 @@ p,h1,h2,h3,h4,h5,h6
 label
   padding-right: 1%
   font-family: 'Roboto', sans-serif
+
 .options
   width: 100%
-  & > span
-    background-color: #d4d4d4
-    display: inline-block
+  .column
+    width: 23%
+    float: left
+    position: relative
     margin: .25em
     padding: .25em
+    //display: inline-block
+    //display: flow-root
+  label
+    display: block
+    border-bottom: 1px solid black
+    padding: .33em 0
+    .asset-value
+      font-size: .8em
+    input
+      position: absolute
+      right: 2px
+
 .wrapper
   position: relative
+
 .map.layer
   position: absolute
   top: 0
@@ -45,7 +63,7 @@ label
 #asset-totals
   font-family: 'Roboto', sans-serif
   font-size: 1rem
-  width: 1200px // to make it match the width of the header. So that the
+  // width: 1200px // to make it match the width of the header. So that the
   // left positioning of the <p> within matches the alignment of the header.
   // Width should eventually be more responsive.
   p
@@ -76,6 +94,25 @@ label
       height: 40px
       position: relative
       top: 5px
+    &.nav
+      border: none
+      padding: 1% 0 0 78%
+      height: 25px
+      a
+        padding-right: 2em
+        font-weight: bold
+        font-family: 'Roboto', sans-serif
+        text-decoration: none
+        font-size: 1rem
+        line-height: 1.2em
+        top: 0
+        color: black
+      span
+        position: absolute
+        left: 0
+        color: #800000
+        font-size: 25px
+        bottom: 2px
   .builder-link
     position: absolute
     left: 10%
@@ -85,19 +122,21 @@ label
     position: absolute
     font-weight: bold
     font-family: 'Roboto', sans-serif
-    font-size: .9rem
+    font-size: 1.5rem
     line-height: 1.2em
     top: 0
     left: 25%
     padding: .5em 0
   .headline2
     color: #b2b2b2
-    left: 50%
+    left: 35%
     padding: 8px 0
+    font-size: .9rem
   .headline3
     color: #b2b2b2
-    left: 72%
+    left: 70%
     padding: 8px 0
+    font-size: .9rem
 
 .layer
   fill: none
@@ -119,3 +158,9 @@ label
     fill: #000000
     &.plant
       fill: #cccccc
+.cf
+  &:before, &:after
+    content: ' '
+    display: table
+  &:after
+    clear: both
