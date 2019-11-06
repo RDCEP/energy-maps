@@ -358,12 +358,6 @@
 
           console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
 
-          d3.select(`.map.layer.${lyr.name}`)
-            .append('canvas')
-            .attr('class', `map layer canvas ${lyr.name}`)
-            .attr('width', width + SCALE * 400)
-            .attr('height', height);
-
           decrement_asset_total(lyr.value);
 
         } else {
