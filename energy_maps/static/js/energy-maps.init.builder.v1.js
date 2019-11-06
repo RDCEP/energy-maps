@@ -329,7 +329,7 @@
           .replace(/-/g, '\u00A0'))}\u00A0`)
       .append('span')
       .attr('class', 'asset-value')
-      .text(` (${capitalize_first_letter(
+      .text(` ($${capitalize_first_letter(
         d3.format('.2~s')(lyr.value).replace(/G/, 'B'))})`)
       .append('span');
 
