@@ -7,11 +7,6 @@ p, h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
-h4 {
-  margin: 0.5em 0;
-  padding: 0;
-}
-
 /* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up on the index page */
 .wrap {
   width: 1200px;
@@ -34,8 +29,15 @@ label {
   width: 23%;
   float: left;
   position: relative;
-  margin: 0.25em;
-  padding: 0.25em;
+}
+.options .column + .column {
+  margin: 0 0 0 0.5em;
+}
+.options .column h4 {
+  padding: 0.5em 0;
+  margin: 0;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
 }
 .options label {
   display: block;
@@ -93,6 +95,7 @@ label {
 #builder-headline {
   font-family: "Roboto", sans-serif;
   font-size: 1.3rem;
+  margin: 1em 0 0.5em;
 }
 
 #spinner {
@@ -118,7 +121,7 @@ label {
 }
 .title.container.nav {
   border: none;
-  padding: 1% 0 0 78%;
+  padding: 1% 0 0 70%;
   height: 25px;
 }
 .title.container.nav a {

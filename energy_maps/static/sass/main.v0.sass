@@ -4,9 +4,6 @@
   font-family: Arial, sans-serif
 p,h1,h2,h3,h4,h5,h6
   font-size: 1em
-h4
-  margin: .5em 0
-  padding: 0
 /* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up on the index page */
 .wrap
   width: 1200px
@@ -25,10 +22,13 @@ label
     width: 23%
     float: left
     position: relative
-    margin: .25em
-    padding: .25em
-    //display: inline-block
-    //display: flow-root
+    &+.column
+      margin: 0 0 0 .5em
+    h4
+      padding: .5em 0
+      margin: 0
+      border-top: 2px solid black
+      border-bottom: 1px solid black
   label
     display: block
     border-bottom: 1px solid black
@@ -74,6 +74,7 @@ label
 #builder-headline
   font-family: 'Roboto', sans-serif
   font-size: 1.3rem
+  margin: 1em 0 .5em
 #spinner
   position: absolute
   top: 45%
@@ -96,7 +97,7 @@ label
       top: 5px
     &.nav
       border: none
-      padding: 1% 0 0 78%
+      padding: 1% 0 0 70%
       height: 25px
       a
         padding-right: 2em
