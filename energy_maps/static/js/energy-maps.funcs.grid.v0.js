@@ -49,9 +49,9 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-under-100-kv')
@@ -76,7 +76,10 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
+
+
 
 // let features2 = grid.features.filter(function(d) {
 //   return d.properties.class === classes[2]});
@@ -122,9 +125,9 @@ const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queu
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-200-to-300-kv')
@@ -148,9 +151,9 @@ const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, que
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-345-kV')
@@ -174,9 +177,9 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-500-kV')
@@ -200,9 +203,9 @@ const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-735+-kV')
@@ -226,9 +229,9 @@ const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-
-}
+};
 
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   console.log('draw_grid_class_ac')
@@ -259,6 +262,7 @@ const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
   
   // unavailable 
@@ -276,8 +280,9 @@ const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-}
+};
 
 const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
   console.log('draw_grid_class_dc')
@@ -303,8 +308,9 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
   }
-} 
+};
 
 
 /**

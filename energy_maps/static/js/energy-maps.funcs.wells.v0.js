@@ -10,10 +10,11 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   ctx.strokeStyle = viz.transport.gas.stroke;
   ctx.lineWidth = viz.transport.gas.width;
   ctx.beginPath();
-  path(pipe_data)
+  path(pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
-}
+  hide_spinner();
+};
 
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
@@ -37,7 +38,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
-
+  hide_spinner();
 };
 
 const draw_gas_wells = function draw_gas_wells(queued_data) {
@@ -80,7 +81,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 
   let wells = queued_data[0];
 
-  wells.forEach(function(d) {
+  wells.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
     if (xy === null) {
       return;
@@ -99,6 +100,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
         }
       }
     }
+    if (i === wells.length - 1) { hide_spinner(); }
   });
 
 };
@@ -109,9 +111,10 @@ const draw_processing = function draw_processing(ctx, queued_data) {
   let gproc = queued_data[0];
   let gstor = queued_data[1];
 
-  gproc.forEach(function(d) {
+  gproc.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
     draw_gas_processor(ctx, xy);
+    if (i === gproc.length - 1) { hide_spinner(); }
   });
 
   gstor.forEach(function(d) {
@@ -126,7 +129,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   let oref = queued_data[0].features;
 
-  oref.forEach(function(d) {
+  oref.forEach(function(d, i) {
     let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
       'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
     let r = 0;
@@ -136,6 +139,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
       }
     }
     d.r = r;
+    if (i === oref.length - 1) { hide_spinner(); }
   });
 
   oref.sort(function(a, b) {

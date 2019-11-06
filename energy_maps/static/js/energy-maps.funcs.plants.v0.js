@@ -48,7 +48,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
   });
   // Draw the standard layer
-  features.forEach(function(d) {
+  features.forEach(function(d, i) {
     let xy = projection(d.geometry.coordinates);
     if (xy === null) {
       //
@@ -68,6 +68,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       }
       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
+    if (i === features.length - 1) { hide_spinner(); }
   });
 
 };

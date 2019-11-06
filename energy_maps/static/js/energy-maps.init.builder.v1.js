@@ -242,7 +242,7 @@
       draw: [ {
         f: draw_nuclear_plants,
         src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        w: null,
+        w: d3.json,
       } ],
       column: 'electricity-generation',
     },
@@ -345,6 +345,7 @@
 
         if (lyr.counter % 2 === 0) {
 
+          hide_spinner();
           lyr.context.clearRect(0, 0, width, height);
           lyr.active = false;
 

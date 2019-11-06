@@ -23,6 +23,7 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   ctx.beginPath();
   path(railroad);
   ctx.stroke();
+  hide_spinner();
 
 };
 
@@ -42,7 +43,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
     return d3.descending(+a.tot_prod, +b.tot_prod);
   });
 
-  wells.forEach(function(d) {
+  wells.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
     if (xy === null) {
       //
@@ -50,6 +51,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       // console.log(d.tot_prod);
       draw_mine(ctx, xy, viz.black, +d.tot_prod);
     }
+    if (i === wells.length - 1) { hide_spinner(); }
   });
 
 };
