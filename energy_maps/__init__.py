@@ -98,7 +98,17 @@ assets.register('js_bigfucker',
                        'js/energy-maps.init.wells.v1.js',
                        filters='jsmin',
                        output='gen/js_bigfucker.js'))
-
+assets.register('js_builderfucker',
+                Bundle('js/energy-maps.globals.v0.js',
+                       'js/energy-maps.funcs.v0.js',
+                       'js/energy-maps.funcs.coal.v0.js',
+                       'js/energy-maps.funcs.grid.v0.js',
+                       'js/energy-maps.funcs.plants.v0.js',
+                       'js/energy-maps.funcs.wells.v0.js',
+                       'js/energy-maps.legends.v1.js',
+                       'js/energy-maps.init.builder.v1.js',
+                       filters='jsmin',
+                       output='gen/js_builderfucker.js'))
 
 # @app.errorhandler(400)
 # def not_found(error):
