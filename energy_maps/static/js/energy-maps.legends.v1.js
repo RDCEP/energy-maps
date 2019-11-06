@@ -148,24 +148,31 @@ const update_legend = function update_legend(ctx, layers) {
   };
 
   const draw_grid_ac_legend = function draw_grid_ac_legend(
-    ctx, x, y, color, width, dashed, text) {
+    ctx, x, y, bin_list) {
     let bins = [100, 200, 300, 350, 500, 1000];
-    let bin_labels = ['Under 100 kV', '100–200 kV',
-      '200–300 kV', '345 kV', '500 kV', '735+ kV'];
+    let bin_labels = ['Unknown kV AC', 'Under 100 kV AC', '100–200 kV AC',
+      '200–300 kV AC', '345 kV AC', '500 kV AC', '735 kV AC'];
     // Voltage swatches
-    for (let i = 0; i < bins.length; ++i) {
+    for (let i = 0; i < bin_list.length; ++i) {
+      let j = bin_list[i];
       y += 15 * SCALE;
-      ctx.strokeStyle = viz.grid.palette[i];
-      ctx.lineWidth = viz.transport.rail.width *
-        (1 + 3 / (1 + Math.exp(-3 * (i / ((bins.length - 1) / 2) -1 ))));
-      ctx.beginPath();
-      ctx.moveTo(x - 7 * SCALE, y);
-      ctx.lineTo(x + 7 * SCALE, y);
-      ctx.stroke();
+      ctx.strokeStyle = viz.grid.palette[j];
+      // FIXME: This is a kludge for drawing a white swatch for unknown kV
+      if (j === 0) {
+        ctx.lineWidth = 2 * SCALE;
+        ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
+      } else {
+        ctx.lineWidth = 14 * SCALE;
+        ctx.beginPath();
+        ctx.moveTo(x - 7 * SCALE, y);
+        ctx.lineTo(x + 7 * SCALE, y);
+        ctx.stroke();
+      }
+
       y += 5 * SCALE;
       ctx.fillStyle = viz.black;
       ctx.font = `bold ${14 * SCALE}px Arial`;
-      ctx.fillText(`${bin_labels[i]} kV AC`, text_offset + x, y);
+      ctx.fillText(`${bin_labels[j]}`, text_offset + x, y);
     }
     return y;
   };
@@ -197,7 +204,6 @@ const update_legend = function update_legend(ctx, layers) {
   // Offset for text
   let text_offset = 30 * SCALE;
     
-
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
       switch (layers[i].name) {
@@ -253,10 +259,20 @@ const update_legend = function update_legend(ctx, layers) {
         case 'wind-farms':
           y = draw_power_plant_legend(ctx, x, y, viz.plants.wind, 'Wind');
           break;
-        case 'electrical-grid-unavailable-kv':
+        case 'AC-lines-under-100-kV':
+          y = draw_grid_ac_legend(ctx, x, y, [0, 1]);
+          break;
+        case 'AC-lines-100-to-300-kV':
+          y = draw_grid_ac_legend(ctx, x, y, [2, 3]);
+          break;
+        case 'AC-lines-345-to-735-kV':
+          y = draw_grid_ac_legend(ctx, x, y, [4, 5, 6]);
+          break;
+        case 'DC-lines':
+          y = draw_grid_dc_legend(ctx, x, y);
           break;
         case 'electrical-grid-ac-lines':
-          y = draw_grid_ac_legend(ctx, x, y);
+          y = draw_grid_ac_legend(ctx, x, y, );
           break;
         case 'electrical-grid-dc-lines':
           y = draw_grid_dc_legend(ctx, x, y);
