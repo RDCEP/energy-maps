@@ -124,8 +124,8 @@
       value: 1_059_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ '/static/csv/wells_gas1.csv',
-               '/static/csv/wells_gas2.csv' ],
+        src: [ '/static/csv/Wells_gas1.csv',
+               '/static/csv/Wells_gas2.csv' ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -134,8 +134,8 @@
       value: 654_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ '/static/csv/wells_oil1.csv',
-               '/static/csv/wells_oil2.csv' ],
+        src: [ '/static/csv/Wells_oil1.csv',
+               '/static/csv/Wells_oil2.csv' ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
