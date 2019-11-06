@@ -107,10 +107,12 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.fillStyle = color;
     ctx.strokeStyle = viz.plants.stroke.light;
     ctx.lineWidth = viz.plants.stroke.width;
-    if (color === viz.plants.gas ||
-        color === viz.plants.solar)
+    if (color === viz.plants.gas) {
+      ctx.strokeStyle = 'darkblue';
+    } else if (color === viz.plants.solar)
     {
-      ctx.strokeStyle = viz.plants.stroke.dark;
+      ctx.strokeStyle = 'darkorange';
+      // ctx.strokeStyle = viz.plants.stroke.dark;
     }
     // x = r * 2 - 20 * SCALE + xo;
     y += 18 * SCALE;

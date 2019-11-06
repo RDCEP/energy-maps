@@ -159,17 +159,23 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
   ctx.lineWidth = viz.plants.stroke.width;
   ctx.fillStyle = color;
+  r = Math.sqrt(r / Math.PI) * viz.plants.scale;
   ctx.beginPath();
-  draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * viz.plants.scale);
-  ctx.fill();
+  // Draw larger circle for stroke, so that stroke aligns to outside of
+  //  of circumference
+  draw_circle(ctx, xy, r + ctx.lineWidth);
+  // FIXME: Need a better method of changing stroke color for lighter circles.
   if (color !== viz.white) {
-    if (color === viz.plants.gas ||
-        color === viz.plants.solar)
-    {
-      ctx.strokeStyle = viz.plants.stroke.dark;
+    if (color === viz.plants.gas) {
+      ctx.strokeStyle = 'darkblue';
+    } else if (color === viz.plants.solar) {
+      ctx.strokeStyle = 'darkorange';
+      // ctx.strokeStyle = viz.plants.stroke.dark;
     }
     ctx.stroke();
   }
+  draw_circle(ctx, xy, r);
+  ctx.fill();
 };
 
 const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
