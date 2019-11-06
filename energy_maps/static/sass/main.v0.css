@@ -43,6 +43,9 @@ label {
   border-bottom: 1px solid black;
   padding: 0.33em 0;
 }
+.options label.inactive {
+  color: #767676;
+}
 .options label .asset-value {
   font-size: 0.8em;
 }

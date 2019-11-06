@@ -322,7 +322,9 @@
 
     let checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
-      .attr('class', `${lyr.name}`)
+      .attr('class', () => {
+        return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
+      })
       .text(`${capitalize_first_letter(
         lyr.name
           .replace(/ /g, '\u00A0')
