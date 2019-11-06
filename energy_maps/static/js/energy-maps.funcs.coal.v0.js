@@ -78,9 +78,8 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
     ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / n),
       xy[1] + r * Math.sin(a + i * 2 * Math.PI / n));
   }
-
   ctx.fill();
-  if (r > 500000) {
+  if (r > 8) {
     ctx.stroke();
   }
 
