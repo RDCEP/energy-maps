@@ -7,7 +7,7 @@
 
 
 
-let layers = ['gas-well', 'oil-well', 'off-shore-well', 'gas-pipeline', 'oil-pipeline', 'oil-product-pipeline', 'gas-processing', 'gas-storage', 'oil-refinery', 'railroad', 'coal-mine', 'natural-gas-plant', 'petroleum-plant', 'coal-plant', 'non-fossil-fuel-plant', 'solar-plant', 'wind-plant', 'hydro-plant', 'nuclear-plant', 'geothermal-plant', 'fossil-fuel-plant']
+let layers = ['gas-well', 'oil-well', 'off-shore-well', 'gas-pipeline', 'oil-pipeline', 'oil-product-pipeline', 'gas-processing', 'gas-storage', 'oil-refinery', 'railroad', 'coal-mine', 'natural-gas-plant', 'petroleum-plant', 'coal-plant', 'non-fossil-fuel-plant', 'solar-PV', 'wind-plant', 'hydro-plant', 'nuclear-plant', 'geothermal-plant', 'fossil-fuel-plant']
 
 // Objects to contain keys from the layers array with corresponding d3 expressions as values
 let canvases = {};

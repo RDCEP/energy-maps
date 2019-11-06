@@ -254,7 +254,7 @@ const update_legend = function update_legend(ctx, layers) {
         case 'petroleum-plant':
           y = draw_power_plant_legend(ctx, x, y, viz.plants.oil, 'Petroleum');
           break;
-        case 'solar-plant':
+        case 'solar-PV':
           y = draw_power_plant_legend(ctx, x, y, viz.plants.solar, 'Solar');
           break;
         case 'wind-farms':
@@ -293,7 +293,7 @@ const update_legend = function update_legend(ctx, layers) {
   let draw_plants_legend = layers.filter(function(d) {
     return ["coal-plant", "geothermal-plant", "hydro-plant",
     "natural-gas-plant", "nuclear-plant", "petroleum-plant",
-    "solar-plant", "wind-farms",].indexOf(d[0]) > -1;
+    "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
   }).length > 0;
   if (draw_plants_legend) {
     // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * viz.plants.scale);

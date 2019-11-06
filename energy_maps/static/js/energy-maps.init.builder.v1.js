@@ -269,7 +269,7 @@
       } ],
       column: 'electricity-generation',
     },
-    { name: 'solar-plant',
+    { name: 'solar-PV',
       value: 14_000_000_000,
       draw: [ {
         f: draw_solar_plants,
