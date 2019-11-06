@@ -185,3 +185,11 @@ const get_path = function get_path(ctx) {
     .pointRadius(2)
     .context(ctx);
 };
+
+const spinner = document.getElementById('spinner');
+const show_spinner = function show_spinner() {
+  spinner.style.display = "block";
+};
+const hide_spinner = function hide_spinner() {
+    spinner.style.display = "none";
+  };

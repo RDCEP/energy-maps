@@ -8,17 +8,35 @@
   /** @description Sets the fill for the base map */
   const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
 
-  const spinner = document.getElementById('spinner');
-  const show_spinner = function show_spinner() {
-    spinner.style.display = "block";
-  };
-  const hide_spinner = function hide_spinner() {
-    spinner.style.display = "none";
-  };
-
   const capitalize_first_letter = function capitalize_first_letter(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
+
+  /** @description the total sum of asset values for all active layers */
+  let asset_total_sum = 0;
+
+  /** Add the passed value to the asset total array and compute the new value */
+  function increment_asset_total(value) {
+    asset_total_sum += value;
+    display_asset_total();
+  }
+
+  /** Remove the passed value from the asset total array and compute the new value */
+  function decrement_asset_total(value) {
+    asset_total_sum -= value;
+    display_asset_total();
+  }
+
+  /** Display total asset value of all active layers.
+   * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
+   */
+  function display_asset_total() {
+    let asset_total_sum_display = d3.format('$.2~s')(asset_total_sum);
+    document.getElementById(
+      "asset-totals"
+    ).innerHTML = `${asset_total_sum_display}`
+      .replace(/G/, 'B');
+  }
 
   // Set base map canvas
   /** @description A canvas element for the base map, attached to
@@ -54,16 +72,13 @@
   
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
+      console.log('show spinner');
+      show_spinner();
       Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
-          console.log('show spinner');
-          show_spinner();
           lyr.draw[i].f(lyr.context, files);
-        })
+        });
         // FIXME: this does not work. Spinner disappears too soon
-        .then(function() {
-          console.log('hide spinner');
-          hide_spinner(); });
     }
   };
 
@@ -348,7 +363,7 @@
           console.log(`${lyr.name} counter is odd, value of ${lyr.counter}`);
 
           load_layer_data(lyr);
-          load(lyr.timer);
+          // load(lyr.timer);
           lyr.active = true;
 
           console.log(lyr.value);
