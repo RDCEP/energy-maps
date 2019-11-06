@@ -7,7 +7,6 @@ p, h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
-/* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up on the index page */
 .wrap {
   width: 1200px;
   margin: 0 auto;
@@ -56,7 +55,10 @@ label {
   position: relative;
 }
 
-.map.layer {
+.layer {
+  fill: none;
+}
+.layer.map {
   position: absolute;
   top: 0;
 }
@@ -70,18 +72,14 @@ label {
   top: 0;
 }
 
-/* Hack for an updated legend */
 .master-legend {
   width: auto !important;
 }
 
-.layer {
-  fill: none;
-}
-
 #asset-totals {
   font-family: "Roboto", sans-serif;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  padding: 0.5em 0;
 }
 #asset-totals p {
   position: relative;
@@ -168,10 +166,6 @@ label {
   left: 70%;
   padding: 8px 0;
   font-size: 0.9rem;
-}
-
-.layer {
-  fill: none;
 }
 
 .boundary.ocean {
