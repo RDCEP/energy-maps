@@ -180,8 +180,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, color, width, dashed, text) {
     y += 15 * SCALE;
-    ctx.lineWidth = viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (1000 / 500 - 1))));
+    ctx.lineWidth = 14 * SCALE;
     ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.moveTo(x - 7 * SCALE, y);
