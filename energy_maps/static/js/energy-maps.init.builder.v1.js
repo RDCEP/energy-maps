@@ -16,6 +16,10 @@
     spinner.style.display = "none";
   };
 
+  const capitalize_first_letter = function capitalize_first_letter(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+
   // Set base map canvas
   /** @description A canvas element for the base map, attached to
    *  <div class="main map builder" id="mapcanvas">
@@ -64,37 +68,41 @@
   };
 
   let layers = [
-    { name: 'electrical-grid-ac-lines-under-100-kv',
+    { name: 'AC-lines-under-100-kV',
       value: 102_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_unk_and_under_100,
         src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-transmission-and-distribution',
     },
-    { name: 'electrical-grid-ac-lines-100-to-300-kV',
+    { name: 'AC-lines-100-to-300-kV',
       value: 167_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_100_300,
         src: ['/static/json/elec_grid_split/grid-100_300.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-transmission-and-distribution',
     },
-    { name: 'electrical-grid-ac-lines-345-to-735-kV',
+    { name: 'AC-lines-345-to-735-kV',
       value: 137_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_345_735,
         src: ['/static/json/elec_grid_split/grid-345_735.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-transmission-and-distribution',
     },
-    { name: 'electrical-grid-dc-lines',
+    { name: 'DC-lines',
       value: 4_000_000_000,
       draw: [ {
         f: draw_grid_class_dc,
         src: ['/static/json/elec_grid_split/grid-dc.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-transmission-and-distribution',
     },
     {
       name: 'gas-well',
@@ -105,6 +113,7 @@
                '/static/csv/wells_gas2.csv' ],
         w: d3.csv
       } ],
+      column: 'oil-and-gas',
     },
     { name: 'oil-well',
       value: 654_000_000_000,
@@ -114,6 +123,12 @@
                '/static/csv/wells_oil2.csv' ],
         w: d3.csv
       } ],
+      column: 'oil-and-gas',
+    },
+    { name: 'foreign-oil-and-gas-wells',
+      value: -999_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
     },
     { name: 'gas-pipeline',
       value: 940_000_000_000,
@@ -122,7 +137,7 @@
         src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
         w: d3.json
       }, ],
-
+      column: 'oil-and-gas',
     },
     { name: 'oil-pipeline',
       value: 170_000_000_000,
@@ -135,14 +150,7 @@
         src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ],
         w: d3.json
       }, ],
-    },
-    { name: 'gas-processing',
-      value: 45_000_000_000,
-      draw: [ {
-        f: draw_processing,
-        src: [ '/static/csv/nproc.csv' ],
-        w: d3.csv
-      } ]
+      column: 'oil-and-gas',
     },
     { name: 'oil-refinery',
       value: 373_000_000_000, // 373 B
@@ -150,8 +158,31 @@
         f: draw_refining,
         src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
         w: d3.json
-      }]
-
+      }],
+      column: 'oil-and-gas',
+    },
+    { name: 'gas-processing',
+      value: 45_000_000_000,
+      draw: [ {
+        f: draw_processing,
+        src: [ '/static/csv/nproc.csv' ],
+        w: d3.csv
+      } ],
+      column: 'oil-and-gas',
+    },
+    { name: 'oil-and-gas-storage',
+      value: -999_999_999_999,
+      draw: false,
+      column: 'oil-and-gas',
+    },
+    { name: 'coal-mine',
+      value: 57_000_000_000,
+      draw: [ {
+        f: draw_coal_mines,
+        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        w: d3.csv
+      } ],
+      column: 'coal',
     },
     { name: 'railroad',
       value: 137_000_000_000,
@@ -161,15 +192,8 @@
         f: draw_railroads,
         src: [ '/static/json/railrdl020.geojson' ],
         w: d3.json
-      } ]
-    },
-    { name: 'coal-mine',
-      value: 57_000_000_000,
-      draw: [ {
-        f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
-        w: d3.csv
-      } ]
+      } ],
+      column: 'coal',
     },
     { name: 'coal-plant',
       value: 1_092_000_000_000,
@@ -177,23 +201,8 @@
         f: draw_coal_plants,
         src: ['/static/json/power_plants_split/power_plants-COAL.json'],
         w: d3.json,
-      } ]
-    },
-    { name: 'geothermal-plant',
-      value: 22_000_000_000,
-      draw: [ {
-        f: draw_geo_plants,
-        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        w: d3.json,
-      } ]
-    },
-    { name: 'hydro-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_hydro_plants,
-        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-generation',
     },
     { name: 'natural-gas-plant',
       value: 488_000_000_000,
@@ -201,15 +210,8 @@
         f: draw_ng_plants,
         src: ['/static/json/power_plants_split/power_plants-NG.json'],
         w: d3.json,
-      } ]
-    },
-    { name: 'nuclear-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_nuclear_plants,
-        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        w: null,
-      } ]
+      } ],
+      column: 'electricity-generation',
     },
     { name: 'petroleum-plant',
       value: 64_000_000_000,
@@ -217,15 +219,26 @@
         f: draw_petro_plants,
         src: ['/static/json/power_plants_split/power_plants-PET.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-generation',
     },
-    { name: 'solar-plant',
-      value: 14_000_000_000,
+    { name: 'nuclear-plant',
+      value: 597_000_000_000,
       draw: [ {
-        f: draw_solar_plants,
-        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+        f: draw_nuclear_plants,
+        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+        w: null,
+      } ],
+      column: 'electricity-generation',
+    },
+    { name: 'hydro-plant',
+      value: 597_000_000_000,
+      draw: [ {
+        f: draw_hydro_plants,
+        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-generation',
     },
     { name: 'wind-farms',
       value: 132_000_000_000,
@@ -233,14 +246,126 @@
         f: draw_wind_farms,
         src: ['/static/json/power_plants_split/power_plants-WND.json'],
         w: d3.json,
-      } ]
+      } ],
+      column: 'electricity-generation',
+    },
+    { name: 'solar-plant',
+      value: 14_000_000_000,
+      draw: [ {
+        f: draw_solar_plants,
+        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-generation',
+    },
+    { name: 'geothermal-plant',
+      value: 22_000_000_000,
+      draw: [ {
+        f: draw_geo_plants,
+        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-generation',
+    },
+    { name: 'biofuel',
+      value: -999_999_999_999,
+      draw: false,
+      column: 'electricity-generation',
+    }
+  ];
+
+  const button_columns = [
+    { name: 'oil-and-gas',
+    },
+    { name: 'coal',
+    },
+    { name: 'electricity-generation',
+    },
+    { name: 'electricity-transmission-and-distribution',
     },
   ];
-  
+
+  let cols = button_columns.length;
+
+  for (let i = 0; i < cols; ++i) {
+    let col = button_columns[i];
+    d3.select('.options')
+      .append('div')
+      .attr('class', () => { return `column ${col.name}`; })
+      .append('h4')
+      .text((d) => { return `${capitalize_first_letter(col.name
+        .replace(/ /g, '\u00A0')
+        .replace(/-/g, '\u00A0'))}`; })
+  }
+
   let lay = layers.length;
-  
+
   for (let i = 0; i < lay; i++) {
+
     let lyr = layers[i];
+    lyr.counter = 0;
+
+    let checkbox_span = d3.select(`.${lyr.column}`)
+      .append('label')
+      .attr('class', `${lyr.name}`)
+      .text(`${capitalize_first_letter(
+        lyr.name
+          .replace(/ /g, '\u00A0')
+          .replace(/-/g, '\u00A0'))}\u00A0`)
+      .append('span')
+      .attr('class', 'asset-value')
+      .text(` (${capitalize_first_letter(
+        d3.format('.2~s')(lyr.value).replace(/G/, 'B'))})`)
+      .append('span');
+
+    if (lyr.draw) {
+      lyr.checkbox = checkbox_span.append('input')
+        .attr('type', 'checkbox')
+        .attr('class', `checkbox ${lyr.name}`)
+        .attr('data-assetvalue', lyr.value);
+
+      lyr.checkbox.on('change', function() {
+
+        lyr.counter++;
+
+        if (lyr.counter % 2 === 0) {
+
+          lyr.context.clearRect(0, 0, width, height);
+          lyr.active = false;
+
+          console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
+
+          d3.select(`.map.layer.${lyr.name}`)
+            .append('canvas')
+            .attr('class', `map layer canvas ${lyr.name}`)
+            .attr('width', width + SCALE * 400)
+            .attr('height', height);
+
+          decrement_asset_total(lyr.value);
+
+        } else {
+
+          console.log(`${lyr.name} counter is odd, value of ${lyr.counter}`);
+
+          load_layer_data(lyr);
+          load(lyr.timer);
+          lyr.active = true;
+
+          console.log(lyr.value);
+
+          increment_asset_total(lyr.value);
+
+        }
+
+        // TODO: Arguably the legend context should be cleared in the
+        //  update_legend() function.
+        legend_ctx.clearRect(0, 0, width, height);
+        update_legend(legend_ctx, layers);
+
+      });
+
+    }
+
     lyr.canvas = d3
       .select('.map.wrapper')
       .append('div')
@@ -254,61 +379,8 @@
 
     lyr.context = lyr.canvas.node().getContext('2d');
     lyr.context.lineCap = 'round';
+    lyr.active = false;
 
-    console.log(lyr.context);
-
-    layers[i].checkbox = d3
-      .select('.options')
-      .insert('span')
-      .append('label')
-      .text(`${lyr.name.replace(/ /g, '\u00A0')
-        .replace(/-/g, '\u2011')}\u00A0`)
-      .append('input')
-      .attr('type', 'checkbox')
-      .attr('class', `checkbox ${lyr.name}`)
-      .attr('data-assetvalue', lyr.value);
-
-    layers[i].active = false;
-
-    lyr.counter = 0;
-    lyr.checkbox.on('change', function() {
-
-      lyr.counter++;
-
-      if (lyr.counter % 2 === 0) {
-
-        lyr.context.clearRect(0, 0, width, height);
-        lyr.active = false;
-        
-        console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
-        
-        d3.select(`.map.layer.${lyr.name}`)
-          .append('canvas')
-          .attr('class', `map layer canvas ${lyr.name}`)
-          .attr('width', width + SCALE * 400)
-          .attr('height', height);
-
-        decrement_asset_total(lyr.value);
-
-      } else {
-
-        console.log(`${lyr.name} counter is odd, value of ${lyr.counter}`);
-
-        load_layer_data(lyr);
-        load(lyr.timer);
-        lyr.active = true;
-
-        console.log(lyr.value);
-
-        increment_asset_total(lyr.value);
-      }
-
-      // TODO: Arguably the legend context should be cleared in the
-      //  update_legend() function.
-      legend_ctx.clearRect(0, 0, width, height);
-      update_legend(legend_ctx, layers);
-
-    });
   }
 
   draw_base_map();
