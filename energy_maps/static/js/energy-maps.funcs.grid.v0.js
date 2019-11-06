@@ -45,7 +45,7 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'white';
+    ctx.strokeStyle = viz.grid.palette[0];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
@@ -72,7 +72,7 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'purple';
+    ctx.strokeStyle = viz.grid.palette[1];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
@@ -147,7 +147,7 @@ const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, que
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = viz.grid.palette[5];
+    ctx.strokeStyle = viz.grid.palette[3];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
@@ -173,7 +173,7 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'rgba(255, 255, 51)';
+    ctx.strokeStyle = viz.grid.palette[4];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
@@ -199,7 +199,7 @@ const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'rgba(255, 127, 0)';
+    ctx.strokeStyle = viz.grid.palette[5];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
@@ -225,7 +225,7 @@ const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
     ctx.lineWidth = viz.transport.rail.width;
-    ctx.strokeStyle = 'rgba(228, 26, 28)';
+    ctx.strokeStyle = viz.grid.palette[6];
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();

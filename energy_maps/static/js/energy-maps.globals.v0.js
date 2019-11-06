@@ -104,13 +104,13 @@ const viz = {
     // FIXME: This is based on colors hard coded in funcs.grid. Colors
     //  should be dynamic.
     palette: [
-      'rgba(228, 228, 228)',
-      'purple',
+      'rgba(255, 255, 255)', // white
+      'rgba(255, 255, 170)', // yellow
+      'rgba(86, 180, 233)', // lt blue
       'rgba(55, 126, 184)', // blue
-      'rgba(77, 175, 74)', // green
-      'rgba(255, 255, 51)',
-      'rgba(255, 127, 0)',
-      'rgba(228, 26, 28)',
+      'rgba(255, 149, 0)', // orange
+      'purple',
+      'rgba(228, 53, 5)', // red
     ],
     // This was the original palette from the summer 2019
     palette2: [
