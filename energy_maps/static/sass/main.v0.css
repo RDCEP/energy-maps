@@ -17,6 +17,10 @@ p {
   margin: 0 0 0.5em;
 }
 
+a {
+  color: inherit;
+}
+
 .wrap {
   width: 1200px;
   margin: 0 auto;
