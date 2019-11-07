@@ -110,9 +110,10 @@ function create_layer(label, canvas, asset_value, ctx, draw_function, arg_obj) {
    * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
    */
   function display_asset_total() {
-    let asset_total_sum_display = d3.format('$.2~s')(asset_total_sum);
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `${asset_total_sum_display}`
-      .replace(/G/, 'B');
+    ).innerHTML = `${d3.format('$.2~s')(asset_total_sum)
+      .replace(/G/, ' B')
+      .replace(/T/, ' T')}`
+    ;
   }

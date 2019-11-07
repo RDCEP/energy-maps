@@ -31,11 +31,14 @@
    * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
    */
   function display_asset_total() {
-    let asset_total_sum_display = d3.format('$.2~s')(asset_total_sum);
+    // FIXME: This is a horrible kludge in order to get space before units.
+    //  Need to write a proper formatter.
     document.getElementById(
       "asset-totals"
-    ).innerHTML = `${asset_total_sum_display}`
-      .replace(/G/, 'B');
+    ).innerHTML = `${d3.format('$.2~s')(asset_total_sum)
+      .replace(/G/, ' B')
+      .replace(/T/, ' T')}`
+    ;
   }
 
   // Set base map canvas
@@ -341,8 +344,12 @@
           .replace(/-/g, '\u00A0'))}\u00A0`)
       .append('span')
       .attr('class', 'asset-value')
+      // FIXME: This is a horrible kludge in order to get space before units.
+      //  Need to write a proper formatter.
       .text(` ($${capitalize_first_letter(
-        d3.format('.2~s')(lyr.value).replace(/G/, 'B'))})`)
+        d3.format('.2~s')(lyr.value)
+          .replace(/G/, ' B')
+          .replace(/T/, ' T'))})`)
       .append('span');
 
     if (lyr.draw) {
