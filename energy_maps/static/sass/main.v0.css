@@ -7,12 +7,21 @@ p, h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
+h4 {
+  margin: 1em 0 0.5em;
+}
+
+p {
+  color: #222222;
+  line-height: 1.4;
+  margin: 0 0 0.5em;
+}
+
 .wrap {
   width: 1200px;
   margin: 0 auto;
 }
 .wrap img {
-  width: 100%;
   display: block;
 }
 
@@ -91,6 +100,7 @@ label {
 
 #browser-notice {
   font-style: italic;
+  margin-top: 20px;
 }
 
 #builder-headline {
@@ -193,6 +203,67 @@ label {
 }
 .feature.dot.plant {
   fill: #cccccc;
+}
+
+footer {
+  margin: 3em 0 6em;
+  color: #c5c5c5;
+  font-size: 0.8em;
+  border-top: 1px solid #ababab;
+  padding: 30px 0 60px;
+}
+footer img {
+  display: inline-block;
+  margin-right: 30px;
+}
+footer img.nsf {
+  clear: left;
+  height: 80px;
+  float: left;
+}
+footer img.rdcep {
+  height: 80px;
+  float: left;
+}
+footer p {
+  float: left;
+  color: #ababab;
+  margin-right: 30px;
+}
+footer p.nsf {
+  width: 300px;
+  margin-top: 25px;
+}
+
+.modal-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.8;
+}
+
+.modal-window {
+  display: none;
+  background-color: white;
+  border: #767676;
+  border-radius: 3px;
+  position: absolute;
+  top: 120px;
+  margin: 0 200px;
+  padding: 40px 60px;
+  width: 680px;
+}
+.modal-window .modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #767676;
 }
 
 .cf:before, .cf:after {
