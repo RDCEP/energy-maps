@@ -1,35 +1,32 @@
-{% extends 'base.html' %} {% block header %}
-
+{% extends 'base.html' %}
+{% block header %}
 <div class="title container nav headline">
-    <span id="span-title">US Energy Infrastructure Visualization</span>
-    <a href="#">ABOUT</a>
-    <a href="#">LICENSE</a>
-    <a href="#">CONTACT</a>
-  </div>
+  <span id="span-title">US Energy Infrastructure Visualization</span>
+  <a class=about-contact href="#">About / Contact / License</a>
+</div>
 
-  <div class="title container" style="width: 1200px; height: 50px;">
-      <section class="builder-link">
-        <strong> Total Asset Value <br> out of $9.8T </strong>
-      </section>
-      <a href="/"><img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;"></a>
-      <section class="headline" id=asset-totals>
-        $0.00
-      </section>
-      <section class="headline headline2">
-          <i>A Physical Inventory of the U.S. Energy System</i>
-          <br>
-        Chen, Weisbach, Matteson,
-        Brizius, Moyer, 2019
-      </section>
-      <section class="headline headline3">
-        University of Chicago. Center for Robust <br>
-        Decision-making on Climate and Energy Policy.
-      </section>
-    </div>
+<div class="title container" style="width: 1200px; height: 50px;">
+  <section class="builder-link">
+    <strong> Total Asset Value <br> out of $9.8T </strong>
+  </section>
+  <a href="/"><img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;"></a>
+  <section class="headline" id=asset-totals>
+    $0.00
+  </section>
+  <section class="headline headline2">
+      <i>A Physical Inventory of the U.S. Energy System</i>
+      <br>
+    Chen, Weisbach, Matteson,
+    Brizius, Moyer, 2019
+  </section>
+  <section class="headline headline3">
+    University of Chicago. Center for Robust <br>
+    Decision-making on Climate and Energy Policy.
+  </section>
+</div>
 <!--/ Map Builder UI -->
-
-{% endblock %} {% block main %}
-
+{% endblock %}
+{% block main %}
 <div class="map wrapper">
   <div class="main map builder">
     <div id="spinner">
@@ -38,28 +35,54 @@
   </div>
   <div class="map layer legend"></div>
   <div class="map composite"></div>
-    <p id="builder-headline">Create a custom map of 2012 U.S. energy infrastructure:</p>
+
+  <p id="builder-headline">Create a custom map of 2012 U.S.
+    energy infrastructure:</p>
+
   <div class="options cf">
     <!-- Checkboxes render here -->
   </div>
-  
-  <!-- Layer divs render here -->
-  <footer>
-{#    <img class="master-legend" src="../static/images/infrastructure-map-legend-md.png"/>#}
-    <div>
-      <div>
-        <p id="browser-notice">Note: this application is not compatible with all browsers at present; we suggest using Chrome.</p>
-      </div>
-{#      <span>#}
-{#        <a id="download" download="custom-map.png">#}
-{#          <button type="button" onClick="download()">Download</button>#}
-{#        </a>#}
-{#      </span>#}
-    </div>
-  </footer>
+  <p id="browser-notice">Note: this application is not compatible with
+    all browsers at present; we suggest using Chrome.</p>
 </div>
+  <!-- Layer divs render here -->
+<div class=modal-screen></div>
+    <div class="about-window modal-window">
+      <a href=# class=modal-close>[close]</a>
 
-{% endblock %} {% block bodyjs %}
+      <h4>About.</h4>
+
+      <p>This application is in beta (please be patient).</p>
+
+      <h4>Contact.</h4>
+
+      <p>Please send questions or comments to Nathan Matteson
+        (<a href=mailto:nmatteso@depaul.edu?subject=US%20Infrastructure%20app>
+          nmatteso@depaul.edu</a>) or Liz Moyer
+        (<a href=mailto:moyer@uchicago.edu?subject=US%20Infrastructure%20app>
+          moyer@uchicago.edu</a>).</p>
+
+      <h4>License.</h4>
+
+      <p>Licensed for public use under the Apache License, Version
+        2.0. You may obtain a copy of the License at
+        <a href="http://www.apache.org/licenses/LICENSE-2.0">
+          http://www.apache.org/licenses/LICENSE-2.0</a>
+        You may not use this file except in compliance with the
+        License. Unless required by applicable law or agreed to in
+        writing, software distributed under the License is
+        distributed on an "AS IS" basis, without warranties or conditions
+        of any kind, either express
+        or implied. See the License for the specific language
+        governing permissions and limitations under the License.</p>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+{% block bodyjs %}
 
 <script>
   let SCALE = {{ scale }};

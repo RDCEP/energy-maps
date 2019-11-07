@@ -78,3 +78,12 @@ const draw_cross = function draw_cross(ctx, xy, d) {
 //   // if check box value equal to @param layer,
 //   // toggle layer on/off
 // };
+
+d3.select('.about-contact').on('click', () => {
+  d3.select('.modal-screen').style('display', 'block');
+  d3.select('.modal-window.about-window').style('display', 'block');
+});
+d3.select('.modal-close').on('click', function() {
+  d3.select(this.parentNode).style('display', 'none');
+  d3.select('.modal-screen').style('display', 'none');
+});
