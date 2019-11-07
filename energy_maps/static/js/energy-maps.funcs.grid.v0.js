@@ -5,6 +5,11 @@ let classes = [
   'DC'
 ];
 
+const line_width_kludge = function line_width_kludge(idx) {
+  return viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
+}
+
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
   draw_grid_class_unavailable(ctx, queued_data);
   draw_grid_class_ac_under_100(ctx, queued_data);
@@ -44,7 +49,7 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(0);
     ctx.strokeStyle = viz.grid.palette[0];
     ctx.beginPath();
     path(tmp_grid);
@@ -71,7 +76,7 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(1);
     ctx.strokeStyle = viz.grid.palette[1];
     ctx.beginPath();
     path(tmp_grid);
@@ -120,7 +125,7 @@ const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queu
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(2);
     ctx.strokeStyle = viz.grid.palette[2];
     ctx.beginPath();
     path(tmp_grid);
@@ -146,7 +151,7 @@ const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, que
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(3);
     ctx.strokeStyle = viz.grid.palette[3];
     ctx.beginPath();
     path(tmp_grid);
@@ -172,7 +177,7 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(4);
     ctx.strokeStyle = viz.grid.palette[4];
     ctx.beginPath();
     path(tmp_grid);
@@ -198,7 +203,7 @@ const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(5);
     ctx.strokeStyle = viz.grid.palette[5];
     ctx.beginPath();
     path(tmp_grid);
@@ -224,7 +229,7 @@ const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width;
+    ctx.lineWidth = line_width_kludge(6);
     ctx.strokeStyle = viz.grid.palette[6];
     ctx.beginPath();
     path(tmp_grid);
