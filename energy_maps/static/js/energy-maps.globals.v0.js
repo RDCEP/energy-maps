@@ -109,7 +109,8 @@ const viz = {
       'rgba(86, 180, 233)', // lt blue
       'rgba(55, 126, 184)', // blue
       'rgba(255, 149, 0)', // orange
-      'purple',
+      'rgba(213, 113, 45)', // vermilion
+      // 'purple',
       'rgba(228, 53, 5)', // red
     ],
     // This was the original palette from the summer 2019
