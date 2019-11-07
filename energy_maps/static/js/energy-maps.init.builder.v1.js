@@ -119,6 +119,11 @@
       } ],
       column: 'electricity-transmission-and-distribution',
     },
+    { name: 'electricity-distribution',
+      value: 1_400_000_000_000,
+      draw: false,
+      column: 'electricity-transmission-and-distribution',
+    },
     {
       name: 'gas-well',
       value: 1_059_000_000_000,
