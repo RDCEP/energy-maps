@@ -384,7 +384,7 @@
     }
 
     lyr.canvas = d3
-      .select('.map.wrapper')
+      .select('.map.builder')
       .append('div')
       .attr('class', `map layer ${lyr.name}`)
       .append('canvas')
