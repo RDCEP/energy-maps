@@ -9,9 +9,11 @@ main_views = Blueprint('base_views', __name__, static_folder='static')
 @main_views.route('/')
 def index():
     return render_template(
-        'images.html',
-        index=True,
+        'builder.html',
+        scale='false',
+        # index=True,
     )
+
 
 @main_views.route('/builder')
 @main_views.route('/builder/<float:scale>')
@@ -20,6 +22,15 @@ def builder(scale='false'):
         'builder.html',
         scale=scale,
     )
+
+
+@main_views.route('/static')
+def static_images():
+    return render_template(
+        'images.html',
+        index=True,
+    )
+
 
 @main_views.route('/coal')
 @main_views.route('/coal/<float:scale>')
