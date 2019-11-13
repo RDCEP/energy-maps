@@ -73,6 +73,10 @@
   let legend_ctx = legend_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
   
+  /**
+   * @description Call all draw methods for a given layer and render it to its canvas element. 
+   * @param {*} lyr An object from layers[].
+   */
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
       console.log('show spinner');
@@ -341,7 +345,7 @@
 
     let lyr = layers[i];
     lyr.counter = 0;
-
+    // Generate UI element for checkbox columns
     let checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
       .attr('class', () => {
@@ -367,6 +371,7 @@
         .attr('class', `checkbox ${lyr.name}`)
         .attr('data-assetvalue', lyr.value);
 
+      // bind 
       lyr.checkbox.on('change', function() {
 
         lyr.counter++;
