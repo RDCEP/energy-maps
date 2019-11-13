@@ -85,6 +85,15 @@
     }
   };
 
+  /** @description An array of objects representing resources to be rendered on top of the map canvas.
+  @property {string}  name               - A canvas id.
+  @property {number}  value              - Asset value in USD.
+  @property {object}  draw[]             - An array of objects containing properties accessed by load_layer_data().
+  @property {function}  draw[f]          - A draw function bound to each object.
+  @property {string}  draw[src]          - A reference to the data source (json or csv).
+  @property {function} draw[w]           - A call to a d3 data parse function.
+  @property {string} column              -The class of the column that the layer's checkbox is written to.
+     */
   let layers = [
     { name: 'AC-lines-under-100-kV',
       value: 102_000_000_000,
