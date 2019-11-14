@@ -95,6 +95,7 @@ label {
 #asset-totals {
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
+  font-weight: normal;
   padding: 0.5em 0;
 }
 #asset-totals p {
