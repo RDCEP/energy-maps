@@ -161,7 +161,7 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.strokeStyle = viz.grid.palette[j];
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       if (j === 0) {
-        ctx.strokeStyle = 'rgba(76, 76, 76)';
+        ctx.strokeStyle = 'rgba(76, 76, 76)'; 
         ctx.lineWidth = 1 * SCALE;
         ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
       } else {
