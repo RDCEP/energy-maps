@@ -28,7 +28,8 @@
   }
 
   /** Display total asset value of all active layers.
-   * Numeral.js is used for currency formatting (http://numeraljs.com/#format)
+   * Currently using d3-format (https://github.com/d3/d3-format) for currency formatting.
+   * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
    */
   function display_asset_total() {
     // FIXME: This is a horrible kludge in order to get space before units.
@@ -349,6 +350,7 @@
     let checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
       .attr('class', () => {
+        // If the layer has no draw attributes, name the class inactive.
         return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
       })
       .text(`${capitalize_first_letter(
