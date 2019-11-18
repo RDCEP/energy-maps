@@ -355,7 +355,7 @@
       })
       .text(`${capitalize_first_letter(
         lyr.name
-          .replace(/ /g, '\u00A0')
+          .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
           .replace(/-/g, '\u00A0'))}\u00A0`)
       .append('span')
       .attr('class', 'asset-value')
