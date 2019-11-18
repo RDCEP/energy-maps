@@ -158,6 +158,7 @@ const update_legend = function update_legend(ctx, layers) {
     for (let i = 0; i < bin_list.length; ++i) {
       let j = bin_list[i];
       y += 15 * SCALE;
+      ctx.lineCap = 'butt';
       ctx.strokeStyle = viz.grid.palette[j];
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       if (j === 0) {
@@ -183,6 +184,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, color, width, dashed, text) {
     y += 15 * SCALE;
+    ctx.lineCap = 'butt';
     ctx.lineWidth = 14 * SCALE;
     ctx.strokeStyle = 'black';
     ctx.beginPath();
