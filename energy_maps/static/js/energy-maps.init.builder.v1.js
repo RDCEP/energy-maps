@@ -350,7 +350,6 @@
     let checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
       .attr('class', () => {
-        // If the layer has no draw attributes, name the class inactive.
         return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
       })
       .text(`${capitalize_first_letter(
