@@ -390,6 +390,7 @@
         }
         else if (lyr.counter > 1 && lyr.counter % 2 !== 0) {
           document.getElementsByClassName(`map layer ${lyr.name}`)[0].style.display = 'block';
+          increment_asset_total(lyr.value);
         } 
         else {
 
