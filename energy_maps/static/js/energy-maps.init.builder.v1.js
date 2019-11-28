@@ -381,7 +381,7 @@
           document.getElementsByClassName(`map layer ${lyr.name}`)[0].style.display = 'none';
           // hide_spinner();
           // lyr.context.clearRect(0, 0, width, height);
-          // lyr.active = false;
+          lyr.active = false;
 
           console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
 
@@ -390,6 +390,7 @@
         }
         else if (lyr.counter > 1 && lyr.counter % 2 !== 0) {
           document.getElementsByClassName(`map layer ${lyr.name}`)[0].style.display = 'block';
+          lyr.active = true;
           increment_asset_total(lyr.value);
         } 
         else {
