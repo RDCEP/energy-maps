@@ -377,17 +377,21 @@
 
         lyr.counter++;
 
-        if (lyr.counter % 2 === 0) {
-
-          hide_spinner();
-          lyr.context.clearRect(0, 0, width, height);
-          lyr.active = false;
+        if (lyr.counter > 1 && lyr.counter % 2 === 0) {
+          document.getElementsByClassName(`map layer ${lyr.name}`)[0].style.display = 'none';
+          // hide_spinner();
+          // lyr.context.clearRect(0, 0, width, height);
+          // lyr.active = false;
 
           console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
 
           decrement_asset_total(lyr.value);
 
-        } else {
+        }
+        else if (lyr.counter > 1 && lyr.counter % 2 !== 0) {
+          document.getElementsByClassName(`map layer ${lyr.name}`)[0].style.display = 'block';
+        } 
+        else {
 
           console.log(`${lyr.name} counter is odd, value of ${lyr.counter}`);
 
