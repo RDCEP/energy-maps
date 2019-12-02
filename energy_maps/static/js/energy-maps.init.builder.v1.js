@@ -42,6 +42,17 @@
     ;
   }
 
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  let geoSrc = fetch('http://localhost:3000/geo', requestOptions)
+  .then(response => response.text())
+  // .then(result => console.log(result)) 
+  .catch(error => console.log('error', error));
+
   // Set base map canvas
   /** @description A canvas element for the base map, attached to
    *  <div class="main map builder" id="mapcanvas">
@@ -304,7 +315,8 @@
       value: 22_000_000_000,
       draw: [ {
         f: draw_geo_plants,
-        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        // src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        src: ['http://localhost:3000/geo'],
         w: d3.json,
       } ],
       column: 'electricity-generation',
