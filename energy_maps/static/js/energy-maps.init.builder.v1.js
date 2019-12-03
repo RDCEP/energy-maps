@@ -52,6 +52,8 @@
   // .then(result => console.log(result)) 
   .catch(error => console.log('error', error));
 
+  let apiUrl = 'http://localhost:3000/'
+
   // let getEndpoint = getEndpoint(endpoint) {
   //   let src = fetch(`http://localhost:3000/${endpoint}`, requestOptions)
   //   .then(response => response.text())
@@ -269,7 +271,7 @@
       draw: [ {
         f: draw_coal_plants,
         // src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        src: ['http://localhost:3000/coal'],
+        src: [`${apiUrl}coal`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -279,7 +281,7 @@
       draw: [ {
         f: draw_ng_plants,
         // src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        src: ['http://localhost:3000/ng'],
+        src: [`${apiUrl}ng`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -289,7 +291,7 @@
       draw: [ {
         f: draw_petro_plants,
         // src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        src: ['http://localhost:3000/pet'],
+        src: [`${apiUrl}pet`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -299,7 +301,7 @@
       draw: [ {
         f: draw_nuclear_plants,
         // src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        src: ['http://localhost:3000/nuc'],
+        src: [`${apiUrl}nuc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -309,7 +311,7 @@
       draw: [ {
         f: draw_hydro_plants,
         // src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        src: ['http://localhost:3000/hyc'],
+        src: [`${apiUrl}hyc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -319,7 +321,7 @@
       draw: [ {
         f: draw_wind_farms,
         // src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        src: ['http://localhost:3000/wnd'],
+        src: [`${apiUrl}wnd`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -329,7 +331,7 @@
       draw: [ {
         f: draw_solar_plants,
         // src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        src: ['http://localhost:3000/sun'],
+        src: [`${apiUrl}sun`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -339,7 +341,8 @@
       draw: [ {
         f: draw_geo_plants,
         // src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        src: ['http://localhost:3000/geo'],
+        // src: ['http://localhost:3000/geo'],
+        src: [`${apiUrl}geo`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
