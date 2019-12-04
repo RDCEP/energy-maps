@@ -221,11 +221,11 @@
       value: 170_000_000_000,
       draw: [ {
         f: draw_oil_pipes,
-        src: [ '/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson', ],
+        src: [`${apiUrl}/oilpipeline`],
         w: d3.json
       }, {
         f: draw_oil_pipes,
-        src: [ '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson' ],
+        src: [`${apiUrl}/oilprodpipeline`],
         w: d3.json
       }, ],
       column: 'oil-and-gas',
@@ -234,7 +234,7 @@
       value: 373_000_000_000, // 373 B
       draw: [ {
         f: draw_refining,
-        src: [ '/static/json/Petroleum_Refineries_US_2015.geojson' ],
+        src: [`${apiUrl}/oilrefinery`],
         w: d3.json
       }],
       column: 'oil-and-gas',
