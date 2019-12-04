@@ -211,7 +211,8 @@
       value: 940_000_000_000,
       draw: [ {
         f: draw_gas_pipes,
-        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+        // src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+        src: [`${apiUrl}/InterIntrastate_Pipelines_US`],
         w: d3.json
       }, ],
       column: 'oil-and-gas',
@@ -257,6 +258,7 @@
       draw: [ {
         f: draw_coal_mines,
         src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        // src: [`${apiUrl}/coalmines`], // TODO: Is this supposed to be CSV? This API route currently has the JSON data and is failing to draw to the canvas 
         w: d3.csv
       } ],
       column: 'coal',
@@ -267,7 +269,8 @@
       // the value of the freight railway shown
       draw: [ {
         f: draw_railroads,
-        src: [ '/static/json/railrdl020.geojson' ],
+        // src: [ '/static/json/railrdl020.geojson' ],
+        src: [`${apiUrl}/railroads`],
         w: d3.json
       } ],
       column: 'coal',
