@@ -181,8 +181,8 @@
       value: 1_059_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ '/static/csv/Wells_gas1.csv',
-               '/static/csv/Wells_gas2.csv' ],
+        src: [ `${apiUrl}/wells_gas1`,
+               `${apiUrl}/wells_gas2` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -191,8 +191,8 @@
       value: 654_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ '/static/csv/Wells_oil1.csv',
-               '/static/csv/Wells_oil2.csv' ],
+        src: [ `${apiUrl}/wells_oil1`,
+               `${apiUrl}/wells_oil2` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -243,7 +243,7 @@
       value: 45_000_000_000,
       draw: [ {
         f: draw_processing,
-        src: [ '/static/csv/nproc.csv' ],
+        src: [ `${apiUrl}/nproc` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -257,8 +257,8 @@
       value: 57_000_000_000,
       draw: [ {
         f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
-        // src: [`${apiUrl}/coalmines`], // TODO: Is this supposed to be CSV? This API route currently has the JSON data and is failing to draw to the canvas 
+        // src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        src: [`${apiUrl}/coalmines`], // TODO: Is this supposed to be CSV? This API route currently has the JSON data and is failing to draw to the canvas 
         w: d3.csv
       } ],
       column: 'coal',
