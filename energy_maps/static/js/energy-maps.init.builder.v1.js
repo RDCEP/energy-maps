@@ -1,12 +1,15 @@
 (function() {
   'use strict';
 
+  let apiUrl = 'https://hidden-brook-47088.herokuapp.com'
+
   /** @type {string} */
   /** @description Sets the path for the base map */
   const fmap = '../static/json/us-geojson.json';
   /** @type {string} */
   /** @description Sets the fill for the base map */
-  const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
+  // const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
+  const fmapfill = `${apiUrl}/fmapfill`;
 
   const capitalize_first_letter = function capitalize_first_letter(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -42,17 +45,15 @@
     ;
   }
 
-  var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-  };
+  // var requestOptions = {
+  //   method: 'GET',
+  //   redirect: 'follow'
+  // };
 
-  let geoSrc = fetch('http://localhost:3000/geo', requestOptions)
-  .then(response => response.text())
-  // .then(result => console.log(result)) 
-  .catch(error => console.log('error', error));
-
-  let apiUrl = 'http://localhost:3000/'
+  // let geoSrc = fetch('http://localhost:3000/geo', requestOptions)
+  // .then(response => response.text())
+  // // .then(result => console.log(result)) 
+  // .catch(error => console.log('error', error));
 
   // let getEndpoint = getEndpoint(endpoint) {
   //   let src = fetch(`http://localhost:3000/${endpoint}`, requestOptions)
@@ -133,7 +134,8 @@
       value: 102_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_unk_and_under_100,
-        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+        // src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+        src: [`${apiUrl}/grid-unk_under_100`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -142,7 +144,8 @@
       value: 167_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_100_300,
-        src: ['/static/json/elec_grid_split/grid-100_300.json'],
+        // src: ['/static/json/elec_grid_split/grid-100_300.json'],
+        src: [`${apiUrl}/grid-100_300`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -151,7 +154,8 @@
       value: 137_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_345_735,
-        src: ['/static/json/elec_grid_split/grid-345_735.json'],
+        // src: ['/static/json/elec_grid_split/grid-345_735.json'],
+        src: [`${apiUrl}/grid-345_735`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -160,7 +164,8 @@
       value: 4_000_000_000,
       draw: [ {
         f: draw_grid_class_dc,
-        src: ['/static/json/elec_grid_split/grid-dc.json'],
+        // src: ['/static/json/elec_grid_split/grid-dc.json'],
+        src: [`${apiUrl}/grid-dc`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -271,7 +276,7 @@
       draw: [ {
         f: draw_coal_plants,
         // src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        src: [`${apiUrl}coal`],
+        src: [`${apiUrl}/coal`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -281,7 +286,7 @@
       draw: [ {
         f: draw_ng_plants,
         // src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        src: [`${apiUrl}ng`],
+        src: [`${apiUrl}/ng`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -291,7 +296,7 @@
       draw: [ {
         f: draw_petro_plants,
         // src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        src: [`${apiUrl}pet`],
+        src: [`${apiUrl}/pet`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -301,7 +306,7 @@
       draw: [ {
         f: draw_nuclear_plants,
         // src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        src: [`${apiUrl}nuc`],
+        src: [`${apiUrl}/nuc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -311,7 +316,7 @@
       draw: [ {
         f: draw_hydro_plants,
         // src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        src: [`${apiUrl}hyc`],
+        src: [`${apiUrl}/hyc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -321,7 +326,7 @@
       draw: [ {
         f: draw_wind_farms,
         // src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        src: [`${apiUrl}wnd`],
+        src: [`${apiUrl}/wnd`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -331,7 +336,7 @@
       draw: [ {
         f: draw_solar_plants,
         // src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        src: [`${apiUrl}sun`],
+        src: [`${apiUrl}/sun`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -342,7 +347,7 @@
         f: draw_geo_plants,
         // src: ['/static/json/power_plants_split/power_plants-GEO.json'],
         // src: ['http://localhost:3000/geo'],
-        src: [`${apiUrl}geo`],
+        src: [`${apiUrl}/geo`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
