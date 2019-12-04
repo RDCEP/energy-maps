@@ -5,7 +5,8 @@
 
   /** @type {string} */
   /** @description Sets the path for the base map */
-  const fmap = '../static/json/us-geojson.json';
+  // const fmap = '../static/json/us-geojson.json';
+  const fmap = `${apiUrl}/fmap`;
   /** @type {string} */
   /** @description Sets the fill for the base map */
   // const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
