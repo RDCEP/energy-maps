@@ -3,9 +3,10 @@
 from flask import Flask, render_template
 from flask_assets import Environment, Bundle
 from energy_maps.views import main_views
-
+from flask_compress import Compress
 
 app = Flask(__name__)
+Compress(app)
 app.config.from_object('energy_maps.config.FlaskConfig')
 app.register_blueprint(main_views)
 assets = Environment(app)
