@@ -5,8 +5,10 @@ from flask_assets import Environment, Bundle
 from energy_maps.views import main_views
 from flask_compress import Compress
 
+compress = Compress()
+
 app = Flask(__name__)
-Compress(app)
+compress.init_app(app)
 app.config.from_object('energy_maps.config.FlaskConfig')
 app.register_blueprint(main_views)
 assets = Environment(app)
