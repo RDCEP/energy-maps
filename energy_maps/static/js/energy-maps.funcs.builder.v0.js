@@ -50,47 +50,6 @@ const load = async time => {
   spinner.style.display = "none";
 };
 
-function create_layer(label, canvas, asset_value, ctx, draw_function, arg_obj) {
-  checkbox = d3.select(`.checkbox.${label}`);
-  let counter = 0;
-  
-  checkbox.on("change", function() {
-    console.log(spinner.style.display);
-    counter++;
-    if (counter % 2 == 0) {
-      // call the spinner here
-      // spinner.style.display = "block";
-      console.log(`counter is even, current value is ${counter}`);
-      canvas.remove();
-      d3.select(`.map.layer.${label}`)
-        .append("canvas")
-        .attr("class", `map layer canvas ${label}`)
-        .attr("width", width + SCALE * 400)
-        .attr("height", height);
-      decrement_asset_total(asset_value);
-      // kill the spinner here
-      // spinner.style.display = "none";
-    } 
-    else {
-      if (counter > 1) {
-        canvas = d3.select(`.map.layer.canvas.${label}`);
-        ctx = canvas.node().getContext("2d");
-        ctx.LineCap = "round";
-      }
-      // call the spinner here
-      spinner.style.display = "block";
-      console.log(`counter is odd, current value is ${counter}`);
-      draw_function(arg_obj);
-      // load(load_time);
-      console.log(asset_value);
-      increment_asset_total(asset_value);
-      // kill the spinner here
-      // spinner.style.display = "none";
-    }
-  });
-
-}
-
   /** @description the total sum of asset values for all active layers */
   let asset_total_sum = 0;
 
