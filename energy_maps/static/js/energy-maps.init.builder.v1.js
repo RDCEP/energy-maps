@@ -1,16 +1,16 @@
 (function() {
   'use strict';
 
-  let apiUrl = 'https://hidden-brook-47088.herokuapp.com'
+  // let apiUrl = 'https://hidden-brook-47088.herokuapp.com'
 
   /** @type {string} */
   /** @description Sets the path for the base map */
-  // const fmap = '../static/json/us-geojson.json';
-  const fmap = `${apiUrl}/fmap`;
+  const fmap = '../static/json/us-geojson.json';
+  // const fmap = `${apiUrl}/fmap`;
   /** @type {string} */
   /** @description Sets the fill for the base map */
-  // const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
-  const fmapfill = `${apiUrl}/fmapfill`;
+  const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
+  // const fmapfill = `${apiUrl}/fmapfill`;
 
   const capitalize_first_letter = function capitalize_first_letter(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -135,8 +135,8 @@
       value: 102_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_unk_and_under_100,
-        // src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-        src: [`${apiUrl}/grid-unk_under_100`],
+        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+        // src: [`${apiUrl}/grid-unk_under_100`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -145,8 +145,8 @@
       value: 167_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_100_300,
-        // src: ['/static/json/elec_grid_split/grid-100_300.json'],
-        src: [`${apiUrl}/grid-100_300`],
+        src: ['/static/json/elec_grid_split/grid-100_300.json'],
+        // src: [`${apiUrl}/grid-100_300`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -155,8 +155,8 @@
       value: 137_000_000_000,
       draw: [ {
         f: draw_grid_class_ac_345_735,
-        // src: ['/static/json/elec_grid_split/grid-345_735.json'],
-        src: [`${apiUrl}/grid-345_735`],
+        src: ['/static/json/elec_grid_split/grid-345_735.json'],
+        // src: [`${apiUrl}/grid-345_735`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -165,8 +165,8 @@
       value: 4_000_000_000,
       draw: [ {
         f: draw_grid_class_dc,
-        // src: ['/static/json/elec_grid_split/grid-dc.json'],
-        src: [`${apiUrl}/grid-dc`],
+        src: ['/static/json/elec_grid_split/grid-dc.json'],
+        // src: [`${apiUrl}/grid-dc`],
         w: d3.json,
       } ],
       column: 'electricity-transmission-and-distribution',
@@ -181,8 +181,10 @@
       value: 1_059_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ `${apiUrl}/wells_gas1`,
-               `${apiUrl}/wells_gas2` ],
+        src: [ `/static/csv/wells_gas1.csv`,
+               `/static/csv/wells_gas2.csv` ],
+        // src: [ `${apiUrl}/wells_gas1`,
+        //        `${apiUrl}/wells_gas2` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -191,8 +193,10 @@
       value: 654_000_000_000,
       draw: [ {
         f: draw_all_wells,
-        src: [ `${apiUrl}/wells_oil1`,
-               `${apiUrl}/wells_oil2` ],
+        src: [ `/static/csv/wells_oil1.csv`,
+               `/static/csv/wells_oil2.csv` ],
+        // src: [ `${apiUrl}/wells_oil1`,
+        //        `${apiUrl}/wells_oil2` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -211,8 +215,8 @@
       value: 940_000_000_000,
       draw: [ {
         f: draw_gas_pipes,
-        // src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-        src: [`${apiUrl}/InterIntrastate_Pipelines_US`],
+        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+        // src: [`${apiUrl}/InterIntrastate_Pipelines_US`],
         w: d3.json
       }, ],
       column: 'oil-and-gas',
@@ -221,11 +225,13 @@
       value: 170_000_000_000,
       draw: [ {
         f: draw_oil_pipes,
-        src: [`${apiUrl}/oilpipeline`],
+        src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+        // src: [`${apiUrl}/oilpipeline`],
         w: d3.json
       }, {
         f: draw_oil_pipes,
-        src: [`${apiUrl}/oilprodpipeline`],
+        src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+        // src: [`${apiUrl}/oilprodpipeline`],
         w: d3.json
       }, ],
       column: 'oil-and-gas',
@@ -234,7 +240,8 @@
       value: 373_000_000_000, // 373 B
       draw: [ {
         f: draw_refining,
-        src: [`${apiUrl}/oilrefinery`],
+        src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
+        // src: [`${apiUrl}/oilrefinery`],
         w: d3.json
       }],
       column: 'oil-and-gas',
@@ -243,7 +250,8 @@
       value: 45_000_000_000,
       draw: [ {
         f: draw_processing,
-        src: [ `${apiUrl}/nproc` ],
+        src: [ `/static/csv/nproc.csv`],
+        // src: [ `${apiUrl}/nproc` ],
         w: d3.csv
       } ],
       column: 'oil-and-gas',
@@ -257,8 +265,8 @@
       value: 57_000_000_000,
       draw: [ {
         f: draw_coal_mines,
-        // src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
-        src: [`${apiUrl}/coalmines`], // TODO: Is this supposed to be CSV? This API route currently has the JSON data and is failing to draw to the canvas 
+        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        // src: [`${apiUrl}/coalmines`], 
         w: d3.csv
       } ],
       column: 'coal',
@@ -269,8 +277,8 @@
       // the value of the freight railway shown
       draw: [ {
         f: draw_railroads,
-        // src: [ '/static/json/railrdl020.geojson' ],
-        src: [`${apiUrl}/railroads`],
+        src: [ '/static/json/railrdl020.geojson' ],
+        // src: [`${apiUrl}/railroads`],
         w: d3.json
       } ],
       column: 'coal',
@@ -279,8 +287,8 @@
       value: 1_092_000_000_000,
       draw: [ {
         f: draw_coal_plants,
-        // src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        src: [`${apiUrl}/coal`],
+        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+        // src: [`${apiUrl}/coal`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -289,8 +297,8 @@
       value: 488_000_000_000,
       draw: [ {
         f: draw_ng_plants,
-        // src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        src: [`${apiUrl}/ng`],
+        src: ['/static/json/power_plants_split/power_plants-NG.json'],
+        // src: [`${apiUrl}/ng`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -299,8 +307,8 @@
       value: 64_000_000_000,
       draw: [ {
         f: draw_petro_plants,
-        // src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        src: [`${apiUrl}/pet`],
+        src: ['/static/json/power_plants_split/power_plants-PET.json'],
+        // src: [`${apiUrl}/pet`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -309,8 +317,8 @@
       value: 597_000_000_000,
       draw: [ {
         f: draw_nuclear_plants,
-        // src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        src: [`${apiUrl}/nuc`],
+        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+        // src: [`${apiUrl}/nuc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -319,8 +327,8 @@
       value: 597_000_000_000,
       draw: [ {
         f: draw_hydro_plants,
-        // src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        src: [`${apiUrl}/hyc`],
+        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+        // src: [`${apiUrl}/hyc`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -329,8 +337,8 @@
       value: 132_000_000_000,
       draw: [ {
         f: draw_wind_farms,
-        // src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        src: [`${apiUrl}/wnd`],
+        src: ['/static/json/power_plants_split/power_plants-WND.json'],
+        // src: [`${apiUrl}/wnd`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -339,8 +347,8 @@
       value: 14_000_000_000,
       draw: [ {
         f: draw_solar_plants,
-        // src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        src: [`${apiUrl}/sun`],
+        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+        // src: [`${apiUrl}/sun`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
@@ -349,9 +357,8 @@
       value: 22_000_000_000,
       draw: [ {
         f: draw_geo_plants,
-        // src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        // src: ['http://localhost:3000/geo'],
-        src: [`${apiUrl}/geo`],
+        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+        // src: [`${apiUrl}/geo`],
         w: d3.json,
       } ],
       column: 'electricity-generation',
