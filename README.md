@@ -9,7 +9,7 @@ and power plants in the US.
 
 ## Structure
 
-This is a web app built with `flask` nad is 
+This is a web app built with `flask` and is 
 organized in a pretty run-of-the-mill no-frills
 manner.
 
@@ -36,9 +36,15 @@ manner.
  
  * `/static/json` and `/static/csv` contain 
  data files.
- 
- ## API
 
- ### Postman URL:
+## API
+
+ [Node/Express microservice](https://hidden-brook-47088.herokuapp.com/)
+ [Endpoints on Postman](https://documenter.getpostman.com/view/9183499/SWLce9RF?version=latest)
  
- 
+## Style Guide
+
+ * Function names are snake_case()
+ * Fat arrow functions are generally avoided
+ * Styling is written in SCSS and compiled down to CSS
+   * `sass main.v#.sass main.v#.css`
