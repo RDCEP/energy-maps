@@ -36,20 +36,6 @@ function draw_csv_layer(path, draw_function, ctx) {
     console.log(`draw csv layer`);
 }
 
-// Loading
-let spinner = document.getElementById("spinner");
-const sleep = milliseconds => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
-};
-/** @description display the loading spinner for user set time in milliseconds */
-const load = async time => {
-  // show the spinner
-  spinner.style.display = "block";
-  await sleep(time);
-  // hide the spinner
-  spinner.style.display = "none";
-};
-
   /** @description the total sum of asset values for all active layers */
   let asset_total_sum = 0;
 
@@ -76,3 +62,20 @@ const load = async time => {
       .replace(/T/, ' T')}`
     ;
   }
+
+// Spinner code below commented out 01/02/20 to see if it was being used. 
+// Hasn't effected anything yet. Will delete it once location of current spinner is found.
+
+// Loading
+// let spinner = document.getElementById("spinner");
+// const sleep = milliseconds => {
+//   return new Promise(resolve => setTimeout(resolve, milliseconds));
+// };
+// /** @description display the loading spinner for user set time in milliseconds */
+// const load = async time => {
+//   // show the spinner
+//   spinner.style.display = "block";
+//   await sleep(time);
+//   // hide the spinner
+//   spinner.style.display = "none";
+// };
