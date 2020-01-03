@@ -179,18 +179,6 @@ const projection = d3.geoAlbersUsa()
   .scale(width*1.1)
   .translate([width / 2.4, height / 2]);
 
-// const canvas = d3.select('.main.map')
-//   .append('canvas')
-//   .attr('width', width + SCALE * 400)
-//   .attr('height', height);
-// const ctx = canvas.node().getContext('2d');
-// ctx.LineCap = 'round';
-//
-// const path = d3.geoPath()
-//   .projection(projection)
-//   .pointRadius(2)
-//   .context(ctx);
-
 const path = d3.geoPath()
   .projection(projection)
   .pointRadius(2);
