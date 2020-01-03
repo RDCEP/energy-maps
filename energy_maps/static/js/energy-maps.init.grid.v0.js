@@ -9,7 +9,7 @@
   const canvas = d3.select('.main.map.grid')
     .append('canvas')
     .attr('id', 'mapcanvas')
-    .attr('width', width + SCALE * 400)
+    .attr('width', canvas_width)
     .attr('height', height);
   const ctx = canvas.node().getContext('2d');
   ctx.LineCap = 'round';

@@ -16,6 +16,8 @@ let width = 1200 * SCALE;
 const height = width / 2;
 const padding = {top: 10, right: 10, bottom: 50, left: 50};
 
+const canvas_width = width + SCALE * 400;
+
 const viz = {
   white: 'rgba(255, 255, 255, 1)',
   black: 'rgba(0, 0, 0, 1)',

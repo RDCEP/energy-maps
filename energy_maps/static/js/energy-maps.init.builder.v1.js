@@ -85,7 +85,7 @@
     .select(mapclass)
     .append('canvas')
     .attr('id', 'mapcanvas')
-    .attr('width', width + SCALE * 400)
+    .attr('width', canvas_width)
     .attr('height', height);
   const ctx = base_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
@@ -104,7 +104,7 @@
     .select('.map.legend')
     .append('canvas')
     .attr('id', 'legendcanvas')
-    .attr('width', width + SCALE * 400)
+    .attr('width', canvas_width)
     .attr('height', height);
   let legend_ctx = legend_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
@@ -474,7 +474,7 @@
       .attr('class', `map layer ${lyr.name}`)
       .append('canvas')
       .attr('class', `map layer canvas ${lyr.name}`)
-      .attr('width', width + SCALE * 400)
+      .attr('width', canvas_width)
       .attr('height', height);
 
     console.log(`<div map layer ${lyr}> created!`);

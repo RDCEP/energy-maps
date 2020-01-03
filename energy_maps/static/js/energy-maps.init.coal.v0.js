@@ -26,7 +26,7 @@
     .select(".main.map.coal")
     .append("canvas")
     .attr("id", "mapcanvas")
-    .attr("width", width + SCALE * 400)
+    .attr("width", canvas_width)
     .attr("height", height);
   const ctx = canvas.node().getContext("2d");
   ctx.LineCap = "round";
@@ -158,7 +158,7 @@
     .select(".main.map.coal")
     .append("canvas")
     .attr("id", "mapcanvas")
-    .attr("width", width + SCALE * 400)
+    .attr("width", canvas_width)
     .attr("height", height);
   const ctx = canvas.node().getContext("2d");
   ctx.LineCap = "round";
