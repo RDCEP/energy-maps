@@ -31,6 +31,7 @@
     display_asset_total();
   }
 
+  let asset_total_id = document.getElementById("asset-totals")
   /** Display total asset value of all active layers.
    * Currently using d3-format (https://github.com/d3/d3-format) for currency formatting.
    * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
@@ -38,9 +39,8 @@
   function display_asset_total() {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
-    document.getElementById(
-      "asset-totals"
-    ).innerHTML = `${d3.format('$.2~s')(asset_total_sum)
+    asset_total_id
+      .innerHTML = `${d3.format('$.2~s')(asset_total_sum)
       .replace(/G/, ' B')
       .replace(/T/, ' T')}`
     ;
