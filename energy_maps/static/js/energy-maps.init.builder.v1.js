@@ -12,6 +12,10 @@
   const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
   // const fmapfill = `${apiUrl}/fmapfill`;
 
+  /** @type {string} */
+  /** @description HTML class which the main map is drawn */
+  const mapclass = '.main.map.builder';
+
   const capitalize_first_letter = function capitalize_first_letter(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
@@ -78,7 +82,7 @@
    *  <div class="main map builder" id="mapcanvas">
    */
   const base_canvas = d3
-    .select('.main.map.builder')
+    .select(mapclass)
     .append('canvas')
     .attr('id', 'mapcanvas')
     .attr('width', width + SCALE * 400)
