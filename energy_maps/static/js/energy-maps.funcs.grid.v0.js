@@ -26,8 +26,13 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
   draw_grid_class_ac_735(ctx, queued_data);
 };
 
-const filter_features = function filter_features(grid, c) {
-  let features = grid.features.filter(function(d) {
+/**
+ * Retreive the features you want from your GeoJSON FeatureCollection.
+ * @param {Object} infrastructure -- the read file
+ * @param {Number} c -- array index containing the feature as a string identifier
+ */
+const filter_features = function filter_features(infrastructure, c) {
+  let features = infrastructure.features.filter(function(d) {
     return d.properties.class === classes[c]
   });
   return features;
