@@ -10,16 +10,31 @@ const line_width_kludge = function line_width_kludge(idx) {
       (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
 }
 
+/**
+ * Draw grid class unknown and under 100 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
   draw_grid_class_unavailable(ctx, queued_data);
   draw_grid_class_ac_under_100(ctx, queued_data);
 };
 
+/**
+ * Draw grid class 100-300 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
   draw_grid_class_ac_100_200(ctx, queued_data);
   draw_grid_class_ac_200_300(ctx, queued_data);
 };
 
+/**
+ * Draw grid class 345-735 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
   draw_grid_class_ac_345(ctx, queued_data);
   draw_grid_class_ac_500(ctx, queued_data);
@@ -72,7 +87,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
 /**
  * Draw grid class unavailable on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, queued_data) {
   console.log('draw_grid_class_unavailable')
@@ -82,7 +97,7 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
 /**
  * Draw grid class under 100 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-under-100-kv')
@@ -92,7 +107,7 @@ const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, 
 /**
  * Draw grid class 100-200 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-100-200')
@@ -102,7 +117,7 @@ const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queu
 /**
  * Draw grid class 200-300 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-200-to-300-kv')
@@ -112,7 +127,7 @@ const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, que
 /**
  * Draw grid class 345 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-345-kV')
@@ -122,7 +137,7 @@ const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data
 /**
  * Draw grid class 500 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-500-kV')
@@ -132,7 +147,7 @@ const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data
 /**
  * Draw grid class 735 on the electric grid infrastructure map.
  * @param {Object} ctx
- * @param {coal_mine[]} queued_data
+ * @param {Array} queued_data
  */
 const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-735+-kV')
