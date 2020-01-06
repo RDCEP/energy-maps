@@ -165,10 +165,8 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
 
   ctx.lineCap = 'round';
 
-  // DC voltage class
-  features = grid.features
-    .filter(function(d) {
-      return d.properties.class === classes[classes.length-1]; });
+  features = filter_features(grid, classes.length-1);
+
   feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
