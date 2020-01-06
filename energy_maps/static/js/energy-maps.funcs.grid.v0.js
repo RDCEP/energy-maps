@@ -27,241 +27,104 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
 };
 
 /**
+ * Draw grid class on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {array} queued_data
+ * @param {Number} c -- index of the array of grid classes
+ */
+draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+
+  let features = grid.features.filter(function(d) {
+    return d.properties.class === classes[c]; });
+  
+  let feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = line_width_kludge(c);
+    ctx.strokeStyle = viz.grid.palette[c];
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
+  }
+};
+
+/**
  * Draw grid class unavailable on the electric grid infrastructure map.
  * @param {Object} ctx
  * @param {coal_mine[]} queued_data
  */
 const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, queued_data) {
   console.log('draw_grid_class_unavailable')
-
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  // Class unavailable
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[0]; });
-  
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(0);
-    ctx.strokeStyle = viz.grid.palette[0];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
+  draw_grid_class(ctx, queued_data, 0)
 };
 
-// Refactor attempt: One idea is to load all grid data into an array
-// The other idea is to load it in a function and then call the value returned by that function when you draw it.
-// The return value would be the filtered dataset.asset-value
-// It's possible that you don't need to do this here, or even in the current function itself since
-// you are already parsing out the src values in init builder. You may still need to filter them tho.
-
-// let grid_data = [];
-
-// const get_grid_data_ac_under_100 = function get_grid_data_ac_under_100(queued_data) {
-//   let grid = queued_data[0];
-//   let features = grid.features.filter(function(d) {
-//     return d.properties.class === classes[1]
-//   });
-//   return features;
-// }
-
-// const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
-//   console.log('electrical-grid-ac-lines-under-100-kv')
-
-//   const path = get_path(ctx);
-
-//   let tmp_grid = {type: 'FeatureCollection', features: []};
-
-//   ctx.lineCap = 'round';
-
-//   // Class ac under 100
-//   let features = grid.features.filter(function(d) {
-//     return d.properties.class === classes[1]});
-
-//   let feat_len = features.length;
-//   for (let i = 0; i < feat_len; ++i) {
-//     tmp_grid.features = [features[i]];
-//     ctx.lineWidth = line_width_kludge(1);
-//     ctx.strokeStyle = viz.grid.palette[1];
-//     ctx.beginPath();
-//     path(tmp_grid);
-//     ctx.stroke();
-//     if (i === feat_len - 1) { hide_spinner(); }
-//   }
-// }
-
-  const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
-    console.log('electrical-grid-ac-lines-under-100-kv')
-  
-    let grid = queued_data[0];
-  
-    const path = get_path(ctx);
-  
-    let tmp_grid = {type: 'FeatureCollection', features: []};
-  
-    ctx.lineCap = 'round';
-  
-    // Class ac under 100
-    let features = grid.features.filter(function(d) {
-      return d.properties.class === classes[1]});
-  
-    let feat_len = features.length;
-    for (let i = 0; i < feat_len; ++i) {
-      tmp_grid.features = [features[i]];
-      ctx.lineWidth = line_width_kludge(1);
-      ctx.strokeStyle = viz.grid.palette[1];
-      ctx.beginPath();
-      path(tmp_grid);
-      ctx.stroke();
-      if (i === feat_len - 1) { hide_spinner(); }
-    }
-}
+/**
+ * Draw grid class under 100 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
+const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
+  console.log('electrical-grid-ac-lines-under-100-kv')
+  draw_grid_class(ctx, queued_data, 1)
+}  
 
 /**
  * Draw grid class 100-200 on the electric grid infrastructure map.
  * @param {Object} ctx
  * @param {coal_mine[]} queued_data
  */
-
 const draw_grid_class_ac_100_200 = function draw_grid_class_ac_100_200(ctx, queued_data) {
   console.log('electrical-grid-ac-lines-100-200')
+  draw_grid_class(ctx, queued_data, 2)
+}
 
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  // Class ac 100 to 200
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[2]});
-
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(2);
-    ctx.strokeStyle = viz.grid.palette[2];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
-
+/**
+ * Draw grid class 200-300 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
 const draw_grid_class_ac_200_300 = function draw_grid_class_ac_200_300 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-200-to-300-kv')
+  draw_grid_class(ctx, queued_data, 3)
+}
 
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[3]; });
-  
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(3);
-    ctx.strokeStyle = viz.grid.palette[3];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
-
+/**
+ * Draw grid class 345 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
 const draw_grid_class_ac_345 = function draw_grid_class_ac_345 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-345-kV')
+  draw_grid_class(ctx, queued_data, 4)
+}
 
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[4]; });
-  
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(4);
-    ctx.strokeStyle = viz.grid.palette[4];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
-
+/**
+ * Draw grid class 500 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
 const draw_grid_class_ac_500 = function draw_grid_class_ac_500 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-500-kV')
+  draw_grid_class(ctx, queued_data, 5)
+}
 
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[5]; });
-  
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(5);
-    ctx.strokeStyle = viz.grid.palette[5];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
-
+/**
+ * Draw grid class 735 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {coal_mine[]} queued_data
+ */
 const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data) {
   console.log('electrical-grid-ac-lines-735+-kV')
-
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[6]; });
-  
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(6);
-    ctx.strokeStyle = viz.grid.palette[6];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
+  draw_grid_class(ctx, queued_data, 6)
+}
 
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   console.log('draw_grid_class_ac')
