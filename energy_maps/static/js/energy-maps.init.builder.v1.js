@@ -50,33 +50,6 @@
     ;
   }
 
-  // var requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow'
-  // };
-
-  // let geoSrc = fetch('http://localhost:3000/geo', requestOptions)
-  // .then(response => response.text())
-  // // .then(result => console.log(result)) 
-  // .catch(error => console.log('error', error));
-
-  // let getEndpoint = getEndpoint(endpoint) {
-  //   let src = fetch(`http://localhost:3000/${endpoint}`, requestOptions)
-  //   .then(response => response.text())
-  //   .catch(error => console.log('error', error));
-  //   return src;
-  // }
-
-  // let getEndpoint = function getEndpoint(endpoint) {
-  //   let src = fetch(`http://localhost:3000/${endpoint}`, requestOptions)
-  //   .then(response => response.text())=
-  //   .catch(error => console.log('error', error));
-  //   return src;
-  // }
-
-  // let geoSrc = getEndpoint('geo');
-  // let sunSrc = getEndpoint('sun');
-
   // Set base map canvas
   /** @description A canvas element for the base map, attached to
    *  <div class="main map builder" id="mapcanvas">
@@ -113,6 +86,13 @@
    * @description Call all draw methods for a given layer and render it to its canvas element. 
    * @param {*} lyr An object from layers[].
    */
+  // CODE SMELL: Inspect this for tight coupling.
+  // It could be nice to map out the draw methods in one method and actually 
+  // call them in another if we can do so feasibly. This would complement
+  // A strategy in which we abstract data loading out of our draw functions
+  // and store each object in a variable, so that when our draw 
+  // functions are called they only operate on that data rather than collect
+  // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
       console.log('show spinner');
@@ -121,7 +101,6 @@
         .then(function(files) {
           lyr.draw[i].f(lyr.context, files);
         });
-        // FIXME: this does not work. Spinner disappears too soon
     }
   };
 

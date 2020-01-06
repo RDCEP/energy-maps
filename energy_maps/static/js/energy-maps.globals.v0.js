@@ -172,7 +172,6 @@ const viz = {
 
 };
 
-
 // create projection and path objects with which to draw geo objects
 
 const projection = d3.geoAlbersUsa()

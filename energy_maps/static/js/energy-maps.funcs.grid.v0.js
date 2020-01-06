@@ -58,34 +58,73 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
   }
 };
 
-const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
-  console.log('electrical-grid-ac-lines-under-100-kv')
+// Refactor attempt: One idea is to load all grid data into an array
+// The other idea is to load it in a function and then call the value returned by that function when you draw it.
+// The return value would be the filtered dataset.asset-value
+// It's possible that you don't need to do this here, or even in the current function itself since
+// you are already parsing out the src values in init builder. You may still need to filter them tho.
 
-  let grid = queued_data[0];
+// let grid_data = [];
 
-  const path = get_path(ctx);
+// const get_grid_data_ac_under_100 = function get_grid_data_ac_under_100(queued_data) {
+//   let grid = queued_data[0];
+//   let features = grid.features.filter(function(d) {
+//     return d.properties.class === classes[1]
+//   });
+//   return features;
+// }
 
-  let tmp_grid = {type: 'FeatureCollection', features: []};
+// const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
+//   console.log('electrical-grid-ac-lines-under-100-kv')
 
-  ctx.lineCap = 'round';
+//   const path = get_path(ctx);
 
-  // Class ac under 100
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[1]});
+//   let tmp_grid = {type: 'FeatureCollection', features: []};
 
-  let feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = line_width_kludge(1);
-    ctx.strokeStyle = viz.grid.palette[1];
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
+//   ctx.lineCap = 'round';
 
+//   // Class ac under 100
+//   let features = grid.features.filter(function(d) {
+//     return d.properties.class === classes[1]});
 
+//   let feat_len = features.length;
+//   for (let i = 0; i < feat_len; ++i) {
+//     tmp_grid.features = [features[i]];
+//     ctx.lineWidth = line_width_kludge(1);
+//     ctx.strokeStyle = viz.grid.palette[1];
+//     ctx.beginPath();
+//     path(tmp_grid);
+//     ctx.stroke();
+//     if (i === feat_len - 1) { hide_spinner(); }
+//   }
+// }
 
+  const draw_grid_class_ac_under_100 = function draw_grid_class_ac_under_100(ctx, queued_data) {
+    console.log('electrical-grid-ac-lines-under-100-kv')
+  
+    let grid = queued_data[0];
+  
+    const path = get_path(ctx);
+  
+    let tmp_grid = {type: 'FeatureCollection', features: []};
+  
+    ctx.lineCap = 'round';
+  
+    // Class ac under 100
+    let features = grid.features.filter(function(d) {
+      return d.properties.class === classes[1]});
+  
+    let feat_len = features.length;
+    for (let i = 0; i < feat_len; ++i) {
+      tmp_grid.features = [features[i]];
+      ctx.lineWidth = line_width_kludge(1);
+      ctx.strokeStyle = viz.grid.palette[1];
+      ctx.beginPath();
+      path(tmp_grid);
+      ctx.stroke();
+      if (i === feat_len - 1) { hide_spinner(); }
+    }
+  
 // let features2 = grid.features.filter(function(d) {
 //   return d.properties.class === classes[2]});
 
