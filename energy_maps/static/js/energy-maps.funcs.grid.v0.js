@@ -6,6 +6,7 @@ let classes = [
 ];
 
 const line_width_kludge = function line_width_kludge(idx) {
+  // TODO: Replace magic numbers with descriptive variable names
   return viz.transport.rail.width *
       (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
 }
@@ -177,7 +178,7 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
-    
+
     if (i === feat_len - 1) { 
       hide_spinner(); 
     }
