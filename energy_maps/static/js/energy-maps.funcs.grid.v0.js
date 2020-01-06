@@ -124,20 +124,6 @@ const draw_grid_class_unavailable = function draw_grid_class_unavailable(ctx, qu
       ctx.stroke();
       if (i === feat_len - 1) { hide_spinner(); }
     }
-  
-// let features2 = grid.features.filter(function(d) {
-//   return d.properties.class === classes[2]});
-
-//   let feat_len = features2.length;
-//   for (let i = 0; i < feat_len; ++i) {
-//     tmp_grid.features = [features2[i]];
-//     ctx.lineWidth = viz.transport.rail.width;
-//     ctx.strokeStyle = 'purple';
-//     ctx.beginPath();
-//     path(tmp_grid);
-//     ctx.stroke();
-//   }
-
 }
 
 /**

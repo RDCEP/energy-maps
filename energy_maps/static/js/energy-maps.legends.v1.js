@@ -38,7 +38,6 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color, width, dashed, text) {
     // Advance vertical increment
     y += 15 * SCALE;
-    ctx.lineCap = 'round';
     ctx.strokeStyle = color;
     ctx.lineWidth = width;
     if (dashed) {
@@ -134,7 +133,6 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color, width, dashed, text) {
     // Advance vertical increment
     y += 15 * SCALE;
-    ctx.lineCap = 'round';
     ctx.strokeStyle = viz.transport.rail.stroke;
     ctx.lineWidth = viz.transport.rail.width;
     ctx.beginPath();
