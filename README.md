@@ -37,6 +37,10 @@ manner.
  * `/static/json` and `/static/csv` contain 
  data files.
 
+ * `/static/css` and `/static/sass` contain project stylesheets.
+   * All styling is written in SCSS and compiled down to CSS like so: 
+   `sass main.v#.sass main.v#.css`
+
 ## API
 
  [Node/Express microservice](https://hidden-brook-47088.herokuapp.com/)
@@ -46,5 +50,8 @@ manner.
 
  * Function names are snake_case()
  * Fat arrow functions are generally avoided
- * Styling is written in SCSS and compiled down to CSS
-   * `sass main.v#.sass main.v#.css`
+ * Descriptive variable names are used rather than magic numbers
+ * Curly braces open at the end of a line and close on their own line, like so:
+   *      if (i === foo) { 
+              bar(); 
+            }
