@@ -7,6 +7,7 @@
   /** @description Sets the path for the base map */
   const fmap = '../static/json/us-geojson.json';
   // const fmap = `${apiUrl}/fmap`;
+
   /** @type {string} */
   /** @description Sets the fill for the base map */
   const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
@@ -36,6 +37,7 @@
   }
 
   let asset_total_id = document.getElementById("asset-totals")
+  
   /** Display total asset value of all active layers.
    * Currently using d3-format (https://github.com/d3/d3-format) for currency formatting.
    * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
