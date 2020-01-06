@@ -26,8 +26,15 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
   draw_grid_class_ac_735(ctx, queued_data);
 };
 
+const filter_features = function filter_features(grid, c) {
+  let features = grid.features.filter(function(d) {
+    return d.properties.class === classes[c]
+  });
+  return features;
+}
+
 /**
- * Draw grid class on the electric grid infrastructure map.
+ * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx
  * @param {array} queued_data
  * @param {Number} c -- index of the array of grid classes
@@ -41,8 +48,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
 
   ctx.lineCap = 'round';
 
-  let features = grid.features.filter(function(d) {
-    return d.properties.class === classes[c]; });
+  features = filter_features(grid, c);
   
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
@@ -52,7 +58,9 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
     ctx.beginPath();
     path(tmp_grid);
     ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
+    if (i === feat_len - 1) { 
+      hide_spinner(); 
+    }
   }
 };
 
@@ -126,6 +134,37 @@ const draw_grid_class_ac_735 = function draw_grid_class_ac_735 (ctx, queued_data
   draw_grid_class(ctx, queued_data, 6)
 }
 
+const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
+  console.log('draw_grid_class_dc')
+
+  let grid = queued_data[0];
+
+  const path = get_path(ctx);
+
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+
+  ctx.lineCap = 'round';
+
+  // DC voltage class
+  features = grid.features
+    .filter(function(d) {
+      return d.properties.class === classes[classes.length-1]; });
+  feat_len = features.length;
+  for (let i = 0; i < feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+    ctx.lineWidth = viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
+    ctx.strokeStyle = 'black';
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+    if (i === feat_len - 1) { hide_spinner(); }
+  }
+};
+
+// TODO: Do we need a draw all ac function? Worth saving if we want to generate the static images or inject the functionality,
+// But depending on the use case, maybe we want to save it in a different project? 
+
 const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
   console.log('draw_grid_class_ac')
 
@@ -176,35 +215,6 @@ const draw_grid_class_ac = function draw_grid_class_ac(ctx, queued_data) {
     if (i === feat_len - 1) { hide_spinner(); }
   }
 };
-
-const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
-  console.log('draw_grid_class_dc')
-
-  let grid = queued_data[0];
-
-  const path = get_path(ctx);
-
-  let tmp_grid = {type: 'FeatureCollection', features: []};
-
-  ctx.lineCap = 'round';
-
-  // DC voltage class
-  features = grid.features
-    .filter(function(d) {
-      return d.properties.class === classes[classes.length-1]; });
-  feat_len = features.length;
-  for (let i = 0; i < feat_len; ++i) {
-    tmp_grid.features = [features[i]];
-    ctx.lineWidth = viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
-    ctx.strokeStyle = 'black';
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-    if (i === feat_len - 1) { hide_spinner(); }
-  }
-};
-
 
 /**
  * Draw grid on the electric grid infrastructure map.
