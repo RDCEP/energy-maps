@@ -41,38 +41,37 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   hide_spinner();
 };
 
+/**
+ * Get a set of xy coordinates on the map projection for each element in the dataset.
+ * @param {array} queued_data -- the supplied dataset
+ */
+const get_xy = function get_xy(queued_data) {
+  let wells = queued_data[0];
+  
+  wells.forEach(function(d) { 
+    let xy = projection([+d.lon, +d.lat]);
+    return xy 
+  });
+
+}
+
 const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
 
-  let wells = queued_data[0];
+  get_xy(queued_data);
+  draw_well(xy, viz.wells.gas)
 
-  wells.forEach(function(d) {
-    let xy = projection([+d.lon, +d.lat]);
-    if (xy === null) {
-      //
-    } else {
-      draw_well(xy, viz.wells.gas);
-    }
-  });
 };
 
 const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
 
-  let wells = queued_data[0];
-
-  wells.forEach(function(d) {
-    let xy = projection([+d.lon, +d.lat]);
-    if (xy === null) {
-      //
-    } else {
-      if (d.class === 'Off') {
-        draw_off_well(xy);
-      } else {
-        draw_well(xy, viz.wells.oil);
-      }
-    }
-  });
+  get_xy(queued_data)
+  if (d.class === 'Off') {
+    draw_off_well(xy);
+  } else {
+    draw_well(xy, viz.wells.oil);
+  }
 
 };
 
