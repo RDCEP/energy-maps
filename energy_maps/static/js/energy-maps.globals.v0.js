@@ -10,14 +10,38 @@ const fill_screen = false;
 // ^^^ end original width and scale definitions ^^^
 
 // alter the width variable below to change the scale of the map if you need to make UI adjustments
+
 SCALE = 1;
+
+/**
+ * @type {number} 
+ * Global page width, set to some multiple of `SCALE`
+ */
 let width = 1200 * SCALE;
 
+/**
+ * @type {number} 
+ * Global page height, set to some fraction of `width`
+ */
 const height = width / 2;
+
+/**
+ * @type {Object} 
+ * Global page padding
+ */
 const padding = {top: 10, right: 10, bottom: 50, left: 50};
 
+/**
+ * @type {number} 
+ * Global canvas width, set to some multiple of the sum of `width` and `scale`
+ */
 const canvas_width = width + SCALE * 400;
 
+/**
+ * @type {Object} 
+ * A collection of nested objects containing color and scaling properties per resource 
+ * 
+ */
 const viz = {
   white: 'rgba(255, 255, 255, 1)',
   black: 'rgba(0, 0, 0, 1)',
@@ -174,10 +198,16 @@ const viz = {
 
 // create projection and path objects with which to draw geo objects
 
+/**
+ * D3 geoAlbersUsa projection object set to custom scale and translation offset
+ */
 const projection = d3.geoAlbersUsa()
   .scale(width*1.1)
   .translate([width / 2.4, height / 2]);
 
+/**
+ * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
+ */
 const path = d3.geoPath()
   .projection(projection)
   .pointRadius(2);
