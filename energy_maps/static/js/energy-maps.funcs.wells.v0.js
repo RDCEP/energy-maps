@@ -55,6 +55,10 @@ const get_xy = function get_xy(queued_data) {
 
 }
 
+/**
+ * Draw gas wells to the infrastructure map.
+ * @param {Array} queued_data -- the datafile to be read
+ */
 const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
 
@@ -63,6 +67,10 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
 
 };
 
+/**
+ * Draw oil wells to the infrastructure map.
+ * @param {Array} queued_data -- the datafile to be read
+ */
 const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
 
@@ -180,20 +188,37 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
   ctx.fill();
 };
 
+/**
+ * Draw oil refinery to the infrastructure map as a hexagon
+ * @param {Object} ctx 
+ * @param {Object} xy
+ * @param {Number} r 
+ */
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
+  const NUM_SIDES_REFIN = 6
   r *= viz.process.oil_refinery.size;
   ctx.fillStyle = viz.process.oil_refinery.fill;
   ctx.beginPath();
-  let a = Math.PI / 2;
-  let n = 6;
-  ctx.moveTo (xy[0] + r * Math.cos(a), xy[1] + r * Math.sin(a));
-  for (let i = 1; i <= n; ++i) {
-    ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / n),
-      xy[1] + r * Math.sin(a + i * 2 * Math.PI / n));
-  }
-  // draw_circle(ctx, xy, r);
+  draw_polygon(NUM_SIDES_REFIN, ctx, r, xy)
   ctx.fill();
 };
+
+/**
+ * Draw polygon
+ * @param {Number} sides -- number of sides of the polygon
+ * @param {Object} ctx 
+ * @param {Object} xy
+ * @param {Number} r 
+ */
+const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
+  /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
+  let a = Math.PI / 2; 
+  ctx.moveTo (xy[0] + r * Math.cos(a), xy[1] + r * Math.sin(a)); 
+  for (let i = 1; i <= sides; ++i) { 
+    ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / sides),
+      xy[1] + r * Math.sin(a + i * 2 * Math.PI / sides));
+  }
+}
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   // ctx.strokeStyle = viz.wells.off;
