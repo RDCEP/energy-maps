@@ -5,43 +5,6 @@ let classes = [
   'DC'
 ];
 
-const line_width_kludge = function line_width_kludge(idx) {
-  // TODO: Replace magic numbers with descriptive variable names
-  return viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
-}
-
-/**
- * Draw grid class unknown and under 100 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
- */
-const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class_unavailable(ctx, queued_data);
-  draw_grid_class_ac_under_100(ctx, queued_data);
-};
-
-/**
- * Draw grid class 100-300 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
- */
-const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class_ac_100_200(ctx, queued_data);
-  draw_grid_class_ac_200_300(ctx, queued_data);
-};
-
-/**
- * Draw grid class 345-735 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
- */
-const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class_ac_345(ctx, queued_data);
-  draw_grid_class_ac_500(ctx, queued_data);
-  draw_grid_class_ac_735(ctx, queued_data);
-};
-
 /**
  * Retreive the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure -- the read file
@@ -52,6 +15,12 @@ const filter_features = function filter_features(infrastructure, c) {
     return d.properties.class === classes[c]
   });
   return features;
+}
+
+const line_width_kludge = function line_width_kludge(idx) {
+  // TODO: Replace magic numbers with descriptive variable names
+  return viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
 }
 
 /**
@@ -83,6 +52,37 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
       hide_spinner(); 
     }
   }
+};
+
+/**
+ * Draw grid class unknown and under 100 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
+  draw_grid_class_unavailable(ctx, queued_data);
+  draw_grid_class_ac_under_100(ctx, queued_data);
+};
+
+/**
+ * Draw grid class 100-300 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
+  draw_grid_class_ac_100_200(ctx, queued_data);
+  draw_grid_class_ac_200_300(ctx, queued_data);
+};
+
+/**
+ * Draw grid class 345-735 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
+  draw_grid_class_ac_345(ctx, queued_data);
+  draw_grid_class_ac_500(ctx, queued_data);
+  draw_grid_class_ac_735(ctx, queued_data);
 };
 
 /**
