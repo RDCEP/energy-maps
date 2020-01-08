@@ -209,33 +209,3 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines')
   draw_grid_class(ctx, queued_data, classes.GRID_CLASS_DC)
 }
-
-// const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
-//   console.log('draw_grid_class_dc')
-
-//   let grid = queued_data[0];
-
-//   const path = get_path(ctx);
-
-//   let tmp_grid = {type: 'FeatureCollection', features: []};
-
-//   ctx.lineCap = 'round';
-
-//   features = filter_features(grid, classes.GRID_CLASS_DC);
-
-//   feat_len = features.length;
-//   for (let i = 0; i < feat_len; ++i) {
-//     tmp_grid.features = [features[i]];
-//     // FIXME: Replace magic numbers with descriptive variable names
-//     ctx.lineWidth = viz.transport.rail.width *
-//       (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
-//     ctx.strokeStyle = 'black';
-//     ctx.beginPath();
-//     path(tmp_grid);
-//     ctx.stroke();
-
-//     if (i === feat_len - 1) { 
-//       hide_spinner(); 
-//     }
-//   }
-// };
