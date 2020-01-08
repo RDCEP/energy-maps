@@ -44,8 +44,8 @@ let classes = {
 
 /**
  * Retreive the features you want from your GeoJSON FeatureCollection.
- * @param {Object} infrastructure -- the read file
- * @param {Number} c -- array index containing the feature as a string identifier
+ * @param {Object} infrastructure - the read file
+ * @param {Number} c - `classes` object member to compare readfile against
  */
 const filter_features = function filter_features(infrastructure, c) {
   let features = infrastructure.features.filter(function(d) {
@@ -56,22 +56,17 @@ const filter_features = function filter_features(infrastructure, c) {
 }
 
 /**
- * Get the infrastructure class 
- * @param {Object} infrastructure -- the read file
- * @param {Object} c -- `classes` object member
+ * A closure function that allows you to get the infrastructure class from the readfile 
+ * @param {Object} d - passed down from the enclosing function: the set of features to be filtered from the readfile
+ * @param {Object} infrastructure - the readfile
+ * @param {Object} c - `classes` object member to compare readfile features against
  */
-// const get_inf_class = function get_inf_class(d, infrastructure, c) {
-//   if (c == classes.length - 1) {
-//     return d.properties.class === classes[c]
-//   } else if (infrastructure === '') {
-//     return;
-//   }
-// }
 const get_inf_class = function get_inf_class(d, infrastructure, c) {
-  if (c == classes.GRID_CLASS_DC.value) {
+  if (c == classes.GRID_CLASS_DC) {
     // return d.properties.class === classes[c]
     return d.properties.class === classes.GRID_CLASS_DC.name;
   } else if (infrastructure === '') {
+    // TODO: Complete control flow with all other classes
     return;
   }
 }
@@ -218,7 +213,6 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
   console.log('draw_grid_class_dc')
 
   let grid = queued_data[0];
-  // const GRID_CLASS_DC = classes.length - 1;
 
   const path = get_path(ctx);
 
@@ -226,8 +220,7 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
 
   ctx.lineCap = 'round';
 
-  features = filter_features(grid, classes.GRID_CLASS_DC.value);
-  // features = filter_features(grid, classes.length - 1);
+  features = filter_features(grid, classes.GRID_CLASS_DC);
 
   feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
