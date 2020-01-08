@@ -75,5 +75,4 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
   if (r > 8) {
     ctx.stroke();
   }
-
 };

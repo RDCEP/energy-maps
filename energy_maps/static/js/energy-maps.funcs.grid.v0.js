@@ -1,9 +1,46 @@
-let classes = [
-  'NOT AVAILABLE',
-  'Under 100',
-  '100-161', '220-287', '345', '500', '735 and Above',
-  'DC'
-];
+// TODO: store classes in an object where each has a descriptive
+// name like: GRID_CLASS_NA: 'NOT AVAILABLE', and a property
+// let classes = [
+//   'NOT AVAILABLE',
+//   'Under 100',
+//   '100-161', '220-287', '345', '500', '735 and Above',
+//   'DC'
+// ];
+
+let classes = {
+  GRID_CLASS_NA: {
+    name: 'NOT AVAILABLE',
+    value: 0
+  },
+  GRID_CLASS_UNDER_100: { 
+    name: 'Under 100',
+    value: 1
+  },
+  GRID_CLASS_100_200: {
+    name: '100-161',
+    value: 2
+  }, 
+  GRID_CLASS_200_300: {
+    name: '220-287',
+    value: 3
+  }, 
+  GRID_CLASS_345: {
+    name: '345',
+    value: 4
+  }, 
+  GRID_CLASS_500: {
+    name: '500',
+    value: 5
+  }, 
+  GRID_CLASS_735_PLUS: {
+    name: '735 and Above',
+    value: 6
+  },
+  GRID_CLASS_DC: {
+    name: 'DC',
+    value: 7
+  }
+}
 
 /**
  * Retreive the features you want from your GeoJSON FeatureCollection.
@@ -12,9 +49,31 @@ let classes = [
  */
 const filter_features = function filter_features(infrastructure, c) {
   let features = infrastructure.features.filter(function(d) {
-    return d.properties.class === classes[c]
+    // return d.properties.class === classes[c]
+    return get_inf_class(d, infrastructure, c)
   });
   return features;
+}
+
+/**
+ * Get the infrastructure class 
+ * @param {Object} infrastructure -- the read file
+ * @param {Object} c -- `classes` object member
+ */
+// const get_inf_class = function get_inf_class(d, infrastructure, c) {
+//   if (c == classes.length - 1) {
+//     return d.properties.class === classes[c]
+//   } else if (infrastructure === '') {
+//     return;
+//   }
+// }
+const get_inf_class = function get_inf_class(d, infrastructure, c) {
+  if (c == classes.GRID_CLASS_DC.value) {
+    // return d.properties.class === classes[c]
+    return d.properties.class === classes.GRID_CLASS_DC.name;
+  } else if (infrastructure === '') {
+    return;
+  }
 }
 
 const line_width_kludge = function line_width_kludge(idx) {
@@ -159,6 +218,7 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
   console.log('draw_grid_class_dc')
 
   let grid = queued_data[0];
+  // const GRID_CLASS_DC = classes.length - 1;
 
   const path = get_path(ctx);
 
@@ -166,7 +226,8 @@ const draw_grid_class_dc = function draw_grid_class_dc(ctx, queued_data) {
 
   ctx.lineCap = 'round';
 
-  features = filter_features(grid, classes.length-1);
+  features = filter_features(grid, classes.GRID_CLASS_DC.value);
+  // features = filter_features(grid, classes.length - 1);
 
   feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
