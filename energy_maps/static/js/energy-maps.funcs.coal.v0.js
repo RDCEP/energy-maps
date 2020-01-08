@@ -64,24 +64,16 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  * @param {Number} r - Radius. 
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
+  const NUM_SIDES_MINE = 5;
   r = Math.sqrt(r / Math.PI) * viz.mines.scale;
   ctx.strokeStyle = viz.mines.coal.stroke;
   ctx.strokeWidth = viz.mines.coal.width;
   ctx.fillStyle = viz.mines.coal.fill;
-
   ctx.beginPath();
-
-  let a = Math.PI / 2;
-  let n = 5;
-  ctx.moveTo (xy[0] + r * Math.cos(a), xy[1] + r * Math.sin(a));
-  for (let i = 1; i <= n; ++i) {
-    ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / n),
-      xy[1] + r * Math.sin(a + i * 2 * Math.PI / n));
-  }
+  draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
   if (r > 8) {
     ctx.stroke();
   }
 
 };
-

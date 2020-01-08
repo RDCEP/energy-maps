@@ -226,3 +226,20 @@ const show_spinner = function show_spinner() {
 const hide_spinner = function hide_spinner() {
     spinner.style.display = "none";
   };
+
+/**
+ * Draw polygon
+ * @param {Number} sides -- number of sides of the polygon
+ * @param {Object} ctx 
+ * @param {Object} xy
+ * @param {Number} r 
+ */
+const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
+  /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
+  let starting_angle = Math.PI / 2; 
+  ctx.moveTo (xy[0] + r * Math.cos(starting_angle), xy[1] + r * Math.sin(starting_angle)); 
+  for (let i = 1; i <= sides; ++i) { 
+    ctx.lineTo (xy[0] + r * Math.cos(starting_angle + i * 2 * Math.PI / sides),
+      xy[1] + r * Math.sin(starting_angle + i * 2 * Math.PI / sides));
+  }
+}
