@@ -31,7 +31,7 @@ let classes = {
     name: 'DC',
     value: 7
   }
-}
+};
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
@@ -98,8 +98,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
  * @param {Array} queued_data
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_NA)
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_UNDER_100)
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_NA);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_UNDER_100);
 };
 
 /**
@@ -108,8 +108,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} queued_data
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_100_200)
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_200_300)
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_100_200);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_200_300);
 };
 
 /**
@@ -118,9 +118,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} queued_data
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_345)
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_500)
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_735_PLUS)
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_345);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_500);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_735_PLUS);
 };
 
 /**
@@ -129,6 +129,6 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  * @param {Array} queued_data
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
-  console.log('electrical-grid-dc-lines')
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_DC)
+  console.log('electrical-grid-dc-lines');
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_DC);
 }
