@@ -56,7 +56,7 @@ const filter_features = function filter_features(infrastructure, c) {
 
 const line_width_kludge = function line_width_kludge(idx) {
   // TODO: Replace magic numbers with descriptive variable names
-  return viz.transport.rail.width *
+      return viz.transport.rail.width *
       (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
 }
 
@@ -70,8 +70,9 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   let grid = queued_data[0];
   const path = get_path(ctx);
   let tmp_grid = {type: 'FeatureCollection', features: []};
-
+  
   ctx.lineCap = 'round';
+
   features = filter_features(grid, c);
 
   let feat_len = features.length;
