@@ -1,12 +1,3 @@
-// TODO: store classes in an object where each has a descriptive
-// name like: GRID_CLASS_NA: 'NOT AVAILABLE', and a property
-// let classes = [
-//   'NOT AVAILABLE',
-//   'Under 100',
-//   '100-161', '220-287', '345', '500', '735 and Above',
-//   'DC'
-// ];
-
 let classes = {
   GRID_CLASS_NA: {
     name: 'NOT AVAILABLE',
