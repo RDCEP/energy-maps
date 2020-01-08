@@ -1,5 +1,3 @@
-
-
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   console.log('draw_gas_pipes');
 
@@ -46,7 +44,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
  * @param {array} queued_data -- the supplied dataset
  */
 const get_xy = function get_xy(queued_data) {
-  let wells = queued_data[0];
+  let wells = queued_data[0]; // generalize it so it doesn't just apply to wells, and also strike the queued data assignment bc some require two data sets
   
   wells.forEach(function(d) { 
     let xy = projection([+d.lon, +d.lat]);
@@ -115,8 +113,8 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
 
-  let gproc = queued_data[0];
-  let gstor = queued_data[1];
+  let gproc = queued_data[0]; // gas processing
+  let gstor = queued_data[1]; // gas storage
 
   gproc.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
