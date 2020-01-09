@@ -45,7 +45,7 @@
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
- * @param {Object} infrastructure - the readfile
+ * @param {Object} infrastructure - readfile
  * @param {Number} c - `classes` object member to compare readfile against
  */
 const filter_features = function filter_features(infrastructure, c) {
@@ -66,8 +66,8 @@ const line_width_kludge = function line_width_kludge(value) {
 
 /**
  * Draw a grid class on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {array} queued_data
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  * @param {Object} c - object member of `classes`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
@@ -107,8 +107,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
 
 /**
  * Draw grid class unknown and under 100 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, classes.GRID_CLASS_NA);
@@ -117,8 +117,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
 
 /**
  * Draw grid class 100-300 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, classes.GRID_CLASS_100_200);
@@ -127,8 +127,8 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
 
 /**
  * Draw grid class 345-735 on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, classes.GRID_CLASS_345);
@@ -138,8 +138,8 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
 
 /**
  * Draw grid class DC on the electric grid infrastructure map.
- * @param {Object} ctx
- * @param {Array} queued_data
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
