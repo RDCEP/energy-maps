@@ -54,11 +54,14 @@ const filter_features = function filter_features(infrastructure, c) {
   });
   return features;
 }
-
-const line_width_kludge = function line_width_kludge(idx) {
+/**
+ * A quick 'n dirty kludge to format electric grid line width for the calling grid class object
+ * @param  {Number} value - value attached to the respective `classes` object member
+ */
+const line_width_kludge = function line_width_kludge(value) {
   // TODO: Replace magic numbers with descriptive variable names
       return viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
+      (1 + 3 / (1 + Math.exp(-3 * (value / ((7 - 1) / 1.25) -1 ))));
 }
 
 /**
