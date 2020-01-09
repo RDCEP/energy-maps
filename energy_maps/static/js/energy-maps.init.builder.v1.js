@@ -411,6 +411,11 @@
     }
   ];
 
+  /** 
+   * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
+   * @property {string} name - an HTML/CSS ID that will be assigned to the markup dynamically and ultimately formatted for case and plain-English spacing to label the columns.
+   * @memberof Init
+   */
   const button_columns = [
     { name: 'oil-and-gas',
     },
