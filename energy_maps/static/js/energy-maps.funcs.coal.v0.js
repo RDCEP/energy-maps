@@ -63,8 +63,8 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 
 /**
  * Helper function for draw_coal_mines to draw the pentagon representing the mine.
- * @param {Object} ctx - HTML5 canvas context.
- * @param {Number} xy
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  * @param {Object} color
  * @param {Number} r - Radius. 
  */

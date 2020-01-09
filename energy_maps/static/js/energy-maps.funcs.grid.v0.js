@@ -47,6 +47,7 @@
  * Get the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure - readfile
  * @param {Number} c - `classes` object member to compare readfile against
+ * @returns {Array} features - an array of features matching the filtered class(es)
  */
 const filter_features = function filter_features(infrastructure, c) {
   let features = infrastructure.features.filter(function(d) {
@@ -57,6 +58,7 @@ const filter_features = function filter_features(infrastructure, c) {
 /**
  * A quick 'n dirty kludge to format electric grid line width for the calling grid class object
  * @param  {Number} value - value attached to the respective `classes` object member
+ * @returns {Number} the calculated line width
  */
 const line_width_kludge = function line_width_kludge(value) {
   // TODO: Replace magic numbers with descriptive variable names

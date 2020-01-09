@@ -218,6 +218,10 @@ const path = d3.geoPath()
   .projection(projection)
   .pointRadius(2);
 
+/**
+ * @param  {} ctx - HTML5 canvas context
+ * @returns {d3.geoPath} geographic path generator for the supplied ctx 
+ */
 const get_path = function get_path(ctx) {
   return d3.geoPath()
     .projection(projection)
