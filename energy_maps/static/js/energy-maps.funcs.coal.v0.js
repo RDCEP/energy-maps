@@ -1,3 +1,8 @@
+/**
+ * @file Provides draw functions and any helpers for coal mines and railroads.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ */
 
 /**
  * @typedef {Object} coal_mine

@@ -1,3 +1,8 @@
+/**
+ * @file Provides draw functions and any helpers for all power plants.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ */
 
 /**
  * @typedef {Object} geojson_geometry

@@ -1,5 +1,5 @@
 /**
- * @file Provides draw functions and any helpers for gas & oil wells, pipelines, refineries, processing, and storage.
+ * @file Provides global draw functions and any helpers for gas & oil wells, pipelines, refineries, processing, and storage.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
  */

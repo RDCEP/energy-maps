@@ -1,4 +1,14 @@
-let classes = {
+/**
+ * @file Provides draw functions and any helpers for the electric grid, subdivided into separate classes.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ */
+
+ /**
+ * @type {Object} 
+ * A collection of electric grid classifications, used to filter out and render separate portions of the grid.
+ */
+ let classes = {
   GRID_CLASS_NA: {
     name: 'NOT AVAILABLE',
     value: 0

@@ -1,4 +1,10 @@
 /**
+ * @file Provides global functions and any helpers for the more specialized drawing functions contained in other *.funcs files.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ */
+
+/**
  * Draw the base map.
  * @param {Object} ctx - HTML5 <canvas> element
  * @param {Object[]} queued_data - Dataset for the corresponding resource
@@ -71,6 +77,23 @@ const draw_cross = function draw_cross(ctx, xy, d) {
   ctx.moveTo(xy[0] - d / 2, xy[1]);
   ctx.lineTo(xy[0] + d / 2, xy[1]);
 };
+
+/**
+ * Draw polygon
+ * @param {Number} sides -- number of sides of the polygon
+ * @param {Object} ctx 
+ * @param {Object} xy
+ * @param {Number} r 
+ */
+const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
+  /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
+  let starting_angle = Math.PI / 2; 
+  ctx.moveTo (xy[0] + r * Math.cos(starting_angle), xy[1] + r * Math.sin(starting_angle)); 
+  for (let i = 1; i <= sides; ++i) { 
+    ctx.lineTo (xy[0] + r * Math.cos(starting_angle + i * 2 * Math.PI / sides),
+      xy[1] + r * Math.sin(starting_angle + i * 2 * Math.PI / sides));
+  }
+}
 
 // const toggle_layer = function toggle_layer(layer) {
 //   // Select all check boxes
