@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: energy-maps.funcs.grid.v0.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: energy-maps.funcs.grid.v0.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let classes = {
+  GRID_CLASS_NA: {
+    name: 'NOT AVAILABLE',
+    value: 0
+  },
+  GRID_CLASS_UNDER_100: { 
+    name: 'Under 100',
+    value: 1
+  },
+  GRID_CLASS_100_200: {
+    name: '100-161',
+    value: 2
+  }, 
+  GRID_CLASS_200_300: {
+    name: '220-287',
+    value: 3
+  }, 
+  GRID_CLASS_345: {
+    name: '345',
+    value: 4
+  }, 
+  GRID_CLASS_500: {
+    name: '500',
+    value: 5
+  }, 
+  GRID_CLASS_735_PLUS: {
+    name: '735 and Above',
+    value: 6
+  },
+  GRID_CLASS_DC: {
+    name: 'DC',
+    value: 7
+  }
+};
+
+/**
+ * Get the features you want from your GeoJSON FeatureCollection.
+ * @param {Object} infrastructure - the readfile
+ * @param {Number} c - `classes` object member to compare readfile against
+ */
+const filter_features = function filter_features(infrastructure, c) {
+  let features = infrastructure.features.filter(function(d) {
+    return d.properties.class === c.name;
+  });
+  return features;
+}
+
+const line_width_kludge = function line_width_kludge(idx) {
+  // TODO: Replace magic numbers with descriptive variable names
+      return viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (idx / ((7 - 1) / 1.25) -1 ))));
+}
+
+/**
+ * Draw a grid class on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {array} queued_data
+ * @param {Object} c -- object member of `classes`
+ */
+draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
+  let grid = queued_data[0];
+  const path = get_path(ctx);
+  let tmp_grid = {type: 'FeatureCollection', features: []};
+  
+  ctx.lineCap = 'round';
+
+  features = filter_features(grid, c);
+
+  let feat_len = features.length;
+  for (let i = 0; i &lt; feat_len; ++i) {
+    tmp_grid.features = [features[i]];
+
+    if (c == classes.GRID_CLASS_DC) {
+      // FIXME: Replace magic numbers with descriptive variable names
+      ctx.lineWidth = viz.transport.rail.width *
+      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
+      ctx.strokeStyle = 'black';
+    } 
+    
+    else {
+      ctx.lineWidth = line_width_kludge(c.value);
+      ctx.strokeStyle = viz.grid.palette[c.value];
+    }
+
+    ctx.beginPath();
+    path(tmp_grid);
+    ctx.stroke();
+
+      if (i === feat_len - 1) { 
+        hide_spinner(); 
+      }
+    }
+};
+
+/**
+ * Draw grid class unknown and under 100 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_NA);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_UNDER_100);
+};
+
+/**
+ * Draw grid class 100-300 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_100_200);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_200_300);
+};
+
+/**
+ * Draw grid class 345-735 on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_345);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_500);
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_735_PLUS);
+};
+
+/**
+ * Draw grid class DC on the electric grid infrastructure map.
+ * @param {Object} ctx
+ * @param {Array} queued_data
+ */
+const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
+  console.log('electrical-grid-dc-lines');
+  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_DC);
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 09 2020 12:05:50 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
