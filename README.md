@@ -16,6 +16,8 @@ This data visualization project is the result of a grant-funded partnership betw
 `git clone`
 `python run.py`
 
+view documentation at [docs](./energy_maps/docs/index.html)
+
 ### Prerequisites
 
 Ensure that you have [Python 3.x](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/) installed on your machine; install [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/) if you haven't already:
