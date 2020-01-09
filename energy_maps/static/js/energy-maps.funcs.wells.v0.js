@@ -61,7 +61,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 /**
  * Draw gas wells to the infrastructure map.
- * @param {Array} queued_data -- the datafile to be read
+ * @param {Array} queued_data - readfile
  */
 const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
@@ -73,7 +73,7 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
 
 /**
  * Draw oil wells to the infrastructure map.
- * @param {Array} queued_data -- the datafile to be read
+ * @param {Array} queued_data - readfile
  */
 const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
@@ -194,8 +194,8 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
 
 /**
  * Draw oil refinery to the infrastructure map as a hexagon
- * @param {Object} ctx 
- * @param {Object} xy
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} xy - Array of xy coordinates 
  * @param {Number} r 
  */
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {

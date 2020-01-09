@@ -6,7 +6,7 @@
 
 /**
  * Draw the base map.
- * @param {Object} ctx - HTML5 <canvas> element
+ * @param {Object} ctx - HTML5 canvas context.
  * @param {Object[]} queued_data - Dataset for the corresponding resource
  * @param {Object} border_only
  */
@@ -40,6 +40,12 @@ const draw_land = function draw_land(ctx, queued_data, border_only) {
 
 /// Primitives
 
+/**
+ * Draw an 'x' to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_x = function draw_x(ctx, xy, d) {
   ctx.moveTo(xy[0] - d / 2, xy[1] - d / 2);
   ctx.lineTo(xy[0] + d / 2, xy[1] + d / 2);
@@ -47,14 +53,32 @@ const draw_x = function draw_x(ctx, xy, d) {
   ctx.lineTo(xy[0] + d / 2, xy[1] - d / 2);
 };
 
+/**
+ * Draw a circle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} r - radius 
+ */
 const draw_circle = function draw_circle(ctx, xy, r) {
   ctx.arc(xy[0], xy[1], r, 0, Math.PI * 2, true);
 };
 
+/**
+ * Draw a box to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_box = function draw_box(ctx, xy, d) {
   ctx.rect(xy[0] - d / 2, xy[1] - d / 2, d, d);
 };
 
+/**
+ * Draw a triangle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_triangle = function draw_triangle(ctx, xy, d) {
   let e = (d * Math.sqrt(3)) / 3;
   ctx.moveTo(xy[0], xy[1] - e * 2);
@@ -63,6 +87,12 @@ const draw_triangle = function draw_triangle(ctx, xy, d) {
   ctx.lineTo(xy[0], xy[1] - e * 2);
 };
 
+/**
+ * Draw a downward facing triangle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_triangle_down = function draw_triangle_down(ctx, xy, d) {
   let e = (d * Math.sqrt(3)) / 3;
   ctx.moveTo(xy[0], xy[1] + e * 2);
@@ -71,6 +101,12 @@ const draw_triangle_down = function draw_triangle_down(ctx, xy, d) {
   ctx.lineTo(xy[0], xy[1] + e * 2);
 };
 
+/**
+ * Draw a cross to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_cross = function draw_cross(ctx, xy, d) {
   ctx.moveTo(xy[0], xy[1] - d / 2);
   ctx.lineTo(xy[0], xy[1] + d / 2);
@@ -79,11 +115,11 @@ const draw_cross = function draw_cross(ctx, xy, d) {
 };
 
 /**
- * Draw polygon
- * @param {Number} sides -- number of sides of the polygon
- * @param {Object} ctx 
- * @param {Object} xy
- * @param {Number} r 
+ * Draw a polygon to the desired canvas context with a variable number of sides
+ * @param {Number} sides - number of sides of the polygon
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} r - radius
  */
 const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
   /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
@@ -94,13 +130,6 @@ const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
       xy[1] + r * Math.sin(starting_angle + i * 2 * Math.PI / sides));
   }
 }
-
-// const toggle_layer = function toggle_layer(layer) {
-//   // Select all check boxes
-//   d3.selectAll(".checkbox");
-//   // if check box value equal to @param layer,
-//   // toggle layer on/off
-// };
 
 d3.select('.about-contact').on('click', () => {
   d3.select('.modal-screen').style('display', 'block');

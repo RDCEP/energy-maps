@@ -65,7 +65,7 @@ const line_width_kludge = function line_width_kludge(idx) {
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx
  * @param {array} queued_data
- * @param {Object} c -- object member of `classes`
+ * @param {Object} c - object member of `classes`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   let grid = queued_data[0];

@@ -27,8 +27,14 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
+ * @file Provides global functions and any helpers for the more specialized drawing functions contained in other *.funcs files.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ */
+
+/**
  * Draw the base map.
- * @param {Object} ctx - HTML5 &lt;canvas> element
+ * @param {Object} ctx - HTML5 canvas context.
  * @param {Object[]} queued_data - Dataset for the corresponding resource
  * @param {Object} border_only
  */
@@ -62,6 +68,12 @@ const draw_land = function draw_land(ctx, queued_data, border_only) {
 
 /// Primitives
 
+/**
+ * Draw an 'x' to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_x = function draw_x(ctx, xy, d) {
   ctx.moveTo(xy[0] - d / 2, xy[1] - d / 2);
   ctx.lineTo(xy[0] + d / 2, xy[1] + d / 2);
@@ -69,14 +81,32 @@ const draw_x = function draw_x(ctx, xy, d) {
   ctx.lineTo(xy[0] + d / 2, xy[1] - d / 2);
 };
 
+/**
+ * Draw a circle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} r - radius 
+ */
 const draw_circle = function draw_circle(ctx, xy, r) {
   ctx.arc(xy[0], xy[1], r, 0, Math.PI * 2, true);
 };
 
+/**
+ * Draw a box to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_box = function draw_box(ctx, xy, d) {
   ctx.rect(xy[0] - d / 2, xy[1] - d / 2, d, d);
 };
 
+/**
+ * Draw a triangle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_triangle = function draw_triangle(ctx, xy, d) {
   let e = (d * Math.sqrt(3)) / 3;
   ctx.moveTo(xy[0], xy[1] - e * 2);
@@ -85,6 +115,12 @@ const draw_triangle = function draw_triangle(ctx, xy, d) {
   ctx.lineTo(xy[0], xy[1] - e * 2);
 };
 
+/**
+ * Draw a downward facing triangle to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_triangle_down = function draw_triangle_down(ctx, xy, d) {
   let e = (d * Math.sqrt(3)) / 3;
   ctx.moveTo(xy[0], xy[1] + e * 2);
@@ -93,6 +129,12 @@ const draw_triangle_down = function draw_triangle_down(ctx, xy, d) {
   ctx.lineTo(xy[0], xy[1] + e * 2);
 };
 
+/**
+ * Draw a cross to the desired canvas context 
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} d - ??? 
+ */
 const draw_cross = function draw_cross(ctx, xy, d) {
   ctx.moveTo(xy[0], xy[1] - d / 2);
   ctx.lineTo(xy[0], xy[1] + d / 2);
@@ -100,12 +142,22 @@ const draw_cross = function draw_cross(ctx, xy, d) {
   ctx.lineTo(xy[0] + d / 2, xy[1]);
 };
 
-// const toggle_layer = function toggle_layer(layer) {
-//   // Select all check boxes
-//   d3.selectAll(".checkbox");
-//   // if check box value equal to @param layer,
-//   // toggle layer on/off
-// };
+/**
+ * Draw a polygon to the desired canvas context with a variable number of sides
+ * @param {Number} sides - number of sides of the polygon
+ * @param {Object} ctx - HTML5 canvas context.
+ * @param {Array} xy - Array of xy coordinates 
+ * @param {Number} r - radius
+ */
+const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
+  /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
+  let starting_angle = Math.PI / 2; 
+  ctx.moveTo (xy[0] + r * Math.cos(starting_angle), xy[1] + r * Math.sin(starting_angle)); 
+  for (let i = 1; i &lt;= sides; ++i) { 
+    ctx.lineTo (xy[0] + r * Math.cos(starting_angle + i * 2 * Math.PI / sides),
+      xy[1] + r * Math.sin(starting_angle + i * 2 * Math.PI / sides));
+  }
+}
 
 d3.select('.about-contact').on('click', () => {
   d3.select('.modal-screen').style('display', 'block');
@@ -124,13 +176,13 @@ d3.select('.modal-close').on('click', function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#classes">classes</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#classes">classes</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 09 2020 12:57:38 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 09 2020 13:24:54 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

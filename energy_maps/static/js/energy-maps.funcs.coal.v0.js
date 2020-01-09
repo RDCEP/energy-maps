@@ -13,7 +13,7 @@
 
 /**
  * Draw railroads on the coal infrastructure map.
- * @param {Object} ctx - HTML5 <canvas> element.
+ * @param {Object} ctx - HTML5 canvas context..
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_railroads = function draw_railroads(ctx, queued_data) {
@@ -34,7 +34,7 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 
 /**
  * Draw coal mines on the coal infrastructure map.
- * @param {Object} ctx - HTML5 <canvas> element.
+ * @param {Object} ctx - HTML5 canvas context.
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
@@ -63,7 +63,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 
 /**
  * Helper function for draw_coal_mines to draw the pentagon representing the mine.
- * @param {Object} ctx - HTML5 <canvas> element.
+ * @param {Object} ctx - HTML5 canvas context.
  * @param {Number} xy
  * @param {Object} color
  * @param {Number} r - Radius. 
