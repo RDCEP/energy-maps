@@ -4,6 +4,8 @@
  * @author Nathan Matteson
  */
 
+// TODO: Determine use of typedefinitions below
+
 /**
  * @typedef {Object} geojson_geometry
  * @property {String} type

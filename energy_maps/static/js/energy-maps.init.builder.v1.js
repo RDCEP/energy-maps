@@ -306,7 +306,7 @@
       value: 57_000_000_000,
       draw: [ {
         f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ], // FIXME: All data in JSON
+        src: [ '/static/csv/coal.csv' ],
         // src: [`${apiUrl}/coalmines`], 
         w: d3.csv
       } ],

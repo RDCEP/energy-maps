@@ -31,18 +31,6 @@
   const ctx = canvas.node().getContext("2d");
   ctx.LineCap = "round";
 
-  /**
-   * Fetch the JSON files for each map componenet
-   * and then call global functions and coal-specific functions
-   * to draw the base map, the railroad lines, the coal mines,
-   * and the coal legend.
-   *
-   * TODO: Only allow a layer to be drawn if it is not
-   * currently toggled
-   *
-   * TODO: Create a loader or some other heuristic signifier
-   */
-
   draw_base_map();
 
   /**
@@ -60,7 +48,6 @@
 
   /**
    * Create the railroad map layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
   function layer_rrmap() {
     Promise.all([d3.json(rrmap)]).then(function(files) {
@@ -76,7 +63,6 @@
 
   /**
    * Create the coal mine layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
   function layer_coalmines() {
     Promise.all([d3.csv(mines)]).then(function(files) {
@@ -163,18 +149,6 @@
   const ctx = canvas.node().getContext("2d");
   ctx.LineCap = "round";
 
-  /**
-   * Fetch the JSON files for each map componenet
-   * and then call global functions and coal-specific functions
-   * to draw the base map, the railroad lines, the coal mines,
-   * and the coal legend.
-   *
-   * TODO: Only allow a layer to be drawn if it is not
-   * currently toggled
-   *
-   * TODO: Create a loader or some other heuristic signifier
-   */
-
   draw_base_map();
 
   /**
@@ -192,7 +166,6 @@
 
   /**
    * Create the railroad map layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
   function layer_rrmap() {
     Promise.all([d3.json(rrmap)]).then(function(files) {
@@ -208,7 +181,6 @@
 
   /**
    * Create the coal mine layer.
-   * TODO: Ensure that the railroads always appear below the mines
    */
   function layer_coalmines() {
     Promise.all([d3.csv(mines)]).then(function(files) {
