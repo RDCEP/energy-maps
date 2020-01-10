@@ -27,8 +27,20 @@ function advance_for_type(y, ctx, text, text_offset, x) {
   return y;
 }
 
+function advance_vertical_increment(y, ctx, color) {
+  y += 15 * SCALE;
+  ctx.strokeStyle = color;
+  ctx.strokeWidth = viz.wells.stroke;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  return y;
+}
+
 const update_legend = function update_legend(ctx, layers) {
 
+  // FIXME: Integrating advance_vertical_increment() has exacerbated a pre-existing bug, in which activating a grid layer would alter the appearance
+  // of circles drawn to the legend by draw_circle(). This bug was already up on the live site. After integrating advance_vertical_increment() to this block,
+  // the x's drawn to the legend by draw_x() are also getting blown out. 
   const draw_well_legend = function draw_well_legend(
     ctx, x, y, color, text) {
     console.log('well symbol');
@@ -38,6 +50,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeWidth = viz.wells.stroke;
     ctx.fillStyle = color;
     ctx.beginPath();
+    // y = advance_vertical_increment(y, ctx, color);
     // Draw circle
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
@@ -49,14 +62,13 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeStyle = color;
     ctx.lineWidth = viz.wells.stroke;
     ctx.beginPath();
+    // y = advance_vertical_increment(y, ctx, color);
+    // draw x
     draw_x(ctx, [x, y], viz.wells.cross);
     ctx.stroke();
     // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    // ctx.fillText(`${text} offshore well`, text_offset + x, y);
-    ctx.fillText(`${text.slice(0, 3)} offshore well`, text_offset + x, y);
+    text = `${text.slice(0, 3)} offshore well`
+    advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -75,10 +87,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
     // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`${text} pipeline`, text_offset + x, y);
+    text = `${text} pipeline`
+    advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -327,3 +337,5 @@ const update_legend = function update_legend(ctx, layers) {
   }
 
 };
+
+
