@@ -11,12 +11,13 @@
 const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
 
 /**
- * Advance vertical increment for type (text display)
- * @param {*} y - y axis
- * @param {*} ctx - HTML5 canvas context
- * @param {*} text 
- * @param {*} text_offset 
- * @param {*} x 
+ * Advance vertical increment for legend type (text display)
+ * @param {Number} y - y axis
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {string} text - the text to be displayed
+ * @param {Number} text_offset - ?
+ * @param {Number} x - x axis
+ * @returns {Number} y - updated y axis
  */
 function advance_for_type(y, ctx, text, text_offset, x) {
   y += 5 * SCALE;
