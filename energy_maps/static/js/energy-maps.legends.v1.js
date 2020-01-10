@@ -48,7 +48,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment
     // y += VERTICAL_INCREMENT;
     // ctx.strokeStyle = color;
-    // ctx.strokeWidth = viz.wells.stroke; // keeping this line in fixes the blown out 'x' issue
+    // ctx.strokeWidth = viz.wells.stroke;
     // ctx.fillStyle = color;
     // ctx.beginPath();
     y = advance_vertical_increment(y, ctx, color); // above comments kept for reference
