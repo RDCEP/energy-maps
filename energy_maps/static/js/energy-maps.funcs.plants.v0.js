@@ -4,42 +4,6 @@
  * @author Nathan Matteson
  */
 
-// TODO: Determine use of typedefinitions below
-
-/**
- * @typedef {Object} geojson_geometry
- * @property {String} type
- * @property {Array} coordinates
- */
-
-/**
- * @typedef {Object} power_plant_properties
- * @property {String} total_cap - Annual capacity in TKTK
- * @property {String} primary_fu - Primary fuel
- */
-
-/**
- * @typedef {Object} power_plant_feature
- * @property {geojson_geometry} geometry
- * @property {power_plant_properties} properties
- */
-
-/**
- * @typedef {Object} power_plant_geojson
- * @property {Object} crs
- * @property {power_plant_feature[]} features
- */
-
-/**
- * @typedef {power_plant_geojson} power_plant
- * @property
- */
-
-/**
- *
- * @param {power_plant_geojson[]} queued_data
- */
-
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
