@@ -61,7 +61,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment
     // y += VERTICAL_INCREMENT;
     // ctx.strokeStyle = color;
-    ctx.lineWidth = viz.wells.stroke;
+    // ctx.lineWidth = viz.wells.stroke;
     // ctx.beginPath();
     y = advance_vertical_increment(y, ctx, color);
     // draw x
