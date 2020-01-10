@@ -8,7 +8,9 @@
  
  // TODO: Document functions
 
-const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
+// TODO: Asses whether all instances of '14 * SCALE' should use this named constant as a point of reference. Is there a relevant relationship, or is it just coincidence?
+const LEGEND_FONT_SIZE = 14 * SCALE;
+const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Arial`;
 const VERTICAL_INCREMENT = 15 * SCALE;
 
 /**
@@ -31,8 +33,9 @@ function advance_for_type(y, ctx, text, text_offset, x) {
 function advance_vertical_increment(y, ctx, color) {
   y += VERTICAL_INCREMENT;
   ctx.strokeStyle = color;
-  ctx.strokeWidth = viz.wells.stroke;
-  ctx.fillStyle = color;
+  // ctx.strokeWidth = viz.wells.stroke; // this doesn't seem to do anything when the same line is left in the draw_well_legend() function
+  ctx.lineWidth = viz.wells.stroke;
+  // ctx.fillStyle = color;
   ctx.beginPath();
   return y;
 }
@@ -46,12 +49,12 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color, text) {
     console.log('well symbol');
     // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = color;
-    ctx.strokeWidth = viz.wells.stroke;
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    // y = advance_vertical_increment(y, ctx, color);
+    // y += VERTICAL_INCREMENT;
+    // ctx.strokeStyle = color;
+    // ctx.strokeWidth = viz.wells.stroke; // keeping this line in fixes the blown out 'x' issue
+    // ctx.fillStyle = color;
+    // ctx.beginPath();
+    y = advance_vertical_increment(y, ctx, color);
     // Draw circle
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
@@ -59,11 +62,11 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y = advance_for_type(y, ctx, text, text_offset, x);
     // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = color;
+    // y += VERTICAL_INCREMENT;
+    // ctx.strokeStyle = color;
     ctx.lineWidth = viz.wells.stroke;
-    ctx.beginPath();
-    // y = advance_vertical_increment(y, ctx, color);
+    // ctx.beginPath();
+    y = advance_vertical_increment(y, ctx, color);
     // draw x
     draw_x(ctx, [x, y], viz.wells.cross);
     ctx.stroke();
