@@ -36,6 +36,24 @@
  
  // TODO: Document functions
 
+const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
+
+/**
+ * Advance vertical increment for type (text display)
+ * @param {*} y - y axis
+ * @param {*} ctx - HTML5 canvas context
+ * @param {*} text 
+ * @param {*} text_offset 
+ * @param {*} x 
+ */
+function advance_for_type(y, ctx, text, text_offset, x) {
+  y += 5 * SCALE;
+  ctx.fillStyle = viz.black;
+  ctx.font = LEGEND_FONT;
+  ctx.fillText(`${text}`, text_offset + x, y);
+  return y;
+}
+
 const update_legend = function update_legend(ctx, layers) {
 
   const draw_well_legend = function draw_well_legend(
@@ -52,10 +70,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     ctx.fill();
     // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
-    ctx.fillText(`${text} well`, text_offset + x, y);
+    advance_for_type(y, ctx, text, text_offset, x);
     // Advance vertical increment
     y += 15 * SCALE;
     ctx.strokeStyle = color;
@@ -66,13 +81,15 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
-    ctx.fillText(`${text} offshore well`, text_offset + x, y);
+    ctx.font = LEGEND_FONT;
+    // ctx.fillText(`${text} offshore well`, text_offset + x, y);
+    ctx.fillText(`${text.slice(0, 3)} offshore well`, text_offset + x, y);
     return y;
   };
 
   const draw_pipeline_legend = function draw_pipeline_legend(
     ctx, x, y, color, width, dashed, text) {
+
     // Advance vertical increment
     y += 15 * SCALE;
     ctx.strokeStyle = color;
@@ -87,7 +104,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`${text} pipeline`, text_offset + x, y);
     return y;
   };
@@ -99,7 +116,7 @@ const update_legend = function update_legend(ctx, layers) {
     draw_gas_processor(ctx, [x, y]);
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText('Gas processing', text_offset + x, y);
     return y;
   };
@@ -111,7 +128,7 @@ const update_legend = function update_legend(ctx, layers) {
     draw_gas_storage(ctx, [x, y]);
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText('Gas storage', text_offset + x, y);
     return y;
   };
@@ -121,7 +138,7 @@ const update_legend = function update_legend(ctx, layers) {
     y += 15 * SCALE;
     draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     ctx.fillText('Oil refinery', text_offset + x, y);
     return y;
@@ -132,7 +149,7 @@ const update_legend = function update_legend(ctx, layers) {
     y += 15 * SCALE;
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     ctx.fillText('Coal mine', text_offset + x, y);
     return y;
@@ -159,7 +176,7 @@ const update_legend = function update_legend(ctx, layers) {
     // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
     // solar font
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     let plant_text = text == 'Wind' ? 'farm' : 'power plant';
     ctx.fillText(`${text} ${plant_text}`, text_offset + x, y);
@@ -179,7 +196,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`Railroads`, text_offset + x, y);
     return y;
   };
@@ -209,7 +226,7 @@ const update_legend = function update_legend(ctx, layers) {
 
       y += 5 * SCALE;
       ctx.fillStyle = viz.black;
-      ctx.font = `bold ${14 * SCALE}px Arial`;
+      ctx.font = LEGEND_FONT;
       ctx.fillText(`${bin_labels[j]}`, text_offset + x, y);
     }
     return y;
@@ -226,7 +243,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`500–1000 kV DC`, text_offset + x, y);
     return y;
   };
@@ -246,12 +263,12 @@ const update_legend = function update_legend(ctx, layers) {
       switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(
-            ctx, x, y, viz.oil, 'Oil');
+            ctx, x, y, viz.oil, 'Oil well');
           break;
         case 'gas-well':
           console.log('gas-well switch');
           y = draw_well_legend(
-            ctx, x, y, viz.gas, 'Gas');
+            ctx, x, y, viz.gas, 'Gas well');
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y,
@@ -336,8 +353,7 @@ const update_legend = function update_legend(ctx, layers) {
     // y +=
   }
 
-};
-</code></pre>
+};</code></pre>
         </article>
     </section>
 
@@ -347,13 +363,13 @@ const update_legend = function update_legend(ctx, layers) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#classes">classes</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#line_width_kludge">line_width_kludge</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Global</h3><ul><li><a href="global.html#advance_for_type">advance_for_type</a></li><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#classes">classes</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#line_width_kludge">line_width_kludge</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 10 2020 11:42:00 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 10 2020 13:46:05 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

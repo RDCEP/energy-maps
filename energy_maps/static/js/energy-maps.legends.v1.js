@@ -10,6 +10,22 @@
 
 const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
 
+/**
+ * Advance vertical increment for type (text display)
+ * @param {*} y - y axis
+ * @param {*} ctx - HTML5 canvas context
+ * @param {*} text 
+ * @param {*} text_offset 
+ * @param {*} x 
+ */
+function advance_for_type(y, ctx, text, text_offset, x) {
+  y += 5 * SCALE;
+  ctx.fillStyle = viz.black;
+  ctx.font = LEGEND_FONT;
+  ctx.fillText(`${text}`, text_offset + x, y);
+  return y;
+}
+
 const update_legend = function update_legend(ctx, layers) {
 
   const draw_well_legend = function draw_well_legend(
@@ -26,10 +42,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     ctx.fill();
     // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`${text} well`, text_offset + x, y);
+    advance_for_type(y, ctx, text, text_offset, x);
     // Advance vertical increment
     y += 15 * SCALE;
     ctx.strokeStyle = color;
@@ -41,12 +54,14 @@ const update_legend = function update_legend(ctx, layers) {
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
     ctx.font = LEGEND_FONT;
-    ctx.fillText(`${text} offshore well`, text_offset + x, y);
+    // ctx.fillText(`${text} offshore well`, text_offset + x, y);
+    ctx.fillText(`${text.slice(0, 3)} offshore well`, text_offset + x, y);
     return y;
   };
 
   const draw_pipeline_legend = function draw_pipeline_legend(
     ctx, x, y, color, width, dashed, text) {
+
     // Advance vertical increment
     y += 15 * SCALE;
     ctx.strokeStyle = color;
@@ -220,12 +235,12 @@ const update_legend = function update_legend(ctx, layers) {
       switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(
-            ctx, x, y, viz.oil, 'Oil');
+            ctx, x, y, viz.oil, 'Oil well');
           break;
         case 'gas-well':
           console.log('gas-well switch');
           y = draw_well_legend(
-            ctx, x, y, viz.gas, 'Gas');
+            ctx, x, y, viz.gas, 'Gas well');
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y,
