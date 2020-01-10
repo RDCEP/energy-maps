@@ -107,14 +107,8 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment
     y += 15 * SCALE;
     draw_gas_storage(ctx, [x, y]);
-
     text = 'Gas storage'
     y = advance_for_type(y, ctx, text, text_offset, x);
-
-    // y += 5 * SCALE;
-    // ctx.fillStyle = viz.black;
-    // ctx.font = LEGEND_FONT;
-    // ctx.fillText('Gas storage', text_offset + x, y);
     return y;
   };
 
@@ -122,10 +116,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color) {
     y += 15 * SCALE;
     draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
-    ctx.fillText('Oil refinery', text_offset + x, y);
+    text = 'Oil refinery';
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -133,10 +125,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color) {
     y += 15 * SCALE;
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
-    ctx.fillText('Coal mine', text_offset + x, y);
+    text = 'Coal mine'
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -160,11 +150,9 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.fill();
     // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
     // solar font
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
     let plant_text = text == 'Wind' ? 'farm' : 'power plant';
-    ctx.fillText(`${text} ${plant_text}`, text_offset + x, y);
+    text = `${text} ${plant_text}`
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -179,10 +167,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
     // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`Railroads`, text_offset + x, y);
+    text = `Railroads`;
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -208,11 +194,8 @@ const update_legend = function update_legend(ctx, layers) {
         ctx.lineTo(x + 7 * SCALE, y);
         ctx.stroke();
       }
-
-      y += 5 * SCALE;
-      ctx.fillStyle = viz.black;
-      ctx.font = LEGEND_FONT;
-      ctx.fillText(`${bin_labels[j]}`, text_offset + x, y);
+      text = `${bin_labels[j]}`;
+      y = advance_for_type(y, ctx, text, text_offset, x);
     }
     return y;
   };
@@ -226,10 +209,8 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.moveTo(x - 7 * SCALE, y);
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`500–1000 kV DC`, text_offset + x, y);
+    text = `500–1000 kV DC`;
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
