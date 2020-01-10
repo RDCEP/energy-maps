@@ -107,10 +107,14 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment
     y += 15 * SCALE;
     draw_gas_storage(ctx, [x, y]);
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText('Gas storage', text_offset + x, y);
+
+    text = 'Gas storage'
+    y = advance_for_type(y, ctx, text, text_offset, x);
+
+    // y += 5 * SCALE;
+    // ctx.fillStyle = viz.black;
+    // ctx.font = LEGEND_FONT;
+    // ctx.fillText('Gas storage', text_offset + x, y);
     return y;
   };
 
