@@ -32,19 +32,16 @@ function advance_for_type(y, ctx, text, text_offset, x) {
 
 function advance_vertical_increment(y, ctx, color) {
   y += VERTICAL_INCREMENT;
+  console.log(color);
   ctx.strokeStyle = color;
-  // ctx.strokeWidth = viz.wells.stroke; // this doesn't seem to do anything when the same line is left in the draw_well_legend() function
   ctx.lineWidth = viz.wells.stroke;
-  // ctx.fillStyle = color;
+  ctx.fillStyle = color;
   ctx.beginPath();
   return y;
 }
 
 const update_legend = function update_legend(ctx, layers) {
 
-  // FIXME: Integrating advance_vertical_increment() has exacerbated a pre-existing bug, in which activating a grid layer would alter the appearance
-  // of circles drawn to the legend by draw_circle(). This bug was already up on the live site. After integrating advance_vertical_increment() to this block,
-  // the x's drawn to the legend by draw_x() are also getting blown out. 
   const draw_well_legend = function draw_well_legend(
     ctx, x, y, color, text) {
     console.log('well symbol');
@@ -54,7 +51,7 @@ const update_legend = function update_legend(ctx, layers) {
     // ctx.strokeWidth = viz.wells.stroke; // keeping this line in fixes the blown out 'x' issue
     // ctx.fillStyle = color;
     // ctx.beginPath();
-    y = advance_vertical_increment(y, ctx, color);
+    y = advance_vertical_increment(y, ctx, color); // above comments kept for reference
     // Draw circle
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
