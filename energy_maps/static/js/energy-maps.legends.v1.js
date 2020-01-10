@@ -9,6 +9,7 @@
  // TODO: Document functions
 
 const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
+const VERTICAL_INCREMENT = 15 * SCALE;
 
 /**
  * Advance vertical increment for legend type (text display)
@@ -28,7 +29,7 @@ function advance_for_type(y, ctx, text, text_offset, x) {
 }
 
 function advance_vertical_increment(y, ctx, color) {
-  y += 15 * SCALE;
+  y += VERTICAL_INCREMENT;
   ctx.strokeStyle = color;
   ctx.strokeWidth = viz.wells.stroke;
   ctx.fillStyle = color;
@@ -45,7 +46,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color, text) {
     console.log('well symbol');
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.strokeStyle = color;
     ctx.strokeWidth = viz.wells.stroke;
     ctx.fillStyle = color;
@@ -58,7 +59,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y = advance_for_type(y, ctx, text, text_offset, x);
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.strokeStyle = color;
     ctx.lineWidth = viz.wells.stroke;
     ctx.beginPath();
@@ -76,7 +77,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color, width, dashed, text) {
 
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.strokeStyle = color;
     ctx.lineWidth = width;
     if (dashed) {
@@ -95,7 +96,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_processing_legend = function draw_processing_legend(
     ctx, x, y, color) {
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_gas_processor(ctx, [x, y]);
     text = `Gas processing`
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -105,7 +106,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_storage_legend = function draw_storage_legend(
     ctx, x, y, color) {
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_gas_storage(ctx, [x, y]);
     text = 'Gas storage'
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -114,7 +115,7 @@ const update_legend = function update_legend(ctx, layers) {
 
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
     text = 'Oil refinery';
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -123,7 +124,7 @@ const update_legend = function update_legend(ctx, layers) {
 
   const draw_coalmine_legend = function draw_coalmine_legend(
     ctx, x, y, color) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
     text = 'Coal mine'
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -159,7 +160,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_railroad_legend = function draw_railroad_legend(
     ctx, x, y, color, width, dashed, text) {
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.strokeStyle = viz.transport.rail.stroke;
     ctx.lineWidth = viz.transport.rail.width;
     ctx.beginPath();
@@ -180,7 +181,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Voltage swatches
     for (let i = 0; i < bin_list.length; ++i) {
       let j = bin_list[i];
-      y += 15 * SCALE;
+      y += VERTICAL_INCREMENT;
       ctx.strokeStyle = viz.grid.palette[j];
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       if (j === 0) {
@@ -202,7 +203,7 @@ const update_legend = function update_legend(ctx, layers) {
 
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, color, width, dashed, text) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.lineWidth = 14 * SCALE;
     ctx.strokeStyle = 'black';
     ctx.beginPath();
