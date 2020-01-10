@@ -8,6 +8,8 @@
  
  // TODO: Document functions
 
+const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
+
 const update_legend = function update_legend(ctx, layers) {
 
   const draw_well_legend = function draw_well_legend(
@@ -26,7 +28,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`${text} well`, text_offset + x, y);
     // Advance vertical increment
     y += 15 * SCALE;
@@ -38,7 +40,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`${text} offshore well`, text_offset + x, y);
     return y;
   };
@@ -59,7 +61,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`${text} pipeline`, text_offset + x, y);
     return y;
   };
@@ -71,7 +73,7 @@ const update_legend = function update_legend(ctx, layers) {
     draw_gas_processor(ctx, [x, y]);
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText('Gas processing', text_offset + x, y);
     return y;
   };
@@ -83,7 +85,7 @@ const update_legend = function update_legend(ctx, layers) {
     draw_gas_storage(ctx, [x, y]);
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText('Gas storage', text_offset + x, y);
     return y;
   };
@@ -93,7 +95,7 @@ const update_legend = function update_legend(ctx, layers) {
     y += 15 * SCALE;
     draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     ctx.fillText('Oil refinery', text_offset + x, y);
     return y;
@@ -104,7 +106,7 @@ const update_legend = function update_legend(ctx, layers) {
     y += 15 * SCALE;
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     ctx.fillText('Coal mine', text_offset + x, y);
     return y;
@@ -131,7 +133,7 @@ const update_legend = function update_legend(ctx, layers) {
     // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
     // solar font
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     y += 5 * SCALE;
     let plant_text = text == 'Wind' ? 'farm' : 'power plant';
     ctx.fillText(`${text} ${plant_text}`, text_offset + x, y);
@@ -151,7 +153,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment for type
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`Railroads`, text_offset + x, y);
     return y;
   };
@@ -181,7 +183,7 @@ const update_legend = function update_legend(ctx, layers) {
 
       y += 5 * SCALE;
       ctx.fillStyle = viz.black;
-      ctx.font = `bold ${14 * SCALE}px Arial`;
+      ctx.font = LEGEND_FONT;
       ctx.fillText(`${bin_labels[j]}`, text_offset + x, y);
     }
     return y;
@@ -198,7 +200,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     y += 5 * SCALE;
     ctx.fillStyle = viz.black;
-    ctx.font = `bold ${14 * SCALE}px Arial`;
+    ctx.font = LEGEND_FONT;
     ctx.fillText(`500–1000 kV DC`, text_offset + x, y);
     return y;
   };
