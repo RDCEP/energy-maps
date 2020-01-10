@@ -56,7 +56,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     ctx.fill();
     // Advance vertical increment for type
-    advance_for_type(y, ctx, text, text_offset, x);
+    y = advance_for_type(y, ctx, text, text_offset, x);
     // Advance vertical increment
     y += 15 * SCALE;
     ctx.strokeStyle = color;
@@ -68,7 +68,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     // Advance vertical increment for type
     text = `${text.slice(0, 3)} offshore well`
-    advance_for_type(y, ctx, text, text_offset, x);
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -88,7 +88,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.stroke();
     // Advance vertical increment for type
     text = `${text} pipeline`
-    advance_for_type(y, ctx, text, text_offset, x);
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -97,10 +97,8 @@ const update_legend = function update_legend(ctx, layers) {
     // Advance vertical increment
     y += 15 * SCALE;
     draw_gas_processor(ctx, [x, y]);
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText('Gas processing', text_offset + x, y);
+    text = `Gas processing`
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
