@@ -74,23 +74,37 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
-  const draw_pipeline_legend = function draw_pipeline_legend(
-    ctx, x, y, color, width, dashed, text) {
-
-    // Advance vertical increment
+  // helper function for pipes and railroad
+  const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
+    
     y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
+    
     if (dashed) {
       ctx.setLineDash(dashed);
     }
+
+    if (inf === 'pipes') {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      text = `${text} pipeline`
+    } else if (inf === 'rr') {
+      ctx.strokeStyle = viz.transport.rail.stroke;
+      ctx.lineWidth = viz.transport.rail.width;
+      text = `Railroads`;
+    }
+
     ctx.beginPath();
     ctx.moveTo(x - 7 * SCALE, y);
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
-    // Advance vertical increment for type
-    text = `${text} pipeline`
+
     y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  }
+
+  const draw_pipeline_legend = function draw_pipeline_legend(
+    ctx, x, y, color, width, dashed, text) {
+    y = draw_line(ctx, x, y, color, width, dashed, text, 'pipes')
     return y;
   };
 
@@ -160,17 +174,7 @@ const update_legend = function update_legend(ctx, layers) {
 
   const draw_railroad_legend = function draw_railroad_legend(
     ctx, x, y, color, width, dashed, text) {
-    // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = viz.transport.rail.stroke;
-    ctx.lineWidth = viz.transport.rail.width;
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.stroke();
-    // Advance vertical increment for type
-    text = `Railroads`;
-    y = advance_for_type(y, ctx, text, text_offset, x);
+    y = draw_line(ctx, x, y, color, width, dashed, text, 'rr')
     return y;
   };
 
