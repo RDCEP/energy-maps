@@ -27,6 +27,7 @@ function advance_for_type(y, ctx, text, text_offset, x) {
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
   ctx.fillText(`${text}`, text_offset + x, y);
+  console.log(`${text} y value: ${y}`);
   return y;
 }
 
