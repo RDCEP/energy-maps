@@ -31,11 +31,11 @@ function advance_for_type(y, ctx, text, text_offset, x) {
   return y;
 }
 
-function advance_vertical_increment(y, ctx, color) {
+function advance_vertical_increment(y, ctx, color, lineWidth) {
   y += VERTICAL_INCREMENT;
   console.log(color);
   ctx.strokeStyle = color;
-  ctx.lineWidth = viz.wells.stroke;
+  ctx.lineWidth = lineWidth;
   ctx.fillStyle = color;
   ctx.beginPath();
   return y;
@@ -52,7 +52,7 @@ const update_legend = function update_legend(ctx, layers) {
     // ctx.strokeWidth = viz.wells.stroke;
     // ctx.fillStyle = color;
     // ctx.beginPath();
-    y = advance_vertical_increment(y, ctx, color); // above comments kept for reference
+    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); // above comments kept for reference
     // Draw circle
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
@@ -64,7 +64,7 @@ const update_legend = function update_legend(ctx, layers) {
     // ctx.strokeStyle = color;
     // ctx.lineWidth = viz.wells.stroke;
     // ctx.beginPath();
-    y = advance_vertical_increment(y, ctx, color);
+    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke);
     // draw x
     draw_x(ctx, [x, y], viz.wells.cross);
     ctx.stroke();
