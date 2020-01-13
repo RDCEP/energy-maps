@@ -46,31 +46,22 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_well_legend = function draw_well_legend(
     ctx, x, y, color, text) {
     console.log('well symbol');
-    // Advance vertical increment
-    // y += VERTICAL_INCREMENT;
-    // ctx.strokeStyle = color;
-    // ctx.strokeWidth = viz.wells.stroke;
-    // ctx.fillStyle = color;
-    // ctx.beginPath();
-    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); // above comments kept for reference
-    // Draw circle
+    
+    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); 
+    
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
     ctx.fill();
-    // Advance vertical increment for type
+    
     y = advance_for_type(y, ctx, text, text_offset, x);
-    // Advance vertical increment
-    // y += VERTICAL_INCREMENT;
-    // ctx.strokeStyle = color;
-    // ctx.lineWidth = viz.wells.stroke;
-    // ctx.beginPath();
     y = advance_vertical_increment(y, ctx, color, viz.wells.stroke);
-    // draw x
+    
     draw_x(ctx, [x, y], viz.wells.cross);
     ctx.stroke();
-    // Advance vertical increment for type
+    
     text = `${text.slice(0, 3)} offshore well`
     y = advance_for_type(y, ctx, text, text_offset, x);
+    
     return y;
   };
 
