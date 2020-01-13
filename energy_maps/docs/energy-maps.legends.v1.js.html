@@ -30,13 +30,17 @@
  * @file Provides draw functions and any helpers for the map legend.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
+ * @module Legends
  */
 
  // TODO: Factor out repetitive behavior
  
  // TODO: Document functions
 
-const LEGEND_FONT = `bold ${14 * SCALE}px Arial`;
+// TODO: Asses whether all instances of '14 * SCALE' should use this named constant as a point of reference. Is there a relevant relationship, or is it just coincidence?
+const LEGEND_FONT_SIZE = 14 * SCALE;
+const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Arial`;
+const VERTICAL_INCREMENT = 15 * SCALE;
 
 /**
  * Advance vertical increment for legend type (text display)
@@ -52,6 +56,24 @@ function advance_for_type(y, ctx, text, text_offset, x) {
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
   ctx.fillText(`${text}`, text_offset + x, y);
+  console.log(`${text} y value: ${y}`);
+  return y;
+}
+
+/**
+ * Advance vertical increment for legend symbol
+ * @param {Number} y - y axis
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+ * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
+ */
+function advance_vertical_increment(y, ctx, color, lineWidth) {
+  y += VERTICAL_INCREMENT;
+  console.log(color);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.fillStyle = color;
+  ctx.beginPath();
   return y;
 }
 
@@ -60,99 +82,94 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_well_legend = function draw_well_legend(
     ctx, x, y, color, text) {
     console.log('well symbol');
-    // Advance vertical increment
-    y += 15 * SCALE;
-    ctx.strokeStyle = color;
-    ctx.strokeWidth = viz.wells.stroke;
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    // Draw circle
+    
+    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); 
+    
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     ctx.stroke();
     ctx.fill();
-    // Advance vertical increment for type
-    advance_for_type(y, ctx, text, text_offset, x);
-    // Advance vertical increment
-    y += 15 * SCALE;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = viz.wells.stroke;
-    ctx.beginPath();
+    
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    y = advance_vertical_increment(y, ctx, color, viz.wells.stroke);
+    
     draw_x(ctx, [x, y], viz.wells.cross);
     ctx.stroke();
-    // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    // ctx.fillText(`${text} offshore well`, text_offset + x, y);
-    ctx.fillText(`${text.slice(0, 3)} offshore well`, text_offset + x, y);
+    
+    text = `${text.slice(0, 3)} offshore well`
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    
     return y;
   };
 
-  const draw_pipeline_legend = function draw_pipeline_legend(
-    ctx, x, y, color, width, dashed, text) {
-
-    // Advance vertical increment
-    y += 15 * SCALE;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
+  // helper function for pipes and railroad
+  const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
+    
+    y += VERTICAL_INCREMENT;
+    
     if (dashed) {
       ctx.setLineDash(dashed);
     }
+
+    if (inf === 'pipes') {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      text = `${text} pipeline`
+    } else if (inf === 'rr') {
+      ctx.strokeStyle = viz.transport.rail.stroke;
+      ctx.lineWidth = viz.transport.rail.width;
+      text = `Railroads`;
+    }
+
     ctx.beginPath();
     ctx.moveTo(x - 7 * SCALE, y);
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
-    // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`${text} pipeline`, text_offset + x, y);
+
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  }
+
+  const draw_pipeline_legend = function draw_pipeline_legend(
+    ctx, x, y, color, width, dashed, text) {
+    y = draw_line(ctx, x, y, color, width, dashed, text, 'pipes')
     return y;
   };
 
   const draw_processing_legend = function draw_processing_legend(
     ctx, x, y, color) {
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_gas_processor(ctx, [x, y]);
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText('Gas processing', text_offset + x, y);
+    text = `Gas processing`
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
   const draw_storage_legend = function draw_storage_legend(
     ctx, x, y, color) {
     // Advance vertical increment
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_gas_storage(ctx, [x, y]);
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText('Gas storage', text_offset + x, y);
+    text = 'Gas storage'
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
-    ctx.fillText('Oil refinery', text_offset + x, y);
+    text = 'Oil refinery';
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
   const draw_coalmine_legend = function draw_coalmine_legend(
     ctx, x, y, color) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
-    ctx.fillText('Coal mine', text_offset + x, y);
+    text = 'Coal mine'
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -176,29 +193,15 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.fill();
     // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
     // solar font
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    y += 5 * SCALE;
     let plant_text = text == 'Wind' ? 'farm' : 'power plant';
-    ctx.fillText(`${text} ${plant_text}`, text_offset + x, y);
+    text = `${text} ${plant_text}`
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
   const draw_railroad_legend = function draw_railroad_legend(
     ctx, x, y, color, width, dashed, text) {
-    // Advance vertical increment
-    y += 15 * SCALE;
-    ctx.strokeStyle = viz.transport.rail.stroke;
-    ctx.lineWidth = viz.transport.rail.width;
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.stroke();
-    // Advance vertical increment for type
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`Railroads`, text_offset + x, y);
+    y = draw_line(ctx, x, y, color, width, dashed, text, 'rr')
     return y;
   };
 
@@ -210,7 +213,7 @@ const update_legend = function update_legend(ctx, layers) {
     // Voltage swatches
     for (let i = 0; i &lt; bin_list.length; ++i) {
       let j = bin_list[i];
-      y += 15 * SCALE;
+      y += VERTICAL_INCREMENT;
       ctx.strokeStyle = viz.grid.palette[j];
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       if (j === 0) {
@@ -224,28 +227,23 @@ const update_legend = function update_legend(ctx, layers) {
         ctx.lineTo(x + 7 * SCALE, y);
         ctx.stroke();
       }
-
-      y += 5 * SCALE;
-      ctx.fillStyle = viz.black;
-      ctx.font = LEGEND_FONT;
-      ctx.fillText(`${bin_labels[j]}`, text_offset + x, y);
+      text = `${bin_labels[j]}`;
+      y = advance_for_type(y, ctx, text, text_offset, x);
     }
     return y;
   };
 
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, color, width, dashed, text) {
-    y += 15 * SCALE;
+    y += VERTICAL_INCREMENT;
     ctx.lineWidth = 14 * SCALE;
     ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.moveTo(x - 7 * SCALE, y);
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
-    y += 5 * SCALE;
-    ctx.fillStyle = viz.black;
-    ctx.font = LEGEND_FONT;
-    ctx.fillText(`500–1000 kV DC`, text_offset + x, y);
+    text = `500–1000 kV DC`;
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -354,7 +352,10 @@ const update_legend = function update_legend(ctx, layers) {
     // y +=
   }
 
-};</code></pre>
+};
+
+
+</code></pre>
         </article>
     </section>
 
@@ -364,13 +365,13 @@ const update_legend = function update_legend(ctx, layers) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Global</h3><ul><li><a href="global.html#advance_for_type">advance_for_type</a></li><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#classes">classes</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_coal_mines">draw_coal_mines</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_gas_wells">draw_gas_wells</a></li><li><a href="global.html#draw_grid_class">draw_grid_class</a></li><li><a href="global.html#draw_grid_class_ac_100_300">draw_grid_class_ac_100_300</a></li><li><a href="global.html#draw_grid_class_ac_345_735">draw_grid_class_ac_345_735</a></li><li><a href="global.html#draw_grid_class_ac_unk_and_under_100">draw_grid_class_ac_unk_and_under_100</a></li><li><a href="global.html#draw_grid_class_dc">draw_grid_class_dc</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_mine">draw_mine</a></li><li><a href="global.html#draw_oil_refinery">draw_oil_refinery</a></li><li><a href="global.html#draw_oil_wells">draw_oil_wells</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_railroads">draw_railroads</a></li><li><a href="global.html#draw_single_plant">draw_single_plant</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#filter_features">filter_features</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#get_xy">get_xy</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#line_width_kludge">line_width_kludge</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 10 2020 13:48:33 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Jan 13 2020 17:58:28 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

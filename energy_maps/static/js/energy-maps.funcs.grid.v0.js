@@ -2,11 +2,15 @@
  * @file Provides draw functions and any helpers for the electric grid, subdivided into separate classes.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
+ * @module Grid
  */
 
  /**
- * @type {Object} 
  * A collection of electric grid classifications, used to filter out and render separate portions of the grid.
+ * @type {Object} 
+ * @property {string} identifier - an abbreviation of the class name in the data file
+ * @property {string} name - a nested property; cooresponds to class heading in data file 
+ * @property {string} value - a nested property; used for mathematical operations that call this object 
  */
  let classes = {
   GRID_CLASS_NA: {

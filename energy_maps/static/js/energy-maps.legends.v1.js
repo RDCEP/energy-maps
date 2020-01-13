@@ -2,6 +2,7 @@
  * @file Provides draw functions and any helpers for the map legend.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
+ * @module Legends
  */
 
  // TODO: Factor out repetitive behavior
@@ -31,6 +32,13 @@ function advance_for_type(y, ctx, text, text_offset, x) {
   return y;
 }
 
+/**
+ * Advance vertical increment for legend symbol
+ * @param {Number} y - y axis
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+ * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
+ */
 function advance_vertical_increment(y, ctx, color, lineWidth) {
   y += VERTICAL_INCREMENT;
   console.log(color);

@@ -2,6 +2,7 @@
  * @file Provides draw functions and any helpers for all power plants.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
+ * @module Plants
  */
 
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
