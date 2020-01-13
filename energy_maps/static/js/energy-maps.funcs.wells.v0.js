@@ -149,11 +149,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   oref.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
     draw_oil_refinery(ctx, xy, d.r);
-    ctx.strokeStyle = viz.process.stroke.light;
-    ctx.lineWidth = viz.process.stroke.width;
-    ctx.beginPath();
-    draw_circle(ctx, xy, viz.process.oil_refinery.size * d.r);
-    ctx.stroke();
+
   });
 
 };
@@ -194,6 +190,17 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   }
   // draw_circle(ctx, xy, r);
   ctx.fill();
+
+  ctx.strokeStyle = viz.process.stroke.light;
+  ctx.lineWidth = viz.process.stroke.width;
+  ctx.beginPath();
+  ctx.moveTo (xy[0] + r * Math.cos(a), xy[1] + r * Math.sin(a));
+  for (let i = 1; i <= n; ++i) {
+    ctx.lineTo (xy[0] + r * Math.cos(a + i * 2 * Math.PI / n),
+      xy[1] + r * Math.sin(a + i * 2 * Math.PI / n));
+  }
+  ctx.stroke();
+
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
