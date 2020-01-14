@@ -49,6 +49,11 @@ function advance_vertical_increment(y, ctx, color, lineWidth) {
   return y;
 }
 
+/**
+ * Update the entire legend. Call each relevant draw function and render them in the appropriate order
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Object[]} layers - An array of objects representing resources to be rendered on top of the map canvas.
+ */
 const update_legend = function update_legend(ctx, layers) {
 
   const draw_well_legend = function draw_well_legend(
