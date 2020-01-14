@@ -9,7 +9,6 @@
  
  // TODO: Document functions
 
-// TODO: Asses whether all instances of '14 * SCALE' should use this named constant as a point of reference. Is there a relevant relationship, or is it just coincidence?
 const LEGEND_FONT_SIZE = 14 * SCALE;
 const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Arial`;
 const VERTICAL_INCREMENT = 15 * SCALE;
@@ -51,6 +50,14 @@ function advance_vertical_increment(y, ctx, color, lineWidth) {
 }
 
 /**
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {string} text - the text for the layer written to the legend
+   */
+
+/**
  * Update the entire legend. Call each relevant draw function and render them in the appropriate order
  * @param {Object} ctx - HTML5 canvas context
  * @param {Object[]} layers - An array of objects representing resources to be rendered on top of the map canvas.
@@ -64,10 +71,9 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    * @param {string} text - the text for the layer written to the legend
    */
-  const draw_well_legend = function draw_well_legend(
-    ctx, x, y, color, text) {
+  const draw_well_legend = function draw_well_legend(ctx, x, y, color, text) {
     console.log('well symbol');
-    
+
     y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); 
     
     draw_circle(ctx, [x, y], viz.wells.diameter * 3);
