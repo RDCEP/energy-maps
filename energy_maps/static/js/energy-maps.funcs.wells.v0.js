@@ -128,7 +128,9 @@ const draw_processing = function draw_processing(ctx, queued_data) {
   gproc.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
     draw_gas_processor(ctx, xy);
-    if (i === gproc.length - 1) { hide_spinner(); }
+    if (i === gproc.length - 1) { 
+      hide_spinner(); 
+    }
   });
 
   gstor.forEach(function(d) {
