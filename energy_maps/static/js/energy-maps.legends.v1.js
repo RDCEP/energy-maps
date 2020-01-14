@@ -112,6 +112,10 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.strokeStyle = viz.transport.rail.stroke;
       ctx.lineWidth = viz.transport.rail.width;
       text = `Railroads`;
+    } else if (inf === 'dc') {
+      ctx.lineWidth = LEGEND_FONT_SIZE;
+      ctx.strokeStyle = 'black';
+      text = `500–1000 kV DC`;
     }
 
     ctx.beginPath();
@@ -239,7 +243,7 @@ const update_legend = function update_legend(ctx, layers) {
   };
 
   /**
-   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
@@ -254,6 +258,13 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw AC electric grid legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {*} bin_list - array used to map bin labels to values
+   */
   const draw_grid_ac_legend = function draw_grid_ac_legend(
     ctx, x, y, bin_list) {
     let bins = [100, 200, 300, 350, 500, 1000];
@@ -282,17 +293,19 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw DC electric grid legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Number} width - width value to set for lineWidth
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @param {string} text - the text for the layer written to the legend
+   */
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, color, width, dashed, text) {
-    y += VERTICAL_INCREMENT;
-    ctx.lineWidth = 14 * SCALE;
-    ctx.strokeStyle = 'black';
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.stroke();
-    text = `500–1000 kV DC`;
-    y = advance_for_type(y, ctx, text, text_offset, x);
+    y = draw_line(ctx, x, y, color, width, dashed, text, 'dc')
     return y;
   };
 
