@@ -112,7 +112,9 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
         }
       }
     }
-    if (i === wells.length - 1) { hide_spinner(); }
+    if (i === wells.length - 1) { 
+      hide_spinner();
+     }
   });
 
 };
