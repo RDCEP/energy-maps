@@ -13,6 +13,7 @@
 const LEGEND_FONT_SIZE = 14 * SCALE;
 const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Arial`;
 const VERTICAL_INCREMENT = 15 * SCALE;
+const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
 
 /**
  * Advance vertical increment for legend type (text display)
@@ -24,7 +25,7 @@ const VERTICAL_INCREMENT = 15 * SCALE;
  * @returns {Number} y - updated y axis
  */
 function advance_for_type(y, ctx, text, text_offset, x) {
-  y += 5 * SCALE;
+  y += VERTICAL_TYPE_INCREMENT;
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
   ctx.fillText(`${text}`, text_offset + x, y);
