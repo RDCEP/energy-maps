@@ -155,7 +155,9 @@ const draw_refining = function draw_refining(ctx, queued_data) {
       }
     }
     d.r = r;
-    if (i === oref.length - 1) { hide_spinner(); }
+    if (i === oref.length - 1) { 
+      hide_spinner(); 
+    }
   });
 
   oref.sort(function(a, b) {
