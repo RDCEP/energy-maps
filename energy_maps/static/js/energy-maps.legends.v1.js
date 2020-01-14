@@ -56,6 +56,13 @@ function advance_vertical_increment(y, ctx, color, lineWidth) {
  */
 const update_legend = function update_legend(ctx, layers) {
 
+  /**
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {string} text - the text for the layer written to the legend
+   */
   const draw_well_legend = function draw_well_legend(
     ctx, x, y, color, text) {
     console.log('well symbol');
@@ -78,7 +85,17 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
-  // helper function for pipes and railroad
+  /**
+   * Helper function for pipes and railroad
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Number} width - width value to set for lineWidth
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @param {string} text - the text for the layer written to the legend
+   * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
+   */
   const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
     
     y += VERTICAL_INCREMENT;
@@ -106,12 +123,29 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   }
 
+  /**
+   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Number} width - width value to set for lineWidth
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @param {string} text - the text for the layer written to the legend
+   */
   const draw_pipeline_legend = function draw_pipeline_legend(
     ctx, x, y, color, width, dashed, text) {
     y = draw_line(ctx, x, y, color, width, dashed, text, 'pipes')
     return y;
   };
 
+  /**
+   * Draw gas processing legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
   const draw_processing_legend = function draw_processing_legend(
     ctx, x, y, color) {
     // Advance vertical increment
@@ -122,6 +156,13 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw gas storage legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
   const draw_storage_legend = function draw_storage_legend(
     ctx, x, y, color) {
     // Advance vertical increment
@@ -132,6 +173,13 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw oil refinery legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
@@ -141,6 +189,13 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw coal mine legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
   const draw_coalmine_legend = function draw_coalmine_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
@@ -150,6 +205,13 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw power plant legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
   const draw_power_plant_legend = function draw_power_plant_legend(
     ctx, x, y, color, text) {
     ctx.fillStyle = color;
@@ -176,6 +238,16 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   };
 
+  /**
+   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Number} width - width value to set for lineWidth
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @param {string} text - the text for the layer written to the legend
+   */
   const draw_railroad_legend = function draw_railroad_legend(
     ctx, x, y, color, width, dashed, text) {
     y = draw_line(ctx, x, y, color, width, dashed, text, 'rr')
