@@ -40,7 +40,9 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       }
       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
-    if (i === features.length - 1) { hide_spinner(); }
+    if (i === features.length - 1) { 
+      hide_spinner(); 
+    }
   });
 
 };
