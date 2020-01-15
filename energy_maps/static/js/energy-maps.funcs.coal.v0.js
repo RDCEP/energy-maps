@@ -15,7 +15,6 @@ function setRadius(radius, scale) {
   return radius;
 }
 
-
 /**
  * Helper function for draw_coal_mines to draw the pentagon representing the mine.
  * @param {Object} ctx - HTML5 canvas context
@@ -32,6 +31,7 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
   ctx.beginPath();
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
+  // TODO: what happens if r <= 8? Is this to filter out points that are so small that they are insignificant?
   if (r > 8) {
     ctx.stroke();
   }
