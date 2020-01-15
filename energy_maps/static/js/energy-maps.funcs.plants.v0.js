@@ -13,45 +13,37 @@
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
 
-// case 'COAL': color = viz.plants.coal; break;
-// case 'GEO': color = viz.plants.geo; break;
-// case 'HYC': color = viz.plants.hydro; break;
-// case 'NG': color = viz.plants.gas; break;
-// case 'NUC': color = viz.plants.nuclear; break;
-// case 'PET': color = viz.plants.oil; break;
-// case 'SUN': color = viz.plants.solar; break;
-// case 'WND': color = viz.plants.wind; break;
 let plant_classes = {
   PLANT_CLASS_COAL: {
-    fuel: 'COAL',
+    fuel_type: 'COAL',
     color: viz.plants.coal
   },
   PLANT_CLASS_GEO: { 
-    fuel: 'GEO',
+    fuel_type: 'GEO',
     color: viz.plants.geo
   },
   PLANT_CLASS_HYC: {
-    fuel: 'HYC',
+    fuel_type: 'HYC',
     color: viz.plants.hydro
   }, 
   PLANT_CLASS_NG: {
-    fuel: 'NG',
+    fuel_type: 'NG',
     color: viz.plants.gas
   }, 
   PLANT_CLASS_NUC: {
-    fuel: 'NUC',
+    fuel_type: 'NUC',
     color: viz.plants.nuclear
   }, 
   PLANT_CLASS_PET: {
-    fuel: 'PET',
+    fuel_type: 'PET',
     color: viz.plants.oil
   }, 
   PLANT_CLASS_SUN: {
-    fuel: 'SUN',
+    fuel_type: 'SUN',
     color: viz.plants.solar
   },
   PLANT_CLASS_WND: {
-    fuel: 'WND',
+    fuel_type: 'WND',
     color: viz.plants.wind
   }
 }; 
@@ -64,7 +56,8 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   // Filter out all records based on primary fuel and draw their white layer
   features = wells.features
     .filter(function(d) {
-      return d.properties.primary_fu === fuel; 
+      // return d.properties.primary_fu === fuel;
+      return d.properties.primary_fu === fuel.fuel_type; 
     });
   features.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
@@ -76,19 +69,20 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     if (xy === null) {
       //
     } else {
-      let color = 'black';
-      switch(fuel) {
-        case 'COAL': color = viz.plants.coal; break;
-        case 'GEO': color = viz.plants.geo; break;
-        case 'HYC': color = viz.plants.hydro; break;
-        case 'NG': color = viz.plants.gas; break;
-        case 'NUC': color = viz.plants.nuclear; break;
-        case 'PET': color = viz.plants.oil; break;
-        case 'SUN': color = viz.plants.solar; break;
-        case 'WND': color = viz.plants.wind; break;
-        default:
-          color =  'rgba(255, 255, 255, 0)';  break;
-      }
+      // let color = 'black';
+      // switch(fuel) {
+      //   case 'COAL': color = viz.plants.coal; break;
+      //   case 'GEO': color = viz.plants.geo; break;
+      //   case 'HYC': color = viz.plants.hydro; break;
+      //   case 'NG': color = viz.plants.gas; break;
+      //   case 'NUC': color = viz.plants.nuclear; break;
+      //   case 'PET': color = viz.plants.oil; break;
+      //   case 'SUN': color = viz.plants.solar; break;
+      //   case 'WND': color = viz.plants.wind; break;
+      //   default:
+      //     color =  'rgba(255, 255, 255, 0)';  break;
+      // }
+      let color = fuel.color;
       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
     if (i === features.length - 1) { 
@@ -204,34 +198,34 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
 };
 
 const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'COAL')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_COAL)
 };
 
 const draw_ng_plants = function draw_ng_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'NG')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_NG)
 };
 
 const draw_petro_plants = function draw_petro_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'PET')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_PET)
 };
 
 const draw_hydro_plants = function draw_hydro_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'HYC')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_HYC)
 };
 
 const draw_nuclear_plants = function draw_nuclear_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'NUC')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_NUC)
 };
 
 const draw_wind_farms = function draw_wind_farms(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'WND')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_WND)
 };
 
 const draw_solar_plants = function draw_solar_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'SUN')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_SUN)
 };
 
 const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, 'GEO')
+  draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_GEO)
 };
 
