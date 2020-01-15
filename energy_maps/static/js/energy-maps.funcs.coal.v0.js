@@ -6,13 +6,6 @@
  */
 
 /**
- * @typedef {Object} coal_mine
- * @property {String} tot_prod - Total annual production in short tons.
- * @property {String} lat - Latitude
- * @property {String} lon - Longitude
- */
-
-/**
  * Helper function for draw_coal_mines to draw the pentagon representing the mine.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} xy - Array of xy coordinates 
