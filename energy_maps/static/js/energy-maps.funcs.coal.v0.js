@@ -48,7 +48,8 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   let wells = queued_data[0];
 
   // Sort in descending order so large mines don't
-  // obscure small mines.
+  // obscure small mines. Unary '+' operator used to return the numeric rather
+  // than string values to tot_prod
   wells.sort(function(a, b) {
     return d3.descending(+a.tot_prod, +b.tot_prod);
   });
@@ -61,7 +62,9 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       // console.log(d.tot_prod);
       draw_mine(ctx, xy, viz.black, +d.tot_prod);
     }
-    if (i === wells.length - 1) { hide_spinner(); }
+    if (i === wells.length - 1) { 
+      hide_spinner(); 
+    }
   });
 
 };
