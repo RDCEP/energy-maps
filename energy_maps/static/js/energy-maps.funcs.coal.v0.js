@@ -6,8 +6,9 @@
  */
 
 /**
- * Scale out the radius relative to the desired size
- * @param {Number} r - radius
+ * Helper function for draw_mine() to Scale out the radius relative to the desired size
+ * @param {Number} r - starting radius
+ * @param {Number} scale - the desired scale value, bound to `viz` object value relative to category.
  */
 function setRadius(radius, scale) {
   radius = Math.sqrt(radius / Math.PI) * scale;
