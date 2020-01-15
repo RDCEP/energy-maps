@@ -9,7 +9,7 @@
  * A collection of power plant classifications used for filtering.
  * @type {Object} 
  * @property {string} identifier - an abbreviation of the class name in the data file
- * @property {string} name - a nested property; cooresponds to class heading in data file 
+ * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
 
@@ -48,40 +48,37 @@ let plant_classes = {
   }
 }; 
 
+// Filter out all records based on primary fuel and draw their white layer
+/**
+ * Helper function for draw_single_plant(). Draw the white background for each symbol.
+ * @param {Object} wells - data from the readfile, passes through from draw_single_plant()
+ * @param {Object} fuel - fuel object from `plant_classes`, passes through from draw_single_plant()
+ * @param {Object} ctx 
+ */
+function draw_white_layer(wells, fuel, ctx) {
+  features.forEach(function (d) {
+    let xy = projection(d.geometry.coordinates);
+    draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
+  });
+}
+
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
   let wells = queued_data[0];
 
-  // Filter out all records based on primary fuel and draw their white layer
   features = wells.features
-    .filter(function(d) {
-      // return d.properties.primary_fu === fuel;
-      return d.properties.primary_fu === fuel.fuel_type; 
+    .filter(function (d) {
+      return d.properties.primary_fu === fuel.fuel_type;
     });
-  features.forEach(function(d) {
-    let xy = projection(d.geometry.coordinates);
-    draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
-  });
+
+  draw_white_layer(wells, fuel, ctx);
   // Draw the standard layer
   features.forEach(function(d, i) {
     let xy = projection(d.geometry.coordinates);
     if (xy === null) {
       //
     } else {
-      // let color = 'black';
-      // switch(fuel) {
-      //   case 'COAL': color = viz.plants.coal; break;
-      //   case 'GEO': color = viz.plants.geo; break;
-      //   case 'HYC': color = viz.plants.hydro; break;
-      //   case 'NG': color = viz.plants.gas; break;
-      //   case 'NUC': color = viz.plants.nuclear; break;
-      //   case 'PET': color = viz.plants.oil; break;
-      //   case 'SUN': color = viz.plants.solar; break;
-      //   case 'WND': color = viz.plants.wind; break;
-      //   default:
-      //     color =  'rgba(255, 255, 255, 0)';  break;
-      // }
       let color = fuel.color;
       draw_power_plant(ctx, xy, color, +d.properties.total_cap);
     }
@@ -228,4 +225,6 @@ const draw_solar_plants = function draw_solar_plants(ctx, queued_data) {
 const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, plant_classes.PLANT_CLASS_GEO)
 };
+
+
 
