@@ -6,13 +6,12 @@
  */
 
  /**
- * A collection of power plant classifications used to filter out.
+ * A collection of power plant classifications used for filtering.
  * @type {Object} 
  * @property {string} identifier - an abbreviation of the class name in the data file
  * @property {string} name - a nested property; cooresponds to class heading in data file 
- * @property {string} value - a nested property; used for mathematical operations that call this object 
+ * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
-
 let plant_classes = {
   PLANT_CLASS_COAL: {
     name: 'COAL',
