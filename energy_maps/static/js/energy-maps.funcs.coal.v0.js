@@ -6,6 +6,16 @@
  */
 
 /**
+ * Scale out the radius relative to the desired size
+ * @param {Number} r - radius
+ */
+function setRadius(radius, scale) {
+  radius = Math.sqrt(radius / Math.PI) * scale;
+  return radius;
+}
+
+
+/**
  * Helper function for draw_coal_mines to draw the pentagon representing the mine.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} xy - Array of xy coordinates 
@@ -14,7 +24,7 @@
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  r = Math.sqrt(r / Math.PI) * viz.mines.scale;
+  r = setRadius(r, viz.mines.scale);
   ctx.strokeStyle = viz.mines.coal.stroke;
   ctx.strokeWidth = viz.mines.coal.width;
   ctx.fillStyle = viz.mines.coal.fill;
@@ -75,5 +85,3 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   hide_spinner();
 
 };
-
-
