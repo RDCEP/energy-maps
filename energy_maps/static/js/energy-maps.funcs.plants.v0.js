@@ -5,6 +5,49 @@
  * @module Plants
  */
 
+ /**
+ * A collection of power plant classifications used to filter out.
+ * @type {Object} 
+ * @property {string} identifier - an abbreviation of the class name in the data file
+ * @property {string} name - a nested property; cooresponds to class heading in data file 
+ * @property {string} value - a nested property; used for mathematical operations that call this object 
+ */
+
+let plant_classes = {
+  PLANT_CLASS_COAL: {
+    name: 'COAL',
+    color: viz.plants.coal
+  },
+  PLANT_CLASS_GEO: { 
+    name: 'GEO',
+    color: viz.plants.geo
+  },
+  PLANT_CLASS_HYC: {
+    name: 'HYC',
+    color: viz.plants.hydro
+  }, 
+  PLANT_CLASS_NG: {
+    name: '220-287',
+    color: viz.plants.gas
+  }, 
+  PLANT_CLASS_NUC: {
+    name: '345',
+    color: viz.plants.nuclear
+  }, 
+  PLANT_CLASS_PET: {
+    name: '500',
+    color: viz.plants.oil
+  }, 
+  PLANT_CLASS_SUN: {
+    name: '735 and Above',
+    color: viz.plants.solar
+  },
+  PLANT_CLASS_WND: {
+    name: 'DC',
+    color: viz.plants.wind
+  }
+}; 
+
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 

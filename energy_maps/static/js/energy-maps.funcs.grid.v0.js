@@ -12,7 +12,7 @@
  * @property {string} name - a nested property; cooresponds to class heading in data file 
  * @property {string} value - a nested property; used for mathematical operations that call this object 
  */
- let classes = {
+ let grid_classes = {
   GRID_CLASS_NA: {
     name: 'NOT AVAILABLE',
     value: 0
