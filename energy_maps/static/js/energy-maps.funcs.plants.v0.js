@@ -51,11 +51,11 @@ let plant_classes = {
 // Filter out all records based on primary fuel and draw their white layer
 /**
  * Helper function for draw_single_plant(). Draw the white background for each symbol.
- * @param {Object} wells - data from the readfile, passes through from draw_single_plant()
+ * @param {Object} plants - data from the readfile, passes through from draw_single_plant()
  * @param {Object} fuel - fuel object from `plant_classes`, passes through from draw_single_plant()
- * @param {Object} ctx 
+ * @param {Object} ctx - HTML5 canvas context
  */
-function draw_white_layer(wells, fuel, ctx) {
+function draw_white_layer(plants, fuel, ctx) {
   features.forEach(function (d) {
     let xy = projection(d.geometry.coordinates);
     draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
@@ -65,14 +65,14 @@ function draw_white_layer(wells, fuel, ctx) {
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
-  let wells = queued_data[0];
+  let plants = queued_data[0];
 
-  features = wells.features
+  features = plants.features
     .filter(function (d) {
       return d.properties.primary_fu === fuel.fuel_type;
     });
 
-  draw_white_layer(wells, fuel, ctx);
+  draw_white_layer(plants, fuel, ctx);
   // Draw the standard layer
   features.forEach(function(d, i) {
     let xy = projection(d.geometry.coordinates);
@@ -92,7 +92,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
   console.log('draw_power_plants');
 
-  let wells = queued_data[0];
+  let plants = queued_data[0];
 
   // Toggle fuels for fossil vs non-fossil fuels
   let fuels = ['PET', 'NG', 'COAL'];
@@ -105,14 +105,14 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
   // change method signature to draw_power_plants(ctx, queued_data, nff, set)
 
   // if (set === fuels[0]) {
-  //   wells.features.filter(function(d) {
+  //   plants.features.filter(function(d) {
   //     return fuels.indexOf(d.properties.primary_fu) == fuels[0];
   //   })
   //   .forEach(function(d) {
   //     let xy = projection(d.geo.coordinates);
   //     draw_power_plant(ctx, xy, iz.whit, +d.properties.total_cap);
   //   });
-  //   wells.features
+  //   plants.features
   //     .filter(function(d) {
   //       return fuels.indexOf(d.properties.primary_fu) == fuels[0];
   //     }).forEach(function(d) {
@@ -125,14 +125,14 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
   //       }
   //     })
   // }
-  wells.features.filter(function(d) {
+  plants.features.filter(function(d) {
       return fuels.indexOf(d.properties.primary_fu) > -1;
     })
     .forEach(function(d) {
       let xy = projection(d.geometry.coordinates);
       draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
     });
-  wells.features
+  plants.features
     .filter(function(d) {
       return fuels.indexOf(d.properties.primary_fu) > -1;
     }).forEach(function(d) {
