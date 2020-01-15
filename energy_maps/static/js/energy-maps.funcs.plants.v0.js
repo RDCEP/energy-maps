@@ -12,37 +12,46 @@
  * @property {string} name - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
+
+// case 'COAL': color = viz.plants.coal; break;
+// case 'GEO': color = viz.plants.geo; break;
+// case 'HYC': color = viz.plants.hydro; break;
+// case 'NG': color = viz.plants.gas; break;
+// case 'NUC': color = viz.plants.nuclear; break;
+// case 'PET': color = viz.plants.oil; break;
+// case 'SUN': color = viz.plants.solar; break;
+// case 'WND': color = viz.plants.wind; break;
 let plant_classes = {
   PLANT_CLASS_COAL: {
-    name: 'COAL',
+    fuel: 'COAL',
     color: viz.plants.coal
   },
   PLANT_CLASS_GEO: { 
-    name: 'GEO',
+    fuel: 'GEO',
     color: viz.plants.geo
   },
   PLANT_CLASS_HYC: {
-    name: 'HYC',
+    fuel: 'HYC',
     color: viz.plants.hydro
   }, 
   PLANT_CLASS_NG: {
-    name: '220-287',
+    fuel: 'NG',
     color: viz.plants.gas
   }, 
   PLANT_CLASS_NUC: {
-    name: '345',
+    fuel: 'NUC',
     color: viz.plants.nuclear
   }, 
   PLANT_CLASS_PET: {
-    name: '500',
+    fuel: 'PET',
     color: viz.plants.oil
   }, 
   PLANT_CLASS_SUN: {
-    name: '735 and Above',
+    fuel: 'SUN',
     color: viz.plants.solar
   },
   PLANT_CLASS_WND: {
-    name: 'DC',
+    fuel: 'WND',
     color: viz.plants.wind
   }
 }; 

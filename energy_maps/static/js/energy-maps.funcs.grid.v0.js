@@ -13,35 +13,35 @@
  * @property {string} value - a nested property; used for mathematical operations that call this object 
  */
  let grid_classes = {
-  GRID_CLASS_NA: {
+  AC_NA: {
     name: 'NOT AVAILABLE',
     value: 0
   },
-  GRID_CLASS_UNDER_100: { 
+  AC_UNDER_100: { 
     name: 'Under 100',
     value: 1
   },
-  GRID_CLASS_100_200: {
+  AC_100_200: {
     name: '100-161',
     value: 2
   }, 
-  GRID_CLASS_200_300: {
+  AC_200_300: {
     name: '220-287',
     value: 3
   }, 
-  GRID_CLASS_345: {
+  AC_345: {
     name: '345',
     value: 4
   }, 
-  GRID_CLASS_500: {
+  AC_500: {
     name: '500',
     value: 5
   }, 
-  GRID_CLASS_735_PLUS: {
+  AC_735_PLUS: {
     name: '735 and Above',
     value: 6
   },
-  GRID_CLASS_DC: {
+  DC: {
     name: 'DC',
     value: 7
   }
@@ -50,7 +50,7 @@
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure - readfile
- * @param {Number} c - `classes` object member to compare readfile against
+ * @param {Number} c - `grid_classes` object member to compare readfile against
  * @returns {Array} features - an array of features matching the filtered class(es)
  */
 const filter_features = function filter_features(infrastructure, c) {
@@ -61,7 +61,7 @@ const filter_features = function filter_features(infrastructure, c) {
 }
 /**
  * A quick 'n dirty kludge to format electric grid line width for the calling grid class object
- * @param  {Number} value - value attached to the respective `classes` object member
+ * @param  {Number} value - value attached to the respective `grid_classes` object member
  * @returns {Number} the calculated line width
  */
 const line_width_kludge = function line_width_kludge(value) {
@@ -74,7 +74,7 @@ const line_width_kludge = function line_width_kludge(value) {
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} xy - Array of xy coordinates 
- * @param {Object} c - object member of `classes`
+ * @param {Object} c - object member of `grid_classes`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   let grid = queued_data[0];
@@ -89,7 +89,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
 
-    if (c == classes.GRID_CLASS_DC) {
+    if (c == grid_classes.DC) {
       // FIXME: Replace magic numbers with descriptive variable names
       ctx.lineWidth = viz.transport.rail.width *
       (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
@@ -117,8 +117,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
  * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_NA);
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_UNDER_100);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_NA);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_UNDER_100);
 };
 
 /**
@@ -127,8 +127,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_100_200);
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_200_300);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_100_200);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_200_300);
 };
 
 /**
@@ -137,9 +137,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} xy - Array of xy coordinates 
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_345);
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_500);
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_735_PLUS);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_345);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_500);
+  draw_grid_class(ctx, queued_data, grid_classes.AC_735_PLUS);
 };
 
 /**
@@ -149,5 +149,5 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
-  draw_grid_class(ctx, queued_data, classes.GRID_CLASS_DC);
+  draw_grid_class(ctx, queued_data, grid_classes.DC);
 }
