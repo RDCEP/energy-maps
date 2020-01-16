@@ -58,7 +58,7 @@
   },
   DC: {
     name: 'DC',
-    color: 7,
+    color: 'black',
     line_width: 7,
     nominal_voltage: 1000
   }
@@ -110,8 +110,9 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
     tmp_grid.features = [features[i]];
 
     if (c == grid_classes.DC) {
+      // console.log("color is" + c.color)
       ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-      ctx.strokeStyle = 'black';
+      ctx.strokeStyle = c.color;
     } 
     
     else {
