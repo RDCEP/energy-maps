@@ -281,6 +281,7 @@ const update_legend = function update_legend(ctx, layers) {
     for (let i = 0; i < bin_list.length; ++i) {
       let j = bin_list[i];
       y += VERTICAL_INCREMENT;
+      // TODO: find a way to couple the stroke style to grid_classes obj instead of viz
       ctx.strokeStyle = viz.grid.palette[j];
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       if (j === 0) {

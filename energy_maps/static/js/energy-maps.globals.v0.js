@@ -134,7 +134,7 @@ const viz = {
   grid: {
     // FIXME: This is based on colors hard coded in funcs.grid. Colors
     //  should be dynamic.
-    palette: [
+    palette: [ // legends file is still using this array in a for loop, so we will have to resolve that conflict before we can delete this one
       'rgba(255, 255, 255)', // white
       'rgba(255, 255, 170)', // yellow
       'rgba(86, 180, 233)', // lt blue
@@ -143,53 +143,6 @@ const viz = {
       'rgba(213, 113, 45)', // vermilion
       // 'purple',
       'rgba(228, 53, 5)', // red
-    ],
-    // This was the original palette from the summer 2019
-    palette2: [
-      'rgba(255, 255, 255)', // white
-      'rgba(255, 255, 170)', // yellow
-      // 'rgba(255, 214, 255)', // lilac
-      'rgba(86, 180, 233)', // lt blue
-      'rgba(55, 126, 184)', // blue
-      // 'rgba(255, 127, 0)', // orange
-      'rgba(255, 149, 0)', // orange
-      // 'rgba(213, 94, 0)', // vermilion
-      'rgba(213, 113, 45)', // vermilion
-      'rgba(77, 175, 74)', // green
-      // 'rgba(228, 26, 28)', // red
-      'rgba(228, 53, 5)', // red
-    ],
-    palette_uni: [
-      'rgba(0, 114, 178)', // blue
-      'rgba(86, 180, 233)', // lt blue
-      'rgba(0, 158, 115)',
-      'rgba(230, 159, 0)',
-      'rgba(204, 121, 167)',
-      'rgba(213, 94, 0)',
-    ],
-    palette_set1: [
-      'rgba(152, 78, 163)', // dk blue
-      'rgba(55, 126, 184)', // blue
-      'rgba(77, 175, 74)', // green
-      'rgba(255, 127, 0)', // orange
-      'rgba(255, 255, 51)', // yellow
-      'rgba(228, 26, 28)', // red
-    ],
-    palette_div: [
-      'rgba(44,123,182)',
-      'rgba(171,217,233)',
-      'rgba(255,255,191)',
-      'rgba(253,174,97)',
-      'rgba(26,152,80)', //
-      'rgba(215,25,28)',
-    ],
-    palette_fuel: [ // Unused. Uses fuel colors and looks like shit.
-      'rgba(144, 29, 143, .5)',
-      'rgba(11, 36, 251, .5)',
-      'rgba(34, 139, 34, .5)',
-      'rgba(255, 215, 0, .5)',
-      'rgba(255, 127, 0, .5)',
-      'rgba(255, 0, 0, .5)',
     ]
   },
   map: {
