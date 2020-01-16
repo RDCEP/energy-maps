@@ -16,43 +16,43 @@
  let grid_classes = {
   AC_NA: {
     name: 'NOT AVAILABLE',
-    color: 0,
+    color: viz.grid.palette[0],
     line_width: 0,
     nominal_voltage: 50
   },
   AC_UNDER_100: { 
     name: 'Under 100',
-    color: 1,
+    color: viz.grid.palette[1],
     line_width: 1,
     nominal_voltage: 50
   },
   AC_100_200: {
     name: '100-161',
-    color: 2,
+    color: viz.grid.palette[2],
     line_width: 2,
     nominal_voltage: 100
   }, 
   AC_200_300: {
     name: '220-287',
-    color: 3,
+    color: viz.grid.palette[3],
     line_width: 3,
     nominal_voltage: 250
   }, 
   AC_345: {
     name: '345',
-    color: 4,
+    color: viz.grid.palette[4],
     line_width: 4,
     nominal_voltage: 350
   }, 
   AC_500: {
     name: '500',
-    color: 5,
+    color: viz.grid.palette[5],
     line_width: 5,
     nominal_voltage: 500 
   }, 
   AC_735_PLUS: {
     name: '735 and Above',
-    color: 6,
+    color: viz.grid.palette[6],
     line_width: 6,
     nominal_voltage: 750
   },
@@ -109,16 +109,9 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   for (let i = 0; i < feat_len; ++i) {
     tmp_grid.features = [features[i]];
 
-    if (c == grid_classes.DC) {
-      // console.log("color is" + c.color)
-      ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-      ctx.strokeStyle = c.color;
-    } 
-    
-    else {
-      ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-      ctx.strokeStyle = viz.grid.palette[c.color];
-    }
+    // TODO: Add descriptive comment here to explain the args
+    ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
+    ctx.strokeStyle = c.color;
 
     ctx.beginPath();
     path(tmp_grid);
