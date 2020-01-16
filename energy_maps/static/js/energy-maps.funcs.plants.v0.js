@@ -12,7 +12,6 @@
  * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
-
 let plant_classes = {
   PLANT_CLASS_COAL: {
     fuel_type: 'COAL',
@@ -140,19 +139,7 @@ const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
       if (xy === null) {
         //
       } else {
-        let color = 'black';
-        switch(d.properties.primary_fu) {
-          case 'COAL': color = viz.plants.coal; break;
-          case 'NG': color = viz.plants.gas; break;
-          case 'PET': color = viz.plants.oil; break;
-          case 'HYC': color = viz.plants.hydro; break;
-          case 'SUN': color = viz.plants.solar; break;
-          case 'WND': color = viz.plants.wind; break;
-          case 'GEO': color = viz.plants.geo; break;
-          case 'NUC': color = viz.plants.nuclear; break;
-          default:
-            color =  'rgba(255, 255, 255, 0)';  break;
-        }
+        let color = fuel.color;
         draw_power_plant(ctx, xy, color, +d.properties.total_cap);
       }
     });
