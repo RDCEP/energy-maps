@@ -88,75 +88,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 
 };
 
-const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
-  console.log('draw_power_plants');
 
-  let plants = queued_data[0];
-
-  // Toggle fuels for fossil vs non-fossil fuels
-  let fuels = ['PET', 'NG', 'COAL'];
-  if (nff) {
-    fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
-  }
-
-  // Attempt at filtering by layer
-  // If you decide to bring this back in and make it work, 
-  // change method signature to draw_power_plants(ctx, queued_data, nff, set)
-
-  // if (set === fuels[0]) {
-  //   plants.features.filter(function(d) {
-  //     return fuels.indexOf(d.properties.primary_fu) == fuels[0];
-  //   })
-  //   .forEach(function(d) {
-  //     let xy = projection(d.geo.coordinates);
-  //     draw_power_plant(ctx, xy, iz.whit, +d.properties.total_cap);
-  //   });
-  //   plants.features
-  //     .filter(function(d) {
-  //       return fuels.indexOf(d.properties.primary_fu) == fuels[0];
-  //     }).forEach(function(d) {
-  //       let xy = projection(d.geometry.coordinates);
-  //       if (xy == null) {
-  //         //
-  //       } else {
-  //         let color = viz.plants.oil;
-  //         draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-  //       }
-  //     })
-  // }
-  plants.features.filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    })
-    .forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
-    });
-  plants.features
-    .filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    }).forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      if (xy === null) {
-        //
-      } else {
-        let color = fuel.color;
-        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-      }
-    });
-  // plants_legend(ctx, nff);
-};
-
-const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
-  draw_power_plants(ctx, queued_data, false)
-};
-
-const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
-  draw_power_plants(ctx, queued_data, true)
-};
-
-// const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
-//   draw_power_plants(ctx, queued_data, false)
-// };
 
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
@@ -215,3 +147,70 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Old code, used for drawing the static images. Replace with code
+// that just calls each function
+const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
+  console.log('draw_power_plants');
+
+  let plants = queued_data[0];
+
+  // Toggle fuels for fossil vs non-fossil fuels
+  let fuels = ['PET', 'NG', 'COAL'];
+  if (nff) {
+    fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
+  }
+
+  plants.features.filter(function(d) {
+      return fuels.indexOf(d.properties.primary_fu) > -1;
+    })
+    .forEach(function(d) {
+      let xy = projection(d.geometry.coordinates);
+      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
+    });
+  plants.features
+    .filter(function(d) {
+      return fuels.indexOf(d.properties.primary_fu) > -1;
+    }).forEach(function(d) {
+      let xy = projection(d.geometry.coordinates);
+      if (xy === null) {
+        //
+      } else {
+        let color = fuel.color;
+        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      }
+    });
+};
+
+const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
+  // draw_power_plants(ctx, queued_data, false) // old implementation
+  // suggested implementation below:
+  draw_petro_plants(ctx, queued_data);
+  draw_ng_plants(ctx, queued_data);
+  draw_coal_plants(ctx, queued_data);
+};
+
+const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
+  // draw_power_plants(ctx, queued_data, true) old implementation
+  // suggested implementation below:
+  draw_solar_plants(ctx, queued_data);
+  draw_wind_farms(ctx, queued_data);
+  draw_nuclear_plants(ctx, queued_data);
+  draw_geo_plants(ctx, queued_data);
+  draw_hydro_plants(ctx, queued_data);
+};
