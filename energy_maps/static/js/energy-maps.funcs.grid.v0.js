@@ -16,48 +16,56 @@
  let grid_classes = {
   AC_NA: {
     name: 'NOT AVAILABLE',
+    display: 'Unknown kV AC',
     color: 'rgba(255, 255, 255)', // white
     line_width: 0,
     nominal_voltage: 50
   },
   AC_UNDER_100: { 
     name: 'Under 100',
+    display: 'Under 100 kV AC',
     color: 'rgba(255, 255, 170)', // yellow
     line_width: 1,
     nominal_voltage: 50
   },
   AC_100_200: {
     name: '100-161',
+    display: '100–200 kV AC',
     color: 'rgba(86, 180, 233)', // lt blue
     line_width: 2,
     nominal_voltage: 100
   }, 
   AC_200_300: {
     name: '220-287',
+    display: '200–300 kV AC',
     color: 'rgba(55, 126, 184)', // blue
     line_width: 3,
     nominal_voltage: 250
   }, 
   AC_345: {
     name: '345',
+    display: '345 kV AC',
     color: 'rgba(255, 149, 0)', // orange
     line_width: 4,
     nominal_voltage: 350
   }, 
   AC_500: {
     name: '500',
+    display: '500 kV AC',
     color: 'rgba(213, 113, 45)', // vermillion
     line_width: 5,
     nominal_voltage: 500 
   }, 
   AC_735_PLUS: {
     name: '735 and Above',
+    display: '735 kV AC',
     color: 'rgba(228, 53, 5)', // red 
     line_width: 6,
     nominal_voltage: 750
   },
   DC: {
     name: 'DC',
+    display: 'DC',
     color: 'black', // black
     line_width: 7,
     nominal_voltage: 1000
