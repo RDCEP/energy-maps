@@ -11,6 +11,7 @@
  * @property {string} identifier - an abbreviation of the class name in the data file
  * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
+ * @property {string} ??? stroke_style ??? - a nested property; corresponds to `viz` object; used to assign ctx.strokeStyle property 
  */
 let plant_classes = {
   PLANT_CLASS_COAL: {
@@ -66,6 +67,7 @@ function draw_white_layer(plants, fuel, ctx) {
  * @param {Object} queued_data - the readfile
  * @param {Object} fuel - fuel object from `plant_classes`
  */
+// TODO: Is this drawing one single plant, or one single set of plants? Change jsdoc if necessary
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
@@ -97,6 +99,7 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
   ctx.lineWidth = viz.plants.stroke.width;
   ctx.fillStyle = color;
+  // TODO: extract math to variable or function
   r = Math.sqrt(r / Math.PI) * viz.plants.scale;
   ctx.beginPath();
   // Draw larger circle for stroke, so that stroke aligns to outside of
