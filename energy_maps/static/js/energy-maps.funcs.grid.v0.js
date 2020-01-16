@@ -11,39 +11,56 @@
  * @property {string} identifier - an abbreviation of the class name in the data file
  * @property {string} name - a nested property; cooresponds to class heading in data file 
  * @property {string} value - a nested property; used for mathematical operations that call this object 
+ * @property {Number} nominal voltage - system voltage for which grid class (values are estimates)
  */
  let grid_classes = {
   AC_NA: {
     name: 'NOT AVAILABLE',
-    value: 0
+    color: 0,
+    line_width: 0,
+    nominal_voltage: 50
   },
   AC_UNDER_100: { 
     name: 'Under 100',
-    value: 1
+    color: 1,
+    line_width: 1,
+    nominal_voltage: 50
   },
   AC_100_200: {
     name: '100-161',
-    value: 2
+    color: 2,
+    line_width: 2,
+    nominal_voltage: 100
   }, 
   AC_200_300: {
     name: '220-287',
-    value: 3
+    color: 3,
+    line_width: 3,
+    nominal_voltage: 250
   }, 
   AC_345: {
     name: '345',
-    value: 4
+    color: 4,
+    line_width: 4,
+    nominal_voltage: 350
   }, 
   AC_500: {
     name: '500',
-    value: 5
+    color: 5,
+    line_width: 5,
+    nominal_voltage: 500 
   }, 
   AC_735_PLUS: {
     name: '735 and Above',
-    value: 6
+    color: 6,
+    line_width: 6,
+    nominal_voltage: 750
   },
   DC: {
     name: 'DC',
-    value: 7
+    color: 7,
+    line_width: 7,
+    nominal_voltage: 1000
   }
 };
 
@@ -59,15 +76,18 @@ const filter_features = function filter_features(infrastructure, c) {
   });
   return features;
 }
+
 /**
- * A quick 'n dirty kludge to format electric grid line width for the calling grid class object
- * @param  {Number} value - value attached to the respective `grid_classes` object member
- * @returns {Number} the calculated line width
+ * Format electric grid line width for the calling grid class object. 
+ * Create an exponential response curve between voltages and line widths
+ * to ensure that the lines that represent large voltages aren't too large visually.
+ * @param {Number} value - the value to be scaled, bound to the line_width 
+ * property of the corresponding `grid_classes` object 
+ * @param {Number} divisor - sets line inflection point to adjust the scale of the line width as `value` grows. Must be at least half the size of `value` to get a decent inflection point. Helps determine the mid point of the curve.
  */
-const line_width_kludge = function line_width_kludge(value) {
-  // TODO: Replace magic numbers with descriptive variable names
-      return viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (value / ((7 - 1) / 1.25) -1 ))));
+const set_line_width = function set_line_width(value, divisor) {
+  // TODO: Set nominal voltage as a property of the grid object
+  return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1))));
 }
 
 /**
@@ -90,15 +110,13 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
     tmp_grid.features = [features[i]];
 
     if (c == grid_classes.DC) {
-      // FIXME: Replace magic numbers with descriptive variable names
-      ctx.lineWidth = viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
+      ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
       ctx.strokeStyle = 'black';
     } 
     
     else {
-      ctx.lineWidth = line_width_kludge(c.value);
-      ctx.strokeStyle = viz.grid.palette[c.value];
+      ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
+      ctx.strokeStyle = viz.grid.palette[c.color];
     }
 
     ctx.beginPath();
