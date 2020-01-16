@@ -39,7 +39,7 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
 
 /**
  * Draw coal mines on the coal infrastructure map.
- * @param {Object} ctx - HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas coal-mine"
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
@@ -71,7 +71,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 
 /**
  * Draw railroads on the coal infrastructure map.
- * @param {Object} ctx - HTML5 canvas context..
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas railroad"
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_railroads = function draw_railroads(ctx, queued_data) {

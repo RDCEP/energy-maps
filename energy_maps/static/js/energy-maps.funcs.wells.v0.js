@@ -19,6 +19,11 @@ const get_xy = function get_xy(queued_data) {
   });
 }
 
+/**
+ * Draw gas pipelines to the infrastructure map.
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas gas-pipeline"
+ * @param {Array} queued_data - readfile: '/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'
+ */
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   console.log('draw_gas_pipes');
 
@@ -201,7 +206,7 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
 
 /**
  * Draw oil refinery to the infrastructure map as a hexagon
- * @param {Object} ctx - HTML5 canvas context
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer oil-refinery"
  * @param {Array} xy - Array of xy coordinates 
  * @param {Number} r 
  */
