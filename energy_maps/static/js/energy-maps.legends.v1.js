@@ -272,36 +272,6 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {*} bin_list - array used to map bin labels to values
    */
-  // !!! This is this known working implementation !!! Different attempt below !!! 
-  // const draw_grid_ac_legend = function draw_grid_ac_legend(
-  //   ctx, x, y, bin_list) {
-  //   let bins = [100, 200, 300, 350, 500, 1000];
-  //   let bin_labels = ['Unknown kV AC', 'Under 100 kV AC', '100–200 kV AC',
-  //     '200–300 kV AC', '345 kV AC', '500 kV AC', '735 kV AC'];
-  //   // Voltage swatches
-  //   for (let i = 0; i < bin_list.length; ++i) {
-  //     let j = bin_list[i];
-  //     y += VERTICAL_INCREMENT;
-  //     // TODO: find a way to couple the stroke style to grid_classes obj instead of viz
-  //     ctx.strokeStyle = viz.grid.palette[j];
-  //     // FIXME: This is a kludge for drawing a white swatch for unknown kV
-  //     if (j === 0) {
-  //       ctx.strokeStyle = 'rgba(76, 76, 76)'; 
-  //       ctx.lineWidth = 1 * SCALE;
-  //       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
-  //     } else {
-  //       ctx.lineWidth = 14 * SCALE;
-  //       ctx.beginPath();
-  //       ctx.moveTo(x - 7 * SCALE, y);
-  //       ctx.lineTo(x + 7 * SCALE, y);
-  //       ctx.stroke();
-  //     }
-  //     text = `${bin_labels[j]}`;
-  //     y = advance_for_type(y, ctx, text, text_offset, x);
-  //   }
-  //   return y;
-  // };
-
   const draw_grid_ac_legend = function draw_grid_ac_legend(
     ctx, x, y, grid_class) {
     
