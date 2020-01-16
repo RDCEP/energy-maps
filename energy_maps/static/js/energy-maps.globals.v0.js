@@ -205,7 +205,7 @@ const viz = {
 // create projection and path objects with which to draw geo objects
 
 /**
- * D3 geoAlbersUsa projection object set to custom scale and translation offset
+ * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
  */
 const projection = d3.geoAlbersUsa()
   .scale(width*1.1)

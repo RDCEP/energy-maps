@@ -62,7 +62,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 /**
  * Draw gas wells to the infrastructure map.
- * @param {Array} queued_data - readfile
+ * @param {Array} queued_data - readfile: '/static/csv/wells_gas1.csv' & '/static/csv/wells_gas2.csv'
  */
 const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
@@ -74,7 +74,7 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
 
 /**
  * Draw oil wells to the infrastructure map.
- * @param {Array} queued_data - readfile
+ * @param {Array} queued_data - readfile: '/static/csv/wells_oil1.csv' & '/static/csv/wells_oil2.csv'
  */
 const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
