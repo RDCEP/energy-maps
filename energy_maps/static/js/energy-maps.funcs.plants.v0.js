@@ -162,7 +162,8 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 
 
 
-
+// FIXME: MOVE TO A STATIC MAPS FUNCS DIR/FILE OR DELETE LATER
+// UNTIL A DECISION IS MADE, THIS CODE IS SAFE TO IGNORE (COMMENT LEFT 01/15/2020)
 // Old code, used for drawing the static images. Replace with code
 // that just calls each function
 const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
