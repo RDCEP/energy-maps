@@ -47,7 +47,6 @@ let plant_classes = {
   }
 }; 
 
-// Filter out all records based on primary fuel and draw their white layer
 /**
  * Helper function for draw_single_plant(). Draw the white background for each symbol.
  * @param {Object} plants - data from the readfile, passes through from draw_single_plant()
@@ -61,6 +60,12 @@ function draw_white_layer(plants, fuel, ctx) {
   });
 }
 
+/**
+ * Draw a single set of power plants relative to their class.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Object} queued_data - the readfile
+ * @param {Object} fuel - fuel object from `plant_classes`
+ */
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
@@ -87,8 +92,6 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   });
 
 };
-
-
 
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
