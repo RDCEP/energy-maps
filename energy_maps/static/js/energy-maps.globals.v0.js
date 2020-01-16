@@ -21,32 +21,31 @@ SCALE = 1;
 
 /**
  * @type {number} 
- * Global page width, set to some multiple of `SCALE`
+ * @description Global page width, set to some multiple of `SCALE`
  */
 let width = 1200 * SCALE;
 
 /**
  * @type {number} 
- * Global page height, set to some fraction of `width`
+ * @description Global page height, set to some fraction of `width`
  */
 const height = width / 2;
 
 /**
  * @type {Object} 
- * Global page padding
+ * @description Global page padding
  */
 const padding = {top: 10, right: 10, bottom: 50, left: 50};
 
 /**
  * @type {number} 
- * Global canvas width, set to some multiple of the sum of `width` and `scale`
+ * @description Global canvas width, set to some multiple of the sum of `width` and `scale`
  */
 const canvas_width = width + SCALE * 400;
 
 /**
  * @type {Object} 
- * A collection of nested objects containing color and scaling properties per resource 
- * 
+ * @description A collection of nested objects containing color and scaling properties per resource 
  */
 const viz = {
   white: 'rgba(255, 255, 255, 1)',

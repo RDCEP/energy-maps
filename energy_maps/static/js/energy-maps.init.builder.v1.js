@@ -118,7 +118,7 @@
 
   // Set legend canvas
   /**
-   * @type {HTML5 canvas}
+   * @type {Object}
    * @description HTML5 canvas for the application legend
    * @memberof Init
    */
@@ -130,7 +130,7 @@
     .attr('height', height);
 
   /**
-   * @type {HTML5 canvas context}
+   * @type {Object}
    * @description HTML5 canvas context for the application legend
    * @memberof Init
    */  

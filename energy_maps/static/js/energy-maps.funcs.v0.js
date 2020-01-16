@@ -122,7 +122,8 @@ const draw_cross = function draw_cross(ctx, xy, d) {
  * @param {Number} r - radius
  */
 const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
-  /** @type {Number} 90 degrees in radians, to represent the top of a unit circle*/
+  /** @type {Number} 
+   * @description 90 degrees in radians, to represent the top of a unit circle*/
   let starting_angle = Math.PI / 2; 
   ctx.moveTo (xy[0] + r * Math.cos(starting_angle), xy[1] + r * Math.sin(starting_angle)); 
   for (let i = 1; i <= sides; ++i) { 
