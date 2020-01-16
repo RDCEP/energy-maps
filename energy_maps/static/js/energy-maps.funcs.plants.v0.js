@@ -95,6 +95,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 
 };
 
+// TODO: Determine purpose and add jsdoc
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = viz.plants.stroke.light;
   ctx.lineWidth = viz.plants.stroke.width;
