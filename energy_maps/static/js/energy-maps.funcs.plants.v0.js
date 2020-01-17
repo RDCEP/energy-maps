@@ -8,12 +8,21 @@
  /**
  * A collection of power plant classifications used for filtering.
  * @type {Object} 
- * @property {string} identifier - an abbreviation of the class name in the data file
+ * @property {Object} stroke - contains rgba and scale values to assign to ctx.strokeStyle 
+ * @property {Number} scale - sets the scale of all plants to a multiple of global SCALE 
+ * @property {Number} old_scale - clumsily retained legacy value of scale
+ * @property {Object} identifier - an abbreviation of the class name in the data file, contains the following nested props:
  * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
- * @property {string} ??? stroke_style ??? - a nested property; corresponds to `viz` object; used to assign ctx.strokeStyle property 
  */
 let plant_classes = {
+  stroke: {
+    light: 'rgba(255, 255, 255, 1)',
+    dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
+    width: .66 * SCALE
+  },
+  scale: .3 * SCALE,
+  old_scale: .9 * SCALE, // TODO: figure out if needed
   PLANT_CLASS_COAL: {
     fuel_type: 'COAL',
     color: 'rgba(0, 0, 0, .5)'
@@ -46,13 +55,6 @@ let plant_classes = {
     fuel_type: 'WND',
     color: 'rgba(144, 29, 143, .5)'
   },
-  stroke: {
-    light: 'rgba(255, 255, 255, 1)',
-      dark: 'rgba(0, 0, 0, 1)',
-      width: .66 * SCALE
-  },
-  scale: .3 * SCALE,
-  old_scale: .9 * SCALE // TODO: figure out if needed
 }; 
 
 /**

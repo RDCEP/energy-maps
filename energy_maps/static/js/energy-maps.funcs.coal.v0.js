@@ -5,6 +5,14 @@
  * @module Coal
  */
 
+ /**
+  * A collection of coal mine properties used to draw mines to the map and legend.
+ * @type {Object} 
+ * @property {string} fill - rgba value for mine fill color
+ * @property {string} stroke - rgba value for mine stroke color
+ * @property {Number} width - sets the width of the mine, bound to global SCALE
+ * @property {Number} scale - sets the relative scale of the mine, bound to global SCALE as a fraction of its width
+  */
 let mine_props = {
   fill: 'rgba(0, 0, 0, 0.5)',
   stroke: 'rgba(255, 255, 255, 1)',
