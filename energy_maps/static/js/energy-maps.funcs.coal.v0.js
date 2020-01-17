@@ -20,6 +20,11 @@ let mine_props = {
   scale: SCALE / 190
 }
 
+/**
+ * @type {Object} 
+ * @property {string} stroke - rgba value for mine stroke color
+ * @property {Number} width - sets the width of the rr line, bound to global SCALE
+ */
 let railroad_props = {
   stroke: '#767676', 
   width: SCALE, 
