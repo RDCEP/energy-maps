@@ -16,42 +16,34 @@
 let plant_classes = {
   PLANT_CLASS_COAL: {
     fuel_type: 'COAL',
-    // color: viz.plants.coal
     color: 'rgba(0, 0, 0, .5)'
   },
   PLANT_CLASS_GEO: { 
     fuel_type: 'GEO',
-    // color: viz.plants.geo
     color: 'rgba(210, 105, 30, .5)'
   },
   PLANT_CLASS_HYC: {
     fuel_type: 'HYC',
-    // color: viz.plants.hydro
     color: 'rgba(11, 36, 251, .5)'
   }, 
   PLANT_CLASS_NG: {
     fuel_type: 'NG',
-    // color: viz.plants.gas
     color: 'rgba(0, 191, 255, .5)'
   }, 
   PLANT_CLASS_NUC: {
     fuel_type: 'NUC',
-    // color: viz.plants.nuclear
     color: 'rgba(255, 0, 0, .5)'
   }, 
   PLANT_CLASS_PET: {
     fuel_type: 'PET',
-    // color: viz.plants.oil
     color: 'rgba(34, 139, 34, .5)'
   }, 
   PLANT_CLASS_SUN: {
     fuel_type: 'SUN',
-    // color: viz.plants.solar
     color: 'rgba(255, 215, 0, .5)'
   },
   PLANT_CLASS_WND: {
     fuel_type: 'WND',
-    // color: viz.plants.wind
     color: 'rgba(144, 29, 143, .5)'
   },
   stroke: {
