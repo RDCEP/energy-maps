@@ -53,24 +53,6 @@ const viz = {
   gas: 'rgba(0, 191, 255)',
   oil: 'rgba(34, 139, 34)',
   coal: 'rgba(0, 0, 0)',
-  // plants: {
-  //   gas: 'rgba(0, 191, 255, .5)',
-  //   oil: 'rgba(34, 139, 34, .5)',
-  //   hydro: 'rgba(11, 36, 251, .5)',
-  //   wind: 'rgba(144, 29, 143, .5)',
-  //   solar: 'rgba(255, 215, 0, .5)',
-  //   geo: 'rgba(210, 105, 30, .5)',
-  //   nuclear: 'rgba(255, 0, 0, .5)',
-  //   coal: 'rgba(0, 0, 0, .5)',
-  //   stroke: {
-  //     light: 'rgba(255, 255, 255, 1)',
-  //     dark: 'rgba(0, 0, 0, 1)',
-  //     width: .66 * SCALE
-  //   },
-  //   scale: .3 * SCALE,
-  //   // vvv Old Scale vvv
-  //   // scale: .9 * SCALE,
-  // },
   wells: {
     gas: 'rgba(0, 191, 255, .5)',
     oil: 'rgba(34, 139, 34, .5)',
