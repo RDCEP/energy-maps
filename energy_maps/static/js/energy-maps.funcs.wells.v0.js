@@ -5,6 +5,7 @@
  * @module Wells
  */
 
+ // TODO: Add jsdoc and map calls to viz to this obj instead
 const oil_and_gas_props = {
   wells: {
     gas: {
