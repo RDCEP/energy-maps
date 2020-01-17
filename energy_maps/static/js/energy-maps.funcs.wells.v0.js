@@ -5,6 +5,60 @@
  * @module Wells
  */
 
+const oil_and_gas_props = {
+  wells: {
+    gas: {
+      color: 'rgba(0, 191, 255, .5)'
+    },
+    oil: {
+      color: 'rgba(34, 139, 34, .5)'
+    },
+    offshore: {
+      color: 'rgba(34, 139, 34)'
+    },
+    width: SCALE / 6,
+    cross: 5 * SCALE,
+    diameter: SCALE / 2,
+    stroke: SCALE,
+  },
+  processing = {
+    oil_refinery: {
+      fill: 'rgba(60, 179, 113, .7)',
+      size: .006 * SCALE, 
+      old_size: .015 * SCALE
+    },
+    gas_storage: {
+      fill: 'rgb(45, 45, 45, .9)',
+      size: 5 * SCALE
+    },
+    gas_process: {
+      fill: 'rgba(0, 0, 139, .5)',
+      size: 1.5 * SCALE
+      // vvv Old scale vvv
+      // size: 4 * SCALE
+    },
+    stroke: {
+      light: 'rgba(255, 255, 255, 1)',
+      width: SCALE * .75
+    }
+  },
+  transport = {
+    gas: {
+      stroke: 'rgba(0, 191, 255, .5)',
+      width: 1.8 * SCALE
+    },
+    oil: {
+      stroke: '#3CB371',
+      width: 1.5 * SCALE
+    },
+    oil_product: {
+      stroke: '#3CB371',
+      width: 2 * SCALE,
+      dash: 2.5 * SCALE
+    },
+  }
+};
+
 /**
  * @description Get a set of xy coordinates on the map projection for each element in the dataset.
  * @param {array} queued_data - the supplied dataset
