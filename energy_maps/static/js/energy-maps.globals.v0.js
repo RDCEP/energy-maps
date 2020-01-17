@@ -98,10 +98,6 @@ const viz = {
       width: 2 * SCALE,
       dash: 2.5 * SCALE
     },
-    rail: {
-      stroke: '#767676',
-      width: SCALE,
-    }
   },
   map: {
     fill: '#dddddd',

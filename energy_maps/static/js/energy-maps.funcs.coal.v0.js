@@ -20,6 +20,11 @@ let mine_props = {
   scale: SCALE / 190
 }
 
+let railroad_props = {
+  stroke: '#767676', 
+  width: SCALE, 
+}
+
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
@@ -96,8 +101,8 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 
   const path = get_path(ctx);
   // Gas pipeline
-  ctx.strokeStyle = viz.transport.rail.stroke;
-  ctx.lineWidth = viz.transport.rail.width;
+  ctx.strokeStyle = railroad_props.stroke;
+  ctx.lineWidth = railroad_props.width;
   ctx.beginPath();
   path(railroad);
   ctx.stroke();

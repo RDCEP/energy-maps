@@ -116,8 +116,8 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.lineWidth = width;
       text = `${text} pipeline`
     } else if (inf === 'rr') {
-      ctx.strokeStyle = viz.transport.rail.stroke;
-      ctx.lineWidth = viz.transport.rail.width;
+      ctx.strokeStyle = railroad_props.stroke;
+      ctx.lineWidth = railroad_props.width;
       text = `Railroads`;
     } else if (inf === 'dc') {
       ctx.lineWidth = LEGEND_FONT_SIZE;
