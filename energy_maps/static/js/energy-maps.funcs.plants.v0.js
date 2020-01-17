@@ -107,7 +107,8 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.lineWidth = plant_classes.stroke.width;
   ctx.fillStyle = color;
   // TODO: extract math to variable or function
-  r = Math.sqrt(r / Math.PI) * viz.plants.scale;
+  // r = Math.sqrt(r / Math.PI) * viz.plants.scale;
+  r = Math.sqrt(r / Math.PI) * plant_classes.scale;
   ctx.beginPath();
   // Draw larger circle for stroke, so that stroke aligns to outside of
   //  of circumference
