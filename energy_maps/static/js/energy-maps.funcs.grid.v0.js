@@ -137,7 +137,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
 /**
  * Draw grid class unknown and under 100 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-under-100-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_NA);
@@ -147,7 +147,7 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
 /**
  * Draw grid class 100-300 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-100-to-300-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_100_200);
@@ -157,7 +157,7 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
 /**
  * Draw grid class 345-735 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-345-to-735-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_345);
@@ -168,7 +168,7 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
 /**
  * Draw grid class DC on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas DC-lines"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-dc'
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
