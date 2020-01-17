@@ -254,14 +254,13 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_power_plant_legend = function draw_power_plant_legend(
     ctx, x, y, color, text) {
     ctx.fillStyle = color;
-    ctx.strokeStyle = viz.plants.stroke.light;
-    ctx.lineWidth = viz.plants.stroke.width;
-    if (color === viz.plants.gas) {
+    ctx.strokeStyle = plant_classes.stroke.light;
+    ctx.lineWidth = plant_classes.stroke.width;
+      if (color === plant_classes.PLANT_CLASS_NG.color) {
       ctx.strokeStyle = 'darkblue';
-    } else if (color === viz.plants.solar)
+    } else if (color === plant_classes.PLANT_CLASS_SUN.color)
     {
       ctx.strokeStyle = 'darkorange';
-      // ctx.strokeStyle = viz.plants.stroke.dark;
     }
     // x = r * 2 - 20 * SCALE + xo;
     y += 18 * SCALE;
@@ -301,30 +300,25 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {*} bin_list - array used to map bin labels to values
    */
   const draw_grid_ac_legend = function draw_grid_ac_legend(
-    ctx, x, y, bin_list) {
-    let bins = [100, 200, 300, 350, 500, 1000];
-    let bin_labels = ['Unknown kV AC', 'Under 100 kV AC', '100–200 kV AC',
-      '200–300 kV AC', '345 kV AC', '500 kV AC', '735 kV AC'];
-    // Voltage swatches
-    for (let i = 0; i &lt; bin_list.length; ++i) {
-      let j = bin_list[i];
-      y += VERTICAL_INCREMENT;
-      ctx.strokeStyle = viz.grid.palette[j];
-      // FIXME: This is a kludge for drawing a white swatch for unknown kV
-      if (j === 0) {
-        ctx.strokeStyle = 'rgba(76, 76, 76)'; 
-        ctx.lineWidth = 1 * SCALE;
-        ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
-      } else {
-        ctx.lineWidth = 14 * SCALE;
-        ctx.beginPath();
-        ctx.moveTo(x - 7 * SCALE, y);
-        ctx.lineTo(x + 7 * SCALE, y);
-        ctx.stroke();
-      }
-      text = `${bin_labels[j]}`;
-      y = advance_for_type(y, ctx, text, text_offset, x);
-    }
+    ctx, x, y, grid_class) {
+    
+    y += VERTICAL_INCREMENT;
+    ctx.strokeStyle = grid_class.color;
+    // FIXME: This is a kludge for drawing a white swatch for unknown kV
+    if (grid_class === grid_classes.AC_NA) {
+      ctx.strokeStyle = 'rgba(76, 76, 76)';
+      ctx.lineWidth = 1 * SCALE;
+      ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
+    } else {
+      ctx.lineWidth = 14 * SCALE;
+      ctx.beginPath();
+      ctx.moveTo(x - 7 * SCALE, y);
+      ctx.lineTo(x + 7 * SCALE, y);
+      ctx.stroke();
+    };
+
+    text = grid_class.display;
+    y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
 
@@ -386,37 +380,42 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y);
           break;
         case 'coal-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.coal, 'Coal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL.color, 'Coal');
           break;
         case 'geothermal-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.geo, 'Geothermal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO.color, 'Geothermal');
           break;
         case 'hydro-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.hydro, 'Hydro');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC.color, 'Hydro');
           break;
         case 'natural-gas-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.gas, 'Natural gas');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG.color, 'Natural gas');
           break;
         case 'nuclear-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.nuclear, 'Nuclear');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC.color, 'Nuclear');
           break;
         case 'petroleum-plant':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.oil, 'Petroleum');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET.color, 'Petroleum');
           break;
         case 'solar-PV':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.solar, 'Solar');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN.color, 'Solar');
           break;
         case 'wind-farms':
-          y = draw_power_plant_legend(ctx, x, y, viz.plants.wind, 'Wind');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND.color, 'Wind');
           break;
         case 'AC-lines-under-100-kV':
-          y = draw_grid_ac_legend(ctx, x, y, [0, 1]);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_NA);
+          console.log(y)
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_UNDER_100);
           break;
         case 'AC-lines-100-to-300-kV':
-          y = draw_grid_ac_legend(ctx, x, y, [2, 3]);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_100_200);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_200_300);
           break;
         case 'AC-lines-345-to-735-kV':
-          y = draw_grid_ac_legend(ctx, x, y, [4, 5, 6]);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_345);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_500);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_735_PLUS);
           break;
         case 'DC-lines':
           y = draw_grid_dc_legend(ctx, x, y);
@@ -445,7 +444,7 @@ const update_legend = function update_legend(ctx, layers) {
     "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
   }).length > 0;
   if (draw_plants_legend) {
-    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * viz.plants.scale);
+    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * plant_classes.scale);
     // y +=
   }
 
@@ -468,7 +467,7 @@ const update_legend = function update_legend(ctx, layers) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 16 2020 13:49:02 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 17 2020 11:13:54 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

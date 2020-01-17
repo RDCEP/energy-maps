@@ -37,41 +37,69 @@
  * A collection of electric grid classifications, used to filter out and render separate portions of the grid.
  * @type {Object} 
  * @property {string} identifier - an abbreviation of the class name in the data file
- * @property {string} name - a nested property; cooresponds to class heading in data file 
- * @property {string} value - a nested property; used for mathematical operations that call this object 
+ * @property {string} name - a nested property of `identifier`; cooresponds to class heading in data file 
+ * @property {string} display - a nested property of `identifier`; display name for the legend
+ * @property {string} color - a nested property of `identifier`; rgba value used to set the color for the legend and the rendered viz
+ * @property {string} line_width - a nested property of `identifier`; used for mathematical operations that set the line width for the corresponding object
+ * @property {Number} nominal voltage - a nested property of `identifier`; system voltage for the grid class (values are estimates)
  */
  let grid_classes = {
   AC_NA: {
+    // TODO: Consider a more descriptive title for the `name` property, like "class_name", or "data_ref" or something like that
     name: 'NOT AVAILABLE',
-    value: 0
+    display: 'Unknown kV AC',
+    color: 'rgba(255, 255, 255)', // white
+    line_width: 0,
+    nominal_voltage: 50
   },
   AC_UNDER_100: { 
     name: 'Under 100',
-    value: 1
+    display: 'Under 100 kV AC',
+    color: 'rgba(255, 255, 170)', // yellow
+    line_width: 1,
+    nominal_voltage: 50
   },
   AC_100_200: {
     name: '100-161',
-    value: 2
+    display: '100–200 kV AC',
+    color: 'rgba(86, 180, 233)', // lt blue
+    line_width: 2,
+    nominal_voltage: 100
   }, 
   AC_200_300: {
     name: '220-287',
-    value: 3
+    display: '200–300 kV AC',
+    color: 'rgba(55, 126, 184)', // blue
+    line_width: 3,
+    nominal_voltage: 250
   }, 
   AC_345: {
     name: '345',
-    value: 4
+    display: '345 kV AC',
+    color: 'rgba(255, 149, 0)', // orange
+    line_width: 4,
+    nominal_voltage: 350
   }, 
   AC_500: {
     name: '500',
-    value: 5
+    display: '500 kV AC',
+    color: 'rgba(213, 113, 45)', // vermillion
+    line_width: 5,
+    nominal_voltage: 500 
   }, 
   AC_735_PLUS: {
     name: '735 and Above',
-    value: 6
+    display: '735 kV AC',
+    color: 'rgba(228, 53, 5)', // red 
+    line_width: 6,
+    nominal_voltage: 750
   },
   DC: {
     name: 'DC',
-    value: 7
+    display: 'DC',
+    color: 'black', // black
+    line_width: 7,
+    nominal_voltage: 1000
   }
 };
 
@@ -87,21 +115,24 @@ const filter_features = function filter_features(infrastructure, c) {
   });
   return features;
 }
+
 /**
- * A quick 'n dirty kludge to format electric grid line width for the calling grid class object
- * @param  {Number} value - value attached to the respective `grid_classes` object member
- * @returns {Number} the calculated line width
+ * Format electric grid line width for the calling grid class object. 
+ * Create an exponential response curve between voltages and line widths
+ * to ensure that the lines that represent large voltages aren't too large visually.
+ * @param {Number} value - the value to be scaled, bound to the line_width 
+ * property of the corresponding `grid_classes` object 
+ * @param {Number} divisor - sets line inflection point to adjust the scale of the line width as `value` grows. Must be at least half the size of `value` to get a decent inflection point. Helps determine the mid point of the curve.
  */
-const line_width_kludge = function line_width_kludge(value) {
-  // TODO: Replace magic numbers with descriptive variable names
-      return viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (value / ((7 - 1) / 1.25) -1 ))));
+const set_line_width = function set_line_width(value, divisor) {
+  // TODO: Set nominal voltage as a property of the grid object
+  return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1))));
 }
 
 /**
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
  * @param {Object} c - object member of `grid_classes`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
@@ -117,17 +148,9 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   for (let i = 0; i &lt; feat_len; ++i) {
     tmp_grid.features = [features[i]];
 
-    if (c == grid_classes.DC) {
-      // FIXME: Replace magic numbers with descriptive variable names
-      ctx.lineWidth = viz.transport.rail.width *
-      (1 + 3 / (1 + Math.exp(-3 * (features[i]['properties']['voltage'] / 500 - 1))));
-      ctx.strokeStyle = 'black';
-    } 
-    
-    else {
-      ctx.lineWidth = line_width_kludge(c.value);
-      ctx.strokeStyle = viz.grid.palette[c.value];
-    }
+    // TODO: Add descriptive comment here to explain the args
+    ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
+    ctx.strokeStyle = c.color;
 
     ctx.beginPath();
     path(tmp_grid);
@@ -142,7 +165,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
 /**
  * Draw grid class unknown and under 100 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-under-100-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_NA);
@@ -152,7 +175,7 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
 /**
  * Draw grid class 100-300 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-100-to-300-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_100_200);
@@ -162,7 +185,7 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
 /**
  * Draw grid class 345-735 on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas AC-lines-345-to-735-kV"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
   draw_grid_class(ctx, queued_data, grid_classes.AC_345);
@@ -173,7 +196,7 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
 /**
  * Draw grid class DC on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas DC-lines"
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-dc'
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
@@ -194,7 +217,7 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 16 2020 13:49:02 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jan 17 2020 11:13:54 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
