@@ -15,6 +15,7 @@
  */
  let grid_classes = {
   AC_NA: {
+    // TODO: Consider a more descriptive title for the `name` property, like "class_name", or "data_ref" or something like that
     name: 'NOT AVAILABLE',
     display: 'Unknown kV AC',
     color: 'rgba(255, 255, 255)', // white
