@@ -131,20 +131,6 @@ const viz = {
       width: SCALE,
     }
   },
-  grid: {
-    // FIXME: This is based on colors hard coded in funcs.grid. Colors
-    //  should be dynamic.
-    palette: [ // legends file is still using this array in a for loop, so we will have to resolve that conflict before we can delete this one
-      'rgba(255, 255, 255)', // white
-      'rgba(255, 255, 170)', // yellow
-      'rgba(86, 180, 233)', // lt blue
-      'rgba(55, 126, 184)', // blue
-      'rgba(255, 149, 0)', // orange
-      'rgba(213, 113, 45)', // vermilion
-      // 'purple',
-      'rgba(228, 53, 5)', // red
-    ]
-  },
   map: {
     fill: '#dddddd',
     stroke: '#767676',
