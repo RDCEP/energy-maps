@@ -226,18 +226,13 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_power_plant_legend = function draw_power_plant_legend(
     ctx, x, y, color, text) {
     ctx.fillStyle = color;
-    // ctx.strokeStyle = viz.plants.stroke.light;
-    // ctx.lineWidth = viz.plants.stroke.width;
     ctx.strokeStyle = plant_classes.stroke.light;
     ctx.lineWidth = plant_classes.stroke.width;
-    // if (color === viz.plants.gas) {
       if (color === plant_classes.PLANT_CLASS_NG.color) {
       ctx.strokeStyle = 'darkblue';
-    // } else if (color === viz.plants.solar)
     } else if (color === plant_classes.PLANT_CLASS_SUN.color)
     {
       ctx.strokeStyle = 'darkorange';
-      // ctx.strokeStyle = viz.plants.stroke.dark;
     }
     // x = r * 2 - 20 * SCALE + xo;
     y += 18 * SCALE;
@@ -357,35 +352,27 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y);
           break;
         case 'coal-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.coal, 'Coal');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL.color, 'Coal');
           break;
         case 'geothermal-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.geo, 'Geothermal');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO.color, 'Geothermal');
           break;
         case 'hydro-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.hydro, 'Hydro');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC.color, 'Hydro');
           break;
         case 'natural-gas-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.gas, 'Natural gas');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG.color, 'Natural gas');
           break;
         case 'nuclear-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.nuclear, 'Nuclear');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC.color, 'Nuclear');
           break;
         case 'petroleum-plant':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.oil, 'Petroleum');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET.color, 'Petroleum');
           break;
         case 'solar-PV':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.solar, 'Solar');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN.color, 'Solar');
           break;
         case 'wind-farms':
-          // y = draw_power_plant_legend(ctx, x, y, viz.plants.wind, 'Wind');
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND.color, 'Wind');
           break;
         case 'AC-lines-under-100-kV':
@@ -429,7 +416,7 @@ const update_legend = function update_legend(ctx, layers) {
     "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
   }).length > 0;
   if (draw_plants_legend) {
-    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * viz.plants.scale);
+    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * plant_classes.scale);
     // y +=
   }
 
