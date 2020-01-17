@@ -104,7 +104,7 @@ const set_line_width = function set_line_width(value, divisor) {
 /**
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
- * @param {Array} xy - Array of xy coordinates 
+ * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
  * @param {Object} c - object member of `grid_classes`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
