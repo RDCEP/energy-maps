@@ -115,13 +115,10 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   draw_circle(ctx, xy, r + ctx.lineWidth);
   // FIXME: Need a better method of changing stroke color for lighter circles.
   if (color !== viz.white) {
-    // if (color === viz.plants.gas) {
     if (color === plant_classes.PLANT_CLASS_NG.color) {
       ctx.strokeStyle = 'darkblue';
-    // } else if (color === viz.plants.solar) {
     } else if (color === plant_classes.PLANT_CLASS_SUN.color) {
       ctx.strokeStyle = 'darkorange';
-      // ctx.strokeStyle = viz.plants.stroke.dark;
     }
     ctx.stroke();
   }
