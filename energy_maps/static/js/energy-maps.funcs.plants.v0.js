@@ -16,42 +16,51 @@
 let plant_classes = {
   PLANT_CLASS_COAL: {
     fuel_type: 'COAL',
-    color: viz.plants.coal
+    // color: viz.plants.coal
+    color: 'rgba(0, 0, 0, .5)'
   },
   PLANT_CLASS_GEO: { 
     fuel_type: 'GEO',
-    color: viz.plants.geo
+    // color: viz.plants.geo
+    color: 'rgba(210, 105, 30, .5)'
   },
   PLANT_CLASS_HYC: {
     fuel_type: 'HYC',
-    color: viz.plants.hydro
+    // color: viz.plants.hydro
+    color: 'rgba(11, 36, 251, .5)'
   }, 
   PLANT_CLASS_NG: {
     fuel_type: 'NG',
-    color: viz.plants.gas
+    // color: viz.plants.gas
+    color: 'rgba(0, 191, 255, .5)'
   }, 
   PLANT_CLASS_NUC: {
     fuel_type: 'NUC',
-    color: viz.plants.nuclear
+    // color: viz.plants.nuclear
+    color: 'rgba(255, 0, 0, .5)'
   }, 
   PLANT_CLASS_PET: {
     fuel_type: 'PET',
-    color: viz.plants.oil
+    // color: viz.plants.oil
+    color: 'rgba(34, 139, 34, .5)'
   }, 
   PLANT_CLASS_SUN: {
     fuel_type: 'SUN',
-    color: viz.plants.solar
+    // color: viz.plants.solar
+    color: 'rgba(255, 215, 0, .5)'
   },
   PLANT_CLASS_WND: {
     fuel_type: 'WND',
-    color: viz.plants.wind
+    // color: viz.plants.wind
+    color: 'rgba(144, 29, 143, .5)'
   },
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
       dark: 'rgba(0, 0, 0, 1)',
       width: .66 * SCALE
   },
-  scale: .3 * SCALE
+  scale: .3 * SCALE,
+  old_scale: .9 * SCALE // TODO: figure out if needed
 }; 
 
 /**
@@ -107,7 +116,6 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.lineWidth = plant_classes.stroke.width;
   ctx.fillStyle = color;
   // TODO: extract math to variable or function
-  // r = Math.sqrt(r / Math.PI) * viz.plants.scale;
   r = Math.sqrt(r / Math.PI) * plant_classes.scale;
   ctx.beginPath();
   // Draw larger circle for stroke, so that stroke aligns to outside of
@@ -115,9 +123,11 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   draw_circle(ctx, xy, r + ctx.lineWidth);
   // FIXME: Need a better method of changing stroke color for lighter circles.
   if (color !== viz.white) {
-    if (color === viz.plants.gas) {
+    // if (color === viz.plants.gas) {
+    if (color === plant_classes.PLANT_CLASS_NG.color) {
       ctx.strokeStyle = 'darkblue';
-    } else if (color === viz.plants.solar) {
+    // } else if (color === viz.plants.solar) {
+    } else if (color === plant_classes.PLANT_CLASS_SUN.color) {
       ctx.strokeStyle = 'darkorange';
       // ctx.strokeStyle = viz.plants.stroke.dark;
     }
