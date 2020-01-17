@@ -5,6 +5,13 @@
  * @module Coal
  */
 
+let mine_props = {
+  fill: 'rgba(0, 0, 0, 0.5)',
+  stroke: 'rgba(255, 255, 255, 1)',
+  width: SCALE,
+  scale: SCALE / 190
+}
+
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
@@ -24,10 +31,14 @@ function setRadius(radius, scale) {
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  r = setRadius(r, viz.mines.scale);
-  ctx.strokeStyle = viz.mines.coal.stroke;
-  ctx.strokeWidth = viz.mines.coal.width;
-  ctx.fillStyle = viz.mines.coal.fill;
+  // r = setRadius(r, viz.mines.scale);
+  // ctx.strokeStyle = viz.mines.coal.stroke;
+  // ctx.strokeWidth = viz.mines.coal.width;
+  // ctx.fillStyle = viz.mines.coal.fill;
+  r = setRadius(r, mine_props.scale);
+  ctx.strokeStyle = mine_props.stroke;
+  ctx.strokeWidth = mine_props.width;
+  ctx.fillStyle = mine_props.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
