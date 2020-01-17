@@ -31,10 +31,6 @@ function setRadius(radius, scale) {
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  // r = setRadius(r, viz.mines.scale);
-  // ctx.strokeStyle = viz.mines.coal.stroke;
-  // ctx.strokeWidth = viz.mines.coal.width;
-  // ctx.fillStyle = viz.mines.coal.fill;
   r = setRadius(r, mine_props.scale);
   ctx.strokeStyle = mine_props.stroke;
   ctx.strokeWidth = mine_props.width;

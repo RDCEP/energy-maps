@@ -210,6 +210,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_coalmine_legend = function draw_coalmine_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
+    // TODO: decouple this func invocation from viz 
     draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
     text = 'Coal mine'
     y = advance_for_type(y, ctx, text, text_offset, x);

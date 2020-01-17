@@ -62,16 +62,16 @@ const viz = {
     diameter: SCALE / 2,
     stroke: SCALE,
   },
-  mines: {
-    coal: {
-      fill: 'rgba(0, 0, 0, 0.5)',
-      stroke: 'rgba(255, 255, 255, 1)',
-      width: SCALE
-    },
-    scale: SCALE / 190
-    // vvv Old scale vvv
-    // scale: SCALE / 90
-  },
+  // mines: {
+  //   coal: {
+  //     fill: 'rgba(0, 0, 0, 0.5)',
+  //     stroke: 'rgba(255, 255, 255, 1)',
+  //     width: SCALE
+  //   },
+  //   scale: SCALE / 190
+  //   // vvv Old scale vvv
+  //   // scale: SCALE / 90
+  // },
   process: {
     oil_refinery: {
       fill: 'rgba(60, 179, 113, .7)',
