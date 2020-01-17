@@ -45,7 +45,13 @@ let plant_classes = {
   PLANT_CLASS_WND: {
     fuel_type: 'WND',
     color: viz.plants.wind
-  }
+  },
+  stroke: {
+    light: 'rgba(255, 255, 255, 1)',
+      dark: 'rgba(0, 0, 0, 1)',
+      width: .66 * SCALE
+  },
+  scale: .3 * SCALE
 }; 
 
 /**
@@ -97,8 +103,8 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 
 // TODO: Determine purpose and add jsdoc
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
-  ctx.strokeStyle = viz.plants.stroke.light;
-  ctx.lineWidth = viz.plants.stroke.width;
+  ctx.strokeStyle = plant_classes.stroke.light;
+  ctx.lineWidth = plant_classes.stroke.width;
   ctx.fillStyle = color;
   // TODO: extract math to variable or function
   r = Math.sqrt(r / Math.PI) * viz.plants.scale;
