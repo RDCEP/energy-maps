@@ -9,9 +9,11 @@
  * A collection of electric grid classifications, used to filter out and render separate portions of the grid.
  * @type {Object} 
  * @property {string} identifier - an abbreviation of the class name in the data file
- * @property {string} name - a nested property; cooresponds to class heading in data file 
- * @property {string} value - a nested property; used for mathematical operations that call this object 
- * @property {Number} nominal voltage - system voltage for which grid class (values are estimates)
+ * @property {string} name - a nested property of `identifier`; cooresponds to class heading in data file 
+ * @property {string} display - a nested property of `identifier`; display name for the legend
+ * @property {string} color - a nested property of `identifier`; rgba value used to set the color for the legend and the rendered viz
+ * @property {string} line_width - a nested property of `identifier`; used for mathematical operations that set the line width for the corresponding object
+ * @property {Number} nominal voltage - a nested property of `identifier`; system voltage for the grid class (values are estimates)
  */
  let grid_classes = {
   AC_NA: {
