@@ -121,6 +121,23 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   hide_spinner();
 };
 
+const draw_well = function draw_well(ctx, xy, color) {
+  ctx.strokeStyle = color;
+  ctx.strokeWidth = oil_and_gas_props.wells.stroke;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  draw_circle(ctx, xy, oil_and_gas_props.wells.diameter);
+  ctx.stroke();
+};
+
+const draw_off_well = function draw_off_well(ctx, xy, color) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = oil_and_gas_props.wells.stroke;
+  ctx.beginPath();
+  draw_x(ctx, xy, oil_and_gas_props.wells.cross);
+  ctx.stroke();
+};
+
 /**
  * Draw gas wells to the infrastructure map.
  * @param {Array} queued_data - readfile: '/static/csv/wells_gas1.csv' & '/static/csv/wells_gas2.csv'
@@ -237,15 +254,6 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
 };
 
-const draw_well = function draw_well(ctx, xy, color) {
-  ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas_props.wells.stroke;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas_props.wells.diameter);
-  ctx.stroke();
-};
-
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
   ctx.fillStyle = oil_and_gas_props.processing.gas_process.fill;
@@ -273,13 +281,5 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.beginPath();
   draw_polygon(NUM_SIDES_REFIN, ctx, r, xy)
   ctx.fill();
-};
-
-const draw_off_well = function draw_off_well(ctx, xy, color) {
-  ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas_props.wells.stroke;
-  ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas_props.wells.cross);
-  ctx.stroke();
 };
 
