@@ -121,6 +121,23 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   hide_spinner();
 };
 
+// TODO: Simplify well drawing functions by adding relevant properties to nested objects
+// Perhaps t his can include draw functions like draw_circle or draw_x to yield a single draw_well fcn
+/**
+ * const draw_well = function draw_well(ctx, xy, color, function)
+ *  */ 
+
+const draw_well2 = function draw_well2(ctx, xy, obj, fill) { // use obj for color and function
+  ctx.strokeStyle = obj.color;
+  ctx.strokeWidth = oil_and_gas_props.wells.stroke;;
+  if (fill) {
+    ctx.fillStyle = color;
+  }
+  ctx.beginPath();
+  obj.f;
+  ctx.stroke();
+}
+
 const draw_well = function draw_well(ctx, xy, color) {
   ctx.strokeStyle = color;
   ctx.strokeWidth = oil_and_gas_props.wells.stroke;
