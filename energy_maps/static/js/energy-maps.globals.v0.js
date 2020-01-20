@@ -53,15 +53,6 @@ const viz = {
   gas: 'rgba(0, 191, 255)',
   oil: 'rgba(34, 139, 34)',
   coal: 'rgba(0, 0, 0)',
-  wells: {
-    gas: 'rgba(0, 191, 255, .5)',
-    oil: 'rgba(34, 139, 34, .5)',
-    off: 'rgba(34, 139, 34)',
-    width: SCALE / 6,
-    cross: 5 * SCALE,
-    diameter: SCALE / 2,
-    stroke: SCALE,
-  },
   map: {
     fill: '#dddddd',
     stroke: '#767676',

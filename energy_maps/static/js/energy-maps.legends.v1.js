@@ -74,19 +74,13 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_well_legend = function draw_well_legend(ctx, x, y, color, text) {
     console.log('well symbol');
 
-    // y = advance_vertical_increment(y, ctx, color, viz.wells.stroke); 
     y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke); 
-    
-    // draw_circle(ctx, [x, y], viz.wells.diameter * 3);
     draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
     ctx.stroke();
     ctx.fill();
     
     y = advance_for_type(y, ctx, text, text_offset, x);
-    // y = advance_vertical_increment(y, ctx, color, viz.wells.stroke);
     y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke);
-    
-    // draw_x(ctx, [x, y], viz.wells.cross);
     draw_x(ctx, [x, y], oil_and_gas_props.wells.cross);
     ctx.stroke();
     
@@ -198,7 +192,6 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
-    // draw_oil_refinery(ctx, [x, y], 200000*viz.process.oil_refinery.size);
     draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size);
     text = 'Oil refinery';
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -215,8 +208,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_coalmine_legend = function draw_coalmine_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
-    // TODO: decouple this func invocation from viz 
-    // draw_mine(ctx, [x, y], false, 1000000000*viz.process.oil_refinery.size);
+    // TODO: decouple this func invocation from oil 
     draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size);
     text = 'Coal mine'
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -341,13 +333,11 @@ const update_legend = function update_legend(ctx, layers) {
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y,
-            // viz.transport.gas.stroke, viz.transport.gas.width,
             oil_and_gas_props.transport.gas.stroke, oil_and_gas_props.transport.gas.width,
             false, 'Gas');
           break;
         case 'oil-pipeline':
           y = draw_pipeline_legend(ctx, x, y,
-            // viz.transport.oil.stroke, viz.transport.oil.width,
             oil_and_gas_props.transport.oil.stroke, oil_and_gas_props.transport.oil.width,
             false, 'Oil');
           break;
