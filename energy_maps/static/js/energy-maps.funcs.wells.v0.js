@@ -190,6 +190,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   let wells = queued_data[0];
 
   wells.forEach(function(d, i) {
+    // xy converts latitude and longitude string values into numeric values 
     let xy = projection([+d.lon, +d.lat]);
     if (xy === null) {
       return;
