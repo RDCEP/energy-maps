@@ -127,16 +127,16 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
  * const draw_well = function draw_well(ctx, xy, color, function)
  *  */ 
 
-const draw_well2 = function draw_well2(ctx, xy, obj, fill) { // use obj for color and function
-  ctx.strokeStyle = obj.color;
-  ctx.strokeWidth = oil_and_gas_props.wells.stroke;;
-  if (fill) {
-    ctx.fillStyle = color;
-  }
-  ctx.beginPath();
-  obj.f;
-  ctx.stroke();
-}
+// const draw_well2 = function draw_well2(ctx, xy, obj, fill) { // use obj for color and function
+//   ctx.strokeStyle = obj.color;
+//   ctx.strokeWidth = oil_and_gas_props.wells.stroke;;
+//   if (fill) {
+//     ctx.fillStyle = color;
+//   }
+//   ctx.beginPath();
+//   obj.f;
+//   ctx.stroke();
+// }
 
 const draw_well = function draw_well(ctx, xy, color) {
   ctx.strokeStyle = color;
@@ -175,6 +175,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
 
   get_xy(queued_data)
+
   if (d.class === 'Off') {
     draw_off_well(xy);
   } else {
@@ -200,6 +201,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
           draw_well(ctx, xy, oil_and_gas_props.wells.gas.color);
         }
       } else {
+        
         if (d.class === 'Off') {
           draw_off_well(ctx, xy, oil_and_gas_props.wells.oil.color);
         } else {
