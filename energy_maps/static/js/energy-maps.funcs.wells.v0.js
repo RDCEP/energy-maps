@@ -243,6 +243,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
 
+  // TODO: Okay, what the fuck are we doing here?
   oref.forEach(function(d, i) {
     let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
       'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
