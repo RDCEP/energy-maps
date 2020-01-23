@@ -260,18 +260,22 @@ const update_legend = function update_legend(ctx, layers) {
     
     y += VERTICAL_INCREMENT;
     ctx.strokeStyle = obj.color;
+    
+    // Draw the square icon as a fat line
+    ctx.lineWidth = 14 * SCALE;
+    ctx.beginPath();
+    ctx.moveTo(x - 7 * SCALE, y);
+    ctx.lineTo(x + 7 * SCALE, y);
+    ctx.stroke();
+
     // FIXME: This is a kludge for drawing a white swatch for unknown kV
+    // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
     if (obj === grid_classes.AC_NA) {
       ctx.strokeStyle = 'rgba(76, 76, 76)';
       ctx.lineWidth = 1 * SCALE;
-      ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
-    } else {
-      ctx.lineWidth = 14 * SCALE;
-      ctx.beginPath();
-      ctx.moveTo(x - 7 * SCALE, y);
-      ctx.lineTo(x + 7 * SCALE, y);
-      ctx.stroke();
-    };
+      ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+    }
+    // };
 
     text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
