@@ -17,7 +17,8 @@ let mine_props = {
   fill: 'rgba(0, 0, 0, 0.5)',
   stroke: 'rgba(255, 255, 255, 1)',
   width: SCALE,
-  scale: SCALE / 190
+  scale: SCALE / 190,
+  text: 'Coal mine'
 }
 
 /**
@@ -28,6 +29,7 @@ let mine_props = {
 let railroad_props = {
   stroke: '#767676', 
   width: SCALE, 
+  text: 'Railroads'
 }
 
 /**

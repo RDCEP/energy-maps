@@ -196,11 +196,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    */
   const draw_coalmine_legend = function draw_coalmine_legend(
-    ctx, x, y, color) {
+    ctx, x, y, obj) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
     draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
-    text = 'Coal mine'
+    let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -240,10 +240,10 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_railroad_legend = function draw_railroad_legend(
-    ctx, x, y, dashed, text) {
+    ctx, x, y, dashed, obj) {
     ctx.strokeStyle = railroad_props.stroke;
     ctx.lineWidth = railroad_props.width;
-    text = `Railroads`;
+    let text = obj.text;
     y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
@@ -333,10 +333,10 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_refinery_legend(ctx, x, y);
           break;
         case 'railroad':
-          y = draw_railroad_legend(ctx, x, y);
+          y = draw_railroad_legend(ctx, x, y, false, railroad_props);
           break;
         case 'coal-mine':
-          y = draw_coalmine_legend(ctx, x, y);
+          y = draw_coalmine_legend(ctx, x, y, mine_props);
           break;
         case 'coal-plant':
           y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL);
