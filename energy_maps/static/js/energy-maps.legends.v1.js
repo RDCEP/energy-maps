@@ -101,26 +101,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-  const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
+  // const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
+    const draw_line = function draw_line(ctx, x, y, dashed, text) {
     
     y += VERTICAL_INCREMENT;
     
     if (dashed) {
       ctx.setLineDash(dashed);
-    }
-
-    if (inf === 'pipes') {
-      ctx.strokeStyle = color;
-      ctx.lineWidth = width;
-      text = `${text} pipeline`
-    } else if (inf === 'rr') {
-      ctx.strokeStyle = railroad_props.stroke;
-      ctx.lineWidth = railroad_props.width;
-      text = `Railroads`;
-    } else if (inf === 'dc') {
-      ctx.lineWidth = LEGEND_FONT_SIZE;
-      ctx.strokeStyle = 'black';
-      text = `500–1000 kV DC`;
     }
 
     ctx.beginPath();
@@ -144,7 +131,10 @@ const update_legend = function update_legend(ctx, layers) {
    */
   const draw_pipeline_legend = function draw_pipeline_legend(
     ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'pipes')
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    text = `${text} pipeline`
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
@@ -258,8 +248,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_railroad_legend = function draw_railroad_legend(
-    ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'rr')
+    ctx, x, y, dashed, text) {
+    ctx.strokeStyle = railroad_props.stroke;
+    ctx.lineWidth = railroad_props.width;
+    text = `Railroads`;
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
@@ -304,8 +297,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_grid_dc_legend = function draw_grid_dc_legend(
-    ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'dc')
+    ctx, x, y, dashed, text) {
+    ctx.lineWidth = LEGEND_FONT_SIZE;
+    ctx.strokeStyle = 'black';
+    text = `500–1000 kV DC`;
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
