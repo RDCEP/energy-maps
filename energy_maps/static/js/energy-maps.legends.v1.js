@@ -210,8 +210,8 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-  //  */
+   * @param {string} obj - power plant object from `plant_classes`
+   */
   const draw_power_plant_legend = function draw_power_plant_legend(
     ctx, x, y, obj) {
     ctx.fillStyle = obj.color;
