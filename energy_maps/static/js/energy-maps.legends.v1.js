@@ -253,15 +253,15 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {*} bin_list - array used to map bin labels to values
+   * @param {Object} obj - object from `grid_classes`
    */
   const draw_grid_ac_legend = function draw_grid_ac_legend(
-    ctx, x, y, grid_class) {
+    ctx, x, y, obj) {
     
     y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = grid_class.color;
+    ctx.strokeStyle = obj.color;
     // FIXME: This is a kludge for drawing a white swatch for unknown kV
-    if (grid_class === grid_classes.AC_NA) {
+    if (obj === grid_classes.AC_NA) {
       ctx.strokeStyle = 'rgba(76, 76, 76)';
       ctx.lineWidth = 1 * SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
@@ -273,7 +273,7 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.stroke();
     };
 
-    text = grid_class.text;
+    text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
