@@ -18,6 +18,8 @@
 let plant_classes = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
+    natural_gas: 'darkblue',
+    sun: 'darkorange',
     dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
     width: .66 * SCALE
   },

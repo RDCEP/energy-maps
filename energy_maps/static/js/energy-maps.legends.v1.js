@@ -218,9 +218,9 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeStyle = plant_classes.stroke.light;
     ctx.lineWidth = plant_classes.stroke.width;
     if (color === plant_classes.PLANT_CLASS_NG.color) {
-      ctx.strokeStyle = 'darkblue';
+      ctx.strokeStyle = plant_classes.stroke.natural_gas;
     } else if (color === plant_classes.PLANT_CLASS_SUN.color) {
-      ctx.strokeStyle = 'darkorange';
+      ctx.strokeStyle = plant_classes.stroke.sun;
     }
     // x = r * 2 - 20 * SCALE + xo;
     y += 18 * SCALE;
