@@ -129,26 +129,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-  const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
+    const draw_line = function draw_line(ctx, x, y, dashed, text) {
     
     y += VERTICAL_INCREMENT;
     
+    // TODO: Why do we have dashed param? Do we have any dashed lines?
     if (dashed) {
       ctx.setLineDash(dashed);
-    }
-
-    if (inf === 'pipes') {
-      ctx.strokeStyle = color;
-      ctx.lineWidth = width;
-      text = `${text} pipeline`
-    } else if (inf === 'rr') {
-      ctx.strokeStyle = railroad_props.stroke;
-      ctx.lineWidth = railroad_props.width;
-      text = `Railroads`;
-    } else if (inf === 'dc') {
-      ctx.lineWidth = LEGEND_FONT_SIZE;
-      ctx.strokeStyle = 'black';
-      text = `500–1000 kV DC`;
     }
 
     ctx.beginPath();
@@ -172,7 +159,10 @@ const update_legend = function update_legend(ctx, layers) {
    */
   const draw_pipeline_legend = function draw_pipeline_legend(
     ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'pipes')
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    text = `${text} pipeline`
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
@@ -220,7 +210,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
-    draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size);
+    draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
     text = 'Oil refinery';
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -237,7 +227,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size);
+    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
     text = 'Coal mine'
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -248,29 +238,21 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {string} obj - power plant object from `plant_classes`
    */
   const draw_power_plant_legend = function draw_power_plant_legend(
-    ctx, x, y, color, text) {
-    ctx.fillStyle = color;
-    ctx.strokeStyle = plant_classes.stroke.light;
+    ctx, x, y, obj) {
+    ctx.fillStyle = obj.color;
+    ctx.strokeStyle = obj.stroke;
     ctx.lineWidth = plant_classes.stroke.width;
-      if (color === plant_classes.PLANT_CLASS_NG.color) {
-      ctx.strokeStyle = 'darkblue';
-    } else if (color === plant_classes.PLANT_CLASS_SUN.color)
-    {
-      ctx.strokeStyle = 'darkorange';
-    }
-    // x = r * 2 - 20 * SCALE + xo;
+    
     y += 18 * SCALE;
     ctx.beginPath();
     draw_circle(ctx, [x, y], 7 * SCALE);
     ctx.stroke();
     ctx.fill();
-    // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
-    // solar font
-    let plant_text = text == 'Wind' ? 'farm' : 'power plant';
-    text = `${text} ${plant_text}`
+    
+    let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -286,8 +268,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_railroad_legend = function draw_railroad_legend(
-    ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'rr')
+    ctx, x, y, dashed, text) {
+    ctx.strokeStyle = railroad_props.stroke;
+    ctx.lineWidth = railroad_props.width;
+    text = `Railroads`;
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
@@ -316,7 +301,7 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.stroke();
     };
 
-    text = grid_class.display;
+    text = grid_class.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -332,8 +317,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_grid_dc_legend = function draw_grid_dc_legend(
-    ctx, x, y, color, width, dashed, text) {
-    y = draw_line(ctx, x, y, color, width, dashed, text, 'dc')
+    ctx, x, y, dashed, text) {
+    ctx.lineWidth = LEGEND_FONT_SIZE;
+    ctx.strokeStyle = 'black';
+    text = `500–1000 kV DC`;
+    y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
 
@@ -379,28 +367,28 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y);
           break;
         case 'coal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL.color, 'Coal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL);
           break;
         case 'geothermal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO.color, 'Geothermal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO);
           break;
         case 'hydro-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC.color, 'Hydro');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC);
           break;
         case 'natural-gas-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG.color, 'Natural gas');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG);
           break;
         case 'nuclear-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC.color, 'Nuclear');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC);
           break;
         case 'petroleum-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET.color, 'Petroleum');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET);
           break;
         case 'solar-PV':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN.color, 'Solar');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN);
           break;
         case 'wind-farms':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND.color, 'Wind');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND);
           break;
         case 'AC-lines-under-100-kV':
           y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_NA);
@@ -466,7 +454,7 @@ const update_legend = function update_legend(ctx, layers) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 23 2020 12:19:50 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Jan 23 2020 14:44:23 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
