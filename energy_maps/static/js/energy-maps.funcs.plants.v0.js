@@ -15,6 +15,7 @@
  * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
+let plant_stroke = 'rgba(255, 255, 255, 1)';
 let plant_classes = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
@@ -27,35 +28,51 @@ let plant_classes = {
   old_scale: .9 * SCALE, // TODO: figure out if needed
   PLANT_CLASS_COAL: {
     fuel_type: 'COAL',
-    color: 'rgba(0, 0, 0, .5)'
+    text: 'Coal power plant',
+    color: 'rgba(0, 0, 0, .5)',
+    stroke: plant_stroke
   },
   PLANT_CLASS_GEO: { 
     fuel_type: 'GEO',
-    color: 'rgba(210, 105, 30, .5)'
+    text: 'Geothermal power plant',
+    color: 'rgba(210, 105, 30, .5)',
+    stroke: plant_stroke
   },
   PLANT_CLASS_HYC: {
     fuel_type: 'HYC',
-    color: 'rgba(11, 36, 251, .5)'
+    text: 'Hydro power plant',
+    color: 'rgba(11, 36, 251, .5)',
+    stroke: plant_stroke
   }, 
   PLANT_CLASS_NG: {
     fuel_type: 'NG',
-    color: 'rgba(0, 191, 255, .5)'
+    text: 'Natural gas power plant',
+    color: 'rgba(0, 191, 255, .5)',
+    stroke: 'darkblue'
   }, 
   PLANT_CLASS_NUC: {
     fuel_type: 'NUC',
-    color: 'rgba(255, 0, 0, .5)'
+    text: 'Nuclear power plant',
+    color: 'rgba(255, 0, 0, .5)',
+    stroke: plant_stroke
   }, 
   PLANT_CLASS_PET: {
     fuel_type: 'PET',
-    color: 'rgba(34, 139, 34, .5)'
+    text: 'Petroleum power plant',
+    color: 'rgba(34, 139, 34, .5)',
+    stroke: plant_stroke
   }, 
   PLANT_CLASS_SUN: {
     fuel_type: 'SUN',
-    color: 'rgba(255, 215, 0, .5)'
+    text: 'Solar power plant',
+    color: 'rgba(255, 215, 0, .5)',
+    stroke: 'darkorange'
   },
   PLANT_CLASS_WND: {
     fuel_type: 'WND',
-    color: 'rgba(144, 29, 143, .5)'
+    text: 'Wind farm',
+    color: 'rgba(144, 29, 143, .5)',
+    stroke: plant_stroke
   },
 }; 
 

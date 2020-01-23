@@ -211,27 +211,20 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   */
+  //  */
   const draw_power_plant_legend = function draw_power_plant_legend(
-    ctx, x, y, color, text) {
-    ctx.fillStyle = color;
-    ctx.strokeStyle = plant_classes.stroke.light;
+    ctx, x, y, obj) {
+    ctx.fillStyle = obj.color;
+    ctx.strokeStyle = obj.stroke;
     ctx.lineWidth = plant_classes.stroke.width;
-    if (color === plant_classes.PLANT_CLASS_NG.color) {
-      ctx.strokeStyle = plant_classes.stroke.natural_gas;
-    } else if (color === plant_classes.PLANT_CLASS_SUN.color) {
-      ctx.strokeStyle = plant_classes.stroke.sun;
-    }
-    // x = r * 2 - 20 * SCALE + xo;
+    
     y += 18 * SCALE;
     ctx.beginPath();
     draw_circle(ctx, [x, y], 7 * SCALE);
     ctx.stroke();
     ctx.fill();
-    // ctx.fillRect(x, y, 20 * SCALE, 20 * SCALE);
-    // solar font
-    let plant_text = text == 'Wind' ? 'farm' : 'power plant';
-    text = `${text} ${plant_text}`
+    
+    let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -280,7 +273,7 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.stroke();
     };
 
-    text = grid_class.display;
+    text = grid_class.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -346,28 +339,28 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y);
           break;
         case 'coal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL.color, 'Coal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL);
           break;
         case 'geothermal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO.color, 'Geothermal');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO);
           break;
         case 'hydro-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC.color, 'Hydro');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC);
           break;
         case 'natural-gas-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG.color, 'Natural gas');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG);
           break;
         case 'nuclear-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC.color, 'Nuclear');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC);
           break;
         case 'petroleum-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET.color, 'Petroleum');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET);
           break;
         case 'solar-PV':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN.color, 'Solar');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN);
           break;
         case 'wind-farms':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND.color, 'Wind');
+          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND);
           break;
         case 'AC-lines-under-100-kV':
           y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_NA);
