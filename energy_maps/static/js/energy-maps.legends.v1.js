@@ -275,7 +275,6 @@ const update_legend = function update_legend(ctx, layers) {
       ctx.lineWidth = 1 * SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
     }
-    // };
 
     text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
