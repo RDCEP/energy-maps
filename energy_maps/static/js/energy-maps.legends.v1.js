@@ -101,11 +101,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-  // const draw_line = function draw_line(ctx, x, y, color, width, dashed, text, inf) {
     const draw_line = function draw_line(ctx, x, y, dashed, text) {
     
     y += VERTICAL_INCREMENT;
     
+    // TODO: Why do we have dashed param? Do we have any dashed lines?
     if (dashed) {
       ctx.setLineDash(dashed);
     }
@@ -182,7 +182,7 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_refinery_legend = function draw_refinery_legend(
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
-    draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size);
+    draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
     text = 'Oil refinery';
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -199,7 +199,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size);
+    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
     text = 'Coal mine'
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
