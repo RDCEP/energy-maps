@@ -236,7 +236,7 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_railroad_legend = function draw_railroad_legend(
-    ctx, x, y, dashed, obj) {
+    ctx, x, y, obj, dashed) {
     ctx.strokeStyle = railroad_props.stroke;
     ctx.lineWidth = railroad_props.width;
     let text = obj.text;
@@ -327,7 +327,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_refinery_legend(ctx, x, y);
           break;
         case 'railroad':
-          y = draw_railroad_legend(ctx, x, y, false, railroad_props);
+          y = draw_railroad_legend(ctx, x, y, railroad_props);
           break;
         case 'coal-mine':
           y = draw_coalmine_legend(ctx, x, y, mine_props);
