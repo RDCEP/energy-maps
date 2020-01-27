@@ -310,17 +310,18 @@ const update_legend = function update_legend(ctx, layers) {
   // Offset for text
   let text_offset = 30 * SCALE;
     
+  // Consider using Function.prototype.bind() to bind ctx, x, and y to the object's properties (draw function with params for stroke and width)
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
       switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(
-            ctx, x, y, viz.oil, 'Oil well');
+            ctx, x, y, oil_and_gas_props.wells.oil.legend_color, 'Oil well');
           break;
         case 'gas-well':
           console.log('gas-well switch');
           y = draw_well_legend(
-            ctx, x, y, viz.gas, 'Gas well');
+            ctx, x, y, oil_and_gas_props.wells.gas.legend_color, 'Gas well');
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y,

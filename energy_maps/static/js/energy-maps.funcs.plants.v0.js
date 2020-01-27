@@ -27,49 +27,81 @@ let plant_classes = {
   scale: .3 * SCALE,
   old_scale: .9 * SCALE, // TODO: figure out if needed
   PLANT_CLASS_COAL: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'COAL',
+    legend_func: 0,
     text: 'Coal power plant',
     color: 'rgba(0, 0, 0, .5)',
     stroke: plant_stroke
   },
   PLANT_CLASS_GEO: { 
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'GEO',
+    legend_func: 0,
     text: 'Geothermal power plant',
     color: 'rgba(210, 105, 30, .5)',
     stroke: plant_stroke
   },
   PLANT_CLASS_HYC: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'HYC',
+    legend_func: 0,
     text: 'Hydro power plant',
     color: 'rgba(11, 36, 251, .5)',
     stroke: plant_stroke
   }, 
   PLANT_CLASS_NG: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'NG',
+    legend_func: 0,
     text: 'Natural gas power plant',
     color: 'rgba(0, 191, 255, .5)',
     stroke: 'darkblue'
   }, 
   PLANT_CLASS_NUC: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'NUC',
+    legend_func: 0,
     text: 'Nuclear power plant',
     color: 'rgba(255, 0, 0, .5)',
     stroke: plant_stroke
   }, 
   PLANT_CLASS_PET: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'PET',
+    legend_func: 0,
     text: 'Petroleum power plant',
     color: 'rgba(34, 139, 34, .5)',
     stroke: plant_stroke
   }, 
   PLANT_CLASS_SUN: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'SUN',
+    legend_func: 0,
     text: 'Solar power plant',
     color: 'rgba(255, 215, 0, .5)',
     stroke: 'darkorange'
   },
   PLANT_CLASS_WND: {
+    src: '',
+    func: 0,
+    dom_class_attribute: '',
     fuel_type: 'WND',
+    legend_func: 0,
     text: 'Wind farm',
     color: 'rgba(144, 29, 143, .5)',
     stroke: plant_stroke

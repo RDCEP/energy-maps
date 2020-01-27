@@ -50,8 +50,6 @@ const canvas_width = width + SCALE * 400;
 const viz = {
   white: 'rgba(255, 255, 255, 1)',
   black: 'rgba(0, 0, 0, 1)',
-  gas: 'rgba(0, 191, 255)',
-  oil: 'rgba(34, 139, 34)',
   coal: 'rgba(0, 0, 0)',
   map: {
     fill: '#dddddd',
