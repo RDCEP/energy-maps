@@ -123,22 +123,10 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   * @param {Number} width - width value to set for lineWidth
+   * @param {Object} obj - oil_and_gas_props.wells object
    * @param {boolean} dashed - true if line should be dashed, false if solid
-   * @param {string} text - the text for the layer written to the legend
    */
-  // const draw_pipeline_legend = function draw_pipeline_legend(
-  //   ctx, x, y, color, width, dashed, text) {
-  //   ctx.strokeStyle = color;
-  //   ctx.lineWidth = width;
-  //   text = `${text} pipeline`
-  //   y = draw_line(ctx, x, y, dashed, text)
-  //   return y;
-  // };
-
-  const draw_pipeline_legend = function draw_pipeline_legend(
-    ctx, x, y, obj, dashed) {
+  const draw_pipeline_legend = function draw_pipeline_legend(ctx, x, y, obj, dashed) {
     ctx.strokeStyle = obj.color;
     ctx.lineWidth = obj.width;
     let text = obj.text;
