@@ -71,20 +71,39 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    * @param {string} text - the text for the layer written to the legend
    */
-  const draw_well_legend = function draw_well_legend(ctx, x, y, color, text) {
+  // const draw_well_legend = function draw_well_legend(ctx, x, y, color, text) {
+  //   console.log('well symbol');
+
+  //   y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke); 
+  //   draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
+  //   ctx.stroke();
+  //   ctx.fill();
+    
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke);
+  //   draw_x(ctx, [x, y], oil_and_gas_props.wells.cross);
+  //   ctx.stroke();
+    
+  //   text = `${text.slice(0, 3)} offshore well`
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+    
+  //   return y;
+  // };
+
+  const draw_well_legend = function draw_well_legend(ctx, x, y, obj) {
     console.log('well symbol');
 
-    y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke); 
+    y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
     draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
     ctx.stroke();
     ctx.fill();
     
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    y = advance_vertical_increment(y, ctx, color, oil_and_gas_props.wells.stroke);
+    y = advance_for_type(y, ctx, obj.text, text_offset, x);
+    y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas_props.wells.stroke);
     draw_x(ctx, [x, y], oil_and_gas_props.wells.cross);
     ctx.stroke();
     
-    text = `${text.slice(0, 3)} offshore well`
+    let text = `${obj.text.slice(0, 3)} offshore well`
     y = advance_for_type(y, ctx, text, text_offset, x);
     
     return y;
@@ -315,13 +334,11 @@ const update_legend = function update_legend(ctx, layers) {
     if (layers[i].active) {
       switch (layers[i].name) {
         case 'oil-well':
-          y = draw_well_legend(
-            ctx, x, y, oil_and_gas_props.wells.oil.legend_color, 'Oil well');
+          y = draw_well_legend(ctx, x, y, oil_and_gas_props.wells.oil);
           break;
         case 'gas-well':
           console.log('gas-well switch');
-          y = draw_well_legend(
-            ctx, x, y, oil_and_gas_props.wells.gas.legend_color, 'Gas well');
+          y = draw_well_legend(ctx, x, y, oil_and_gas_props.wells.gas);
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y,

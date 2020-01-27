@@ -9,10 +9,12 @@
 const oil_and_gas_props = {
   wells: {
     gas: {
+      text: 'Gas well',
       color: 'rgba(0, 191, 255, .5)',
       legend_color: 'rgba(0, 191, 255)'
     },
     oil: {
+      text: 'Oil well',
       color: 'rgba(34, 139, 34, .5)',
       legend_color: 'rgba(34, 139, 34)'
     },
