@@ -49,10 +49,12 @@ const oil_and_gas_props = {
   },
   transport: {
     gas: {
+      text: 'Gas pipeline',
       stroke: 'rgba(0, 191, 255, .5)',
       width: 1.8 * SCALE
     },
     oil: {
+      text: 'Oil pipeline',
       stroke: '#3CB371',
       width: 1.5 * SCALE
     },

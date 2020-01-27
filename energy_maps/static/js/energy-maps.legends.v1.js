@@ -100,7 +100,7 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-    const draw_line = function draw_line(ctx, x, y, dashed, text) {
+    const draw_line = function draw_line(ctx, x, y, dashed = false, text) {
     
     y += VERTICAL_INCREMENT;
     
@@ -128,11 +128,20 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {boolean} dashed - true if line should be dashed, false if solid
    * @param {string} text - the text for the layer written to the legend
    */
+  // const draw_pipeline_legend = function draw_pipeline_legend(
+  //   ctx, x, y, color, width, dashed, text) {
+  //   ctx.strokeStyle = color;
+  //   ctx.lineWidth = width;
+  //   text = `${text} pipeline`
+  //   y = draw_line(ctx, x, y, dashed, text)
+  //   return y;
+  // };
+
   const draw_pipeline_legend = function draw_pipeline_legend(
-    ctx, x, y, color, width, dashed, text) {
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    text = `${text} pipeline`
+    ctx, x, y, obj, dashed) {
+    ctx.strokeStyle = obj.color;
+    ctx.lineWidth = obj.width;
+    let text = obj.text;
     y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
@@ -321,14 +330,10 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_well_legend(ctx, x, y, oil_and_gas_props.wells.gas);
           break;
         case 'gas-pipeline':
-          y = draw_pipeline_legend(ctx, x, y,
-            oil_and_gas_props.transport.gas.stroke, oil_and_gas_props.transport.gas.width,
-            false, 'Gas');
+          y = draw_pipeline_legend(ctx, x, y, oil_and_gas_props.transport.gas);
           break;
         case 'oil-pipeline':
-          y = draw_pipeline_legend(ctx, x, y,
-            oil_and_gas_props.transport.oil.stroke, oil_and_gas_props.transport.oil.width,
-            false, 'Oil');
+          y = draw_pipeline_legend(ctx, x, y, oil_and_gas_props.transport.oil);
           break;
         case 'oil-refinery':
           y = draw_refinery_legend(ctx, x, y);
