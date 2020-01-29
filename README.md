@@ -18,12 +18,11 @@ This data visualization project is the result of a grant-funded partnership betw
 
 ### Prerequisites
 
-Ensure that you have [Python 3.x](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/) installed on your machine; install [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/) flask_assets, and flask_compress if you haven't already:
+Ensure that you have [Python 3.x](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/) installed on your machine; install [Flask](https://flask.palletsprojects.com/en/1.1.x/installation/) and flask_assets if you haven't already:
 `python --version`
 `pip --version`
 `pip install flask`
 `pip install flask_assets`
-`pip install flask_compress`
 
 ## Structure
 
