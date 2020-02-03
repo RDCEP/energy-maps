@@ -290,8 +290,8 @@ const update_legend = function update_legend(ctx, layers) {
   const draw_grid_dc_legend = function draw_grid_dc_legend(
     ctx, x, y, dashed, text) {
     ctx.lineWidth = LEGEND_FONT_SIZE;
-    ctx.strokeStyle = 'black';
-    text = `500–1000 kV DC`;
+    ctx.strokeStyle = grid_classes.DC.color;
+    text = grid_classes.DC.text;
     y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
