@@ -21,13 +21,13 @@ SCALE = 1;
 
 /**
  * @type {number} 
- * @description Global page width, set to some multiple of `SCALE`
+ * @description Map width, set to some multiple of `SCALE`
  */
 let width = 1200 * SCALE;
 
 /**
  * @type {number} 
- * @description Global page height, set to some fraction of `width`
+ * @description Map height, set to some fraction of `width`
  */
 const height = width / 2;
 
