@@ -6,7 +6,7 @@
  */
 
  /**
- * A collection of electric grid classifications, used to filter out and render separate portions of the grid.
+ * A collection of electric grid classifications containing metadata that is used to filter out and render separate portions of the grid.
  * @type {Object} 
  * @property {string} identifier - an abbreviation of the class name in the data file
  * @property {string} name - a nested property of `identifier`; cooresponds to class heading in data file 
