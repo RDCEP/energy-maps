@@ -16,7 +16,7 @@
  * @property {Number} nominal voltage - a nested property of `identifier`; system voltage for the grid class (values are estimates)
  */
  let grid_classes = {
-  AC_NA: {
+  ac_na: {
     // TODO: Consider a more descriptive title for the `name` property, like "class_name", or "data_ref" or something like that
     name: 'NOT AVAILABLE',
     text: 'Unknown kV AC',
@@ -24,49 +24,49 @@
     line_width: 0,
     nominal_voltage: 50
   },
-  AC_UNDER_100: { 
+  ac_under_100: { 
     name: 'Under 100',
     text: 'Under 100 kV AC',
     color: 'rgba(255, 255, 170)', // yellow
     line_width: 1,
     nominal_voltage: 50
   },
-  AC_100_200: {
+  ac_100_200: {
     name: '100-161',
     text: '100–200 kV AC',
     color: 'rgba(86, 180, 233)', // lt blue
     line_width: 2,
     nominal_voltage: 100
   }, 
-  AC_200_300: {
+  ac_200_300: {
     name: '220-287',
     text: '200–300 kV AC',
     color: 'rgba(55, 126, 184)', // blue
     line_width: 3,
     nominal_voltage: 250
   }, 
-  AC_345: {
+  ac_345: {
     name: '345',
     text: '345 kV AC',
     color: 'rgba(255, 149, 0)', // orange
     line_width: 4,
     nominal_voltage: 350
   }, 
-  AC_500: {
+  ac_500: {
     name: '500',
     text: '500 kV AC',
     color: 'rgba(213, 113, 45)', // vermillion
     line_width: 5,
     nominal_voltage: 500 
   }, 
-  AC_735_PLUS: {
+  ac_735_plus: {
     name: '735 and Above',
     text: '735 kV AC',
     color: 'rgba(228, 53, 5)', // red 
     line_width: 6,
     nominal_voltage: 750
   },
-  DC: {
+  dc: {
     name: 'DC',
     text: '500–1000 kV DC',
     color: 'black', 
@@ -141,8 +141,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.AC_NA);
-  draw_grid_class(ctx, queued_data, grid_classes.AC_UNDER_100);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_na);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_under_100);
 };
 
 /**
@@ -151,8 +151,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.AC_100_200);
-  draw_grid_class(ctx, queued_data, grid_classes.AC_200_300);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_100_200);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_200_300);
 };
 
 /**
@@ -161,9 +161,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.AC_345);
-  draw_grid_class(ctx, queued_data, grid_classes.AC_500);
-  draw_grid_class(ctx, queued_data, grid_classes.AC_735_PLUS);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_345);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_500);
+  draw_grid_class(ctx, queued_data, grid_classes.ac_735_plus);
 };
 
 /**
@@ -173,5 +173,5 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
-  draw_grid_class(ctx, queued_data, grid_classes.DC);
+  draw_grid_class(ctx, queued_data, grid_classes.dc);
 }

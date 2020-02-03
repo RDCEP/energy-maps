@@ -266,7 +266,7 @@ const update_legend = function update_legend(ctx, layers) {
 
     // FIXME: This is a kludge for drawing a white swatch for unknown kV
     // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-    if (obj === grid_classes.AC_NA) {
+    if (obj === grid_classes.ac_na) {
       ctx.strokeStyle = 'rgba(76, 76, 76)';
       ctx.lineWidth = 1 * SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
@@ -357,27 +357,27 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_power_plant_legend(ctx, x, y, electricity_generation.wnd_farms);
           break;
         case 'AC-lines-under-100-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_NA);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_na);
           console.log(y)
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_UNDER_100);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_under_100);
           break;
         case 'AC-lines-100-to-300-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_100_200);
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_200_300);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_100_200);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_200_300);
           break;
         case 'AC-lines-345-to-735-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_345);
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_500);
-          y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_735_PLUS);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_345);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_500);
+          y = draw_grid_ac_legend(ctx, x, y, grid_classes.ac_735_plus);
           break;
         case 'DC-lines':
-          y = draw_grid_dc_legend(ctx, x, y, grid_classes.DC);
+          y = draw_grid_dc_legend(ctx, x, y, grid_classes.dc);
           break;
         case 'electrical-grid-ac-lines':
           y = draw_grid_ac_legend(ctx, x, y, );
           break;
         case 'electrical-grid-dc-lines':
-          y = draw_grid_dc_legend(ctx, x, y, grid_classes.DC);
+          y = draw_grid_dc_legend(ctx, x, y, grid_classes.dc);
           break;
         case 'gas-processing':
           y = draw_processing_legend(ctx, x, y);
