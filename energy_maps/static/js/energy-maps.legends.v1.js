@@ -373,12 +373,6 @@ const update_legend = function update_legend(ctx, layers) {
         case 'DC-lines':
           y = draw_grid_dc_legend(ctx, x, y, grid.dc);
           break;
-        case 'electrical-grid-ac-lines':
-          y = draw_grid_ac_legend(ctx, x, y, );
-          break;
-        case 'electrical-grid-dc-lines':
-          y = draw_grid_dc_legend(ctx, x, y, grid.dc);
-          break;
         case 'gas-processing':
           y = draw_processing_legend(ctx, x, y,oil_and_gas_props.processing.gas_process);
           break;
