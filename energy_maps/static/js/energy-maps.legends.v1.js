@@ -206,13 +206,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} obj - power plant object from `plant_classes`
+   * @param {string} obj - power plant object from `electricity_generation`
    */
   const draw_power_plant_legend = function draw_power_plant_legend(
     ctx, x, y, obj) {
     ctx.fillStyle = obj.color;
     ctx.strokeStyle = obj.stroke;
-    ctx.lineWidth = plant_classes.stroke.width;
+    ctx.lineWidth = electricity_generation.stroke.width;
     
     y += 18 * SCALE;
     ctx.beginPath();
@@ -333,28 +333,28 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y, mine_props);
           break;
         case 'coal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_COAL);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.coal_plants);
           break;
         case 'geothermal-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_GEO);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.geo_plants);
           break;
         case 'hydro-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_HYC);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.hyc_plants);
           break;
         case 'natural-gas-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NG);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.ng_plants);
           break;
         case 'nuclear-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_NUC);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.nuc_plants);
           break;
         case 'petroleum-plant':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_PET);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.pet_plants);
           break;
         case 'solar-PV':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_SUN);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.solar_plants);
           break;
         case 'wind-farms':
-          y = draw_power_plant_legend(ctx, x, y, plant_classes.PLANT_CLASS_WND);
+          y = draw_power_plant_legend(ctx, x, y, electricity_generation.wnd_farms);
           break;
         case 'AC-lines-under-100-kV':
           y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_NA);
@@ -397,7 +397,7 @@ const update_legend = function update_legend(ctx, layers) {
     "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
   }).length > 0;
   if (draw_plants_legend) {
-    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * plant_classes.scale);
+    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * electricity_generation.scale);
     // y +=
   }
 
