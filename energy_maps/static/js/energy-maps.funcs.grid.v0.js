@@ -15,7 +15,7 @@
  * @property {string} line_width - a nested property of `identifier`; used for mathematical operations that set the line width for the corresponding object
  * @property {Number} nominal voltage - a nested property of `identifier`; system voltage for the grid class (values are estimates)
  */
- let grid_classes = {
+ let grid = {
   ac_na: {
     // TODO: Consider a more descriptive title for the `name` property, like "class_name", or "data_ref" or something like that
     name: 'NOT AVAILABLE',
@@ -79,7 +79,7 @@
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure - readfile
- * @param {Number} c - `grid_classes` object member to compare readfile against
+ * @param {Number} c - `grid` object member to compare readfile against
  * @returns {Array} features - an array of features matching the filtered class(es)
  */
 const filter_features = function filter_features(infrastructure, c) {
@@ -94,7 +94,7 @@ const filter_features = function filter_features(infrastructure, c) {
  * Create an exponential response curve between voltages and line widths
  * to ensure that the lines that represent large voltages aren't too large visually.
  * @param {Number} value - the value to be scaled, bound to the line_width 
- * property of the corresponding `grid_classes` object 
+ * property of the corresponding `grid` object 
  * @param {Number} divisor - sets line inflection point to adjust the scale of the line width as `value` grows. Must be at least half the size of `value` to get a decent inflection point. Helps determine the mid point of the curve.
  */
 const set_line_width = function set_line_width(value, divisor) {
@@ -106,7 +106,7 @@ const set_line_width = function set_line_width(value, divisor) {
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
- * @param {Object} c - object member of `grid_classes`
+ * @param {Object} c - object member of `grid`
  */
 draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
   let grid = queued_data[0];
@@ -141,8 +141,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.ac_na);
-  draw_grid_class(ctx, queued_data, grid_classes.ac_under_100);
+  draw_grid_class(ctx, queued_data, grid.ac_na);
+  draw_grid_class(ctx, queued_data, grid.ac_under_100);
 };
 
 /**
@@ -151,8 +151,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.ac_100_200);
-  draw_grid_class(ctx, queued_data, grid_classes.ac_200_300);
+  draw_grid_class(ctx, queued_data, grid.ac_100_200);
+  draw_grid_class(ctx, queued_data, grid.ac_200_300);
 };
 
 /**
@@ -161,9 +161,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid_classes.ac_345);
-  draw_grid_class(ctx, queued_data, grid_classes.ac_500);
-  draw_grid_class(ctx, queued_data, grid_classes.ac_735_plus);
+  draw_grid_class(ctx, queued_data, grid.ac_345);
+  draw_grid_class(ctx, queued_data, grid.ac_500);
+  draw_grid_class(ctx, queued_data, grid.ac_735_plus);
 };
 
 /**
@@ -173,5 +173,5 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
-  draw_grid_class(ctx, queued_data, grid_classes.dc);
+  draw_grid_class(ctx, queued_data, grid.dc);
 }
