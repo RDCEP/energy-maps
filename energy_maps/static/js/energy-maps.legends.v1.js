@@ -380,7 +380,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_grid_dc_legend(ctx, x, y, grid.dc);
           break;
         case 'gas-processing':
-          y = draw_processing_legend(ctx, x, y, oil_and_gas_props.processing.gas_process);
+          y = draw_processing_legend(ctx, x, y,oil_and_gas_props.processing.gas_process);
           break;
         case 'gas-storage':
           y = draw_storage_legend(ctx, x, y);
