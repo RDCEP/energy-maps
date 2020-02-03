@@ -70,6 +70,7 @@
     name: 'DC',
     text: '500–1000 kV DC',
     color: 'black', 
+    dashed: false,
     line_width: 7,
     nominal_voltage: 1000
   }

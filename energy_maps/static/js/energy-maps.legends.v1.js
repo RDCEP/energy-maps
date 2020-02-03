@@ -288,10 +288,10 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    */
   const draw_grid_dc_legend = function draw_grid_dc_legend(
-    ctx, x, y, dashed, text) {
+    ctx, x, y, obj, dashed) {
     ctx.lineWidth = LEGEND_FONT_SIZE;
-    ctx.strokeStyle = grid_classes.DC.color;
-    text = grid_classes.DC.text;
+    ctx.strokeStyle = obj.color;
+    text = obj.text;
     y = draw_line(ctx, x, y, dashed, text)
     return y;
   };
@@ -371,13 +371,13 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_grid_ac_legend(ctx, x, y, grid_classes.AC_735_PLUS);
           break;
         case 'DC-lines':
-          y = draw_grid_dc_legend(ctx, x, y);
+          y = draw_grid_dc_legend(ctx, x, y, grid_classes.DC);
           break;
         case 'electrical-grid-ac-lines':
           y = draw_grid_ac_legend(ctx, x, y, );
           break;
         case 'electrical-grid-dc-lines':
-          y = draw_grid_dc_legend(ctx, x, y);
+          y = draw_grid_dc_legend(ctx, x, y, grid_classes.DC);
           break;
         case 'gas-processing':
           y = draw_processing_legend(ctx, x, y);
