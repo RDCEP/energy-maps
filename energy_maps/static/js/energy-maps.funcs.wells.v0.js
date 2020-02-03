@@ -38,7 +38,8 @@ const oil_and_gas_props = {
     },
     gas_process: {
       fill: 'rgba(0, 0, 139, .5)',
-      size: 1.5 * SCALE
+      size: 1.5 * SCALE,
+      text: 'Gas processing',
       // vvv Old scale vvv
       // size: 4 * SCALE
     },

@@ -142,11 +142,11 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    */
   const draw_processing_legend = function draw_processing_legend(
-    ctx, x, y, color) {
+    ctx, x, y, obj) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
     draw_gas_processor(ctx, [x, y]);
-    text = `Gas processing`
+    let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -380,7 +380,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_grid_dc_legend(ctx, x, y, grid.dc);
           break;
         case 'gas-processing':
-          y = draw_processing_legend(ctx, x, y);
+          y = draw_processing_legend(ctx, x, y, oil_and_gas_props.processing.gas_process);
           break;
         case 'gas-storage':
           y = draw_storage_legend(ctx, x, y);
