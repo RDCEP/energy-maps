@@ -176,10 +176,10 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    */
   const draw_refinery_legend = function draw_refinery_legend(
-    ctx, x, y, color) {
+    ctx, x, y, obj, color) {
     y += VERTICAL_INCREMENT;
-    draw_oil_refinery(ctx, [x, y], 200000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
-    text = 'Oil refinery';
+    draw_oil_refinery(ctx, [x, y], 200000 * obj.size); // TODO: Document or extract these magic numbers
+    let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
   };
@@ -324,7 +324,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_pipeline_legend(ctx, x, y, oil_and_gas_props.transport.oil);
           break;
         case 'oil-refinery':
-          y = draw_refinery_legend(ctx, x, y);
+          y = draw_refinery_legend(ctx, x, y, oil_and_gas_props.processing.oil_refinery);
           break;
         case 'railroad':
           y = draw_railroad_legend(ctx, x, y, railroad_props);

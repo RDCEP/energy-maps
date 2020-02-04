@@ -30,6 +30,7 @@ const oil_and_gas_props = {
     oil_refinery: {
       fill: 'rgba(60, 179, 113, .7)',
       size: .006 * SCALE, 
+      text: 'Oil refinery',
       old_size: .015 * SCALE
     },
     gas_storage: {
