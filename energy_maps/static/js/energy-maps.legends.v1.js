@@ -310,7 +310,6 @@ const update_legend = function update_legend(ctx, layers) {
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
       // y = layers[i].draw_legend(ctx, x, y, layers[i].obj);
-      // y = layers[i].draw_legend(ctx, x, y, layers[i].obj);
       switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(ctx, x, y, oil_and_gas.wells.oil);
