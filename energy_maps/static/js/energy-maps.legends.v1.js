@@ -68,19 +68,19 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {Object} obj - oil_and_gas_props.wells object 
+   * @param {Object} obj - oil_and_gas.wells object 
    */
   const draw_well_legend = function draw_well_legend(ctx, x, y, obj) {
     console.log('well symbol');
 
     y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
-    draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
+    draw_circle(ctx, [x, y], oil_and_gas.wells.diameter * 3);
     ctx.stroke();
     ctx.fill();
     
     y = advance_for_type(y, ctx, obj.text, text_offset, x);
-    y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas_props.wells.stroke);
-    draw_x(ctx, [x, y], oil_and_gas_props.wells.cross);
+    y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas.wells.stroke);
+    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
     ctx.stroke();
     
     let text = `${obj.text.slice(0, 3)} offshore well`
@@ -123,7 +123,7 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {Object} obj - oil_and_gas_props.wells object
+   * @param {Object} obj - oil_and_gas.wells object
    * @param {boolean} dashed - true if line should be dashed, false if solid
    */
   const draw_pipeline_legend = function draw_pipeline_legend(ctx, x, y, obj, dashed) {
@@ -195,7 +195,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, obj) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas_props.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
+    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
     let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -311,20 +311,20 @@ const update_legend = function update_legend(ctx, layers) {
     if (layers[i].active) {
       switch (layers[i].name) {
         case 'oil-well':
-          y = draw_well_legend(ctx, x, y, oil_and_gas_props.wells.oil);
+          y = draw_well_legend(ctx, x, y, oil_and_gas.wells.oil);
           break;
         case 'gas-well':
           console.log('gas-well switch');
-          y = draw_well_legend(ctx, x, y, oil_and_gas_props.wells.gas);
+          y = draw_well_legend(ctx, x, y, oil_and_gas.wells.gas);
           break;
         case 'gas-pipeline':
-          y = draw_pipeline_legend(ctx, x, y, oil_and_gas_props.transport.gas);
+          y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.gas);
           break;
         case 'oil-pipeline':
-          y = draw_pipeline_legend(ctx, x, y, oil_and_gas_props.transport.oil);
+          y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.oil);
           break;
         case 'oil-refinery':
-          y = draw_refinery_legend(ctx, x, y, oil_and_gas_props.processing.oil_refinery);
+          y = draw_refinery_legend(ctx, x, y, oil_and_gas.processing.oil_refinery);
           break;
         case 'railroad':
           y = draw_railroad_legend(ctx, x, y, railroad_props);
@@ -374,10 +374,10 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_grid_dc_legend(ctx, x, y, grid.dc);
           break;
         case 'gas-processing':
-          y = draw_processing_legend(ctx, x, y,oil_and_gas_props.processing.gas_process);
+          y = draw_processing_legend(ctx, x, y,oil_and_gas.processing.gas_process);
           break;
         case 'gas-storage':
-          y = draw_storage_legend(ctx, x, y, oil_and_gas_props.processing.gas_storage);
+          y = draw_storage_legend(ctx, x, y, oil_and_gas.processing.gas_storage);
           break;
         default:
           break;

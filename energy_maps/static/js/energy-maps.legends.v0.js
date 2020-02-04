@@ -205,7 +205,7 @@ const plants_legend = function plants_legend(ctx, nff) {
 const wells_legend = function wells_legend(ctx) {
   let cap = 2000;
   // let r = Math.sqrt(cap / Math.PI) * viz.plants.scale;
-  let r = oil_and_gas_props.processing.oil_refinery.size * cap;
+  let r = oil_and_gas.processing.oil_refinery.size * cap;
 
   let xo = 1620 * SCALE;
   // Title
@@ -234,10 +234,10 @@ const wells_legend = function wells_legend(ctx) {
   // Gas well
   y += 15 * SCALE;
   ctx.strokeStyle = viz.gas;
-  ctx.strokeWidth = oil_and_gas_props.wells.stroke;
+  ctx.strokeWidth = oil_and_gas.wells.stroke;
   ctx.fillStyle = viz.gas;
   ctx.beginPath();
-  draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
+  draw_circle(ctx, [x, y], oil_and_gas.wells.diameter * 3);
   ctx.stroke();
   ctx.fill();
 
@@ -249,10 +249,10 @@ const wells_legend = function wells_legend(ctx) {
   // Oil well
   y += 15 * SCALE;
   ctx.strokeStyle = viz.oil;
-  ctx.strokeWidth = oil_and_gas_props.wells.stroke;
+  ctx.strokeWidth = oil_and_gas.wells.stroke;
   ctx.fillStyle = viz.oil;
   ctx.beginPath();
-  draw_circle(ctx, [x, y], oil_and_gas_props.wells.diameter * 3);
+  draw_circle(ctx, [x, y], oil_and_gas.wells.diameter * 3);
   ctx.stroke();
   ctx.fill();
 
@@ -272,8 +272,8 @@ const wells_legend = function wells_legend(ctx) {
   // Gas pipeline
   y += 15 * SCALE;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas_props.transport.gas.stroke;
-  ctx.lineWidth = oil_and_gas_props.transport.gas.width;
+  ctx.strokeStyle = oil_and_gas.transport.gas.stroke;
+  ctx.lineWidth = oil_and_gas.transport.gas.width;
   ctx.beginPath();
   ctx.moveTo(xo + 10 * SCALE, y);
   ctx.lineTo(text_x - 30 * SCALE, y);
@@ -286,8 +286,8 @@ const wells_legend = function wells_legend(ctx) {
   // Oil pipeline
   y += 15 * SCALE;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas_props.transport.oil.stroke;
-  ctx.lineWidth = oil_and_gas_props.transport.oil.width;
+  ctx.strokeStyle = oil_and_gas.transport.oil.stroke;
+  ctx.lineWidth = oil_and_gas.transport.oil.width;
   ctx.beginPath();
   ctx.moveTo(xo + 10 * SCALE, y);
   ctx.lineTo(text_x - 30 * SCALE, y);
@@ -300,11 +300,11 @@ const wells_legend = function wells_legend(ctx) {
   // Oil product pipeline
   y += 15 * SCALE;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas_props.transport.oil_product.stroke;
-  ctx.lineWidth = oil_and_gas_props.transport.oil_product.width;
-  ctx.setLineDash([oil_and_gas_props.transport.oil_product.dash,
-                   oil_and_gas_props.transport.oil_product.dash +
-                   2 * oil_and_gas_props.transport.oil_product.width]);
+  ctx.strokeStyle = oil_and_gas.transport.oil_product.stroke;
+  ctx.lineWidth = oil_and_gas.transport.oil_product.width;
+  ctx.setLineDash([oil_and_gas.transport.oil_product.dash,
+                   oil_and_gas.transport.oil_product.dash +
+                   2 * oil_and_gas.transport.oil_product.width]);
   ctx.beginPath();
   ctx.moveTo(xo + 10 * SCALE, y);
   ctx.lineTo(text_x - 30 * SCALE, y);

@@ -6,7 +6,7 @@
  */
 
  // TODO: Add jsdoc and map calls to viz to this obj instead
-const oil_and_gas_props = {
+const oil_and_gas = {
   wells: {
     gas: {
       text: 'Gas well',
@@ -94,8 +94,8 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   const path = get_path(ctx);
 
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas_props.transport.gas.stroke;
-  ctx.lineWidth = oil_and_gas_props.transport.gas.width;
+  ctx.strokeStyle = oil_and_gas.transport.gas.stroke;
+  ctx.lineWidth = oil_and_gas.transport.gas.width;
   ctx.beginPath();
   path(pipe_data);
   ctx.stroke();
@@ -111,16 +111,16 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   let oil_prod_pipe_data = queued_data[1];
   const path = get_path(ctx);
   // TODO: explain the reasoning for this value
-  const OIL_PRODUCT_LINE_DASH = [ oil_and_gas_props.transport.oil_product.dash,
-                                  oil_and_gas_props.transport.oil_product.dash +
-                                  2 * oil_and_gas_props.transport.oil_product.width ];
-  ctx.strokeStyle = oil_and_gas_props.transport.oil.stroke;
-  ctx.lineWidth = oil_and_gas_props.transport.oil.width;
+  const OIL_PRODUCT_LINE_DASH = [ oil_and_gas.transport.oil_product.dash,
+                                  oil_and_gas.transport.oil_product.dash +
+                                  2 * oil_and_gas.transport.oil_product.width ];
+  ctx.strokeStyle = oil_and_gas.transport.oil.stroke;
+  ctx.lineWidth = oil_and_gas.transport.oil.width;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
-  ctx.lineWidth = oil_and_gas_props.transport.oil_product.width;
-  ctx.strokeStyle = oil_and_gas_props.transport.oil_product.stroke;
+  ctx.lineWidth = oil_and_gas.transport.oil_product.width;
+  ctx.strokeStyle = oil_and_gas.transport.oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
   ctx.beginPath();
   path(oil_prod_pipe_data);
@@ -137,7 +137,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 // const draw_well2 = function draw_well2(ctx, xy, obj, fill) { // use obj for color and function
 //   ctx.strokeStyle = obj.color;
-//   ctx.strokeWidth = oil_and_gas_props.wells.stroke;;
+//   ctx.strokeWidth = oil_and_gas.wells.stroke;;
 //   if (fill) {
 //     ctx.fillStyle = color;
 //   }
@@ -148,18 +148,18 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas_props.wells.stroke;
+  ctx.strokeWidth = oil_and_gas.wells.stroke;
   ctx.fillStyle = color;
   ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas_props.wells.diameter);
+  draw_circle(ctx, xy, oil_and_gas.wells.diameter);
   ctx.stroke();
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas_props.wells.stroke;
+  ctx.lineWidth = oil_and_gas.wells.stroke;
   ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas_props.wells.cross);
+  draw_x(ctx, xy, oil_and_gas.wells.cross);
   ctx.stroke();
 };
 
@@ -171,7 +171,7 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
 
   get_xy(queued_data);
-  draw_well(xy, oil_and_gas_props.wells.gas.color)
+  draw_well(xy, oil_and_gas.wells.gas.color)
 
 };
 
@@ -187,7 +187,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
   if (d.class === 'Off') {
     draw_off_well(xy);
   } else {
-    draw_well(xy, oil_and_gas_props.wells.oil.color);
+    draw_well(xy, oil_and_gas.wells.oil.color);
   }
 
 };
@@ -205,16 +205,16 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
     } else {
       if (d.oilgas === 'GAS') {
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas_props.wells.gas.color);
+          draw_off_well(ctx, xy, oil_and_gas.wells.gas.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas_props.wells.gas.color);
+          draw_well(ctx, xy, oil_and_gas.wells.gas.color);
         }
       } else {
         
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas_props.wells.oil.color);
+          draw_off_well(ctx, xy, oil_and_gas.wells.oil.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas_props.wells.oil.color);
+          draw_well(ctx, xy, oil_and_gas.wells.oil.color);
         }
       }
     }
@@ -274,10 +274,10 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   oref.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
     draw_oil_refinery(ctx, xy, d.r);
-    ctx.strokeStyle = oil_and_gas_props.processing.stroke.light;
-    ctx.lineWidth = oil_and_gas_props.processing.stroke.width;
+    ctx.strokeStyle = oil_and_gas.processing.stroke.light;
+    ctx.lineWidth = oil_and_gas.processing.stroke.width;
     ctx.beginPath();
-    draw_circle(ctx, xy, oil_and_gas_props.processing.oil_refinery.size * d.r);
+    draw_circle(ctx, xy, oil_and_gas.processing.oil_refinery.size * d.r);
     ctx.stroke();
   });
 
@@ -285,15 +285,15 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
-  ctx.fillStyle = oil_and_gas_props.processing.gas_process.fill;
-  draw_triangle(ctx, xy, oil_and_gas_props.processing.gas_process.size);
+  ctx.fillStyle = oil_and_gas.processing.gas_process.fill;
+  draw_triangle(ctx, xy, oil_and_gas.processing.gas_process.size);
   ctx.fill();
 };
 
 const draw_gas_storage = function draw_gas_storage(ctx, xy) {
   ctx.beginPath();
-  ctx.fillStyle = oil_and_gas_props.processing.gas_storage.fill;
-  draw_box(ctx, xy, oil_and_gas_props.processing.gas_storage.size);
+  ctx.fillStyle = oil_and_gas.processing.gas_storage.fill;
+  draw_box(ctx, xy, oil_and_gas.processing.gas_storage.size);
   ctx.fill();
 };
 
@@ -305,8 +305,8 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
  */
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   const NUM_SIDES_REFIN = 6
-  r *= oil_and_gas_props.processing.oil_refinery.size;
-  ctx.fillStyle = oil_and_gas_props.processing.oil_refinery.fill;
+  r *= oil_and_gas.processing.oil_refinery.size;
+  ctx.fillStyle = oil_and_gas.processing.oil_refinery.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_REFIN, ctx, r, xy)
   ctx.fill();
