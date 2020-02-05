@@ -436,9 +436,10 @@
       increment_asset_total(lyr.value);
     }
 
-    lyr.counter = 0;
+    let checkbox_span;
     // Generate UI element for checkbox columns
-    let checkbox_span = d3.select(`.${lyr.column}`)
+    let initCheckboxes = function initCheckboxes(lyr) {
+      checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
       .attr('class', () => {
         return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
@@ -456,6 +457,11 @@
           .replace(/G/, ' B')
           .replace(/T/, ' T'))})`)
       .append('span');
+      return checkbox_span;
+    }
+
+    lyr.counter = 0;
+    initCheckboxes(lyr);
 
     if (lyr.draw) {
       lyr.checkbox = checkbox_span.append('input')
