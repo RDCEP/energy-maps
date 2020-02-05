@@ -422,6 +422,14 @@
   for (let i = 0; i < lay; i++) {
 
     let lyr = layers[i];
+
+    let removeLayer = function removeLayer(lyr) {
+      hide_spinner();
+      lyr.context.clearRect(0, 0, width, height);
+      lyr.active = false;
+      decrement_asset_total(lyr.value);  
+    }
+
     lyr.counter = 0;
     // Generate UI element for checkbox columns
     let checkbox_span = d3.select(`.${lyr.column}`)
@@ -456,13 +464,7 @@
 
         if (lyr.counter % 2 === 0) {
 
-          hide_spinner();
-          lyr.context.clearRect(0, 0, width, height);
-          lyr.active = false;
-
-          console.log(`layer[i].name counter is even, value of ${lyr.counter}`);
-
-          decrement_asset_total(lyr.value);
+          removeLayer(lyr);
 
         } else {
 
