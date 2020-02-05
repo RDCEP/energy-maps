@@ -402,16 +402,20 @@
 
   let cols = button_columns.length;
 
-  for (let i = 0; i < cols; ++i) {
-    let col = button_columns[i];
-    d3.select('.options')
-      .append('div')
-      .attr('class', () => { return `column ${col.name}`; })
-      .append('h4')
-      .text((d) => { return `${capitalize_first_letter(col.name
-        .replace(/ /g, '\u00A0')
-        .replace(/-/g, '\u00A0'))}`; })
+  let initMenu = function initCheckboxMenu() {
+    for (let i = 0; i < cols; ++i) {
+      let col = button_columns[i];
+      d3.select('.options')
+        .append('div')
+        .attr('class', () => { return `column ${col.name}`; })
+        .append('h4')
+        .text((d) => { return `${capitalize_first_letter(col.name
+          .replace(/ /g, '\u00A0')
+          .replace(/-/g, '\u00A0'))}`; })
+    }
   }
+
+  initMenu();
 
   let lay = layers.length;
 
