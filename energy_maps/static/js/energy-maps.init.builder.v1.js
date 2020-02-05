@@ -431,34 +431,34 @@
   initMenuColumns();
 
   let lay = layers.length;
-
+  let checkbox_span;
+    
+  // Generate UI element for checkbox columns
+  let initCheckboxLabels = function initCheckboxLabels(lyr) {
+    checkbox_span = d3.select(`.${lyr.column}`)
+    .append('label')
+    .attr('class', () => {
+      return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
+    })
+    .text(`${capitalize_first_letter(
+      lyr.name
+        .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
+        .replace(/-/g, '\u00A0'))}\u00A0`)
+    .append('span')
+    .attr('class', 'asset-value')
+    // FIXME: This is a horrible kludge in order to get space before units.
+    //  Need to write a proper formatter.
+    .text(` ($${capitalize_first_letter(
+      d3.format('.2~s')(lyr.value)
+        .replace(/G/, ' B')
+        .replace(/T/, ' T'))})`)
+    .append('span');
+    return checkbox_span;
+  }
+  
   for (let i = 0; i < lay; i++) {
 
     let lyr = layers[i];
-    let checkbox_span;
-    
-    // Generate UI element for checkbox columns
-    let initCheckboxLabels = function initCheckboxLabels(lyr) {
-      checkbox_span = d3.select(`.${lyr.column}`)
-      .append('label')
-      .attr('class', () => {
-        return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
-      })
-      .text(`${capitalize_first_letter(
-        lyr.name
-          .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
-          .replace(/-/g, '\u00A0'))}\u00A0`)
-      .append('span')
-      .attr('class', 'asset-value')
-      // FIXME: This is a horrible kludge in order to get space before units.
-      //  Need to write a proper formatter.
-      .text(` ($${capitalize_first_letter(
-        d3.format('.2~s')(lyr.value)
-          .replace(/G/, ' B')
-          .replace(/T/, ' T'))})`)
-      .append('span');
-      return checkbox_span;
-    }
 
     lyr.counter = 0;
     initCheckboxLabels(lyr);
