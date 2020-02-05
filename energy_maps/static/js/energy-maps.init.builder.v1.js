@@ -430,6 +430,12 @@
       decrement_asset_total(lyr.value);  
     }
 
+    let addLayer = function addLayer(lyr) {
+      load_layer_data(lyr);
+      lyr.active = true;
+      increment_asset_total(lyr.value);
+    }
+
     lyr.counter = 0;
     // Generate UI element for checkbox columns
     let checkbox_span = d3.select(`.${lyr.column}`)
@@ -463,21 +469,9 @@
         lyr.counter++;
 
         if (lyr.counter % 2 === 0) {
-
           removeLayer(lyr);
-
         } else {
-
-          console.log(`${lyr.name} counter is odd, value of ${lyr.counter}`);
-
-          load_layer_data(lyr);
-          // load(lyr.timer);
-          lyr.active = true;
-
-          console.log(lyr.value);
-
-          increment_asset_total(lyr.value);
-
+          addLayer(lyr);
         }
 
         // TODO: Arguably the legend context should be cleared in the
