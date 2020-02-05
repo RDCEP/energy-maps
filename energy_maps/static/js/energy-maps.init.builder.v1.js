@@ -437,8 +437,9 @@
     }
 
     let checkbox_span;
+    
     // Generate UI element for checkbox columns
-    let initCheckboxes = function initCheckboxes(lyr) {
+    let initCheckboxLabels = function initCheckboxLabels(lyr) {
       checkbox_span = d3.select(`.${lyr.column}`)
       .append('label')
       .attr('class', () => {
@@ -461,7 +462,7 @@
     }
 
     lyr.counter = 0;
-    initCheckboxes(lyr);
+    initCheckboxLabels(lyr);
 
     if (lyr.draw) {
       lyr.checkbox = checkbox_span.append('input')
