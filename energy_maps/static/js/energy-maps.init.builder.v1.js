@@ -471,14 +471,6 @@
     initCheckboxLabels(lyr);
 
     if (lyr.draw) {
-
-      // let initCheckbox = function initCheckbox(lyr) {
-      //   lyr.checkbox = checkbox_span.append('input')
-      //   .attr('type', 'checkbox')
-      //   .attr('class', `checkbox ${lyr.name}`)
-      //   .attr('data-assetvalue', lyr.value);
-      // }
-
       initCheckbox(lyr);
 
       // bind 
