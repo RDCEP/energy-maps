@@ -402,6 +402,10 @@
 
   let cols = button_columns.length;
 
+  /**
+   * @description Initialize and display all menu columns that divide checkboxes into categories. 
+   * @memberof Init
+   */
   let initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
       let col = button_columns[i];
@@ -415,6 +419,11 @@
     }
   }
 
+  /**
+   * @description Remove a layer from the screen. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let removeLayer = function removeLayer(lyr) {
     hide_spinner();
     lyr.context.clearRect(0, 0, width, height);
@@ -422,6 +431,11 @@
     decrement_asset_total(lyr.value);  
   }
 
+  /**
+   * @description Add a layer to the screen. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let addLayer = function addLayer(lyr) {
     load_layer_data(lyr);
     lyr.active = true;
@@ -434,6 +448,11 @@
   let checkbox_span;
     
   // Generate UI element for checkbox columns
+  /**
+   * @description Generate labels for each checkbox in the menu. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let initCheckboxLabels = function initCheckboxLabels(lyr) {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
@@ -456,6 +475,11 @@
     return checkbox_span;
   }
 
+  /**
+   * @description Generate each checkbox in the menu. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let initCheckbox = function initCheckbox(lyr) {
     lyr.checkbox = checkbox_span.append('input')
     .attr('type', 'checkbox')
@@ -463,6 +487,11 @@
     .attr('data-assetvalue', lyr.value);
   }
 
+  /**
+   * @description Generate a canvas in the DOM for a given layer. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let addLayerCanvas = function addLayerCanvas(lyr) {
     lyr.canvas = d3
     .select('.map.builder')
@@ -474,6 +503,11 @@
     .attr('height', height);
   }
 
+  /**
+   * @description Generate a canvas context in the DOM for a given layer. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let addCanvasContext = function addCanvasContext(lyr) {
     lyr.context = lyr.canvas.node().getContext('2d');
     lyr.context.lineCap = 'round';
