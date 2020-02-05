@@ -402,7 +402,7 @@
 
   let cols = button_columns.length;
 
-  let initMenu = function initMenu() {
+  let initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
       let col = button_columns[i];
       d3.select('.options')
@@ -415,7 +415,7 @@
     }
   }
 
-  initMenu();
+  initMenuColumns();
 
   let lay = layers.length;
 
