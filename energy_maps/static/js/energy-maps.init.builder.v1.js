@@ -415,6 +415,19 @@
     }
   }
 
+  let removeLayer = function removeLayer(lyr) {
+    hide_spinner();
+    lyr.context.clearRect(0, 0, width, height);
+    lyr.active = false;
+    decrement_asset_total(lyr.value);  
+  }
+
+  let addLayer = function addLayer(lyr) {
+    load_layer_data(lyr);
+    lyr.active = true;
+    increment_asset_total(lyr.value);
+  }
+
   initMenuColumns();
 
   let lay = layers.length;
@@ -422,20 +435,6 @@
   for (let i = 0; i < lay; i++) {
 
     let lyr = layers[i];
-
-    let removeLayer = function removeLayer(lyr) {
-      hide_spinner();
-      lyr.context.clearRect(0, 0, width, height);
-      lyr.active = false;
-      decrement_asset_total(lyr.value);  
-    }
-
-    let addLayer = function addLayer(lyr) {
-      load_layer_data(lyr);
-      lyr.active = true;
-      increment_asset_total(lyr.value);
-    }
-
     let checkbox_span;
     
     // Generate UI element for checkbox columns
