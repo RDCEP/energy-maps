@@ -462,7 +462,24 @@
     .attr('class', `checkbox ${lyr.name}`)
     .attr('data-assetvalue', lyr.value);
   }
-  
+
+  let addLayerCanvas = function addLayerCanvas(lyr) {
+    lyr.canvas = d3
+    .select('.map.builder')
+    .append('div')
+    .attr('class', `map layer ${lyr.name}`)
+    .append('canvas')
+    .attr('class', `map layer canvas ${lyr.name}`)
+    .attr('width', canvas_width)
+    .attr('height', height);
+  }
+
+  let addCanvasContext = function addCanvasContext(lyr) {
+    lyr.context = lyr.canvas.node().getContext('2d');
+    lyr.context.lineCap = 'round';
+    lyr.active = false;
+  }
+
   for (let i = 0; i < lay; i++) {
 
     let lyr = layers[i];
@@ -492,21 +509,9 @@
       });
 
     }
-
-    lyr.canvas = d3
-      .select('.map.builder')
-      .append('div')
-      .attr('class', `map layer ${lyr.name}`)
-      .append('canvas')
-      .attr('class', `map layer canvas ${lyr.name}`)
-      .attr('width', canvas_width)
-      .attr('height', height);
-
-    console.log(`<div map layer ${lyr}> created!`);
-
-    lyr.context = lyr.canvas.node().getContext('2d');
-    lyr.context.lineCap = 'round';
-    lyr.active = false;
+    
+    addLayerCanvas(lyr)
+    addCanvasContext(lyr)
 
   }
 
