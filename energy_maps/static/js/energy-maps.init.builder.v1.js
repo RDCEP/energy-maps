@@ -402,7 +402,7 @@
 
   let cols = button_columns.length;
 
-  let initMenu = function initCheckboxMenu() {
+  let initMenu = function initMenu() {
     for (let i = 0; i < cols; ++i) {
       let col = button_columns[i];
       d3.select('.options')
