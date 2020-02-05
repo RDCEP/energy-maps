@@ -455,6 +455,13 @@
     .append('span');
     return checkbox_span;
   }
+
+  let initCheckbox = function initCheckbox(lyr) {
+    lyr.checkbox = checkbox_span.append('input')
+    .attr('type', 'checkbox')
+    .attr('class', `checkbox ${lyr.name}`)
+    .attr('data-assetvalue', lyr.value);
+  }
   
   for (let i = 0; i < lay; i++) {
 
@@ -464,10 +471,15 @@
     initCheckboxLabels(lyr);
 
     if (lyr.draw) {
-      lyr.checkbox = checkbox_span.append('input')
-        .attr('type', 'checkbox')
-        .attr('class', `checkbox ${lyr.name}`)
-        .attr('data-assetvalue', lyr.value);
+
+      // let initCheckbox = function initCheckbox(lyr) {
+      //   lyr.checkbox = checkbox_span.append('input')
+      //   .attr('type', 'checkbox')
+      //   .attr('class', `checkbox ${lyr.name}`)
+      //   .attr('data-assetvalue', lyr.value);
+      // }
+
+      initCheckbox(lyr);
 
       // bind 
       lyr.checkbox.on('change', function() {
