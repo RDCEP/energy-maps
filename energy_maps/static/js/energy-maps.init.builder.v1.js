@@ -33,6 +33,55 @@
    */
   const mapclass = '.main.map.builder';
 
+  // Set base map canvas
+  /**
+   *  @description A canvas element for the base map, attached to
+   *  <div class="main map builder" id="mapcanvas">
+   * @memberof Init
+   */
+  const base_canvas = d3
+    .select(mapclass)
+    .append('canvas')
+    .attr('id', 'mapcanvas')
+    .attr('width', canvas_width)
+    .attr('height', height);
+  const ctx = base_canvas.node().getContext('2d');
+  ctx.LineCap = 'round';
+
+  // Set legend canvas
+  /**
+   * @type {Object}
+   * @description HTML5 canvas for the application legend
+   * @memberof Init
+   */
+  let legend_canvas = d3
+    .select('.map.legend')
+    .append('canvas')
+    .attr('id', 'legendcanvas')
+    .attr('width', canvas_width)
+    .attr('height', height);
+
+  /**
+   * @type {Object}
+   * @description HTML5 canvas context for the application legend
+   * @memberof Init
+   */  
+  let legend_ctx = legend_canvas.node().getContext('2d');
+  ctx.LineCap = 'round';
+
+  /**
+   * @description Draw the base map for the application based off of the data from fmap and fmapfill
+   * @memberof Init
+   */
+  function draw_base_map() {
+    Promise.all(
+      [d3.json(fmap), d3.json(fmapfill)]
+    ).then(function(files) {
+      draw_land(ctx, files, false);
+    });
+    console.log('draw base map');
+  }
+
   /** 
    * @type {string}
    * @description the total sum of asset values for all active layers
@@ -83,55 +132,6 @@
   const capitalize_first_letter = function capitalize_first_letter(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
-
-  // Set base map canvas
-  /**
-   *  @description A canvas element for the base map, attached to
-   *  <div class="main map builder" id="mapcanvas">
-   * @memberof Init
-   */
-  const base_canvas = d3
-    .select(mapclass)
-    .append('canvas')
-    .attr('id', 'mapcanvas')
-    .attr('width', canvas_width)
-    .attr('height', height);
-  const ctx = base_canvas.node().getContext('2d');
-  ctx.LineCap = 'round';
-
-  /**
-   * @description Draw the base map for the application based off of the data from fmap and fmapfill
-   * @memberof Init
-   */
-  function draw_base_map() {
-    Promise.all(
-      [d3.json(fmap), d3.json(fmapfill)]
-    ).then(function(files) {
-      draw_land(ctx, files, false);
-    });
-    console.log('draw base map');
-  }
-
-  // Set legend canvas
-  /**
-   * @type {Object}
-   * @description HTML5 canvas for the application legend
-   * @memberof Init
-   */
-  let legend_canvas = d3
-    .select('.map.legend')
-    .append('canvas')
-    .attr('id', 'legendcanvas')
-    .attr('width', canvas_width)
-    .attr('height', height);
-
-  /**
-   * @type {Object}
-   * @description HTML5 canvas context for the application legend
-   * @memberof Init
-   */  
-  let legend_ctx = legend_canvas.node().getContext('2d');
-  ctx.LineCap = 'round';
   
   /**
    * @description Call all draw methods for a given layer and render it to its canvas element. 
