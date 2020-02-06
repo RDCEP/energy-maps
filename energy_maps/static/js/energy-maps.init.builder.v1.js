@@ -33,15 +33,6 @@
    */
   const mapclass = '.main.map.builder';
 
-  /**
-   * @param  {String} s - the supplied character string to be formatted
-   * @returns {String} the supplied string with the first letter capitalized
-   * @memberof Init
-   */
-  const capitalize_first_letter = function capitalize_first_letter(s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
-
   /** 
    * @type {string}
    * @description the total sum of asset values for all active layers
@@ -83,6 +74,15 @@
       .replace(/T/, ' T')}`
     ;
   }
+
+  /**
+   * @param  {String} s - the supplied character string to be formatted
+   * @returns {String} the supplied string with the first letter capitalized
+   * @memberof Init
+   */
+  const capitalize_first_letter = function capitalize_first_letter(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
 
   // Set base map canvas
   /**
