@@ -453,7 +453,7 @@
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let initCheckboxLabels = function initCheckboxLabels(lyr) {
+  let initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
@@ -463,6 +463,11 @@
       lyr.name
         .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
         .replace(/-/g, '\u00A0'))}\u00A0`)
+    return checkbox_span;
+  }
+
+  let initMenuAssetValue = function initMenuAssetValue(lyr) {
+    checkbox_span = initMenuCheckboxLabel(lyr)// d3.select(`.${lyr.column}`)
     .append('span')
     .attr('class', 'asset-value')
     // FIXME: This is a horrible kludge in order to get space before units.
@@ -475,16 +480,22 @@
     return checkbox_span;
   }
 
+  let initMenuItem = function initMenuItem(lyr) {
+    let label = initMenuCheckboxLabel(lyr)
+    initMenuAssetValue(label);
+  }
+
   /**
    * @description Generate each checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let initCheckbox = function initCheckbox(lyr) {
+  let initMenuCheckbox = function initMenuCheckbox(lyr) {
     lyr.checkbox = checkbox_span.append('input')
     .attr('type', 'checkbox')
     .attr('class', `checkbox ${lyr.name}`)
     .attr('data-assetvalue', lyr.value);
+    return lyr.checkbox;
   }
 
   /**
@@ -519,10 +530,12 @@
     let lyr = layers[i];
 
     lyr.counter = 0;
-    initCheckboxLabels(lyr);
+    // initMenuCheckboxLabel(lyr);
+    initMenuAssetValue(lyr); 
+    // initMenuItem(lyr);// TODO: Consider making this "initMenu()" function that pipe return values from initMenuCheckboxLabel() and initMenuAssetValue() into one thing
 
     if (lyr.draw) {
-      initCheckbox(lyr);
+      initMenuCheckbox(lyr);
 
       // bind 
       lyr.checkbox.on('change', function() {
