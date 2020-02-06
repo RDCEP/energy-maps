@@ -61,14 +61,54 @@
    */
   const mapclass = '.main.map.builder';
 
+  // Set base map canvas
   /**
-   * @param  {String} s - the supplied character string to be formatted
-   * @returns {String} the supplied string with the first letter capitalized
+   *  @description A canvas element for the base map, attached to
+   *  &lt;div class="main map builder" id="mapcanvas">
    * @memberof Init
    */
-  const capitalize_first_letter = function capitalize_first_letter(s) {
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
+  const base_canvas = d3
+    .select(mapclass)
+    .append('canvas')
+    .attr('id', 'mapcanvas')
+    .attr('width', canvas_width)
+    .attr('height', height);
+  const ctx = base_canvas.node().getContext('2d');
+  ctx.LineCap = 'round';
+
+  // Set legend canvas
+  /**
+   * @type {Object}
+   * @description HTML5 canvas for the application legend
+   * @memberof Init
+   */
+  let legend_canvas = d3
+    .select('.map.legend')
+    .append('canvas')
+    .attr('id', 'legendcanvas')
+    .attr('width', canvas_width)
+    .attr('height', height);
+
+  /**
+   * @type {Object}
+   * @description HTML5 canvas context for the application legend
+   * @memberof Init
+   */  
+  let legend_ctx = legend_canvas.node().getContext('2d');
+  ctx.LineCap = 'round';
+
+  /**
+   * @description Draw the base map for the application based off of the data from fmap and fmapfill
+   * @memberof Init
+   */
+  function draw_base_map() {
+    Promise.all(
+      [d3.json(fmap), d3.json(fmapfill)]
+    ).then(function(files) {
+      draw_land(ctx, files, false);
+    });
+    console.log('draw base map');
+  }
 
   /** 
    * @type {string}
@@ -112,54 +152,14 @@
     ;
   }
 
-  // Set base map canvas
   /**
-   *  @description A canvas element for the base map, attached to
-   *  &lt;div class="main map builder" id="mapcanvas">
+   * @param  {String} s - the supplied character string to be formatted
+   * @returns {String} the supplied string with the first letter capitalized
    * @memberof Init
    */
-  const base_canvas = d3
-    .select(mapclass)
-    .append('canvas')
-    .attr('id', 'mapcanvas')
-    .attr('width', canvas_width)
-    .attr('height', height);
-  const ctx = base_canvas.node().getContext('2d');
-  ctx.LineCap = 'round';
-
-  /**
-   * @description Draw the base map for the application based off of the data from fmap and fmapfill
-   * @memberof Init
-   */
-  function draw_base_map() {
-    Promise.all(
-      [d3.json(fmap), d3.json(fmapfill)]
-    ).then(function(files) {
-      draw_land(ctx, files, false);
-    });
-    console.log('draw base map');
-  }
-
-  // Set legend canvas
-  /**
-   * @type {Object}
-   * @description HTML5 canvas for the application legend
-   * @memberof Init
-   */
-  let legend_canvas = d3
-    .select('.map.legend')
-    .append('canvas')
-    .attr('id', 'legendcanvas')
-    .attr('width', canvas_width)
-    .attr('height', height);
-
-  /**
-   * @type {Object}
-   * @description HTML5 canvas context for the application legend
-   * @memberof Init
-   */  
-  let legend_ctx = legend_canvas.node().getContext('2d');
-  ctx.LineCap = 'round';
+  const capitalize_first_letter = function capitalize_first_letter(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
   
   /**
    * @description Call all draw methods for a given layer and render it to its canvas element. 
@@ -448,6 +448,17 @@
   }
 
   /**
+   * @description Add a layer to the screen. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
+  let addLayer = function addLayer(lyr) {
+    load_layer_data(lyr);
+    lyr.active = true;
+    increment_asset_total(lyr.value);
+  }
+
+  /**
    * @description Remove a layer from the screen. 
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
@@ -459,29 +470,21 @@
     decrement_asset_total(lyr.value);  
   }
 
-  /**
-   * @description Add a layer to the screen. 
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  let addLayer = function addLayer(lyr) {
-    load_layer_data(lyr);
-    lyr.active = true;
-    increment_asset_total(lyr.value);
-  }
-
   initMenuColumns();
 
   let lay = layers.length;
   let checkbox_span;
     
   // Generate UI element for checkbox columns
+
   /**
-   * @description Generate labels for each checkbox in the menu. 
+   * @description Generate a label for a checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - an HTML5 label tag with a class that corresponds to the `lyr` object 
+   * and a descriptive formatted text string. 
    * @memberof Init
    */
-  let initCheckboxLabels = function initCheckboxLabels(lyr) {
+  let initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
@@ -491,6 +494,18 @@
       lyr.name
         .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
         .replace(/-/g, '\u00A0'))}\u00A0`)
+    return checkbox_span;
+  }
+
+  /**
+   * @description Generate an asset value for a checkbox in the menu. 
+   * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - an HTML5 span tag with that displays total asset value for the menu item. 
+   * abbreviated in either billions or trillions. Child of a parent label tag.
+   * @memberof Init
+   */
+  let initMenuAssetValue = function initMenuAssetValue(lyr) {
+    checkbox_span  
     .append('span')
     .attr('class', 'asset-value')
     // FIXME: This is a horrible kludge in order to get space before units.
@@ -504,15 +519,31 @@
   }
 
   /**
-   * @description Generate each checkbox in the menu. 
+   * @description Generate a menu item. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - HTML5 label and span as children of a column 
+   * div in the menu. 
    * @memberof Init
    */
-  let initCheckbox = function initCheckbox(lyr) {
+  let initMenuItem = function initMenuItem(lyr) {
+    initMenuCheckboxLabel(lyr);
+    initMenuAssetValue(lyr); 
+    return checkbox_span;
+  }
+
+  /**
+   * @description Generate each checkbox in the menu. 
+   * @param {Object} lyr - An object from layers[].
+   * @return {Object} lyr.checkbox - a `checkbox` property added to the lyr item 
+   * containing a checkbox input tag.
+   * @memberof Init
+   */
+  let initMenuCheckbox = function initMenuCheckbox(lyr) {
     lyr.checkbox = checkbox_span.append('input')
     .attr('type', 'checkbox')
     .attr('class', `checkbox ${lyr.name}`)
     .attr('data-assetvalue', lyr.value);
+    return lyr.checkbox;
   }
 
   /**
@@ -547,10 +578,11 @@
     let lyr = layers[i];
 
     lyr.counter = 0;
-    initCheckboxLabels(lyr);
+    
+    initMenuItem(lyr);
 
     if (lyr.draw) {
-      initCheckbox(lyr);
+      initMenuCheckbox(lyr);
 
       // bind 
       lyr.checkbox.on('change', function() {
@@ -596,7 +628,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Feb 05 2020 15:58:53 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 06 2020 16:13:52 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
