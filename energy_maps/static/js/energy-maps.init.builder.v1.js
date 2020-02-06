@@ -467,7 +467,7 @@
   }
 
   let initMenuAssetValue = function initMenuAssetValue(lyr) {
-    checkbox_span = initMenuCheckboxLabel(lyr)// d3.select(`.${lyr.column}`)
+    checkbox_span =  initMenuCheckboxLabel(lyr)// d3.select(`.${lyr.column}`) <-- how it was done before extracting as independent method // lyr <-- how it was done to try and pipe values into initMenuItem -- returned NaN for numeric value 
     .append('span')
     .attr('class', 'asset-value')
     // FIXME: This is a horrible kludge in order to get space before units.
