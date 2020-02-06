@@ -420,6 +420,17 @@
   }
 
   /**
+   * @description Add a layer to the screen. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
+  let addLayer = function addLayer(lyr) {
+    load_layer_data(lyr);
+    lyr.active = true;
+    increment_asset_total(lyr.value);
+  }
+
+  /**
    * @description Remove a layer from the screen. 
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
@@ -429,17 +440,6 @@
     lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
     decrement_asset_total(lyr.value);  
-  }
-
-  /**
-   * @description Add a layer to the screen. 
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  let addLayer = function addLayer(lyr) {
-    load_layer_data(lyr);
-    lyr.active = true;
-    increment_asset_total(lyr.value);
   }
 
   initMenuColumns();
