@@ -448,8 +448,9 @@
   let checkbox_span;
     
   // Generate UI element for checkbox columns
+
   /**
-   * @description Generate labels for each checkbox in the menu. 
+   * @description Generate a label for a checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
@@ -466,8 +467,13 @@
     return checkbox_span;
   }
 
+  /**
+   * @description Generate an asset value for a checkbox in the menu. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let initMenuAssetValue = function initMenuAssetValue(lyr) {
-    checkbox_span =  initMenuCheckboxLabel(lyr)// d3.select(`.${lyr.column}`) <-- how it was done before extracting as independent method // lyr <-- how it was done to try and pipe values into initMenuItem -- returned NaN for numeric value 
+    checkbox_span  
     .append('span')
     .attr('class', 'asset-value')
     // FIXME: This is a horrible kludge in order to get space before units.
@@ -480,9 +486,15 @@
     return checkbox_span;
   }
 
+  /**
+   * @description Generate a menu item. 
+   * @param {Object} lyr - An object from layers[].
+   * @memberof Init
+   */
   let initMenuItem = function initMenuItem(lyr) {
-    let label = initMenuCheckboxLabel(lyr)
-    initMenuAssetValue(label);
+    initMenuCheckboxLabel(lyr);
+    initMenuAssetValue(lyr); 
+    return checkbox_span;
   }
 
   /**
@@ -530,9 +542,8 @@
     let lyr = layers[i];
 
     lyr.counter = 0;
-    // initMenuCheckboxLabel(lyr);
-    initMenuAssetValue(lyr); 
-    // initMenuItem(lyr);// TODO: Consider making this "initMenu()" function that pipe return values from initMenuCheckboxLabel() and initMenuAssetValue() into one thing
+    
+    initMenuItem(lyr);
 
     if (lyr.draw) {
       initMenuCheckbox(lyr);
