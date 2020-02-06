@@ -452,6 +452,8 @@
   /**
    * @description Generate a label for a checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - an HTML5 label tag with a class that corresponds to the `lyr` object 
+   * and a descriptive formatted text string. 
    * @memberof Init
    */
   let initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
@@ -470,6 +472,8 @@
   /**
    * @description Generate an asset value for a checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - an HTML5 span tag with that displays total asset value for the menu item. 
+   * abbreviated in either billions or trillions. Child of a parent label tag.
    * @memberof Init
    */
   let initMenuAssetValue = function initMenuAssetValue(lyr) {
@@ -489,6 +493,8 @@
   /**
    * @description Generate a menu item. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} checkbox_span - HTML5 label and span as children of a column 
+   * div in the menu. 
    * @memberof Init
    */
   let initMenuItem = function initMenuItem(lyr) {
@@ -500,6 +506,8 @@
   /**
    * @description Generate each checkbox in the menu. 
    * @param {Object} lyr - An object from layers[].
+   * @return {Object} lyr.checkbox - a `checkbox` property added to the lyr item 
+   * containing a checkbox input tag.
    * @memberof Init
    */
   let initMenuCheckbox = function initMenuCheckbox(lyr) {
