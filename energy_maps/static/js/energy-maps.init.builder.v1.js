@@ -545,42 +545,41 @@
     lyr.active = false;
   }
 
-  for (let i = 0; i < lay; i++) {
+  let initMenu = (function initMenu() {
+    for (let i = 0; i < lay; i++) {
 
-    let lyr = layers[i];
+      let lyr = layers[i];
+      lyr.counter = 0;
+      
+      initMenuItem(lyr);
+  
+      if (lyr.draw) {
+        initMenuCheckbox(lyr);
+        lyr.checkbox.on('change', function() {
+          lyr.counter++;
 
-    lyr.counter = 0;
-    
-    initMenuItem(lyr);
-
-    if (lyr.draw) {
-      initMenuCheckbox(lyr);
-
-      // bind 
-      lyr.checkbox.on('change', function() {
-
-        lyr.counter++;
-
-        if (lyr.counter % 2 === 0) {
-          removeLayer(lyr);
-        } else {
-          addLayer(lyr);
-        }
-
-        // TODO: Arguably the legend context should be cleared in the
-        //  update_legend() function.
-        legend_ctx.clearRect(0, 0, width, height);
-        update_legend(legend_ctx, layers);
-
-      });
-
+          if (lyr.counter % 2 === 0) {
+            removeLayer(lyr);
+          } else {
+            addLayer(lyr);
+          }
+  
+          // TODO: Arguably the legend context should be cleared in the
+          //  update_legend() function.
+          legend_ctx.clearRect(0, 0, width, height);
+          update_legend(legend_ctx, layers);
+  
+        });
+  
+      }
+      
+      addLayerCanvas(lyr)
+      addCanvasContext(lyr)
+  
     }
-    
-    addLayerCanvas(lyr)
-    addCanvasContext(lyr)
+  });
 
-  }
-
+  initMenu();
   draw_base_map();
 
 })();
