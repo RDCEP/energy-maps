@@ -24,8 +24,7 @@ let electricity_generation = {
     dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
     width: .66 * SCALE
   },
-  scale: .3 * SCALE,
-  old_scale: .9 * SCALE, // TODO: figure out if needed
+  scale: .3 * SCALE, //old_scale: .9 * SCALE, // TODO: figure out if needed
   coal_plants: {
     src: '',
     func: 0,

@@ -156,6 +156,8 @@
     }
   };
 
+  // TODO: Consider object destructuring -- you may be able to push objects from other files
+  // Into this layers array and iterate through them to utilize the properties one way or another.
   /** 
    * @description An array of objects representing resources to be rendered on top of the map canvas.
    * @property {string}   name               - A canvas id.
@@ -283,6 +285,12 @@
     { name: 'oil-and-gas-storage',
       value: 181_000_000_000,
       draw: false,
+      // TODO: Split up the JSON files based on whatever property marks processing vs. storage
+      // draw: [ {
+      //   f: draw_storage,
+      //   src: [ `/static/csv/nproc.csv`],
+      //   w: d3.csv
+      // } ],
       column: 'oil-and-gas',
     },
     { name: 'coal-mine',
@@ -400,6 +408,8 @@
     },
   ];
 
+  // button_columns.push({name: 'test'}) 
+
   let cols = button_columns.length;
 
   /**
@@ -464,7 +474,7 @@
     })
     .text(`${capitalize_first_letter(
       lyr.name
-        .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
+        .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
         .replace(/-/g, '\u00A0'))}\u00A0`)
     return checkbox_span;
   }

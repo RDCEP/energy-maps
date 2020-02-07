@@ -225,11 +225,12 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 
 };
 
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
 
   let gproc = queued_data[0]; // gas processing
-  let gstor = queued_data[1]; // gas storage
+  // let gstor = queued_data[1]; // gas storage
 
   gproc.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
@@ -239,12 +240,25 @@ const draw_processing = function draw_processing(ctx, queued_data) {
     }
   });
 
-  gstor.forEach(function(d) {
-    let xy = projection([+d.lon, +d.lat]);
-    draw_gas_storage(ctx, xy);
-  });
+  // gstor.forEach(function(d) {
+  //   let xy = projection([+d.lon, +d.lat]);
+  //   draw_gas_storage(ctx, xy);
+  // });
 
 };
+
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+const draw_storage = function draw_storage(ctx, queued_data) {
+  let gstor = queued_data[0]; // gas storage
+  gstor.forEach(function(d, i) {
+    let xy = projection([+d.lon, +d.lat]);
+    draw_gas_storage(ctx, xy);
+    if (i === gstor.length - 1) { 
+      hide_spinner(); 
+    }
+    return xy
+  });
+}
 
 const draw_refining = function draw_refining(ctx, queued_data) {
   console.log('draw_refining');
