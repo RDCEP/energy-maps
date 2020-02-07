@@ -74,9 +74,9 @@ const oil_and_gas = {
  * @returns {Number[]} xy - Set of xy coordinates
  */
 const get_xy = function get_xy(queued_data) {
-  let wells = queued_data[0]; // generalize it so it doesn't just apply to wells, and also strike the queued data assignment bc some require two data sets
+  let data = queued_data[0]; // generalize it so it doesn't just apply to wells, and also strike the queued data assignment bc some require two data sets
   
-  wells.forEach(function(d) { 
+  data.forEach(function(d) { 
     let xy = projection([+d.lon, +d.lat]);
     return xy 
   });
