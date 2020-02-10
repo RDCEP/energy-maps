@@ -15,6 +15,9 @@
  * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
+
+SCALE = 1;
+
 let plant_stroke = 'rgba(255, 255, 255, 1)';
 let electricity_generation = {
   stroke: {

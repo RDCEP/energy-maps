@@ -13,7 +13,7 @@ let InfSet = module.exports = {
 
 }
 
-let InfrastructureSet = InfSet.InfrastructureSet;
+// let InfrastructureSet = InfSet.InfrastructureSet;
 
-let inf = new InfrastructureSet('inf', 100, 'class-attr');
-console.log(inf);
+// let inf = new InfrastructureSet('inf', 100, 'class-attr');
+// console.log(inf);
