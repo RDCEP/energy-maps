@@ -10,7 +10,8 @@
  * @class
  * @classdesc Used to create objects that represent electric grid infrastructure.
  * @extends InfrastructureSet
- * @param {String} name - class heading in data // TODO: InfrastructureSet declares a convention in which name is a canvas ID
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
  * @param {Array} draw - properties used to parse the data and render the visualization

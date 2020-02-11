@@ -392,7 +392,6 @@
     }
   ];
 
-
 let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
@@ -400,13 +399,13 @@ let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
 } ], 'rgba(255, 255, 255, 1)', 1)
 layers.push(coal_mine)
 
-let acna = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', 
-  102_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-  w: d3.json,
-} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
-layers.push(acna)
+// let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', // TODO: how do we represent both under-100 and unknown kvac in the array? 
+//   102_000_000_000, 'electricity-transmission-and-distribution', [ {
+//   f: draw_grid_class_ac_unk_and_under_100,
+//   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+//   w: d3.json,
+// } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
+// layers.push(ac_under_100);
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
