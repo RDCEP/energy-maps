@@ -82,7 +82,15 @@ function InfrastructureSet(name, text, value, column, draw) {
   }];
 }
 
-function MapBuilderUI(map, columns, toggle) {
+/** 
+ * Instantiates a user interface object that allows you to create a new map.
+ * @class
+ * @classdesc Base class that allows derived classes to create objects that represent data sets for specific types of infrastructure.
+ * @param {Object} map - a map projection on a canvas object? that's probably what this should return... TBD
+ * @param {Number} columns - Number of columns rendered to the menu... TBD
+ * @param {Object} toggle - checkboxes or something... TBD
+ */
+function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real thing
   this.map = map;
   this.columns = columns;
   this.toggle = toggle;
@@ -108,7 +116,7 @@ function MapBuilderUI(map, columns, toggle) {
   }
 
   function initMenuItm() {
-    
+
   }
 
 }
