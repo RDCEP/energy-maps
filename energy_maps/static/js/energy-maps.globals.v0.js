@@ -82,6 +82,37 @@ function InfrastructureSet(name, text, value, column, draw) {
   }];
 }
 
+function MapBuilderUI(map, columns, toggle) {
+  this.map = map;
+  this.columns = columns;
+  this.toggle = toggle;
+
+  function initMenu() {
+
+  }
+
+  function initMenuColumns() {
+    
+  }
+
+  function initMenuChkbx() {
+
+  }
+
+  function initMenuChkbxLabels() {
+
+  }
+
+  function initMenuAssetValue() {
+
+  }
+
+  function initMenuItm() {
+    
+  }
+
+}
+
 // create projection and path objects with which to draw geo objects
 
 /**
