@@ -5,6 +5,31 @@
  * @module Plants
  */
 
+/** 
+ * Instatiates a new PowerPlant object that contains properties used to power plants to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent electricity-generating infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} stroke - rgba value to set the canvas stroke
+ * @param {String} fuel_type - class heading from the data file
+ * @param {String} color - rgba value used to draw the grid line
+ * @param {String} stroke - rgba value used for symbol outlines and opacity
+ */
+function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.fuel_type = fuel_type || '';
+  this.color = color || 'rgba(0, 0, 0, 0.5)';
+  this.stroke = stroke || plant_stroke;
+}
+PowerPlant.prototype = new InfrastructureSet;
+
+SCALE = 1;
+let plant_stroke = 'rgba(255, 255, 255, 1)';
  /**
  * A collection of power plant classifications used for filtering.
  * @type {Object} 
@@ -16,9 +41,6 @@
  * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
 
-SCALE = 1;
-
-let plant_stroke = 'rgba(255, 255, 255, 1)';
 let electricity_generation = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',

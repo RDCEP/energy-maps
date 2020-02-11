@@ -408,7 +408,15 @@ let acna = new Grid('AC-lines-under-100-kV', 'Unknown kV AC',
 } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
 layers.push(acna)
 
+let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
+  f: draw_coal_plants,
+  src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+  w: d3.json,
+} ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
+layers.push(coal_plants);
+
 console.log(layers)
+
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
    * @property {string} name - an HTML/CSS ID that will be assigned to the markup dynamically and ultimately formatted for case and plain-English spacing to label the columns.
