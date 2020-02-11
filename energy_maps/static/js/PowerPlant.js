@@ -1,5 +1,5 @@
-const InfSet = require('./InfrastructureSet');
-let InfrastructureSet = InfSet.InfrastructureSet;
+const is = require('./InfrastructureSet');
+let InfrastructureSet = is.InfrastructureSet;
 
 const d3 = require('d3')
 const plants = require('./energy-maps.funcs.plants.v0.js')
@@ -20,7 +20,5 @@ let draw = [ {
     w: d3.json,
   } ]
 
-let coal_plants = new PowerPlant('coal-plant', 1_092_000_000_000, 'electricity-generation',
-                                draw,'COAL', draw_coalmine_legend, 'Coal power plant', 
-                                'rgba(0, 0, 0, .5)', plant_stroke)
+let coal_plants = new PowerPlant('coal-plant', 1_092_000_000_000, 'electricity-generation',draw,'COAL', draw_coalmine_legend, 'Coal power plant', 'rgba(0, 0, 0, .5)', plant_stroke)
 console.log(coal_plants);
