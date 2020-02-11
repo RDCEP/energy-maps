@@ -184,6 +184,8 @@
     }
   };
 
+  // TODO: Consider object destructuring -- you may be able to push objects from other files
+  // Into this layers array and iterate through them to utilize the properties one way or another.
   /** 
    * @description An array of objects representing resources to be rendered on top of the map canvas.
    * @property {string}   name               - A canvas id.
@@ -311,6 +313,12 @@
     { name: 'oil-and-gas-storage',
       value: 181_000_000_000,
       draw: false,
+      // TODO: Split up the JSON files based on whatever property marks processing vs. storage
+      // draw: [ {
+      //   f: draw_storage,
+      //   src: [ `/static/csv/nproc.csv`],
+      //   w: d3.csv
+      // } ],
       column: 'oil-and-gas',
     },
     { name: 'coal-mine',
@@ -412,6 +420,16 @@
     }
   ];
 
+
+let coal_mine = new Coal('coal-mine', 57_000_000_000, 'coal', [ {
+  f: draw_coal_mines,
+  src: [ '/static/csv/coal.csv' ],
+  w: d3.csv
+} ], 'rgba(255, 255, 255, 1)', 1, 'Coal mine')
+// console.log(coal_mine);
+console.log(layers)
+layers.push(coal_mine)
+console.log(layers)
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
    * @property {string} name - an HTML/CSS ID that will be assigned to the markup dynamically and ultimately formatted for case and plain-English spacing to label the columns.
@@ -427,6 +445,8 @@
     { name: 'electricity-transmission-and-distribution',
     },
   ];
+
+  // button_columns.push({name: 'test'}) 
 
   let cols = button_columns.length;
 
@@ -492,7 +512,7 @@
     })
     .text(`${capitalize_first_letter(
       lyr.name
-        .replace(/ /g, '\u00A0') // Do we need this line? Commented out it does nothing, and it seems to be replacing a space with a space...?
+        .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
         .replace(/-/g, '\u00A0'))}\u00A0`)
     return checkbox_span;
   }
@@ -573,42 +593,41 @@
     lyr.active = false;
   }
 
-  for (let i = 0; i &lt; lay; i++) {
+  let initMenu = (function initMenu() {
+    for (let i = 0; i &lt; lay; i++) {
 
-    let lyr = layers[i];
+      let lyr = layers[i];
+      lyr.counter = 0;
+      
+      initMenuItem(lyr);
+  
+      if (lyr.draw) {
+        initMenuCheckbox(lyr);
+        lyr.checkbox.on('change', function() {
+          lyr.counter++;
 
-    lyr.counter = 0;
-    
-    initMenuItem(lyr);
-
-    if (lyr.draw) {
-      initMenuCheckbox(lyr);
-
-      // bind 
-      lyr.checkbox.on('change', function() {
-
-        lyr.counter++;
-
-        if (lyr.counter % 2 === 0) {
-          removeLayer(lyr);
-        } else {
-          addLayer(lyr);
-        }
-
-        // TODO: Arguably the legend context should be cleared in the
-        //  update_legend() function.
-        legend_ctx.clearRect(0, 0, width, height);
-        update_legend(legend_ctx, layers);
-
-      });
-
+          if (lyr.counter % 2 === 0) {
+            removeLayer(lyr);
+          } else {
+            addLayer(lyr);
+          }
+  
+          // TODO: Arguably the legend context should be cleared in the
+          //  update_legend() function.
+          legend_ctx.clearRect(0, 0, width, height);
+          update_legend(legend_ctx, layers);
+  
+        });
+  
+      }
+      
+      addLayerCanvas(lyr)
+      addCanvasContext(lyr)
+  
     }
-    
-    addLayerCanvas(lyr)
-    addCanvasContext(lyr)
+  });
 
-  }
-
+  initMenu();
   draw_base_map();
 
 })();
@@ -622,13 +641,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="module-Coal-Coal.html">Coal</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 06 2020 16:13:52 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 11 2020 15:21:22 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

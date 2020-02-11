@@ -6,14 +6,17 @@
  */
 
 /** 
- * constructor description
- * @param {[type]} name [description]
- * @param {[type]} value [description]
- * @param {[type]} column [description]
- * @param {[type]} draw [description]
- * @param {[type]} stroke [description]
- * @param {[type]} width [description]
- * @param {[type]} text [description]
+ * Instatiates a new Coal object that contains properties used to draw mines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent coal-based infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} stroke - rgba value to set the canvas stroke
+ * @param {Number} width - width value set relative to SCALE
+ * @param {String} text - text to display on the legend
  */
 function Coal(name, value, column, draw, stroke, width, text) {
     InfrastructureSet.call(this, name, value, column, draw);

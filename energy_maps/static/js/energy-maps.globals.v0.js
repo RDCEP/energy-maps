@@ -61,11 +61,13 @@ const viz = {
 };
 
 /** 
- * constructor description
- * @param {[type]} name [description]
- * @param {[type]} value [description]
- * @param {[type]} column [description]
- * @param {[type]} draw [description]
+ * Instantiates a new generic object that contains properties used to draw infrastructure data to the map and legend.
+ * @class
+ * @classdesc Base class that allows derived classes to create objects that represent data sets for specific types of infrastructure.
+ * @param {String} name - canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
  */
 function InfrastructureSet(name, value, column, draw) {
   this.name = name || '';
