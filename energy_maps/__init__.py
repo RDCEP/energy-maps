@@ -110,6 +110,10 @@ assets.register('js_builderfucker',
                        'js/energy-maps.funcs.wells.v0.js',
                        'js/energy-maps.legends.v1.js',
                        'js/energy-maps.init.builder.v1.js',
+                       'js/InfrastructureSet.js',
+                       'js/Grid.js',
+                       'js/Coal.js',
+                       'js/PowerPlant.js',
                        filters='jsmin',
                        output='gen/js_builderfucker.js'))
 
