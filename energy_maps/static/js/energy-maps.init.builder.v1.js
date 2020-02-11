@@ -392,6 +392,16 @@
     }
   ];
 
+
+let coal_mine = new Coal('coal-mine', 57_000_000_000, 'coal', [ {
+  f: draw_coal_mines,
+  src: [ '/static/csv/coal.csv' ],
+  w: d3.csv
+} ], 'rgba(255, 255, 255, 1)', 1, 'Coal mine')
+// console.log(coal_mine);
+console.log(layers)
+layers.push(coal_mine)
+console.log(layers)
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
    * @property {string} name - an HTML/CSS ID that will be assigned to the markup dynamically and ultimately formatted for case and plain-English spacing to label the columns.
