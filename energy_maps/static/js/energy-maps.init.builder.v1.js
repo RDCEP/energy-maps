@@ -398,9 +398,16 @@ let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   src: [ '/static/csv/coal.csv' ],
   w: d3.csv
 } ], 'rgba(255, 255, 255, 1)', 1)
-// console.log(coal_mine);
-console.log(layers)
 layers.push(coal_mine)
+
+let acna = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', 
+  102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
+layers.push(acna)
+
 console.log(layers)
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
