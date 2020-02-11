@@ -5,6 +5,30 @@
  * @module Grid
  */
 
+/** 
+ * Instatiates a new Grid object that contains properties used to draw electric grid segments to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent electric grid infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - class heading in data // TODO: InfrastructureSet declares a convention in which name is a canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} heading - class heading in the data file
+ * @param {String} color - rgba value
+ * @param {Number} line_width - value used to scale the width of the grid
+ * @param {Number} nominal_voltage - system voltage
+ */
+function Grid(name, text, value, column, draw, heading, color, line_width, nominal_voltage) {
+    InfrastructureSet.call(this, name, text, value, column, draw);
+    this.heading = heading || '';
+    this.color = color || 'rgba(0, 0, 0, 0.5)';
+    this.line_width = line_width || 0;
+    this.nominal_voltage = nominal_voltage || 50;
+}
+Grid.prototype = new InfrastructureSet;
+
+
  /**
  * A collection of electric grid classifications containing metadata that is used to filter out and render separate portions of the grid.
  * @type {Object} 

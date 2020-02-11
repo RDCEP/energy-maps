@@ -393,11 +393,11 @@
   ];
 
 
-let coal_mine = new Coal('coal-mine', 57_000_000_000, 'coal', [ {
+let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
   w: d3.csv
-} ], 'rgba(255, 255, 255, 1)', 1, 'Coal mine')
+} ], 'rgba(255, 255, 255, 1)', 1)
 // console.log(coal_mine);
 console.log(layers)
 layers.push(coal_mine)

@@ -65,12 +65,14 @@ const viz = {
  * @class
  * @classdesc Base class that allows derived classes to create objects that represent data sets for specific types of infrastructure.
  * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
  * @param {Array} draw - properties used to parse the data and render the visualization
  */
-function InfrastructureSet(name, value, column, draw) {
+function InfrastructureSet(name, text, value, column, draw) {
   this.name = name || '';
+  this.text = text || '';
   this.value = value || 0;
   this.column = column || '';
   this.draw = draw || [{

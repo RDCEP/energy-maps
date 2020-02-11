@@ -11,6 +11,7 @@
  * @classdesc Used to create objects that represent coal-based infrastructure.
  * @extends InfrastructureSet
  * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
  * @param {Array} draw - properties used to parse the data and render the visualization
@@ -18,11 +19,10 @@
  * @param {Number} width - width value set relative to SCALE
  * @param {String} text - text to display on the legend
  */
-function Coal(name, value, column, draw, stroke, width, text) {
-    InfrastructureSet.call(this, name, value, column, draw);
+function Coal(name, text, value, column, draw, stroke, width) {
+    InfrastructureSet.call(this, name, text, value, column, draw);
     this.stroke = stroke;
     this.width = width || 0;
-    this.text = text || 'Coal';
 }
 Coal.prototype = new InfrastructureSet;
 
