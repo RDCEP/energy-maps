@@ -170,15 +170,15 @@
    * @memberof Init
    */
   let layers = [
-    { name: 'AC-lines-under-100-kV',
-      value: 102_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_unk_and_under_100,
-        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
+    // { name: 'AC-lines-under-100-kV',
+    //   value: 102_000_000_000,
+    //   draw: [ {
+    //     f: draw_grid_class_ac_unk_and_under_100,
+    //     src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-transmission-and-distribution',
+    // },
     { name: 'AC-lines-100-to-300-kV',
       value: 167_000_000_000,
       draw: [ {
@@ -331,65 +331,65 @@
     //   } ],
     //   column: 'electricity-generation',
     // },
-    { name: 'petroleum-plant',
-      value: 64_000_000_000,
-      draw: [ {
-        f: draw_petro_plants,
-        src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'nuclear-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_nuclear_plants,
-        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'hydro-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_hydro_plants,
-        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'wind-farms',
-      value: 132_000_000_000,
-      draw: [ {
-        f: draw_wind_farms,
-        src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'solar-PV',
-      value: 14_000_000_000,
-      draw: [ {
-        f: draw_solar_plants,
-        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'geothermal-plant',
-      value: 22_000_000_000,
-      draw: [ {
-        f: draw_geo_plants,
-        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'biofuel',
-      value: 51_000_000_000,
-      draw: false,
-      column: 'electricity-generation',
-    }
+    // { name: 'petroleum-plant',
+    //   value: 64_000_000_000,
+    //   draw: [ {
+    //     f: draw_petro_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-PET.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'nuclear-plant',
+    //   value: 597_000_000_000,
+    //   draw: [ {
+    //     f: draw_nuclear_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'hydro-plant',
+    //   value: 597_000_000_000,
+    //   draw: [ {
+    //     f: draw_hydro_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'wind-farms',
+    //   value: 132_000_000_000,
+    //   draw: [ {
+    //     f: draw_wind_farms,
+    //     src: ['/static/json/power_plants_split/power_plants-WND.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'solar-PV',
+    //   value: 14_000_000_000,
+    //   draw: [ {
+    //     f: draw_solar_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'geothermal-plant',
+    //   value: 22_000_000_000,
+    //   draw: [ {
+    //     f: draw_geo_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'biofuel',
+    //   value: 51_000_000_000,
+    //   draw: false,
+    //   column: 'electricity-generation',
+    // }
   ];
 
 let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
@@ -406,13 +406,46 @@ let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
 } ], '#767676', SCALE)
 layers.push(railroad);
 
-// let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', // TODO: how do we represent both under-100 and unknown kvac in the array? 
-//   102_000_000_000, 'electricity-transmission-and-distribution', [ {
-//   f: draw_grid_class_ac_unk_and_under_100,
-//   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-//   w: d3.json,
-// } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
-// layers.push(ac_under_100);
+// TODO: The `name` property for ac_na isn't meaningful since it doesn't have its own canvas to connect to independently. This isn't a huge issue but it's not descriptive when you look at the object's prototype in the console. Consider a rewrite of the Grid constructor. 
+let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
+console.log(ac_na)
+
+let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
+console.log(ac_under_100)
+
+let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_na_and_under_100);
+
+//     { name: 'AC-lines-100-to-300-kV',
+//       value: 167_000_000_000,
+//       draw: [ {
+//         f: draw_grid_class_ac_100_300,
+//         src: ['/static/json/elec_grid_split/grid-100_300.json'],
+//         w: d3.json,
+//       } ],
+//       column: 'electricity-transmission-and-distribution',
+//     },
+//     { name: 'AC-lines-345-to-735-kV',
+//       value: 137_000_000_000,
+//       draw: [ {
+//         f: draw_grid_class_ac_345_735,
+//         src: ['/static/json/elec_grid_split/grid-345_735.json'],
+//         w: d3.json,
+//       } ],
+//       column: 'electricity-transmission-and-distribution',
+//     },
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
@@ -427,6 +460,56 @@ let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 4
     w: d3.json,
 } ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 layers.push(ng_plants);
+
+let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
+  f: draw_petro_plants,
+  src: ['/static/json/power_plants_split/power_plants-PET.json'],
+  w: d3.json,
+} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
+layers.push(pet_plants);
+
+let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_nuclear_plants,
+  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+  w: d3.json,
+} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
+layers.push(nuc_plants);
+
+let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_hydro_plants,
+  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+  w: d3.json,
+} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
+layers.push(hyc_plants);
+
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
+  f: draw_wind_farms,
+  src: ['/static/json/power_plants_split/power_plants-WND.json'],
+  w: d3.json,
+} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
+layers.push(wnd_farms);
+
+let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
+  f: draw_solar_plants,
+  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+  w: d3.json,
+} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
+layers.push(solar_plants);
+
+let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
+  f: draw_geo_plants,
+  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+  w: d3.json,
+} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+layers.push(geo_plants);
+
+let biofuel = { 
+  name: 'biofuel',
+  value: 51_000_000_000,
+  draw: false,
+  column: 'electricity-generation',
+}
+layers.push(biofuel);
 
 console.log(layers)
 
