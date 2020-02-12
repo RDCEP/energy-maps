@@ -198,42 +198,42 @@
    * @memberof Init
    */
   let layers = [
-    // { name: 'AC-lines-under-100-kV',
-    //   value: 102_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_unk_and_under_100,
-    //     src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'AC-lines-100-to-300-kV',
-    //   value: 167_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_100_300,
-    //     src: ['/static/json/elec_grid_split/grid-100_300.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'AC-lines-345-to-735-kV',
-    //   value: 137_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_345_735,
-    //     src: ['/static/json/elec_grid_split/grid-345_735.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'DC-lines',
-    //   value: 4_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_dc,
-    //     src: ['/static/json/elec_grid_split/grid-dc.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
+    { name: 'AC-lines-under-100-kV',
+      value: 102_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_unk_and_under_100,
+        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-transmission-and-distribution',
+    },
+    { name: 'AC-lines-100-to-300-kV',
+      value: 167_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_100_300,
+        src: ['/static/json/elec_grid_split/grid-100_300.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-transmission-and-distribution',
+    },
+    { name: 'AC-lines-345-to-735-kV',
+      value: 137_000_000_000,
+      draw: [ {
+        f: draw_grid_class_ac_345_735,
+        src: ['/static/json/elec_grid_split/grid-345_735.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-transmission-and-distribution',
+    },
+    { name: 'DC-lines',
+      value: 4_000_000_000,
+      draw: [ {
+        f: draw_grid_class_dc,
+        src: ['/static/json/elec_grid_split/grid-dc.json'],
+        w: d3.json,
+      } ],
+      column: 'electricity-transmission-and-distribution',
+    },
     { name: 'electricity-distribution',
       value: 1_400_000_000_000,
       draw: false,
@@ -321,44 +321,44 @@
       // } ],
       column: 'oil-and-gas',
     },
-    { name: 'coal-mine',
-      value: 57_000_000_000,
-      draw: [ {
-        f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ],
-        w: d3.csv
-      } ],
-      column: 'coal',
-    },
-    { name: 'railroad',
-      value: 137_000_000_000,
-      // `137 B *` Needs an asterisk because this is 1/3 of
-      // the value of the freight railway shown
-      draw: [ {
-        f: draw_railroads,
-        src: [ '/static/json/railrdl020.geojson' ],
-        w: d3.json
-      } ],
-      column: 'coal',
-    },
-    { name: 'coal-plant',
-      value: 1_092_000_000_000,
-      draw: [ {
-        f: draw_coal_plants,
-        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'natural-gas-plant',
-      value: 488_000_000_000,
-      draw: [ {
-        f: draw_ng_plants,
-        src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
+    // { name: 'coal-mine',
+    //   value: 57_000_000_000,
+    //   draw: [ {
+    //     f: draw_coal_mines,
+    //     src: [ '/static/csv/coal.csv' ],
+    //     w: d3.csv
+    //   } ],
+    //   column: 'coal',
+    // },
+    // { name: 'railroad',
+    //   value: 137_000_000_000,
+    //   // `137 B *` Needs an asterisk because this is 1/3 of
+    //   // the value of the freight railway shown
+    //   draw: [ {
+    //     f: draw_railroads,
+    //     src: [ '/static/json/railrdl020.geojson' ],
+    //     w: d3.json
+    //   } ],
+    //   column: 'coal',
+    // },
+    // { name: 'coal-plant',
+    //   value: 1_092_000_000_000,
+    //   draw: [ {
+    //     f: draw_coal_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'natural-gas-plant',
+    //   value: 488_000_000_000,
+    //   draw: [ {
+    //     f: draw_ng_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
     { name: 'petroleum-plant',
       value: 64_000_000_000,
       draw: [ {
@@ -427,74 +427,20 @@ let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
 } ], 'rgba(255, 255, 255, 1)', 1)
 layers.push(coal_mine)
 
+let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
+  f: draw_railroads,
+  src: [ '/static/json/railrdl020.geojson' ],
+  w: d3.json
+} ], '#767676', SCALE)
+layers.push(railroad);
 
-
-
-
-
-
-
-
-
-let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', 
-  102_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-  w: d3.json,
-} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
-layers.push(ac_na)
-
-
-// { name: 'AC-lines-under-100-kV',
-//       value: 102_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_ac_unk_and_under_100,
-//         src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
-//     { name: 'AC-lines-100-to-300-kV',
-//       value: 167_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_ac_100_300,
-//         src: ['/static/json/elec_grid_split/grid-100_300.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
-//     { name: 'AC-lines-345-to-735-kV',
-//       value: 137_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_ac_345_735,
-//         src: ['/static/json/elec_grid_split/grid-345_735.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
-//     { name: 'DC-lines',
-//       value: 4_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_dc,
-//         src: ['/static/json/elec_grid_split/grid-dc.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', // TODO: how do we represent both under-100 and unknown kvac in the array? 
+//   102_000_000_000, 'electricity-transmission-and-distribution', [ {
+//   f: draw_grid_class_ac_unk_and_under_100,
+//   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+//   w: d3.json,
+// } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
+// layers.push(ac_under_100);
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
@@ -502,6 +448,13 @@ let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000
   w: d3.json,
 } ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 layers.push(coal_plants);
+
+let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
+  f: draw_ng_plants,
+    src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    w: d3.json,
+} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
+layers.push(ng_plants);
 
 console.log(layers)
 
@@ -722,7 +675,7 @@ console.log(layers)
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 11 2020 17:27:29 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 11 2020 18:01:46 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
