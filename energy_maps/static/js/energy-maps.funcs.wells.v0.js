@@ -5,6 +5,16 @@
  * @module Wells
  */
 
+function Well(name, text, value, column, draw, color, legend_color) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.color = color;
+  this.legend_color = legend_color;
+  this.width = SCALE / 6;
+  this.cross = 5 * SCALE;
+  this.diameter = SCALE / 2;
+  this.stroke = SCALE;
+}
+
  // TODO: Add jsdoc and map calls to viz to this obj instead
 const oil_and_gas = {
   wells: {
@@ -18,7 +28,7 @@ const oil_and_gas = {
       color: 'rgba(34, 139, 34, .5)',
       legend_color: 'rgba(34, 139, 34)'
     },
-    offshore: {
+    offshore: { // TODO: How do we want to represent this?
       color: 'rgba(34, 139, 34)'
     },
     width: SCALE / 6,
