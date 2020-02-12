@@ -15,6 +15,14 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.stroke = SCALE;
 }
 
+function Processing(name, text, value, column, draw, fill, size) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.fill = fill;
+  this.size = size;
+  this.stroke = 'rgba(255, 255, 255, 1)';
+  this.strokeWidth = SCALE * .75;
+}
+
  // TODO: Add jsdoc and map calls to viz to this obj instead
 const oil_and_gas = {
   wells: {

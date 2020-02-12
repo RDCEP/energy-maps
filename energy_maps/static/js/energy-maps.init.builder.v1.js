@@ -222,26 +222,26 @@
     //   } ],
     //   column: 'oil-and-gas',
     // },
-    { name: 'oil-well',
-      value: 654_000_000_000,
-      draw: [ {
-        f: draw_all_wells,
-        src: [ `/static/csv/wells_oil1.csv`,
-               `/static/csv/wells_oil2.csv` ],
-        w: d3.csv
-      } ],
-      column: 'oil-and-gas',
-    },
-    { name: 'foreign-oil-wells',
-      value: 931_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    },
-    { name: 'foreign-gas-wells',
-      value: 63_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    },
+    // { name: 'oil-well',
+    //   value: 654_000_000_000,
+    //   draw: [ {
+    //     f: draw_all_wells,
+    //     src: [ `/static/csv/wells_oil1.csv`,
+    //            `/static/csv/wells_oil2.csv` ],
+    //     w: d3.csv
+    //   } ],
+    //   column: 'oil-and-gas',
+    // },
+    // { name: 'foreign-oil-wells',
+    //   value: 931_000_000_000,
+    //   draw: false,
+    //   column: 'oil-and-gas',
+    // },
+    // { name: 'foreign-gas-wells',
+    //   value: 63_000_000_000,
+    //   draw: false,
+    //   column: 'oil-and-gas',
+    // },
     { name: 'gas-pipeline',
       value: 940_000_000_000,
       draw: [ {
@@ -518,6 +518,20 @@ let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', 
           w: d3.csv
         } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 layers.push(oil_well)
+
+let foreign_oil_wells = { name: 'foreign-oil-wells',
+      value: 931_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+layers.push(foreign_oil_wells);
+
+let foreign_gas_wells = { name: 'foreign-gas-wells',
+      value: 63_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+layers.push(foreign_gas_wells);
 
 // Plants
 
