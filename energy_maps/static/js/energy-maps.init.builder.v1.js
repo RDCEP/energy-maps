@@ -179,38 +179,38 @@
     //   } ],
     //   column: 'electricity-transmission-and-distribution',
     // },
-    { name: 'AC-lines-100-to-300-kV',
-      value: 167_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_100_300,
-        src: ['/static/json/elec_grid_split/grid-100_300.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'AC-lines-345-to-735-kV',
-      value: 137_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_345_735,
-        src: ['/static/json/elec_grid_split/grid-345_735.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'DC-lines',
-      value: 4_000_000_000,
-      draw: [ {
-        f: draw_grid_class_dc,
-        src: ['/static/json/elec_grid_split/grid-dc.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'electricity-distribution',
-      value: 1_400_000_000_000,
-      draw: false,
-      column: 'electricity-transmission-and-distribution',
-    },
+    // { name: 'AC-lines-100-to-300-kV',
+    //   value: 167_000_000_000,
+    //   draw: [ {
+    //     f: draw_grid_class_ac_100_300,
+    //     src: ['/static/json/elec_grid_split/grid-100_300.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-transmission-and-distribution',
+    // },
+    // { name: 'AC-lines-345-to-735-kV',
+    //   value: 137_000_000_000,
+    //   draw: [ {
+    //     f: draw_grid_class_ac_345_735,
+    //     src: ['/static/json/elec_grid_split/grid-345_735.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-transmission-and-distribution',
+    // },
+    // { name: 'DC-lines',
+    //   value: 4_000_000_000,
+    //   draw: [ {
+    //     f: draw_grid_class_dc,
+    //     src: ['/static/json/elec_grid_split/grid-dc.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-transmission-and-distribution',
+    // },
+    // { name: 'electricity-distribution',
+    //   value: 1_400_000_000_000,
+    //   draw: false,
+    //   column: 'electricity-transmission-and-distribution',
+    // },
     {
       name: 'gas-well',
       value: 1_059_000_000_000,
@@ -406,7 +406,16 @@ let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
 } ], '#767676', SCALE)
 layers.push(railroad);
 
+// AC under 100
+
 // TODO: The `name` property for ac_na isn't meaningful since it doesn't have its own canvas to connect to independently. This isn't a huge issue but it's not descriptive when you look at the object's prototype in the console. Consider a rewrite of the Grid constructor. 
+let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_na_and_under_100);
+
 let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
@@ -419,33 +428,78 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
-console.log(ac_under_100)
+console.log(ac_under_100) // Do not push to layers array
 
-let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+// AC 100-300
+
+let ac_100_300 = new InfrastructureSet('AC-lines-100-to-300-kV', '', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ]);
-layers.push(ac_na_and_under_100);
+layers.push(ac_100_300);
 
-//     { name: 'AC-lines-100-to-300-kV',
-//       value: 167_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_ac_100_300,
-//         src: ['/static/json/elec_grid_split/grid-100_300.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
-//     { name: 'AC-lines-345-to-735-kV',
-//       value: 137_000_000_000,
-//       draw: [ {
-//         f: draw_grid_class_ac_345_735,
-//         src: ['/static/json/elec_grid_split/grid-345_735.json'],
-//         w: d3.json,
-//       } ],
-//       column: 'electricity-transmission-and-distribution',
-//     },
+let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '100-161', 'rgba(86, 180, 233)', 2, 100);
+console.log(ac_100_200) // Do not push to layers array
+
+let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '220-287', 'rgba(55, 126, 184)', 3, 250);
+console.log(ac_200_300) // Do not push to layers array
+
+// AC 345-735
+
+let ac_345_735 = new InfrastructureSet('AC-lines-345-to-735-kV', '', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_345_735);
+
+let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '345', 'rgba(255, 149, 0)', 4, 350);
+console.log(ac_345) // Do not push to layers array
+
+let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '500', 'rgba(213, 113, 45)', 5, 350);
+console.log(ac_500) // Do not push to layers array
+
+let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
+console.log(ac_735_plus) // Do not push to layers array
+
+// DC
+
+let dc = new InfrastructureSet('DC-lines', '', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_dc,
+  src: ['/static/json/elec_grid_split/grid-dc.json'],
+  w: d3.json,
+} ]);
+layers.push(dc);
+
+// Distribution
+
+let distribution = { name: 'electricity-distribution',
+value: 1_400_000_000_000,
+draw: false,
+column: 'electricity-transmission-and-distribution',
+};
+layers.push(distribution);
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
