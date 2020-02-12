@@ -293,44 +293,44 @@
       // } ],
       column: 'oil-and-gas',
     },
-    { name: 'coal-mine',
-      value: 57_000_000_000,
-      draw: [ {
-        f: draw_coal_mines,
-        src: [ '/static/csv/coal.csv' ],
-        w: d3.csv
-      } ],
-      column: 'coal',
-    },
-    { name: 'railroad',
-      value: 137_000_000_000,
-      // `137 B *` Needs an asterisk because this is 1/3 of
-      // the value of the freight railway shown
-      draw: [ {
-        f: draw_railroads,
-        src: [ '/static/json/railrdl020.geojson' ],
-        w: d3.json
-      } ],
-      column: 'coal',
-    },
-    { name: 'coal-plant',
-      value: 1_092_000_000_000,
-      draw: [ {
-        f: draw_coal_plants,
-        src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'natural-gas-plant',
-      value: 488_000_000_000,
-      draw: [ {
-        f: draw_ng_plants,
-        src: ['/static/json/power_plants_split/power_plants-NG.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
+    // { name: 'coal-mine',
+    //   value: 57_000_000_000,
+    //   draw: [ {
+    //     f: draw_coal_mines,
+    //     src: [ '/static/csv/coal.csv' ],
+    //     w: d3.csv
+    //   } ],
+    //   column: 'coal',
+    // },
+    // { name: 'railroad',
+    //   value: 137_000_000_000,
+    //   // `137 B *` Needs an asterisk because this is 1/3 of
+    //   // the value of the freight railway shown
+    //   draw: [ {
+    //     f: draw_railroads,
+    //     src: [ '/static/json/railrdl020.geojson' ],
+    //     w: d3.json
+    //   } ],
+    //   column: 'coal',
+    // },
+    // { name: 'coal-plant',
+    //   value: 1_092_000_000_000,
+    //   draw: [ {
+    //     f: draw_coal_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
+    // { name: 'natural-gas-plant',
+    //   value: 488_000_000_000,
+    //   draw: [ {
+    //     f: draw_ng_plants,
+    //     src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    //     w: d3.json,
+    //   } ],
+    //   column: 'electricity-generation',
+    // },
     { name: 'petroleum-plant',
       value: 64_000_000_000,
       draw: [ {
@@ -399,6 +399,13 @@ let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
 } ], 'rgba(255, 255, 255, 1)', 1)
 layers.push(coal_mine)
 
+let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
+  f: draw_railroads,
+  src: [ '/static/json/railrdl020.geojson' ],
+  w: d3.json
+} ], '#767676', SCALE)
+layers.push(railroad);
+
 // let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', // TODO: how do we represent both under-100 and unknown kvac in the array? 
 //   102_000_000_000, 'electricity-transmission-and-distribution', [ {
 //   f: draw_grid_class_ac_unk_and_under_100,
@@ -413,6 +420,13 @@ let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000
   w: d3.json,
 } ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 layers.push(coal_plants);
+
+let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
+  f: draw_ng_plants,
+    src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    w: d3.json,
+} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
+layers.push(ng_plants);
 
 console.log(layers)
 
