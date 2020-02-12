@@ -15,6 +15,12 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.stroke = SCALE;
 }
 
+function Transport(name, text, value, column, draw, stroke, width) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.stroke = stroke;
+  this.width = width;
+}
+
 function Processing(name, text, value, column, draw, fill, size) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.fill = fill;
