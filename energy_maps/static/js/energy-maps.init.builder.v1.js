@@ -357,19 +357,7 @@ layers.push(oil_and_gas_storage);
 
 layers.push(coal_plants);
 layers.push(ng_plants);
-
-let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
-  f: draw_petro_plants,
-  src: ['/static/json/power_plants_split/power_plants-PET.json'],
-  w: d3.json,
-} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
 layers.push(pet_plants);
-
-let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
-  f: draw_nuclear_plants,
-  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-  w: d3.json,
-} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
 layers.push(nuc_plants);
 
 let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {

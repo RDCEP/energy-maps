@@ -220,7 +220,7 @@ const draw_hydro_plants = function draw_hydro_plants(ctx, queued_data) {
 };
 
 const draw_nuclear_plants = function draw_nuclear_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.nuc_plants)
+  draw_single_plant(ctx, queued_data, nuc_plants)
 };
 
 const draw_wind_farms = function draw_wind_farms(ctx, queued_data) {
@@ -325,3 +325,9 @@ let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_0
   src: ['/static/json/power_plants_split/power_plants-PET.json'],
   w: d3.json,
 } ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
+
+let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_nuclear_plants,
+  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+  w: d3.json,
+} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
