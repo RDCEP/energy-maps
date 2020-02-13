@@ -171,7 +171,7 @@
 
 // Coal
 
-let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
+let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
   w: d3.csv
