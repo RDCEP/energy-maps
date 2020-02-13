@@ -274,27 +274,8 @@ layers.push(distribution);
 // Oil and Gas
 
 layers.push(gas_well);
-
-let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
-          f: draw_all_wells,
-          src: [ `/static/csv/wells_oil1.csv`,
-                 `/static/csv/wells_oil2.csv` ],
-          w: d3.csv
-        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 layers.push(oil_well);
-
-let foreign_oil_wells = { name: 'foreign-oil-wells',
-      value: 931_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    }
 layers.push(foreign_oil_wells);
-
-let foreign_gas_wells = { name: 'foreign-gas-wells',
-      value: 63_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    }
 layers.push(foreign_gas_wells);
 
 let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {

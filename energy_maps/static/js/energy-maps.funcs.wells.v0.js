@@ -166,8 +166,8 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   const path = get_path(ctx);
 
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas.transport.gas.stroke;
-  ctx.lineWidth = oil_and_gas.transport.gas.width;
+  ctx.strokeStyle = gas_pipeline.stroke;
+  ctx.lineWidth = gas_pipeline.width;
   ctx.beginPath();
   path(pipe_data);
   ctx.stroke();
@@ -259,7 +259,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
   if (d.class === 'Off') {
     draw_off_well(xy);
   } else {
-    draw_well(xy, oil_and_gas.wells.oil.color);
+    draw_well(xy, oil_well.color);
   }
 
 };
@@ -284,9 +284,9 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
       } else {
         
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas.wells.oil.color);
+          draw_off_well(ctx, xy, oil_well.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas.wells.oil.color);
+          draw_well(ctx, xy, oil_well.color);
         }
       }
     }
@@ -404,3 +404,29 @@ let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas'
          `/static/csv/wells_gas2.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
+
+let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
+          f: draw_all_wells,
+          src: [ `/static/csv/wells_oil1.csv`,
+                 `/static/csv/wells_oil2.csv` ],
+          w: d3.csv
+        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+
+        
+let foreign_oil_wells = { name: 'foreign-oil-wells',
+value: 931_000_000_000,
+draw: false,
+column: 'oil-and-gas',
+}
+
+let foreign_gas_wells = { name: 'foreign-gas-wells',
+      value: 63_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+
+let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
+  f: draw_gas_pipes,
+  src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+  w: d3.json
+} ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
