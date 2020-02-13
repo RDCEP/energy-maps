@@ -207,7 +207,7 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
-console.log(ac_under_100) // Do not push to layers array
+console.log(ac_under_100); // Do not push to layers array
 
 // AC 100-300
 
@@ -223,14 +223,14 @@ let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'el
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '100-161', 'rgba(86, 180, 233)', 2, 100);
-console.log(ac_100_200) // Do not push to layers array
+console.log(ac_100_200); // Do not push to layers array
 
 let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
-console.log(ac_200_300) // Do not push to layers array
+console.log(ac_200_300); // Do not push to layers array
 
 // AC 345-735
 
@@ -246,21 +246,21 @@ let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '345', 'rgba(255, 149, 0)', 4, 350);
-console.log(ac_345) // Do not push to layers array
+console.log(ac_345); // Do not push to layers array
 
 let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '500', 'rgba(213, 113, 45)', 5, 350);
-console.log(ac_500) // Do not push to layers array
+console.log(ac_500); // Do not push to layers array
 
 let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
-console.log(ac_735_plus) // Do not push to layers array
+console.log(ac_735_plus); // Do not push to layers array
 
 // DC
 
@@ -288,7 +288,7 @@ let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas'
          `/static/csv/wells_gas2.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
-layers.push(gas_well)
+layers.push(gas_well);
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
           f: draw_all_wells,
@@ -296,7 +296,7 @@ let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', 
                  `/static/csv/wells_oil2.csv` ],
           w: d3.csv
         } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
-layers.push(oil_well)
+layers.push(oil_well);
 
 let foreign_oil_wells = { name: 'foreign-oil-wells',
       value: 931_000_000_000,
@@ -428,7 +428,7 @@ let biofuel = {
 }
 layers.push(biofuel);
 
-console.log(layers)
+console.log(layers);
 
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
