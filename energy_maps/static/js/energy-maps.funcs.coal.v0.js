@@ -26,23 +26,25 @@ function Coal(name, text, value, column, draw, stroke, width) {
 }
 Coal.prototype = new InfrastructureSet;
 
-function CoalMine(name, text, value, column, draw, stroke, width) {
-  Coal.call(this, name, text, value, column, draw, stroke, width);
-  this.fill = 'rgba(0, 0, 0, 0.5)';
+// function CoalMine(name, text, value, column, draw, stroke, width) {
+//   Coal.call(this, name, text, value, column, draw, stroke, width);
+//   this.fill = 'rgba(0, 0, 0, 0.5)';
+//   this.stroke = 'rgba(255, 255, 255, 1)';
+//   this.width = SCALE;
+//   this.scale = SCALE / 190;
+//   this.text = 'Coal mine';
+// }
+// CoalMine.prototype = new InfrastructureSet;
+function CoalMine(name, text, value, column, draw) {
+  Coal.call(this, name, text, value, column, draw);
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.width = SCALE;
+  this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
   this.text = 'Coal mine';
 }
 CoalMine.prototype = new InfrastructureSet;
 
-// function Railroad(name, text, value, column, draw, stroke, width) {
-//   Coal.call(this, name, text, value, column, draw, stroke, width);
-//   this.stroke = '#767676';
-//   this.width = SCALE;
-//   this.text = 'Railroads';
-// }
-// Railroad.prototype = new InfrastructureSet;
 function Railroad(name, text, value, column, draw) {
   Coal.call(this, name, text, value, column, draw);
   this.stroke = '#767676';

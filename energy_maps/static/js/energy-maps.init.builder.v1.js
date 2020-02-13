@@ -175,7 +175,7 @@ let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
   w: d3.csv
-} ], 'rgba(255, 255, 255, 1)', 1)
+} ])
 layers.push(coal_mine)
 
 let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
