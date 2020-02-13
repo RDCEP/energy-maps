@@ -195,7 +195,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx, x, y, obj) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_and_gas.processing.oil_refinery.size); // TODO: Document or extract these magic numbers
+    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
     let text = obj.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -325,7 +325,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.oil);
           break;
         case 'oil-refinery':
-          y = draw_refinery_legend(ctx, x, y, oil_and_gas.processing.oil_refinery);
+          y = draw_refinery_legend(ctx, x, y, oil_refinery);
           break;
         case 'railroad':;
           y = draw_railroad_legend(ctx, x, y, railroad);

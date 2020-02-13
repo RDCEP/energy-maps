@@ -363,7 +363,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
     ctx.lineWidth = oil_and_gas.processing.stroke.width;
     ctx.beginPath();
-    draw_circle(ctx, xy, oil_and_gas.processing.oil_refinery.size * d.r);
+    draw_circle(ctx, xy, oil_refinery.size * d.r);
     ctx.stroke();
   });
 
@@ -391,8 +391,8 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
  */
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   const NUM_SIDES_REFIN = 6
-  r *= oil_and_gas.processing.oil_refinery.size;
-  ctx.fillStyle = oil_and_gas.processing.oil_refinery.fill;
+  r *= oil_refinery.size;
+  ctx.fillStyle = oil_refinery.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_REFIN, ctx, r, xy)
   ctx.fill();
@@ -440,3 +440,12 @@ let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
+
+let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
+oil_product_pipeline.dash = 2.5 * SCALE;
+
+let oil_refinery = new Processing('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
+  f: draw_refining,
+  src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
+  w: d3.json
+}], 'rgba(60, 179, 113, .7)', .006 * SCALE);

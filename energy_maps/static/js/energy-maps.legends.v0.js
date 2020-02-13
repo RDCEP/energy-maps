@@ -205,7 +205,7 @@ const plants_legend = function plants_legend(ctx, nff) {
 const wells_legend = function wells_legend(ctx) {
   let cap = 2000;
   // let r = Math.sqrt(cap / Math.PI) * viz.plants.scale;
-  let r = oil_and_gas.processing.oil_refinery.size * cap;
+  let r = oil_refinery.size * cap;
 
   let xo = 1620 * SCALE;
   // Title

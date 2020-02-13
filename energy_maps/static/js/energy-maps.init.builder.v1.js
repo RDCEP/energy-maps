@@ -279,16 +279,7 @@ layers.push(foreign_oil_wells);
 layers.push(foreign_gas_wells);
 layers.push(gas_pipeline);
 layers.push(oil_pipeline);
-
-let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
-oil_product_pipeline.dash = 2.5 * SCALE;
 console.log(oil_product_pipeline);
-
-let oil_refinery = new Processing('oil-refinery', 'Gas processing', 373_000_000_000, 'oil-and-gas', [ {
-  f: draw_refining,
-  src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
-  w: d3.json
-}], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 layers.push(oil_refinery);
 
 let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
