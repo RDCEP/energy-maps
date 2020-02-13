@@ -192,7 +192,7 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   draw_circle(ctx, xy, r + ctx.lineWidth);
   // FIXME: Need a better method of changing stroke color for lighter circles.
   if (color !== viz.white) {
-    if (color === electricity_generation.ng_plants.color) {
+    if (color === ng_plants.color) {
       ctx.strokeStyle = 'darkblue';
     } else if (color === electricity_generation.solar_plants.color) {
       ctx.strokeStyle = 'darkorange';
@@ -204,12 +204,11 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
 };
 
 const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
-  // draw_single_plant(ctx, queued_data, electricity_generation.coal_plants)
   draw_single_plant(ctx, queued_data, coal_plants)
 };
 
 const draw_ng_plants = function draw_ng_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.ng_plants)
+  draw_single_plant(ctx, queued_data, ng_plants)
 };
 
 const draw_petro_plants = function draw_petro_plants(ctx, queued_data) {
@@ -314,3 +313,9 @@ let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000
   src: ['/static/json/power_plants_split/power_plants-COAL.json'],
   w: d3.json,
 } ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
+
+let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
+  f: draw_ng_plants,
+    src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    w: d3.json,
+} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');

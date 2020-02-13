@@ -355,18 +355,7 @@ layers.push(oil_and_gas_storage);
 
 // Plants
 
-// let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
-//   f: draw_coal_plants,
-//   src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-//   w: d3.json,
-// } ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 layers.push(coal_plants);
-
-let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
-  f: draw_ng_plants,
-    src: ['/static/json/power_plants_split/power_plants-NG.json'],
-    w: d3.json,
-} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 layers.push(ng_plants);
 
 let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {

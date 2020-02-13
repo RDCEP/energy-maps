@@ -343,7 +343,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_power_plant_legend(ctx, x, y, electricity_generation.hyc_plants);
           break;
         case 'natural-gas-plant':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.ng_plants);
+          y = draw_power_plant_legend(ctx, x, y, ng_plants);
           break;
         case 'nuclear-plant':
           y = draw_power_plant_legend(ctx, x, y, electricity_generation.nuc_plants);
