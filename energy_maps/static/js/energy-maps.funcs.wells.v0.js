@@ -243,7 +243,7 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
 
   get_xy(queued_data);
-  draw_well(xy, oil_and_gas.wells.gas.color)
+  draw_well(xy, gas_well.color)
 
 };
 
@@ -277,9 +277,9 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
     } else {
       if (d.oilgas === 'GAS') {
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas.wells.gas.color);
+          draw_off_well(ctx, xy, gas_well.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas.wells.gas.color);
+          draw_well(ctx, xy, gas_well.color);
         }
       } else {
         
@@ -398,3 +398,9 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.fill();
 };
 
+let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
+  f: draw_all_wells,
+  src: [ `/static/csv/wells_gas1.csv`,
+         `/static/csv/wells_gas2.csv` ],
+  w: d3.csv
+} ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')

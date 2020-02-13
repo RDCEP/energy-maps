@@ -273,12 +273,6 @@ layers.push(distribution);
 
 // Oil and Gas
 
-let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
-  f: draw_all_wells,
-  src: [ `/static/csv/wells_gas1.csv`,
-         `/static/csv/wells_gas2.csv` ],
-  w: d3.csv
-} ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 layers.push(gas_well);
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {

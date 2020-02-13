@@ -316,7 +316,7 @@ const update_legend = function update_legend(ctx, layers) {
           break;
         case 'gas-well':
           console.log('gas-well switch');
-          y = draw_well_legend(ctx, x, y, oil_and_gas.wells.gas);
+          y = draw_well_legend(ctx, x, y, gas_well);
           break;
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.gas);
