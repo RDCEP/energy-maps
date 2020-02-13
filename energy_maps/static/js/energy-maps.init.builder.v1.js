@@ -173,6 +173,8 @@
 
 layers.push(coal_mine)
 layers.push(railroad);
+// TODO: Update the rest of the layers in the above fashion.
+// Move object instantiation to the bottom of your funcs files.
 
 // AC under 100
 

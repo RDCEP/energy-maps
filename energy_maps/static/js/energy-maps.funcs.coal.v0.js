@@ -6,7 +6,7 @@
  */
 
 /** 
- * Instatiates a new Coal object that contains properties used to draw mines to the map and legend.
+ * Instatiates a new Coal object that contains properties used to draw coal infrastructure to the map and legend.
  * @class
  * @classdesc Used to create objects that represent coal-based infrastructure.
  * @extends InfrastructureSet
@@ -17,7 +17,6 @@
  * @param {Array} draw - properties used to parse the data and render the visualization
  * @param {String} stroke - rgba value to set the canvas stroke
  * @param {Number} width - width value set relative to SCALE
- * @param {String} text - text to display on the legend
  */
 function Coal(name, text, value, column, draw, stroke, width) {
     InfrastructureSet.call(this, name, text, value, column, draw);
@@ -26,24 +25,51 @@ function Coal(name, text, value, column, draw, stroke, width) {
 }
 Coal.prototype = new InfrastructureSet;
 
-
+/** 
+ * Instatiates a new CoalMine object that contains properties used to draw coal mines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent coal mines.
+ * @extends Coal
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @property {String} stroke - rgba value to set the canvas stroke
+ * @property {Number} width - width value set relative to SCALE
+ * @property {String} fill - rgba value to set the polygon fill color
+ * @property {Number} scale - scale value applied to each polygon 
+ */
 function CoalMine(name, text, value, column, draw) {
   Coal.call(this, name, text, value, column, draw);
+  this.text = 'Coal mine';
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.width = SCALE;
   this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
-  this.text = 'Coal mine';
 }
 CoalMine.prototype = new Coal;
 
+/** 
+ * Instatiates a new Railroad object that contains properties used to draw railroad lines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent railroads.
+ * @extends Coal
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @property {String} stroke - rgba value to set the canvas stroke
+ * @property {Number} width - width value set relative to SCALE
+ */
 function Railroad(name, text, value, column, draw) {
   Coal.call(this, name, text, value, column, draw);
+  this.text = 'Railroads';
   this.stroke = '#767676';
   this.width = SCALE;
-  this.text = 'Railroads';
 }
-// Railroad.prototype = new Coal;
+Railroad.prototype = new Coal;
 
  /**
   * A collection of coal mine properties used to draw mines to the map and legend.

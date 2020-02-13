@@ -199,19 +199,10 @@
 
 // Coal
 
-let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
-  f: draw_coal_mines,
-  src: [ '/static/csv/coal.csv' ],
-  w: d3.csv
-} ], 'rgba(255, 255, 255, 1)', 1)
 layers.push(coal_mine)
-
-let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
-  f: draw_railroads,
-  src: [ '/static/json/railrdl020.geojson' ],
-  w: d3.json
-} ], '#767676', SCALE)
 layers.push(railroad);
+// TODO: Update the rest of the layers in the above fashion.
+// Move object instantiation to the bottom of your funcs files.
 
 // AC under 100
 
@@ -235,7 +226,7 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
-console.log(ac_under_100) // Do not push to layers array
+console.log(ac_under_100); // Do not push to layers array
 
 // AC 100-300
 
@@ -251,14 +242,14 @@ let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'el
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '100-161', 'rgba(86, 180, 233)', 2, 100);
-console.log(ac_100_200) // Do not push to layers array
+console.log(ac_100_200); // Do not push to layers array
 
 let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
-console.log(ac_200_300) // Do not push to layers array
+console.log(ac_200_300); // Do not push to layers array
 
 // AC 345-735
 
@@ -274,21 +265,21 @@ let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '345', 'rgba(255, 149, 0)', 4, 350);
-console.log(ac_345) // Do not push to layers array
+console.log(ac_345); // Do not push to layers array
 
 let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '500', 'rgba(213, 113, 45)', 5, 350);
-console.log(ac_500) // Do not push to layers array
+console.log(ac_500); // Do not push to layers array
 
 let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
-console.log(ac_735_plus) // Do not push to layers array
+console.log(ac_735_plus); // Do not push to layers array
 
 // DC
 
@@ -316,7 +307,7 @@ let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas'
          `/static/csv/wells_gas2.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
-layers.push(gas_well)
+layers.push(gas_well);
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
           f: draw_all_wells,
@@ -324,7 +315,7 @@ let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', 
                  `/static/csv/wells_oil2.csv` ],
           w: d3.csv
         } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
-layers.push(oil_well)
+layers.push(oil_well);
 
 let foreign_oil_wells = { name: 'foreign-oil-wells',
       value: 931_000_000_000,
@@ -456,7 +447,7 @@ let biofuel = {
 }
 layers.push(biofuel);
 
-console.log(layers)
+console.log(layers);
 
   /** 
    * @description An array of named objects representing button column names to be shown at the top of the checkbox selection menu.
@@ -669,13 +660,13 @@ console.log(layers)
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Feb 12 2020 18:14:59 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 13 2020 14:18:23 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

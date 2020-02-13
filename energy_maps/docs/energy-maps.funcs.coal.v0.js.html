@@ -34,7 +34,7 @@
  */
 
 /** 
- * Instatiates a new Coal object that contains properties used to draw mines to the map and legend.
+ * Instatiates a new Coal object that contains properties used to draw coal infrastructure to the map and legend.
  * @class
  * @classdesc Used to create objects that represent coal-based infrastructure.
  * @extends InfrastructureSet
@@ -45,7 +45,6 @@
  * @param {Array} draw - properties used to parse the data and render the visualization
  * @param {String} stroke - rgba value to set the canvas stroke
  * @param {Number} width - width value set relative to SCALE
- * @param {String} text - text to display on the legend
  */
 function Coal(name, text, value, column, draw, stroke, width) {
     InfrastructureSet.call(this, name, text, value, column, draw);
@@ -53,6 +52,52 @@ function Coal(name, text, value, column, draw, stroke, width) {
     this.width = width || 0;
 }
 Coal.prototype = new InfrastructureSet;
+
+/** 
+ * Instatiates a new CoalMine object that contains properties used to draw coal mines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent coal mines.
+ * @extends Coal
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @property {String} stroke - rgba value to set the canvas stroke
+ * @property {Number} width - width value set relative to SCALE
+ * @property {String} fill - rgba value to set the polygon fill color
+ * @property {Number} scale - scale value applied to each polygon 
+ */
+function CoalMine(name, text, value, column, draw) {
+  Coal.call(this, name, text, value, column, draw);
+  this.text = 'Coal mine';
+  this.stroke = 'rgba(255, 255, 255, 1)';
+  this.width = SCALE;
+  this.fill = 'rgba(0, 0, 0, 0.5)';
+  this.scale = SCALE / 190;
+}
+CoalMine.prototype = new Coal;
+
+/** 
+ * Instatiates a new Railroad object that contains properties used to draw railroad lines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent railroads.
+ * @extends Coal
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @property {String} stroke - rgba value to set the canvas stroke
+ * @property {Number} width - width value set relative to SCALE
+ */
+function Railroad(name, text, value, column, draw) {
+  Coal.call(this, name, text, value, column, draw);
+  this.text = 'Railroads';
+  this.stroke = '#767676';
+  this.width = SCALE;
+}
+Railroad.prototype = new Coal;
 
  /**
   * A collection of coal mine properties used to draw mines to the map and legend.
@@ -100,10 +145,10 @@ function setRadius(radius, scale) {
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  r = setRadius(r, mine_props.scale);
-  ctx.strokeStyle = mine_props.stroke;
-  ctx.strokeWidth = mine_props.width;
-  ctx.fillStyle = mine_props.fill;
+  r = setRadius(r, coal_mine.scale);
+  ctx.strokeStyle = coal_mine.stroke;
+  ctx.strokeWidth = coal_mine.width;
+  ctx.fillStyle = coal_mine.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
@@ -153,18 +198,29 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
-  let railroad = queued_data[0];
+  let rr = queued_data[0];
 
   const path = get_path(ctx);
-  // Gas pipeline
-  ctx.strokeStyle = railroad_props.stroke;
-  ctx.lineWidth = railroad_props.width;
+  ctx.strokeStyle = railroad.stroke;
+  ctx.lineWidth = railroad.width;
   ctx.beginPath();
-  path(railroad);
+  path(rr);
   ctx.stroke();
   hide_spinner();
 
-};</code></pre>
+};
+
+let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
+  f: draw_coal_mines,
+  src: [ '/static/csv/coal.csv' ],
+  w: d3.csv
+} ]);
+
+let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
+  f: draw_railroads,
+  src: [ '/static/json/railrdl020.geojson' ],
+  w: d3.json
+} ])</code></pre>
         </article>
     </section>
 
@@ -174,13 +230,13 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Feb 12 2020 18:14:59 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 13 2020 14:18:23 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
