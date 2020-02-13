@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Grid</title>
+    <title>JSDoc: Class: Well</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Grid</h1>
+    <h1 class="page-title">Class: Well</h1>
 
     
 
@@ -29,9 +29,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="module-Grid.html">Grid</a>~</span>Grid<span class="signature">(name, text, value, column, draw, heading, color, line_width, nominal_voltage)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="module-Wells.html">Wells</a>~</span>Well<span class="signature">(name, text, value, column, draw, color, legend_color)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Used to create objects that represent electric grid infrastructure.</div>
+            <div class="class-description">Used to create objects that represent gas and oil well infrastructure.</div>
         
     
 </header>
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Grid"><span class="type-signature"></span>new Grid<span class="signature">(name, text, value, column, draw, heading, color, line_width, nominal_voltage)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Well"><span class="type-signature"></span>new Well<span class="signature">(name, text, value, column, draw, color, legend_color)</span><span class="type-signature"></span></h4>
     
 
     
@@ -54,7 +54,7 @@
 
 
 <div class="description">
-    Instatiates a new Grid object that contains properties used to draw electric grid segments to the map and legend.
+    Instatiates a new Well object that contains properties used to draw gas and oil wells to the map and legend.
 </div>
 
 
@@ -205,29 +205,6 @@
 
         <tr>
             
-                <td class="name"><code>heading</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">class heading in the data file</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>color</code></td>
             
 
@@ -251,13 +228,13 @@
 
         <tr>
             
-                <td class="name"><code>line_width</code></td>
+                <td class="name"><code>legend_color</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 
             
@@ -267,30 +244,7 @@
 
             
 
-            <td class="description last">value used to scale the width of the grid</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nominal_voltage</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">system voltage</td>
+            <td class="description last">rgba value</td>
         </tr>
 
     
@@ -298,6 +252,127 @@
 </table>
 
 
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">scaled value for symbols on the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cross</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">scaled value for cross symbols on the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>diameter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">scaled value for circular symbols on the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>stroke</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">stroke width</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -331,7 +406,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="energy-maps.funcs.grid.v0.js.html">energy-maps.funcs.grid.v0.js</a>, <a href="energy-maps.funcs.grid.v0.js.html#line23">line 23</a>
+        <a href="energy-maps.funcs.wells.v0.js.html">energy-maps.funcs.wells.v0.js</a>, <a href="energy-maps.funcs.wells.v0.js.html#line25">line 25</a>
     </li></ul></dd>
     
 

@@ -184,9 +184,7 @@
     }
   };
 
-  // TODO: Consider object destructuring -- you may be able to push objects from other files
-  // Into this layers array and iterate through them to utilize the properties one way or another.
-  /** 
+  /** // TODO: Update this documentation. It's handy for now but not accurate.
    * @description An array of objects representing resources to be rendered on top of the map canvas.
    * @property {string}   name               - A canvas id.
    * @property {Number}   value              - Asset value in USD.
@@ -197,228 +195,9 @@
    * @property {string}   column             -The class of the column that the layer's checkbox is written to.
    * @memberof Init
    */
-  let layers = [
-    { name: 'AC-lines-under-100-kV',
-      value: 102_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_unk_and_under_100,
-        src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'AC-lines-100-to-300-kV',
-      value: 167_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_100_300,
-        src: ['/static/json/elec_grid_split/grid-100_300.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'AC-lines-345-to-735-kV',
-      value: 137_000_000_000,
-      draw: [ {
-        f: draw_grid_class_ac_345_735,
-        src: ['/static/json/elec_grid_split/grid-345_735.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'DC-lines',
-      value: 4_000_000_000,
-      draw: [ {
-        f: draw_grid_class_dc,
-        src: ['/static/json/elec_grid_split/grid-dc.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-transmission-and-distribution',
-    },
-    { name: 'electricity-distribution',
-      value: 1_400_000_000_000,
-      draw: false,
-      column: 'electricity-transmission-and-distribution',
-    },
-    {
-      name: 'gas-well',
-      value: 1_059_000_000_000,
-      draw: [ {
-        f: draw_all_wells,
-        src: [ `/static/csv/wells_gas1.csv`,
-               `/static/csv/wells_gas2.csv` ],
-        w: d3.csv
-      } ],
-      column: 'oil-and-gas',
-    },
-    { name: 'oil-well',
-      value: 654_000_000_000,
-      draw: [ {
-        f: draw_all_wells,
-        src: [ `/static/csv/wells_oil1.csv`,
-               `/static/csv/wells_oil2.csv` ],
-        w: d3.csv
-      } ],
-      column: 'oil-and-gas',
-    },
-    { name: 'foreign-oil-wells',
-      value: 931_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    },
-    { name: 'foreign-gas-wells',
-      value: 63_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    },
-    { name: 'gas-pipeline',
-      value: 940_000_000_000,
-      draw: [ {
-        f: draw_gas_pipes,
-        src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-        w: d3.json
-      }, ],
-      column: 'oil-and-gas',
-    },
-    { name: 'oil-pipeline',
-      value: 170_000_000_000,
-      draw: [ {
-        f: draw_oil_pipes,
-        src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-        w: d3.json
-      }, {
-        f: draw_oil_pipes,
-        src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-        w: d3.json
-      }, ],
-      column: 'oil-and-gas',
-    },
-    { name: 'oil-refinery',
-      value: 373_000_000_000, // 373 B
-      draw: [ {
-        f: draw_refining,
-        src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
-        w: d3.json
-      }],
-      column: 'oil-and-gas',
-    },
-    { name: 'gas-processing',
-      value: 45_000_000_000,
-      draw: [ {
-        f: draw_processing,
-        src: [ `/static/csv/nproc.csv`],
-        w: d3.csv
-      } ],
-      column: 'oil-and-gas',
-    },
-    { name: 'oil-and-gas-storage',
-      value: 181_000_000_000,
-      draw: false,
-      // TODO: Split up the JSON files based on whatever property marks processing vs. storage
-      // draw: [ {
-      //   f: draw_storage,
-      //   src: [ `/static/csv/nproc.csv`],
-      //   w: d3.csv
-      // } ],
-      column: 'oil-and-gas',
-    },
-    // { name: 'coal-mine',
-    //   value: 57_000_000_000,
-    //   draw: [ {
-    //     f: draw_coal_mines,
-    //     src: [ '/static/csv/coal.csv' ],
-    //     w: d3.csv
-    //   } ],
-    //   column: 'coal',
-    // },
-    // { name: 'railroad',
-    //   value: 137_000_000_000,
-    //   // `137 B *` Needs an asterisk because this is 1/3 of
-    //   // the value of the freight railway shown
-    //   draw: [ {
-    //     f: draw_railroads,
-    //     src: [ '/static/json/railrdl020.geojson' ],
-    //     w: d3.json
-    //   } ],
-    //   column: 'coal',
-    // },
-    // { name: 'coal-plant',
-    //   value: 1_092_000_000_000,
-    //   draw: [ {
-    //     f: draw_coal_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'natural-gas-plant',
-    //   value: 488_000_000_000,
-    //   draw: [ {
-    //     f: draw_ng_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-NG.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    { name: 'petroleum-plant',
-      value: 64_000_000_000,
-      draw: [ {
-        f: draw_petro_plants,
-        src: ['/static/json/power_plants_split/power_plants-PET.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'nuclear-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_nuclear_plants,
-        src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'hydro-plant',
-      value: 597_000_000_000,
-      draw: [ {
-        f: draw_hydro_plants,
-        src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'wind-farms',
-      value: 132_000_000_000,
-      draw: [ {
-        f: draw_wind_farms,
-        src: ['/static/json/power_plants_split/power_plants-WND.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'solar-PV',
-      value: 14_000_000_000,
-      draw: [ {
-        f: draw_solar_plants,
-        src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'geothermal-plant',
-      value: 22_000_000_000,
-      draw: [ {
-        f: draw_geo_plants,
-        src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-        w: d3.json,
-      } ],
-      column: 'electricity-generation',
-    },
-    { name: 'biofuel',
-      value: 51_000_000_000,
-      draw: false,
-      column: 'electricity-generation',
-    }
-  ];
+  let layers = [];
+
+// Coal
 
 let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
@@ -434,13 +213,184 @@ let railroad = new Coal('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
 } ], '#767676', SCALE)
 layers.push(railroad);
 
-// let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', // TODO: how do we represent both under-100 and unknown kvac in the array? 
-//   102_000_000_000, 'electricity-transmission-and-distribution', [ {
-//   f: draw_grid_class_ac_unk_and_under_100,
-//   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-//   w: d3.json,
-// } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50)
-// layers.push(ac_under_100);
+// AC under 100
+
+// TODO: The `name` property for ac_na isn't meaningful since it doesn't have its own canvas to connect to independently. This isn't a huge issue but it's not descriptive when you look at the object's prototype in the console. Consider a rewrite of the Grid constructor. 
+let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_na_and_under_100);
+
+let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
+console.log(ac_na)
+
+let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
+console.log(ac_under_100) // Do not push to layers array
+
+// AC 100-300
+
+let ac_100_300 = new InfrastructureSet('AC-lines-100-to-300-kV', '', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_100_300);
+
+let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '100-161', 'rgba(86, 180, 233)', 2, 100);
+console.log(ac_100_200) // Do not push to layers array
+
+let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '220-287', 'rgba(55, 126, 184)', 3, 250);
+console.log(ac_200_300) // Do not push to layers array
+
+// AC 345-735
+
+let ac_345_735 = new InfrastructureSet('AC-lines-345-to-735-kV', '', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ]);
+layers.push(ac_345_735);
+
+let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '345', 'rgba(255, 149, 0)', 4, 350);
+console.log(ac_345) // Do not push to layers array
+
+let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '500', 'rgba(213, 113, 45)', 5, 350);
+console.log(ac_500) // Do not push to layers array
+
+let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
+console.log(ac_735_plus) // Do not push to layers array
+
+// DC
+
+let dc = new InfrastructureSet('DC-lines', '', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_dc,
+  src: ['/static/json/elec_grid_split/grid-dc.json'],
+  w: d3.json,
+} ]);
+layers.push(dc);
+
+// Distribution
+
+let distribution = { name: 'electricity-distribution',
+value: 1_400_000_000_000,
+draw: false,
+column: 'electricity-transmission-and-distribution',
+};
+layers.push(distribution);
+
+// Oil and Gas
+
+let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
+  f: draw_all_wells,
+  src: [ `/static/csv/wells_gas1.csv`,
+         `/static/csv/wells_gas2.csv` ],
+  w: d3.csv
+} ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
+layers.push(gas_well)
+
+let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
+          f: draw_all_wells,
+          src: [ `/static/csv/wells_oil1.csv`,
+                 `/static/csv/wells_oil2.csv` ],
+          w: d3.csv
+        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+layers.push(oil_well)
+
+let foreign_oil_wells = { name: 'foreign-oil-wells',
+      value: 931_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+layers.push(foreign_oil_wells);
+
+let foreign_gas_wells = { name: 'foreign-gas-wells',
+      value: 63_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+layers.push(foreign_gas_wells);
+
+let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
+  f: draw_gas_pipes,
+  src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+  w: d3.json
+} ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
+layers.push(gas_pipeline);
+
+let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
+  f: draw_oil_pipes,
+  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+}, {
+  f: draw_oil_pipes,
+  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+} ], '#3CB371', 1.5 * SCALE);
+layers.push(oil_pipeline);
+
+let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
+oil_product_pipeline.dash = 2.5 * SCALE;
+console.log(oil_product_pipeline);
+
+let oil_refinery = new Processing('oil-refinery', 'Gas processing', 373_000_000_000, 'oil-and-gas', [ {
+  f: draw_refining,
+  src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
+  w: d3.json
+}], 'rgba(60, 179, 113, .7)', .006 * SCALE);
+layers.push(oil_refinery);
+
+let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
+  f: draw_processing,
+  src: [ `/static/csv/nproc.csv`],
+  w: d3.csv
+} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+layers.push(gas_processing);
+
+let oil_and_gas_storage = { name: 'oil-and-gas-storage',
+value: 181_000_000_000,
+draw: false,
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// draw: [ {
+//   f: draw_storage,
+//   src: [ `/static/csv/nproc.csv`],
+//   w: d3.csv
+// } ],
+column: 'oil-and-gas',
+}
+layers.push(oil_and_gas_storage);
+
+
+// Plants
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
@@ -455,6 +405,56 @@ let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 4
     w: d3.json,
 } ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 layers.push(ng_plants);
+
+let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
+  f: draw_petro_plants,
+  src: ['/static/json/power_plants_split/power_plants-PET.json'],
+  w: d3.json,
+} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
+layers.push(pet_plants);
+
+let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_nuclear_plants,
+  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+  w: d3.json,
+} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
+layers.push(nuc_plants);
+
+let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_hydro_plants,
+  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+  w: d3.json,
+} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
+layers.push(hyc_plants);
+
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
+  f: draw_wind_farms,
+  src: ['/static/json/power_plants_split/power_plants-WND.json'],
+  w: d3.json,
+} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
+layers.push(wnd_farms);
+
+let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
+  f: draw_solar_plants,
+  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+  w: d3.json,
+} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
+layers.push(solar_plants);
+
+let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
+  f: draw_geo_plants,
+  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+  w: d3.json,
+} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+layers.push(geo_plants);
+
+let biofuel = { 
+  name: 'biofuel',
+  value: 51_000_000_000,
+  draw: false,
+  column: 'electricity-generation',
+}
+layers.push(biofuel);
 
 console.log(layers)
 
@@ -669,13 +669,13 @@ console.log(layers)
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Feb 11 2020 18:01:46 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Feb 12 2020 18:08:36 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
