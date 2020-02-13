@@ -171,18 +171,7 @@
 
 // Coal
 
-// let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
-//   f: draw_coal_mines,
-//   src: [ '/static/csv/coal.csv' ],
-//   w: d3.csv
-// } ])
 layers.push(coal_mine)
-
-let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
-  f: draw_railroads,
-  src: [ '/static/json/railrdl020.geojson' ],
-  w: d3.json
-} ])
 layers.push(railroad);
 
 // AC under 100

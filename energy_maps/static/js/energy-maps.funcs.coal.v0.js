@@ -43,7 +43,7 @@ function Railroad(name, text, value, column, draw) {
   this.width = SCALE;
   this.text = 'Railroads';
 }
-Railroad.prototype = new Coal;
+// Railroad.prototype = new Coal;
 
  /**
   * A collection of coal mine properties used to draw mines to the map and legend.
@@ -91,10 +91,6 @@ function setRadius(radius, scale) {
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  // r = setRadius(r, mine_props.scale);
-  // ctx.strokeStyle = mine_props.stroke;
-  // ctx.strokeWidth = mine_props.width;
-  // ctx.fillStyle = mine_props.fill;
   r = setRadius(r, coal_mine.scale);
   ctx.strokeStyle = coal_mine.stroke;
   ctx.strokeWidth = coal_mine.width;
@@ -148,14 +144,13 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
-  let railroad = queued_data[0];
+  let rr = queued_data[0];
 
   const path = get_path(ctx);
-  // Gas pipeline
-  ctx.strokeStyle = railroad_props.stroke;
-  ctx.lineWidth = railroad_props.width;
+  ctx.strokeStyle = railroad.stroke;
+  ctx.lineWidth = railroad.width;
   ctx.beginPath();
-  path(railroad);
+  path(rr);
   ctx.stroke();
   hide_spinner();
 
@@ -165,5 +160,10 @@ let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
   w: d3.csv
+} ]);
+
+let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
+  f: draw_railroads,
+  src: [ '/static/json/railrdl020.geojson' ],
+  w: d3.json
 } ])
-// layers.push(coal_mine)

@@ -237,8 +237,8 @@ const update_legend = function update_legend(ctx, layers) {
    */
   const draw_railroad_legend = function draw_railroad_legend(
     ctx, x, y, obj, dashed) {
-    ctx.strokeStyle = railroad_props.stroke;
-    ctx.lineWidth = railroad_props.width;
+    ctx.strokeStyle = railroad.stroke;
+    ctx.lineWidth = railroad.width;
     let text = obj.text;
     y = draw_line(ctx, x, y, dashed, text)
     return y;
@@ -327,11 +327,10 @@ const update_legend = function update_legend(ctx, layers) {
         case 'oil-refinery':
           y = draw_refinery_legend(ctx, x, y, oil_and_gas.processing.oil_refinery);
           break;
-        case 'railroad':
-          y = draw_railroad_legend(ctx, x, y, railroad_props);
+        case 'railroad':;
+          y = draw_railroad_legend(ctx, x, y, railroad);
           break;
         case 'coal-mine':
-          // y = draw_coalmine_legend(ctx, x, y, mine_props);
           y = draw_coalmine_legend(ctx, x, y, coal_mine);
           break;
         case 'coal-plant':
