@@ -306,8 +306,6 @@ const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
   draw_hydro_plants(ctx, queued_data);
 };
 
-
-
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
   src: ['/static/json/power_plants_split/power_plants-COAL.json'],
