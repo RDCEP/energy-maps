@@ -194,7 +194,7 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   if (color !== viz.white) {
     if (color === ng_plants.color) {
       ctx.strokeStyle = 'darkblue';
-    } else if (color === electricity_generation.solar_plants.color) {
+    } else if (color === solar_plants.color) {
       ctx.strokeStyle = 'darkorange';
     }
     ctx.stroke();
@@ -216,7 +216,7 @@ const draw_petro_plants = function draw_petro_plants(ctx, queued_data) {
 };
 
 const draw_hydro_plants = function draw_hydro_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.hyc_plants)
+  draw_single_plant(ctx, queued_data, hyc_plants)
 };
 
 const draw_nuclear_plants = function draw_nuclear_plants(ctx, queued_data) {
@@ -224,15 +224,15 @@ const draw_nuclear_plants = function draw_nuclear_plants(ctx, queued_data) {
 };
 
 const draw_wind_farms = function draw_wind_farms(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.wnd_farms)
+  draw_single_plant(ctx, queued_data, wnd_farms)
 };
 
 const draw_solar_plants = function draw_solar_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.solar_plants)
+  draw_single_plant(ctx, queued_data, solar_plants)
 };
 
 const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.geo_plants)
+  draw_single_plant(ctx, queued_data, geo_plants)
 };
 
 
@@ -331,3 +331,35 @@ let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_
   src: ['/static/json/power_plants_split/power_plants-NUC.json'],
   w: d3.json,
 } ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
+
+let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_hydro_plants,
+  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+  w: d3.json,
+} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
+
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
+  f: draw_wind_farms,
+  src: ['/static/json/power_plants_split/power_plants-WND.json'],
+  w: d3.json,
+} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
+
+let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
+  f: draw_solar_plants,
+  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+  w: d3.json,
+} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
+
+let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
+  f: draw_geo_plants,
+  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+  w: d3.json,
+} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+
+
+let biofuel = { 
+  name: 'biofuel',
+  value: 51_000_000_000,
+  draw: false,
+  column: 'electricity-generation',
+}

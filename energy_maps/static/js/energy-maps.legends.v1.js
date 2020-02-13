@@ -337,10 +337,10 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_power_plant_legend(ctx, x, y, coal_plants);
           break;
         case 'geothermal-plant':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.geo_plants);
+          y = draw_power_plant_legend(ctx, x, y, geo_plants);
           break;
         case 'hydro-plant':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.hyc_plants);
+          y = draw_power_plant_legend(ctx, x, y, hyc_plants);
           break;
         case 'natural-gas-plant':
           y = draw_power_plant_legend(ctx, x, y, ng_plants);
@@ -352,10 +352,10 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_power_plant_legend(ctx, x, y, pet_plants);
           break;
         case 'solar-PV':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.solar_plants);
+          y = draw_power_plant_legend(ctx, x, y, solar_plants);
           break;
         case 'wind-farms':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.wnd_farms);
+          y = draw_power_plant_legend(ctx, x, y, wnd_farms);
           break;
         case 'AC-lines-under-100-kV':
           y = draw_grid_ac_legend(ctx, x, y, grid.ac_na);

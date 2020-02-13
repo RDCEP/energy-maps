@@ -359,41 +359,10 @@ layers.push(coal_plants);
 layers.push(ng_plants);
 layers.push(pet_plants);
 layers.push(nuc_plants);
-
-let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
-  f: draw_hydro_plants,
-  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-  w: d3.json,
-} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
 layers.push(hyc_plants);
-
-let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
-  f: draw_wind_farms,
-  src: ['/static/json/power_plants_split/power_plants-WND.json'],
-  w: d3.json,
-} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
 layers.push(wnd_farms);
-
-let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
-  f: draw_solar_plants,
-  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-  w: d3.json,
-} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
 layers.push(solar_plants);
-
-let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
-  f: draw_geo_plants,
-  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-  w: d3.json,
-} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 layers.push(geo_plants);
-
-let biofuel = { 
-  name: 'biofuel',
-  value: 51_000_000_000,
-  draw: false,
-  column: 'electricity-generation',
-}
 layers.push(biofuel);
 
 console.log(layers);
