@@ -51,6 +51,21 @@ function Transport(name, text, value, column, draw, stroke, width) {
   this.width = width;
 }
 
+/** 
+ * Instatiates a new Processing object that contains properties used to draw resource processing infrastructure to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent resource processing infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} fill - rgba value
+ * @param {Number} size - scaled value for symbols on the map
+ * @property {String} stroke - stroke color
+ * @property {Number} strokeWidth - stroke width
+ */
 function Processing(name, text, value, column, draw, fill, size) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.fill = fill;
