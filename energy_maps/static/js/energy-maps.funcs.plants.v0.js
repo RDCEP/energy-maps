@@ -204,7 +204,8 @@ const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
 };
 
 const draw_coal_plants = function draw_coal_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, electricity_generation.coal_plants)
+  // draw_single_plant(ctx, queued_data, electricity_generation.coal_plants)
+  draw_single_plant(ctx, queued_data, coal_plants)
 };
 
 const draw_ng_plants = function draw_ng_plants(ctx, queued_data) {
@@ -305,3 +306,11 @@ const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
   draw_geo_plants(ctx, queued_data);
   draw_hydro_plants(ctx, queued_data);
 };
+
+
+
+let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
+  f: draw_coal_plants,
+  src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+  w: d3.json,
+} ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);

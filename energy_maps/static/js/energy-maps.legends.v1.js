@@ -334,7 +334,7 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_coalmine_legend(ctx, x, y, coal_mine);
           break;
         case 'coal-plant':
-          y = draw_power_plant_legend(ctx, x, y, electricity_generation.coal_plants);
+          y = draw_power_plant_legend(ctx, x, y, coal_plants);
           break;
         case 'geothermal-plant':
           y = draw_power_plant_legend(ctx, x, y, electricity_generation.geo_plants);
