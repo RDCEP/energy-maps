@@ -200,3 +200,13 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
   draw_grid_class(ctx, queued_data, grid.dc);
 }
+
+
+
+
+// TODO: You can push this into layers[] just fine, but it's not passing through the draw functions appropriately
+// let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
+//   f: draw_grid_class_dc,
+//   src: ['/static/json/elec_grid_split/grid-dc.json'],
+//   w: d3.json,
+// } ], 'DC', 'black', 7, 1000);
