@@ -455,3 +455,15 @@ let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_0
   src: [ `/static/csv/nproc.csv`],
   w: d3.csv
 } ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+
+let oil_and_gas_storage = { name: 'oil-and-gas-storage',
+value: 181_000_000_000,
+draw: false,
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// draw: [ {
+//   f: draw_storage,
+//   src: [ `/static/csv/nproc.csv`],
+//   w: d3.csv
+// } ],
+column: 'oil-and-gas',
+}

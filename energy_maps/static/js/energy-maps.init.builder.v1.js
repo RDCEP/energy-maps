@@ -282,20 +282,7 @@ layers.push(oil_pipeline);
 console.log(oil_product_pipeline);
 layers.push(oil_refinery);
 layers.push(gas_processing);
-
-let oil_and_gas_storage = { name: 'oil-and-gas-storage',
-value: 181_000_000_000,
-draw: false,
-// TODO: Split up the JSON files based on whatever property marks processing vs. storage
-// draw: [ {
-//   f: draw_storage,
-//   src: [ `/static/csv/nproc.csv`],
-//   w: d3.csv
-// } ],
-column: 'oil-and-gas',
-}
 layers.push(oil_and_gas_storage);
-
 
 // Plants
 
