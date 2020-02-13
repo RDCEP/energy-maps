@@ -5,6 +5,23 @@
  * @module Wells
  */
 
+/** 
+ * Instatiates a new Well object that contains properties used to draw gas and oil wells to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent gas and oil well infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} color - rgba value
+ * @param {String} legend_color - rgba value
+ * @property {Number} width - scaled value for symbols on the map
+ * @property {Number} cross - scaled value for cross symbols on the map
+ * @property {Number} diameter - scaled value for circular symbols on the map
+ * @property {Number} stroke - stroke width
+ */
 function Well(name, text, value, column, draw, color, legend_color) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.color = color;

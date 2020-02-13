@@ -156,9 +156,7 @@
     }
   };
 
-  // TODO: Consider object destructuring -- you may be able to push objects from other files
-  // Into this layers array and iterate through them to utilize the properties one way or another.
-  /** 
+  /** // TODO: Update this documentation. It's handy for now but not accurate.
    * @description An array of objects representing resources to be rendered on top of the map canvas.
    * @property {string}   name               - A canvas id.
    * @property {Number}   value              - Asset value in USD.
@@ -169,228 +167,9 @@
    * @property {string}   column             -The class of the column that the layer's checkbox is written to.
    * @memberof Init
    */
-  let layers = [
-    // { name: 'AC-lines-under-100-kV',
-    //   value: 102_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_unk_and_under_100,
-    //     src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'AC-lines-100-to-300-kV',
-    //   value: 167_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_100_300,
-    //     src: ['/static/json/elec_grid_split/grid-100_300.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'AC-lines-345-to-735-kV',
-    //   value: 137_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_ac_345_735,
-    //     src: ['/static/json/elec_grid_split/grid-345_735.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'DC-lines',
-    //   value: 4_000_000_000,
-    //   draw: [ {
-    //     f: draw_grid_class_dc,
-    //     src: ['/static/json/elec_grid_split/grid-dc.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // { name: 'electricity-distribution',
-    //   value: 1_400_000_000_000,
-    //   draw: false,
-    //   column: 'electricity-transmission-and-distribution',
-    // },
-    // {
-    //   name: 'gas-well',
-    //   value: 1_059_000_000_000,
-    //   draw: [ {
-    //     f: draw_all_wells,
-    //     src: [ `/static/csv/wells_gas1.csv`,
-    //            `/static/csv/wells_gas2.csv` ],
-    //     w: d3.csv
-    //   } ],
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'oil-well',
-    //   value: 654_000_000_000,
-    //   draw: [ {
-    //     f: draw_all_wells,
-    //     src: [ `/static/csv/wells_oil1.csv`,
-    //            `/static/csv/wells_oil2.csv` ],
-    //     w: d3.csv
-    //   } ],
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'foreign-oil-wells',
-    //   value: 931_000_000_000,
-    //   draw: false,
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'foreign-gas-wells',
-    //   value: 63_000_000_000,
-    //   draw: false,
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'gas-pipeline',
-    //   value: 940_000_000_000,
-    //   draw: [ {
-    //     f: draw_gas_pipes,
-    //     src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-    //     w: d3.json
-    //   }, ],
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'oil-pipeline',
-    //   value: 170_000_000_000,
-    //   draw: [ {
-    //     f: draw_oil_pipes,
-    //     src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-    //     w: d3.json
-    //   }, {
-    //     f: draw_oil_pipes,
-    //     src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-    //     w: d3.json
-    //   }, ],
-    //   column: 'oil-and-gas',
-    // },
-    // { name: 'oil-refinery',
-    //   value: 373_000_000_000, // 373 B
-    //   draw: [ {
-    //     f: draw_refining,
-    //     src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
-    //     w: d3.json
-    //   }],
-    //   column: 'oil-and-gas',
-    // },
-    { name: 'gas-processing',
-      value: 45_000_000_000,
-      draw: [ {
-        f: draw_processing,
-        src: [ `/static/csv/nproc.csv`],
-        w: d3.csv
-      } ],
-      column: 'oil-and-gas',
-    },
-    { name: 'oil-and-gas-storage',
-      value: 181_000_000_000,
-      draw: false,
-      // TODO: Split up the JSON files based on whatever property marks processing vs. storage
-      // draw: [ {
-      //   f: draw_storage,
-      //   src: [ `/static/csv/nproc.csv`],
-      //   w: d3.csv
-      // } ],
-      column: 'oil-and-gas',
-    },
-    // { name: 'coal-mine',
-    //   value: 57_000_000_000,
-    //   draw: [ {
-    //     f: draw_coal_mines,
-    //     src: [ '/static/csv/coal.csv' ],
-    //     w: d3.csv
-    //   } ],
-    //   column: 'coal',
-    // },
-    // { name: 'railroad',
-    //   value: 137_000_000_000,
-    //   // `137 B *` Needs an asterisk because this is 1/3 of
-    //   // the value of the freight railway shown
-    //   draw: [ {
-    //     f: draw_railroads,
-    //     src: [ '/static/json/railrdl020.geojson' ],
-    //     w: d3.json
-    //   } ],
-    //   column: 'coal',
-    // },
-    // { name: 'coal-plant',
-    //   value: 1_092_000_000_000,
-    //   draw: [ {
-    //     f: draw_coal_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'natural-gas-plant',
-    //   value: 488_000_000_000,
-    //   draw: [ {
-    //     f: draw_ng_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-NG.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'petroleum-plant',
-    //   value: 64_000_000_000,
-    //   draw: [ {
-    //     f: draw_petro_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-PET.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'nuclear-plant',
-    //   value: 597_000_000_000,
-    //   draw: [ {
-    //     f: draw_nuclear_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'hydro-plant',
-    //   value: 597_000_000_000,
-    //   draw: [ {
-    //     f: draw_hydro_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'wind-farms',
-    //   value: 132_000_000_000,
-    //   draw: [ {
-    //     f: draw_wind_farms,
-    //     src: ['/static/json/power_plants_split/power_plants-WND.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'solar-PV',
-    //   value: 14_000_000_000,
-    //   draw: [ {
-    //     f: draw_solar_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'geothermal-plant',
-    //   value: 22_000_000_000,
-    //   draw: [ {
-    //     f: draw_geo_plants,
-    //     src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-    //     w: d3.json,
-    //   } ],
-    //   column: 'electricity-generation',
-    // },
-    // { name: 'biofuel',
-    //   value: 51_000_000_000,
-    //   draw: false,
-    //   column: 'electricity-generation',
-    // }
-  ];
+  let layers = [];
+
+// Coal
 
 let coal_mine = new Coal('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
@@ -561,6 +340,27 @@ let oil_refinery = new Processing('oil-refinery', 'Gas processing', 373_000_000_
   w: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 layers.push(oil_refinery);
+
+let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
+  f: draw_processing,
+  src: [ `/static/csv/nproc.csv`],
+  w: d3.csv
+} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+layers.push(gas_processing);
+
+let oil_and_gas_storage = { name: 'oil-and-gas-storage',
+value: 181_000_000_000,
+draw: false,
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// draw: [ {
+//   f: draw_storage,
+//   src: [ `/static/csv/nproc.csv`],
+//   w: d3.csv
+// } ],
+column: 'oil-and-gas',
+}
+layers.push(oil_and_gas_storage);
+
 
 // Plants
 
