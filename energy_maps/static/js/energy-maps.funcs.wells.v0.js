@@ -186,8 +186,8 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   const OIL_PRODUCT_LINE_DASH = [ oil_and_gas.transport.oil_product.dash,
                                   oil_and_gas.transport.oil_product.dash +
                                   2 * oil_and_gas.transport.oil_product.width ];
-  ctx.strokeStyle = oil_and_gas.transport.oil.stroke;
-  ctx.lineWidth = oil_and_gas.transport.oil.width;
+  ctx.strokeStyle = oil_pipeline.stroke;
+  ctx.lineWidth = oil_pipeline.width;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
@@ -430,3 +430,13 @@ let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
   w: d3.json
 } ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
+
+let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
+  f: draw_oil_pipes,
+  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+}, {
+  f: draw_oil_pipes,
+  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+} ], '#3CB371', 1.5 * SCALE);

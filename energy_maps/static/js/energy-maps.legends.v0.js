@@ -286,8 +286,8 @@ const wells_legend = function wells_legend(ctx) {
   // Oil pipeline
   y += 15 * SCALE;
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas.transport.oil.stroke;
-  ctx.lineWidth = oil_and_gas.transport.oil.width;
+  ctx.strokeStyle = oil_pipeline.stroke;
+  ctx.lineWidth = oil_pipeline.width;
   ctx.beginPath();
   ctx.moveTo(xo + 10 * SCALE, y);
   ctx.lineTo(text_x - 30 * SCALE, y);

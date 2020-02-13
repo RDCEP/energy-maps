@@ -277,23 +277,7 @@ layers.push(gas_well);
 layers.push(oil_well);
 layers.push(foreign_oil_wells);
 layers.push(foreign_gas_wells);
-
-let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
-  f: draw_gas_pipes,
-  src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-  w: d3.json
-} ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 layers.push(gas_pipeline);
-
-let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
-  f: draw_oil_pipes,
-  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
-}, {
-  f: draw_oil_pipes,
-  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
-} ], '#3CB371', 1.5 * SCALE);
 layers.push(oil_pipeline);
 
 let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
