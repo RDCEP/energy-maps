@@ -281,12 +281,6 @@ layers.push(gas_pipeline);
 layers.push(oil_pipeline);
 console.log(oil_product_pipeline);
 layers.push(oil_refinery);
-
-let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
-  f: draw_processing,
-  src: [ `/static/csv/nproc.csv`],
-  w: d3.csv
-} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 layers.push(gas_processing);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',

@@ -371,8 +371,8 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
-  ctx.fillStyle = oil_and_gas.processing.gas_process.fill;
-  draw_triangle(ctx, xy, oil_and_gas.processing.gas_process.size);
+  ctx.fillStyle = gas_processing.fill;
+  draw_triangle(ctx, xy, gas_processing.size);
   ctx.fill();
 };
 
@@ -449,3 +449,9 @@ let oil_refinery = new Processing('oil-refinery', 'Oil refinery', 373_000_000_00
   src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
   w: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
+
+let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
+  f: draw_processing,
+  src: [ `/static/csv/nproc.csv`],
+  w: d3.csv
+} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
