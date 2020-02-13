@@ -32,6 +32,19 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.stroke = SCALE;
 }
 
+/** 
+ * Instatiates a new Transport object that contains properties used to draw gas and oil pipelines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent gas and oil pipeline infrastructure.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {String} stroke - rgba value
+ * @param {Number} width - scaled value for symbols on the map
+ */
 function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
