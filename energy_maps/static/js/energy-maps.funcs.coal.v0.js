@@ -91,10 +91,14 @@ function setRadius(radius, scale) {
  */
 const draw_mine = function draw_mine(ctx, xy, color, r) {
   const NUM_SIDES_MINE = 5;
-  r = setRadius(r, mine_props.scale);
-  ctx.strokeStyle = mine_props.stroke;
-  ctx.strokeWidth = mine_props.width;
-  ctx.fillStyle = mine_props.fill;
+  // r = setRadius(r, mine_props.scale);
+  // ctx.strokeStyle = mine_props.stroke;
+  // ctx.strokeWidth = mine_props.width;
+  // ctx.fillStyle = mine_props.fill;
+  r = setRadius(r, coal_mine.scale);
+  ctx.strokeStyle = coal_mine.stroke;
+  ctx.strokeWidth = coal_mine.width;
+  ctx.fillStyle = coal_mine.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
@@ -156,3 +160,10 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   hide_spinner();
 
 };
+
+let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
+  f: draw_coal_mines,
+  src: [ '/static/csv/coal.csv' ],
+  w: d3.csv
+} ])
+// layers.push(coal_mine)

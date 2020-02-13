@@ -331,7 +331,8 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_railroad_legend(ctx, x, y, railroad_props);
           break;
         case 'coal-mine':
-          y = draw_coalmine_legend(ctx, x, y, mine_props);
+          // y = draw_coalmine_legend(ctx, x, y, mine_props);
+          y = draw_coalmine_legend(ctx, x, y, coal_mine);
           break;
         case 'coal-plant':
           y = draw_power_plant_legend(ctx, x, y, electricity_generation.coal_plants);
