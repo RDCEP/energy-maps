@@ -36,6 +36,21 @@ function CoalMine(name, text, value, column, draw, stroke, width) {
 }
 CoalMine.prototype = new InfrastructureSet;
 
+// function Railroad(name, text, value, column, draw, stroke, width) {
+//   Coal.call(this, name, text, value, column, draw, stroke, width);
+//   this.stroke = '#767676';
+//   this.width = SCALE;
+//   this.text = 'Railroads';
+// }
+// Railroad.prototype = new InfrastructureSet;
+function Railroad(name, text, value, column, draw) {
+  Coal.call(this, name, text, value, column, draw);
+  this.stroke = '#767676';
+  this.width = SCALE;
+  this.text = 'Railroads';
+}
+Railroad.prototype = new InfrastructureSet;
+
  /**
   * A collection of coal mine properties used to draw mines to the map and legend.
  * @type {Object} 
