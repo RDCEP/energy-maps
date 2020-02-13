@@ -31,6 +31,7 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
 }
+Well.prototype = new InfrastructureSet;
 
 /** 
  * Instatiates a new Transport object that contains properties used to draw gas and oil pipelines to the map and legend.
@@ -50,6 +51,7 @@ function Transport(name, text, value, column, draw, stroke, width) {
   this.stroke = stroke;
   this.width = width;
 }
+Transport.prototype = new InfrastructureSet;
 
 /** 
  * Instatiates a new Processing object that contains properties used to draw resource processing infrastructure to the map and legend.
@@ -73,6 +75,7 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
 }
+Processing.prototype = new InfrastructureSet;
 
  // TODO: Add jsdoc and map calls to viz to this obj instead
 const oil_and_gas = {
