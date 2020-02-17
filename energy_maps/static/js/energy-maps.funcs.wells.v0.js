@@ -77,7 +77,7 @@ function Processing(name, text, value, column, draw, fill, size) {
 }
 Processing.prototype = new InfrastructureSet;
 
- // TODO: Add jsdoc and map calls to viz to this obj instead
+ // TODO: Add jsdoc
 const oil_and_gas = {
   wells: {
 //     width: SCALE / 6,
@@ -96,13 +96,6 @@ const oil_and_gas = {
       width: SCALE * .75
     }
   },
-  // transport: {
-  //   oil_product: {
-  //     stroke: '#3CB371',
-  //     width: 2 * SCALE,
-  //     dash: 2.5 * SCALE
-  //   },
-  // }
 };
 
 const oil_product = {
