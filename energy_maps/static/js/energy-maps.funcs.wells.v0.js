@@ -80,53 +80,53 @@ Processing.prototype = new InfrastructureSet;
  // TODO: Add jsdoc and map calls to viz to this obj instead
 const oil_and_gas = {
   wells: {
-    gas: {
-      text: 'Gas well',
-      color: 'rgba(0, 191, 255, .5)',
-      legend_color: 'rgba(0, 191, 255)'
-    },
-    oil: {
-      text: 'Oil well',
-      color: 'rgba(34, 139, 34, .5)',
-      legend_color: 'rgba(34, 139, 34)'
-    },
-    offshore: { // TODO: How do we want to represent this?
-      color: 'rgba(34, 139, 34)'
-    },
-    width: SCALE / 6,
-    cross: 5 * SCALE,
+//     gas: {
+//       text: 'Gas well',
+//       color: 'rgba(0, 191, 255, .5)',
+//       legend_color: 'rgba(0, 191, 255)'
+//     },
+//     oil: {
+//       text: 'Oil well',
+//       color: 'rgba(34, 139, 34, .5)',
+//       legend_color: 'rgba(34, 139, 34)'
+//     },
+//     offshore: { // TODO: How do we want to represent this?
+//       color: 'rgba(34, 139, 34)'
+//     },
+//     width: SCALE / 6,
+//     cross: 5 * SCALE,
     diameter: SCALE / 2,
-    stroke: SCALE
+//     stroke: SCALE
   },
   processing: {
-    oil_refinery: {
-      fill: 'rgba(60, 179, 113, .7)',
-      size: .006 * SCALE, 
-      text: 'Oil refinery',
-      old_size: .015 * SCALE
-    },
-    gas_storage: {
-      fill: 'rgb(45, 45, 45, .9)',
-      size: 5 * SCALE
-    },
-    gas_process: {
-      fill: 'rgba(0, 0, 139, .5)',
-      size: 1.5 * SCALE,
-      text: 'Gas processing',
-      // vvv Old scale vvv
-      // size: 4 * SCALE
-    },
+//     oil_refinery: {
+//       fill: 'rgba(60, 179, 113, .7)',
+//       size: .006 * SCALE, 
+//       text: 'Oil refinery',
+//       old_size: .015 * SCALE
+//     },
+//     gas_storage: {
+//       fill: 'rgb(45, 45, 45, .9)',
+//       size: 5 * SCALE
+//     },
+//     gas_process: {
+//       fill: 'rgba(0, 0, 139, .5)',
+//       size: 1.5 * SCALE,
+//       text: 'Gas processing',
+//       // vvv Old scale vvv
+//       // size: 4 * SCALE
+//     },
     stroke: {
       light: 'rgba(255, 255, 255, 1)',
       width: SCALE * .75
     }
   },
   transport: {
-    gas: {
-      text: 'Gas pipeline',
-      stroke: 'rgba(0, 191, 255, .5)',
-      width: 1.8 * SCALE
-    },
+//     gas: {
+//       text: 'Gas pipeline',
+//       stroke: 'rgba(0, 191, 255, .5)',
+//       width: 1.8 * SCALE
+//     },
     oil: {
       text: 'Oil pipeline',
       stroke: '#3CB371',
