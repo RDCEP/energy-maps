@@ -50,86 +50,86 @@ let electricity_generation = {
     width: .66 * SCALE
   },
   scale: .3 * SCALE, //old_scale: .9 * SCALE, // TODO: figure out if needed
-  coal_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'COAL',
-    legend_func: 0,
-    text: 'Coal power plant',
-    color: 'rgba(0, 0, 0, .5)',
-    stroke: plant_stroke
-  },
-  geo_plants: { 
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'GEO',
-    legend_func: 0,
-    text: 'Geothermal power plant',
-    color: 'rgba(210, 105, 30, .5)',
-    stroke: plant_stroke
-  },
-  hyc_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'HYC',
-    legend_func: 0,
-    text: 'Hydro power plant',
-    color: 'rgba(11, 36, 251, .5)',
-    stroke: plant_stroke
-  }, 
-  ng_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'NG',
-    legend_func: 0,
-    text: 'Natural gas power plant',
-    color: 'rgba(0, 191, 255, .5)',
-    stroke: 'darkblue'
-  }, 
-  nuc_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'NUC',
-    legend_func: 0,
-    text: 'Nuclear power plant',
-    color: 'rgba(255, 0, 0, .5)',
-    stroke: plant_stroke
-  }, 
-  pet_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'PET',
-    legend_func: 0,
-    text: 'Petroleum power plant',
-    color: 'rgba(34, 139, 34, .5)',
-    stroke: plant_stroke
-  }, 
-  solar_plants: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'SUN',
-    legend_func: 0,
-    text: 'Solar power plant',
-    color: 'rgba(255, 215, 0, .5)',
-    stroke: 'darkorange'
-  },
-  wnd_farms: {
-    src: '',
-    func: 0,
-    dom_class_attribute: '',
-    fuel_type: 'WND',
-    legend_func: 0,
-    text: 'Wind farm',
-    color: 'rgba(144, 29, 143, .5)',
-    stroke: plant_stroke
-  },
+  // coal_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'COAL',
+  //   legend_func: 0,
+  //   text: 'Coal power plant',
+  //   color: 'rgba(0, 0, 0, .5)',
+  //   stroke: plant_stroke
+  // },
+  // geo_plants: { 
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'GEO',
+  //   legend_func: 0,
+  //   text: 'Geothermal power plant',
+  //   color: 'rgba(210, 105, 30, .5)',
+  //   stroke: plant_stroke
+  // },
+  // hyc_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'HYC',
+  //   legend_func: 0,
+  //   text: 'Hydro power plant',
+  //   color: 'rgba(11, 36, 251, .5)',
+  //   stroke: plant_stroke
+  // }, 
+  // ng_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'NG',
+  //   legend_func: 0,
+  //   text: 'Natural gas power plant',
+  //   color: 'rgba(0, 191, 255, .5)',
+  //   stroke: 'darkblue'
+  // }, 
+  // nuc_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'NUC',
+  //   legend_func: 0,
+  //   text: 'Nuclear power plant',
+  //   color: 'rgba(255, 0, 0, .5)',
+  //   stroke: plant_stroke
+  // }, 
+  // pet_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'PET',
+  //   legend_func: 0,
+  //   text: 'Petroleum power plant',
+  //   color: 'rgba(34, 139, 34, .5)',
+  //   stroke: plant_stroke
+  // }, 
+  // solar_plants: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'SUN',
+  //   legend_func: 0,
+  //   text: 'Solar power plant',
+  //   color: 'rgba(255, 215, 0, .5)',
+  //   stroke: 'darkorange'
+  // },
+  // wnd_farms: {
+  //   src: '',
+  //   func: 0,
+  //   dom_class_attribute: '',
+  //   fuel_type: 'WND',
+  //   legend_func: 0,
+  //   text: 'Wind farm',
+  //   color: 'rgba(144, 29, 143, .5)',
+  //   stroke: plant_stroke
+  // },
 }; 
 
 /**
