@@ -321,8 +321,8 @@ const update_legend = function update_legend(ctx, layers) {
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y, gas_pipeline);
           break;
-        case 'oil-pipeline':
-          y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.oil);
+        case 'oil-pipeline':          
+          y = draw_pipeline_legend(ctx, x, y, oil_pipeline);
           break;
         case 'oil-refinery':
           y = draw_refinery_legend(ctx, x, y, oil_refinery);
