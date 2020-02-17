@@ -15,7 +15,6 @@
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
  * @param {Array} draw - properties used to parse the data and render the visualization
- * @param {String} stroke - rgba value to set the canvas stroke
  * @param {String} fuel_type - class heading from the data file
  * @param {String} color - rgba value used to draw the grid line
  * @param {String} stroke - rgba value used for symbol outlines and opacity

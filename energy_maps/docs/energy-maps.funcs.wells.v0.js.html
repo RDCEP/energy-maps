@@ -194,8 +194,8 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   const path = get_path(ctx);
 
   ctx.lineCap = 'round';
-  ctx.strokeStyle = oil_and_gas.transport.gas.stroke;
-  ctx.lineWidth = oil_and_gas.transport.gas.width;
+  ctx.strokeStyle = gas_pipeline.stroke;
+  ctx.lineWidth = gas_pipeline.width;
   ctx.beginPath();
   path(pipe_data);
   ctx.stroke();
@@ -214,8 +214,8 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   const OIL_PRODUCT_LINE_DASH = [ oil_and_gas.transport.oil_product.dash,
                                   oil_and_gas.transport.oil_product.dash +
                                   2 * oil_and_gas.transport.oil_product.width ];
-  ctx.strokeStyle = oil_and_gas.transport.oil.stroke;
-  ctx.lineWidth = oil_and_gas.transport.oil.width;
+  ctx.strokeStyle = oil_pipeline.stroke;
+  ctx.lineWidth = oil_pipeline.width;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
@@ -271,7 +271,7 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
 
   get_xy(queued_data);
-  draw_well(xy, oil_and_gas.wells.gas.color)
+  draw_well(xy, gas_well.color)
 
 };
 
@@ -287,7 +287,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
   if (d.class === 'Off') {
     draw_off_well(xy);
   } else {
-    draw_well(xy, oil_and_gas.wells.oil.color);
+    draw_well(xy, oil_well.color);
   }
 
 };
@@ -305,16 +305,16 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
     } else {
       if (d.oilgas === 'GAS') {
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas.wells.gas.color);
+          draw_off_well(ctx, xy, gas_well.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas.wells.gas.color);
+          draw_well(ctx, xy, gas_well.color);
         }
       } else {
         
         if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_and_gas.wells.oil.color);
+          draw_off_well(ctx, xy, oil_well.color);
         } else {
-          draw_well(ctx, xy, oil_and_gas.wells.oil.color);
+          draw_well(ctx, xy, oil_well.color);
         }
       }
     }
@@ -391,7 +391,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
     ctx.lineWidth = oil_and_gas.processing.stroke.width;
     ctx.beginPath();
-    draw_circle(ctx, xy, oil_and_gas.processing.oil_refinery.size * d.r);
+    draw_circle(ctx, xy, oil_refinery.size * d.r);
     ctx.stroke();
   });
 
@@ -399,8 +399,8 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
-  ctx.fillStyle = oil_and_gas.processing.gas_process.fill;
-  draw_triangle(ctx, xy, oil_and_gas.processing.gas_process.size);
+  ctx.fillStyle = gas_processing.fill;
+  draw_triangle(ctx, xy, gas_processing.size);
   ctx.fill();
 };
 
@@ -419,14 +419,82 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
  */
 const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   const NUM_SIDES_REFIN = 6
-  r *= oil_and_gas.processing.oil_refinery.size;
-  ctx.fillStyle = oil_and_gas.processing.oil_refinery.fill;
+  r *= oil_refinery.size;
+  ctx.fillStyle = oil_refinery.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_REFIN, ctx, r, xy)
   ctx.fill();
 };
 
-</code></pre>
+let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
+  f: draw_all_wells,
+  src: [ `/static/csv/wells_gas1.csv`,
+         `/static/csv/wells_gas2.csv` ],
+  w: d3.csv
+} ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
+
+let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
+          f: draw_all_wells,
+          src: [ `/static/csv/wells_oil1.csv`,
+                 `/static/csv/wells_oil2.csv` ],
+          w: d3.csv
+        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+
+        
+let foreign_oil_wells = { name: 'foreign-oil-wells',
+value: 931_000_000_000,
+draw: false,
+column: 'oil-and-gas',
+}
+
+let foreign_gas_wells = { name: 'foreign-gas-wells',
+      value: 63_000_000_000,
+      draw: false,
+      column: 'oil-and-gas',
+    }
+
+let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
+  f: draw_gas_pipes,
+  src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+  w: d3.json
+} ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
+
+let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
+  f: draw_oil_pipes,
+  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+}, {
+  f: draw_oil_pipes,
+  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+} ], '#3CB371', 1.5 * SCALE);
+
+let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
+oil_product_pipeline.dash = 2.5 * SCALE;
+
+let oil_refinery = new Processing('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
+  f: draw_refining,
+  src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
+  w: d3.json
+}], 'rgba(60, 179, 113, .7)', .006 * SCALE);
+
+let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
+  f: draw_processing,
+  src: [ `/static/csv/nproc.csv`],
+  w: d3.csv
+} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+
+let oil_and_gas_storage = { name: 'oil-and-gas-storage',
+value: 181_000_000_000,
+draw: false,
+// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// draw: [ {
+//   f: draw_storage,
+//   src: [ `/static/csv/nproc.csv`],
+//   w: d3.csv
+// } ],
+column: 'oil-and-gas',
+} </code></pre>
         </article>
     </section>
 
@@ -442,7 +510,7 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Feb 13 2020 14:18:23 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Feb 17 2020 10:31:42 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
