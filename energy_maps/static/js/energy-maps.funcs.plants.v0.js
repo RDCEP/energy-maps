@@ -34,12 +34,7 @@ let plant_stroke = 'rgba(255, 255, 255, 1)';
  * @type {Object} 
  * @property {Object} stroke - contains rgba and scale values to assign to ctx.strokeStyle 
  * @property {Number} scale - sets the scale of all plants to a multiple of global SCALE 
- * @property {Number} old_scale - clumsily retained legacy value of scale
- * @property {Object} identifier - an abbreviation of the class name in the data file, contains the following nested props:
- * @property {string} fuel_type - a nested property; cooresponds to class heading in data file 
- * @property {string} color - a nested property; corresponds to `viz` object; used to distinguish plant sets on screen 
  */
-
 let electricity_generation = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
