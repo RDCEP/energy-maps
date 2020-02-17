@@ -44,9 +44,9 @@ let plant_stroke = 'rgba(255, 255, 255, 1)';
 let electricity_generation = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
-    natural_gas: 'darkblue',
-    sun: 'darkorange',
-    dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
+  //   natural_gas: 'darkblue',
+  //   sun: 'darkorange',
+  //   dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
     width: .66 * SCALE
   },
   scale: .3 * SCALE, //old_scale: .9 * SCALE, // TODO: figure out if needed
