@@ -96,13 +96,19 @@ const oil_and_gas = {
       width: SCALE * .75
     }
   },
-  transport: {
-    oil_product: {
-      stroke: '#3CB371',
-      width: 2 * SCALE,
-      dash: 2.5 * SCALE
-    },
-  }
+  // transport: {
+  //   oil_product: {
+  //     stroke: '#3CB371',
+  //     width: 2 * SCALE,
+  //     dash: 2.5 * SCALE
+  //   },
+  // }
+};
+
+const oil_product = {
+  stroke: '#3CB371',
+  width: 2 * SCALE,
+  dash: 2.5 * SCALE
 };
 
 /**
@@ -147,17 +153,15 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   let oil_pipe_data = queued_data[0];
   let oil_prod_pipe_data = queued_data[1];
   const path = get_path(ctx);
-  // TODO: explain the reasoning for this value
-  const OIL_PRODUCT_LINE_DASH = [ oil_and_gas.transport.oil_product.dash,
-                                  oil_and_gas.transport.oil_product.dash +
-                                  2 * oil_and_gas.transport.oil_product.width ];
+  const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
+        oil_product.dash + 2 * oil_product.width ];
   ctx.strokeStyle = oil_pipeline.stroke;
   ctx.lineWidth = oil_pipeline.width;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
-  ctx.lineWidth = oil_and_gas.transport.oil_product.width;
-  ctx.strokeStyle = oil_and_gas.transport.oil_product.stroke;
+  ctx.lineWidth = oil_product.width;
+  ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
   ctx.beginPath();
   path(oil_prod_pipe_data);
