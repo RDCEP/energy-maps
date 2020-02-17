@@ -97,11 +97,6 @@ const oil_and_gas = {
     }
   },
   transport: {
-    // oil: {
-    //   text: 'Oil pipeline',
-    //   stroke: '#3CB371',
-    //   width: 1.5 * SCALE
-    // },
     oil_product: {
       stroke: '#3CB371',
       width: 2 * SCALE,
