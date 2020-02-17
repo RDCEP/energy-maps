@@ -79,24 +79,24 @@ Railroad.prototype = new Coal;
  * @property {Number} width - sets the width of the mine, bound to global SCALE
  * @property {Number} scale - sets the relative scale of the mine, bound to global SCALE as a fraction of its width
   */
-let mine_props = {
-  fill: 'rgba(0, 0, 0, 0.5)',
-  stroke: 'rgba(255, 255, 255, 1)',
-  width: SCALE,
-  scale: SCALE / 190,
-  text: 'Coal mine'
-}
+// let mine_props = {
+//   fill: 'rgba(0, 0, 0, 0.5)',
+//   stroke: 'rgba(255, 255, 255, 1)',
+//   width: SCALE,
+//   scale: SCALE / 190,
+//   text: 'Coal mine'
+// }
 
 /**
  * @type {Object} 
  * @property {string} stroke - rgba value for mine stroke color
  * @property {Number} width - sets the width of the rr line, bound to global SCALE
  */
-let railroad_props = {
-  stroke: '#767676', 
-  width: SCALE, 
-  text: 'Railroads'
-}
+// let railroad_props = {
+//   stroke: '#767676', 
+//   width: SCALE, 
+//   text: 'Railroads'
+// }
 
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
