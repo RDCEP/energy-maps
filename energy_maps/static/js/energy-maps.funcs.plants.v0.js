@@ -85,7 +85,14 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       //
     } else {
       let color = fuel.color;
-      draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      if (fuel == bio_plants) {
+        // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
+        draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
+        // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
+      }
+      else {
+        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      }
     }
     if (i === features.length - 1) { 
       hide_spinner(); 
@@ -150,6 +157,10 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
+const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, bio_plants)
+};
+
 // Instantiate PowerPlants
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
@@ -199,6 +210,12 @@ let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22
   src: ['/static/json/power_plants_split/power_plants-GEO.json'],
   w: d3.json,
 } ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+
+let bio_plants = new PowerPlant('biofuel', 'Biofuel power plant', 51_000_000_000, 'electricity-generation', [ {
+  f: draw_bio_plants,
+  src: ['/static/json/power_plants_split/power_plants-BIO.json'],
+  w: d3.json,
+} ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
 
 let biofuel = { 
