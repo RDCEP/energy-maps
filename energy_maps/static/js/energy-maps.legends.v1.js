@@ -41,7 +41,6 @@ function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taki
  */
 function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
-  console.log(color);
   ctx.strokeStyle = color;
   ctx.lineWidth = lineWidth;
   ctx.fillStyle = color;
