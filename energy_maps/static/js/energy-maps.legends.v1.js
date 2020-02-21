@@ -79,7 +79,6 @@ const update_legend = function update_legend(ctx, layers) {
     y = advance_for_type(y, ctx, obj.text, text_offset, x);
     y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas.wells.stroke);
     draw_x(ctx, [x, y], oil_and_gas.wells.cross);
-    console.log(oil_and_gas.wells.cross)
     ctx.stroke();
     
     let text = `${obj.text.slice(0, 3)} offshore well`
