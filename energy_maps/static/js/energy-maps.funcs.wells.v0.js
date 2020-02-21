@@ -81,7 +81,7 @@ Processing.prototype = new InfrastructureSet;
 const oil_and_gas = {
   wells: {
 //     width: SCALE / 6,
-//     cross: 5 * SCALE,
+    cross: 5 * SCALE,
     diameter: SCALE / 2,
 //     stroke: SCALE
   },
