@@ -308,7 +308,7 @@ const update_legend = function update_legend(ctx, layers) {
     
   // Consider using Function.prototype.bind() to bind ctx, x, and y to the object's properties (draw function with params for stroke and width)
   for (let i = 0; i < layers.length; ++i) {
-    if (layers[i].active) {
+    if (layers[i].active) { // TODO: consider this, if we can just pass an obj to the entire function ---> if (obj.active { // Do Stuff })
       // y = layers[i].draw_legend(ctx, x, y, layers[i].obj);
       switch (layers[i].name) {
         case 'oil-well':
@@ -399,6 +399,4 @@ const update_legend = function update_legend(ctx, layers) {
     // y +=
   }
 
-};
-
-
+}; // End update_legend()
