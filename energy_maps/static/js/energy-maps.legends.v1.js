@@ -99,7 +99,7 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-    const draw_line = function draw_line(ctx, x, y, dashed = false, text) {
+    const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
     
     y += VERTICAL_INCREMENT;
     
@@ -111,6 +111,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.beginPath();
     ctx.moveTo(x - 7 * SCALE, y);
     ctx.lineTo(x + 7 * SCALE, y);
+    ctx.strokeStyle = obj.stroke;
     ctx.stroke();
 
     y = advance_for_type(y, ctx, text, text_offset, x);
@@ -129,7 +130,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeStyle = obj.color;
     ctx.lineWidth = obj.width;
     let text = obj.text;
-    y = draw_line(ctx, x, y, dashed, text)
+    y = draw_line(ctx, x, y, obj, dashed, text)
     return y;
   };
 
@@ -234,7 +235,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeStyle = railroad.stroke;
     ctx.lineWidth = railroad.width;
     let text = obj.text;
-    y = draw_line(ctx, x, y, dashed, text)
+    y = draw_line(ctx, x, y, obj, dashed, text)
     return y;
   };
 
@@ -281,7 +282,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.lineWidth = LEGEND_FONT_SIZE;
     ctx.strokeStyle = obj.color;
     text = obj.text;
-    y = draw_line(ctx, x, y, dashed, text)
+    y = draw_line(ctx, x, y, obj, dashed, text)
     return y;
   };
 
