@@ -57,78 +57,6 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
 }
 Grid.prototype = new InfrastructureSet;
 
-
- /**
- * A collection of electric grid classifications containing metadata that is used to filter out and render separate portions of the grid.
- * @type {Object} 
- * @property {string} identifier - an abbreviation of the class name in the data file
- * @property {string} name - a nested property of `identifier`; cooresponds to class heading in data file 
- * @property {string} display - a nested property of `identifier`; display name for the legend
- * @property {string} color - a nested property of `identifier`; rgba value used to set the color for the legend and the rendered viz
- * @property {string} line_width - a nested property of `identifier`; used for mathematical operations that set the line width for the corresponding object
- * @property {Number} nominal voltage - a nested property of `identifier`; system voltage for the grid class (values are estimates)
- */
- let grid = {
-  ac_na: {
-    // TODO: Consider a more descriptive title for the `name` property, like "class_name", or "data_ref" or something like that
-    name: 'NOT AVAILABLE',
-    text: 'Unknown kV AC',
-    color: 'rgba(255, 255, 255)', // white
-    line_width: 0,
-    nominal_voltage: 50
-  },
-  ac_under_100: { 
-    name: 'Under 100',
-    text: 'Under 100 kV AC',
-    color: 'rgba(255, 255, 170)', // yellow
-    line_width: 1,
-    nominal_voltage: 50
-  },
-  ac_100_200: {
-    name: '100-161',
-    text: '100–200 kV AC',
-    color: 'rgba(86, 180, 233)', // lt blue
-    line_width: 2,
-    nominal_voltage: 100
-  }, 
-  ac_200_300: {
-    name: '220-287',
-    text: '200–300 kV AC',
-    color: 'rgba(55, 126, 184)', // blue
-    line_width: 3,
-    nominal_voltage: 250
-  }, 
-  ac_345: {
-    name: '345',
-    text: '345 kV AC',
-    color: 'rgba(255, 149, 0)', // orange
-    line_width: 4,
-    nominal_voltage: 350
-  }, 
-  ac_500: {
-    name: '500',
-    text: '500 kV AC',
-    color: 'rgba(213, 113, 45)', // vermillion
-    line_width: 5,
-    nominal_voltage: 500 
-  }, 
-  ac_735_plus: {
-    name: '735 and Above',
-    text: '735 kV AC',
-    color: 'rgba(228, 53, 5)', // red 
-    line_width: 6,
-    nominal_voltage: 750
-  },
-  dc: {
-    name: 'DC',
-    text: '500–1000 kV DC',
-    color: 'black', 
-    dashed: false,
-    line_width: 7,
-    nominal_voltage: 1000
-  }
-};
-
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure - readfile
@@ -137,7 +65,7 @@ Grid.prototype = new InfrastructureSet;
  */
 const filter_features = function filter_features(infrastructure, c) {
   let features = infrastructure.features.filter(function(d) {
-    return d.properties.class === c.name;
+    return d.properties.class === c.heading;
   });
   return features;
 }
@@ -194,8 +122,8 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid.ac_na);
-  draw_grid_class(ctx, queued_data, grid.ac_under_100);
+  draw_grid_class(ctx, queued_data, ac_na);
+  draw_grid_class(ctx, queued_data, ac_under_100);
 };
 
 /**
@@ -204,8 +132,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid.ac_100_200);
-  draw_grid_class(ctx, queued_data, grid.ac_200_300);
+  draw_grid_class(ctx, queued_data, ac_100_200);
+  draw_grid_class(ctx, queued_data, ac_200_300);
 };
 
 /**
@@ -214,9 +142,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, grid.ac_345);
-  draw_grid_class(ctx, queued_data, grid.ac_500);
-  draw_grid_class(ctx, queued_data, grid.ac_735_plus);
+  draw_grid_class(ctx, queued_data, ac_345);
+  draw_grid_class(ctx, queued_data, ac_500);
+  draw_grid_class(ctx, queued_data, ac_735_plus);
 };
 
 /**
@@ -226,18 +154,95 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
-  draw_grid_class(ctx, queued_data, grid.dc);
+  draw_grid_class(ctx, queued_data, dc);
 }
 
+// AC under 100
 
+// TODO: The `name` property for ac_na isn't meaningful since it doesn't have its own canvas to connect to independently. This isn't a huge issue but it's not descriptive when you look at the object's prototype in the console. Consider a rewrite of the Grid constructor. 
+let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ]);
 
+let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
+console.log(ac_na)
 
-// TODO: You can push this into layers[] just fine, but it's not passing through the draw functions appropriately
-// let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
-//   f: draw_grid_class_dc,
-//   src: ['/static/json/elec_grid_split/grid-dc.json'],
-//   w: d3.json,
-// } ], 'DC', 'black', 7, 1000);</code></pre>
+let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  w: d3.json,
+} ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
+console.log(ac_under_100);
+
+// AC 100-300
+
+let ac_100_300 = new InfrastructureSet('AC-lines-100-to-300-kV', '', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ]);
+
+let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '100-161', 'rgba(86, 180, 233)', 2, 100);
+console.log(ac_100_200); 
+
+let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  w: d3.json,
+} ], '220-287', 'rgba(55, 126, 184)', 3, 250);
+console.log(ac_200_300); 
+
+// AC 345-735
+
+let ac_345_735 = new InfrastructureSet('AC-lines-345-to-735-kV', '', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ]);
+
+let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '345', 'rgba(255, 149, 0)', 4, 350);
+console.log(ac_345); 
+
+let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '500', 'rgba(213, 113, 45)', 5, 350);
+console.log(ac_500); 
+
+let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
+console.log(ac_735_plus); 
+
+let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_dc,
+  src: ['/static/json/elec_grid_split/grid-dc.json'],
+  w: d3.json,
+} ], 'DC', 'black', 7, 1000);
+dc.dashed = false;
+
+let distribution = { name: 'electricity-distribution',
+value: 1_400_000_000_000,
+draw: false,
+column: 'electricity-transmission-and-distribution',
+};</code></pre>
         </article>
     </section>
 
@@ -253,7 +258,7 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Feb 17 2020 10:32:38 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 21 2020 11:13:40 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

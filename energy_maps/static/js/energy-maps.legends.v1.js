@@ -139,10 +139,9 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Object} obj - Infrastructure object 
    */
-  const draw_processing_legend = function draw_processing_legend(
-    ctx, x, y, obj) {
+  const draw_processing_legend = function draw_processing_legend(ctx, x, y, obj) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
     draw_gas_processor(ctx, [x, y]);

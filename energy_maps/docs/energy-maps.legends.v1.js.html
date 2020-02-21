@@ -51,7 +51,7 @@ const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
  * @param {Number} x - x axis
  * @returns {Number} y - updated y axis
  */
-function advance_for_type(y, ctx, text, text_offset, x) {
+function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text &amp; ctx at least
   y += VERTICAL_TYPE_INCREMENT;
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
@@ -67,7 +67,7 @@ function advance_for_type(y, ctx, text, text_offset, x) {
  * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
  * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
  */
-function advance_vertical_increment(y, ctx, color, lineWidth) {
+function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
   console.log(color);
   ctx.strokeStyle = color;
@@ -167,10 +167,9 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {Object} obj - Infrastructure object 
    */
-  const draw_processing_legend = function draw_processing_legend(
-    ctx, x, y, obj) {
+  const draw_processing_legend = function draw_processing_legend(ctx, x, y, obj) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
     draw_gas_processor(ctx, [x, y]);
@@ -294,7 +293,7 @@ const update_legend = function update_legend(ctx, layers) {
 
     // FIXME: This is a kludge for drawing a white swatch for unknown kV
     // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-    if (obj === grid.ac_na) {
+    if (obj === ac_na) {
       ctx.strokeStyle = 'rgba(76, 76, 76)';
       ctx.lineWidth = 1 * SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
@@ -336,7 +335,7 @@ const update_legend = function update_legend(ctx, layers) {
     
   // Consider using Function.prototype.bind() to bind ctx, x, and y to the object's properties (draw function with params for stroke and width)
   for (let i = 0; i &lt; layers.length; ++i) {
-    if (layers[i].active) {
+    if (layers[i].active) { // TODO: consider this, if we can just pass an obj to the entire function ---> if (obj.active { // Do Stuff })
       // y = layers[i].draw_legend(ctx, x, y, layers[i].obj);
       switch (layers[i].name) {
         case 'oil-well':
@@ -349,8 +348,8 @@ const update_legend = function update_legend(ctx, layers) {
         case 'gas-pipeline':
           y = draw_pipeline_legend(ctx, x, y, gas_pipeline);
           break;
-        case 'oil-pipeline':
-          y = draw_pipeline_legend(ctx, x, y, oil_and_gas.transport.oil);
+        case 'oil-pipeline':          
+          y = draw_pipeline_legend(ctx, x, y, oil_pipeline);
           break;
         case 'oil-refinery':
           y = draw_refinery_legend(ctx, x, y, oil_refinery);
@@ -366,6 +365,9 @@ const update_legend = function update_legend(ctx, layers) {
           break;
         case 'geothermal-plant':
           y = draw_power_plant_legend(ctx, x, y, geo_plants);
+          break;
+        case 'biofuel':
+          y = draw_power_plant_legend(ctx, x, y, bio_plants);
           break;
         case 'hydro-plant':
           y = draw_power_plant_legend(ctx, x, y, hyc_plants);
@@ -386,21 +388,21 @@ const update_legend = function update_legend(ctx, layers) {
           y = draw_power_plant_legend(ctx, x, y, wnd_farms);
           break;
         case 'AC-lines-under-100-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_na);
+          y = draw_grid_ac_legend(ctx, x, y, ac_na);
           console.log(y)
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_under_100);
+          y = draw_grid_ac_legend(ctx, x, y, ac_under_100);
           break;
         case 'AC-lines-100-to-300-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_100_200);
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_200_300);
+          y = draw_grid_ac_legend(ctx, x, y, ac_100_200);
+          y = draw_grid_ac_legend(ctx, x, y, ac_200_300);
           break;
         case 'AC-lines-345-to-735-kV':
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_345);
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_500);
-          y = draw_grid_ac_legend(ctx, x, y, grid.ac_735_plus);
+          y = draw_grid_ac_legend(ctx, x, y, ac_345);
+          y = draw_grid_ac_legend(ctx, x, y, ac_500);
+          y = draw_grid_ac_legend(ctx, x, y, ac_735_plus);
           break;
         case 'DC-lines':
-          y = draw_grid_dc_legend(ctx, x, y, grid.dc);
+          y = draw_grid_dc_legend(ctx, x, y, dc);
           break;
         case 'gas-processing':
           y = draw_processing_legend(ctx, x, y,gas_processing);
@@ -424,9 +426,7 @@ const update_legend = function update_legend(ctx, layers) {
     // y +=
   }
 
-};
-
-
+}; // End update_legend()
 </code></pre>
         </article>
     </section>
@@ -443,7 +443,7 @@ const update_legend = function update_legend(ctx, layers) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Feb 17 2020 10:32:38 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 21 2020 11:13:40 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -57,6 +57,7 @@ PowerPlant.prototype = new InfrastructureSet;
 
 SCALE = 1;
 let plant_stroke = 'rgba(255, 255, 255, 1)';
+
  /**
  * A collection of power plant classifications used for filtering.
  * @type {Object} 
@@ -72,86 +73,6 @@ let electricity_generation = {
     width: .66 * SCALE
   },
   scale: .3 * SCALE, //old_scale: .9 * SCALE, // TODO: figure out if needed
-  // coal_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'COAL',
-  //   legend_func: 0,
-  //   text: 'Coal power plant',
-  //   color: 'rgba(0, 0, 0, .5)',
-  //   stroke: plant_stroke
-  // },
-  // geo_plants: { 
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'GEO',
-  //   legend_func: 0,
-  //   text: 'Geothermal power plant',
-  //   color: 'rgba(210, 105, 30, .5)',
-  //   stroke: plant_stroke
-  // },
-  // hyc_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'HYC',
-  //   legend_func: 0,
-  //   text: 'Hydro power plant',
-  //   color: 'rgba(11, 36, 251, .5)',
-  //   stroke: plant_stroke
-  // }, 
-  // ng_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'NG',
-  //   legend_func: 0,
-  //   text: 'Natural gas power plant',
-  //   color: 'rgba(0, 191, 255, .5)',
-  //   stroke: 'darkblue'
-  // }, 
-  // nuc_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'NUC',
-  //   legend_func: 0,
-  //   text: 'Nuclear power plant',
-  //   color: 'rgba(255, 0, 0, .5)',
-  //   stroke: plant_stroke
-  // }, 
-  // pet_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'PET',
-  //   legend_func: 0,
-  //   text: 'Petroleum power plant',
-  //   color: 'rgba(34, 139, 34, .5)',
-  //   stroke: plant_stroke
-  // }, 
-  // solar_plants: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'SUN',
-  //   legend_func: 0,
-  //   text: 'Solar power plant',
-  //   color: 'rgba(255, 215, 0, .5)',
-  //   stroke: 'darkorange'
-  // },
-  // wnd_farms: {
-  //   src: '',
-  //   func: 0,
-  //   dom_class_attribute: '',
-  //   fuel_type: 'WND',
-  //   legend_func: 0,
-  //   text: 'Wind farm',
-  //   color: 'rgba(144, 29, 143, .5)',
-  //   stroke: plant_stroke
-  // },
 }; 
 
 /**
@@ -192,7 +113,14 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       //
     } else {
       let color = fuel.color;
-      draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      if (fuel == bio_plants) {
+        // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
+        draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
+        // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
+      }
+      else {
+        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      }
     }
     if (i === features.length - 1) { 
       hide_spinner(); 
@@ -257,7 +185,73 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
+const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, bio_plants)
+};
 
+// Instantiate PowerPlants
+
+let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
+  f: draw_coal_plants,
+  src: ['/static/json/power_plants_split/power_plants-COAL.json'],
+  w: d3.json,
+} ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
+
+let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
+  f: draw_ng_plants,
+    src: ['/static/json/power_plants_split/power_plants-NG.json'],
+    w: d3.json,
+} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
+
+let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
+  f: draw_petro_plants,
+  src: ['/static/json/power_plants_split/power_plants-PET.json'],
+  w: d3.json,
+} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
+
+let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_nuclear_plants,
+  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
+  w: d3.json,
+} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
+
+let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
+  f: draw_hydro_plants,
+  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
+  w: d3.json,
+} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
+
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
+  f: draw_wind_farms,
+  src: ['/static/json/power_plants_split/power_plants-WND.json'],
+  w: d3.json,
+} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
+
+let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
+  f: draw_solar_plants,
+  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
+  w: d3.json,
+} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
+
+let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
+  f: draw_geo_plants,
+  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
+  w: d3.json,
+} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+
+let bio_plants = new PowerPlant('biofuel', 'Biofuel power plant', 51_000_000_000, 'electricity-generation', [ {
+  f: draw_bio_plants,
+  src: ['/static/json/power_plants_split/power_plants-BIO.json'],
+  w: d3.json,
+} ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
+
+
+let biofuel = { 
+  name: 'biofuel',
+  value: 51_000_000_000,
+  draw: false,
+  column: 'electricity-generation',
+}
 
 
 
@@ -326,63 +320,7 @@ const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
   draw_nuclear_plants(ctx, queued_data);
   draw_geo_plants(ctx, queued_data);
   draw_hydro_plants(ctx, queued_data);
-};
-
-let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
-  f: draw_coal_plants,
-  src: ['/static/json/power_plants_split/power_plants-COAL.json'],
-  w: d3.json,
-} ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
-
-let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
-  f: draw_ng_plants,
-    src: ['/static/json/power_plants_split/power_plants-NG.json'],
-    w: d3.json,
-} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
-
-let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
-  f: draw_petro_plants,
-  src: ['/static/json/power_plants_split/power_plants-PET.json'],
-  w: d3.json,
-} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
-
-let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
-  f: draw_nuclear_plants,
-  src: ['/static/json/power_plants_split/power_plants-NUC.json'],
-  w: d3.json,
-} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
-
-let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
-  f: draw_hydro_plants,
-  src: ['/static/json/power_plants_split/power_plants-HYC.json'],
-  w: d3.json,
-} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
-
-let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
-  f: draw_wind_farms,
-  src: ['/static/json/power_plants_split/power_plants-WND.json'],
-  w: d3.json,
-} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
-
-let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
-  f: draw_solar_plants,
-  src: ['/static/json/power_plants_split/power_plants-SUN.json'],
-  w: d3.json,
-} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
-
-let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
-  f: draw_geo_plants,
-  src: ['/static/json/power_plants_split/power_plants-GEO.json'],
-  w: d3.json,
-} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
-
-
-let biofuel = { 
-  name: 'biofuel',
-  value: 51_000_000_000,
-  draw: false,
-  column: 'electricity-generation',
-}</code></pre>
+};</code></pre>
         </article>
     </section>
 
@@ -398,7 +336,7 @@ let biofuel = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Feb 17 2020 10:32:38 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 21 2020 11:13:40 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
