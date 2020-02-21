@@ -72,7 +72,6 @@ const update_legend = function update_legend(ctx, layers) {
     console.log('well symbol');
 
     y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
-    // draw_circle(ctx, [x, y], oil_and_gas.wells.diameter * 3); 
     draw_circle(ctx, [x, y], obj.diameter * 3);
     ctx.stroke();
     ctx.fill();
