@@ -210,6 +210,7 @@ const update_legend = function update_legend(ctx, layers) {
     ctx.strokeStyle = obj.stroke;
     ctx.lineWidth = electricity_generation.stroke.width;
     
+    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
     y += 18 * SCALE;
     ctx.beginPath();
     draw_circle(ctx, [x, y], 7 * SCALE);
