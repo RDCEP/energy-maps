@@ -276,13 +276,9 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   * @param {Number} width - width value to set for lineWidth
    * @param {boolean} dashed - true if line should be dashed, false if solid
-   * @param {string} text - the text for the layer written to the legend
    */
-  const draw_grid_dc_legend = function draw_grid_dc_legend(
-    ctx, x, y, obj, dashed) {
+  const draw_grid_dc_legend = function draw_grid_dc_legend(ctx, x, y, obj, dashed) {
     ctx.lineWidth = LEGEND_FONT_SIZE;
     ctx.strokeStyle = obj.color;
     text = obj.text;
