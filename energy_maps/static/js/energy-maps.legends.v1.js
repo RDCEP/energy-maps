@@ -155,10 +155,10 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
+   * @param {Object} obj - Infrastructure object 
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    */
-  const draw_storage_legend = function draw_storage_legend(
-    ctx, x, y, obj, color) {
+  const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
     draw_gas_storage(ctx, [x, y]);
