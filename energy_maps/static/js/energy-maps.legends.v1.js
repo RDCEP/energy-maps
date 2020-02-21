@@ -23,7 +23,7 @@ const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
  * @param {Number} x - x axis
  * @returns {Number} y - updated y axis
  */
-function advance_for_type(y, ctx, text, text_offset, x) {
+function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
   y += VERTICAL_TYPE_INCREMENT;
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
@@ -39,7 +39,7 @@ function advance_for_type(y, ctx, text, text_offset, x) {
  * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
  * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
  */
-function advance_vertical_increment(y, ctx, color, lineWidth) {
+function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
   console.log(color);
   ctx.strokeStyle = color;
