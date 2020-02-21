@@ -246,8 +246,7 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {Object} obj - object from `grid`
    */
-  const draw_grid_ac_legend = function draw_grid_ac_legend(
-    ctx, x, y, obj) {
+  const draw_grid_ac_legend = function draw_grid_ac_legend(ctx, x, y, obj) {
     
     y += VERTICAL_INCREMENT;
     ctx.strokeStyle = obj.color;
