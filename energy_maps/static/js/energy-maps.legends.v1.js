@@ -302,6 +302,7 @@ const update_legend = function update_legend(ctx, layers) {
     return y;
   }
 
+  // TODO: Generalize this some how to work with all legends
   let set_draw_legend = function(ctx, x, y, obj) {
     y = draw_power_plant_legend(ctx, x, y, obj)
     console.log(y)
@@ -310,9 +311,7 @@ const update_legend = function update_legend(ctx, layers) {
 
   // Consider using Function.prototype.bind() to bind ctx, x, and y to the object's properties (draw function with params for stroke and width)
   for (let i = 0; i < layers.length; ++i) {
-    if (layers[i].active) { // TODO: consider this, if we can just pass an obj to the entire function ---> if (obj.active { // Do Stuff })
-      // y = draw_legend(ctx, x, y, layers[i]) // requires layers[i] to have a fucntion like draw_gas_storage(ctx, [x, y]); to be called off of it
-      // y = draw_legend(ctx, x, y, layers[i]); *** THIS ONE ***
+    if (layers[i].active) { 
       layers[i].draw_legend = set_draw_legend(ctx, x, y, layers[i]);
       y = layers[i].draw_legend;
       y = draw_legend(ctx, x, y, layers[i])
