@@ -300,6 +300,10 @@ const update_legend = function update_legend(ctx, layers) {
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) { // TODO: consider this, if we can just pass an obj to the entire function ---> if (obj.active { // Do Stuff })
       // y = layers[i].draw_legend(ctx, x, y, layers[i].obj);
+
+      // y = draw_legend(ctx, x, y, layers[i]) // requires layers[i] to have a fucntion like draw_gas_storage(ctx, [x, y]); to be called off of it
+      // y = draw_well_legend(ctx, x, y, layers[i]);
+
       switch (layers[i].name) {
         case 'oil-well':
           y = draw_well_legend(ctx, x, y, oil_well);
