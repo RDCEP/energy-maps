@@ -61,6 +61,21 @@ function draw_white_layer(plants, fuel, ctx) {
 }
 
 /**
+ * Helper function for draw_single_plant(). Returns the desired subset of `data`, filtered by fuel type.
+ * @param {Object} data - data from the readfile, passes through from draw_single_plant() 
+ * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant() // TODO: update params
+ * @param {Object} ctx - HTML5 canvas context
+ * @returns {Object} features - the desired data set, narrowed by fuel type
+ */
+const get_fuel_type = function get_fuel_type(data, fuel) {
+  features = data.features
+    .filter(function (d) {
+      return d.properties.primary_fu === fuel.fuel_type;
+    });
+    return features;
+}
+
+/**
  * Draw a single set of power plants relative to their class.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Object} queued_data - the readfile
@@ -71,11 +86,12 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
   let plants = queued_data[0];
+  get_fuel_type(plants, fuel);
 
-  features = plants.features
-    .filter(function (d) {
-      return d.properties.primary_fu === fuel.fuel_type;
-    });
+  // features = plants.features
+  //   .filter(function (d) {
+  //     return d.properties.primary_fu === fuel.fuel_type;
+  //   });
 
   draw_white_layer(plants, fuel, ctx);
   // Draw the standard layer
