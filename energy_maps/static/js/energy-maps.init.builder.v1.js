@@ -205,8 +205,7 @@ layers.push(hyc_plants);
 layers.push(wnd_farms);
 layers.push(solar_plants);
 layers.push(geo_plants);
-// layers.push(biofuel);
-layers.push(bio_plants);
+layers.push(biofuel);
 
 console.log(layers);
 
