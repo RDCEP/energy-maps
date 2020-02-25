@@ -87,12 +87,6 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 
   let plants = queued_data[0];
   get_fuel_type(plants, fuel);
-
-  // features = plants.features
-  //   .filter(function (d) {
-  //     return d.properties.primary_fu === fuel.fuel_type;
-  //   });
-
   draw_white_layer(plants, fuel, ctx);
   // Draw the standard layer
   features.forEach(function(d, i) {
