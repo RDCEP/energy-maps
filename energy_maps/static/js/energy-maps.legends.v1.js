@@ -328,9 +328,6 @@ const update_legend = function update_legend(ctx, layers) {
         case 'geothermal-plant':
           y = draw_power_plant_legend(ctx, x, y, geo_plants);
           break;
-        case 'biofuel':
-          y = draw_power_plant_legend(ctx, x, y, bio_plants);
-          break;
         case 'hydro-plant':
           y = draw_power_plant_legend(ctx, x, y, hyc_plants);
           break;
