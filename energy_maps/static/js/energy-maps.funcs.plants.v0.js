@@ -150,10 +150,6 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
-const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, bio_plants)
-};
-
 // Instantiate PowerPlants
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
