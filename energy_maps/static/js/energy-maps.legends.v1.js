@@ -189,14 +189,14 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {Object} obj - Infrastructure object 
    */
-  const draw_coalmine_legend = function draw_coalmine_legend(ctx, x, y, obj) {
-    y += VERTICAL_INCREMENT;
-    // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
+  // const draw_coalmine_legend = function draw_coalmine_legend(ctx, x, y, obj) {
+  //   y += VERTICAL_INCREMENT;
+  //   // TODO: decouple this func invocation from oil 
+  //   draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
+  //   let text = obj.text;
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // };
 
   /**
    * Draw power plant legend to its HTML5 canvas context.

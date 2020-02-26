@@ -47,6 +47,14 @@ function CoalMine(name, text, value, column, draw) {
   this.width = SCALE;
   this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
+  this.draw_legend = function draw_coalmine_legend(ctx, x, y) {
+    y += VERTICAL_INCREMENT;
+    // TODO: decouple this func invocation from oil 
+    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 CoalMine.prototype = new Coal;
 
