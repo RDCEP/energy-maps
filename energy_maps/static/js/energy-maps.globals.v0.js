@@ -157,3 +157,22 @@ const show_spinner = function show_spinner() {
 const hide_spinner = function hide_spinner() {
     spinner.style.display = "none";
   };
+
+const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
+  
+  y += VERTICAL_INCREMENT;
+  
+  // TODO: Why do we have dashed param? Do we have any dashed lines?
+  if (dashed) {
+    ctx.setLineDash(dashed);
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(x - 7 * SCALE, y);
+  ctx.lineTo(x + 7 * SCALE, y);
+  ctx.strokeStyle = obj.stroke;
+  ctx.stroke();
+
+  y = advance_for_type(y, ctx, text, text_offset, x);
+  return y;
+}

@@ -68,24 +68,24 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {Object} obj - oil_and_gas.wells object 
    */
-  const draw_well_legend = function draw_well_legend(ctx, x, y, obj) {
-    console.log('well symbol');
+  // const draw_well_legend = function draw_well_legend(ctx, x, y, obj) {
+  //   console.log('well symbol');
 
-    y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
-    draw_circle(ctx, [x, y], obj.diameter * 3);
-    ctx.stroke();
-    ctx.fill();
+  //   y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
+  //   draw_circle(ctx, [x, y], obj.diameter * 3);
+  //   ctx.stroke();
+  //   ctx.fill();
     
-    y = advance_for_type(y, ctx, obj.text, text_offset, x);
-    y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas.wells.stroke);
-    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
-    ctx.stroke();
+  //   y = advance_for_type(y, ctx, obj.text, text_offset, x);
+  //   y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas.wells.stroke);
+  //   draw_x(ctx, [x, y], oil_and_gas.wells.cross);
+  //   ctx.stroke();
     
-    let text = `${obj.text.slice(0, 3)} offshore well`
-    y = advance_for_type(y, ctx, text, text_offset, x);
+  //   let text = `${obj.text.slice(0, 3)} offshore well`
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
     
-    return y;
-  };
+  //   return y;
+  // };
 
   /**
    * Helper function for pipes and railroad
@@ -125,13 +125,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} obj - oil_and_gas.wells object
    * @param {boolean} dashed - true if line should be dashed, false if solid
    */
-  const draw_pipeline_legend = function draw_pipeline_legend(ctx, x, y, obj, dashed) {
-    ctx.strokeStyle = obj.color;
-    ctx.lineWidth = obj.width;
-    let text = obj.text;
-    y = draw_line(ctx, x, y, obj, dashed, text)
-    return y;
-  };
+  // const draw_pipeline_legend = function draw_pipeline_legend(ctx, x, y, obj, dashed) {
+  //   ctx.strokeStyle = obj.color;
+  //   ctx.lineWidth = obj.width;
+  //   let text = obj.text;
+  //   y = draw_line(ctx, x, y, obj, dashed, text)
+  //   return y;
+  // };
 
   /**
    * Draw gas processing legend to its HTML5 canvas context.

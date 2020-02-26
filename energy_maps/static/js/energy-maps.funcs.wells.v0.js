@@ -30,6 +30,24 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.cross = 5 * SCALE;
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
+  this.draw_legend = function draw_well_legend(ctx, x, y) {
+    console.log('well symbol');
+
+    y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
+    draw_circle(ctx, [x, y], this.diameter * 3);
+    ctx.stroke();
+    ctx.fill();
+    
+    y = advance_for_type(y, ctx, this.text, text_offset, x);
+    y = advance_vertical_increment(y, ctx, this.color, oil_and_gas.wells.stroke);
+    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
+    ctx.stroke();
+    
+    let text = `${this.text.slice(0, 3)} offshore well`
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    
+    return y;
+  };
 }
 Well.prototype = new InfrastructureSet;
 
@@ -50,6 +68,13 @@ function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
   this.width = width;
+  this.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = this.width;
+    let text = this.text;
+    y = draw_line(ctx, x, y, this, dashed, text)
+    return y;
+  };
 }
 Transport.prototype = new InfrastructureSet;
 
