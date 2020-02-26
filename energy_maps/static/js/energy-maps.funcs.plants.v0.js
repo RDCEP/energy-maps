@@ -61,6 +61,25 @@ function draw_white_layer(plants, fuel, ctx) {
 }
 
 /**
+ * Helper function for draw_single_plant(). Draw the standard layer for each symbol.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} xy - xy coordinates
+ * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant()
+ * @param {Object} d - data element filtered by fuel type from the readfile
+ */
+const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
+  let color = fuel.color;
+  if (fuel == bio_plants) {
+    // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
+    draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
+    // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
+  }
+  else {
+    draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+  }
+}
+
+/**
  * Helper function for draw_single_plant(). Returns the desired subset of `data`, filtered by fuel type.
  * @param {Object} data - data from the readfile, passes through from draw_single_plant() 
  * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant() // TODO: update params
@@ -94,15 +113,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     if (xy === null) {
       //
     } else {
-      let color = fuel.color;
-      if (fuel == bio_plants) {
-        // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
-        draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
-        // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
-      }
-      else {
-        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-      }
+      draw_standard_layer(fuel, d, ctx, xy);
     }
     if (i === features.length - 1) { 
       hide_spinner(); 
