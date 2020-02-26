@@ -113,7 +113,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     if (xy === null) {
       //
     } else {
-      draw_standard_layer(fuel, d, ctx, xy);
+      draw_standard_layer(ctx, xy, fuel, d);
     }
     if (i === features.length - 1) { 
       hide_spinner(); 
