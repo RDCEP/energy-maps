@@ -140,14 +140,14 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {Object} obj - Infrastructure object 
    */
-  const draw_processing_legend = function draw_processing_legend(ctx, x, y, obj) {
-    // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    draw_gas_processor(ctx, [x, y]);
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
+  // const draw_processing_legend = function draw_processing_legend(ctx, x, y, obj) {
+  //   // Advance vertical increment
+  //   y += VERTICAL_INCREMENT;
+  //   draw_gas_processor(ctx, [x, y]);
+  //   let text = obj.text;
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // };
 
   /**
    * Draw gas storage legend to its HTML5 canvas context.
@@ -174,13 +174,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Object} obj - Infrastructure object 
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
    */
-  const draw_refinery_legend = function draw_refinery_legend(ctx, x, y, obj, color) {
-    y += VERTICAL_INCREMENT;
-    draw_oil_refinery(ctx, [x, y], 200000 * obj.size); // TODO: Document or extract these magic numbers
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
+  // const draw_refinery_legend = function draw_refinery_legend(ctx, x, y, obj, color) {
+  //   y += VERTICAL_INCREMENT;
+  //   draw_oil_refinery(ctx, [x, y], 200000 * obj.size); // TODO: Document or extract these magic numbers
+  //   let text = obj.text;
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // };
 
   /**
    * Draw coal mine legend to its HTML5 canvas context.

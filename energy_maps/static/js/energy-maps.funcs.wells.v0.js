@@ -99,8 +99,32 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.draw_legend = function draw_processing_legend(ctx, x, y) {
+    // Advance vertical increment
+    y += VERTICAL_INCREMENT;
+    draw_gas_processor(ctx, [x, y]);
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 Processing.prototype = new InfrastructureSet;
+
+function Refinery(name, text, value, column, draw, fill, size) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.fill = fill;
+  this.size = size;
+  this.stroke = 'rgba(255, 255, 255, 1)';
+  this.strokeWidth = SCALE * .75;
+  this.draw_legend = function draw_refinery_legend(ctx, x, y, color) {
+    y += VERTICAL_INCREMENT;
+    draw_oil_refinery(ctx, [x, y], 200000 * this.size); // TODO: Document or extract these magic numbers
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
+}
+Refinery.prototype = new InfrastructureSet;
 
  // TODO: Add jsdoc
 const oil_and_gas = {
@@ -431,7 +455,7 @@ let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000
 let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 
-let oil_refinery = new Processing('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
+let oil_refinery = new Refinery('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
   f: draw_refining,
   src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
   w: d3.json
