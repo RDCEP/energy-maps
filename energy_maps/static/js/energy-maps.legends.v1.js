@@ -98,24 +98,24 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {string} text - the text for the layer written to the legend
    * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
    */
-    const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
+  //   const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
     
-    y += VERTICAL_INCREMENT;
+  //   y += VERTICAL_INCREMENT;
     
-    // TODO: Why do we have dashed param? Do we have any dashed lines?
-    if (dashed) {
-      ctx.setLineDash(dashed);
-    }
+  //   // TODO: Why do we have dashed param? Do we have any dashed lines?
+  //   if (dashed) {
+  //     ctx.setLineDash(dashed);
+  //   }
 
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.strokeStyle = obj.stroke;
-    ctx.stroke();
+  //   ctx.beginPath();
+  //   ctx.moveTo(x - 7 * SCALE, y);
+  //   ctx.lineTo(x + 7 * SCALE, y);
+  //   ctx.strokeStyle = obj.stroke;
+  //   ctx.stroke();
 
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  }
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // }
 
   /**
    * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
