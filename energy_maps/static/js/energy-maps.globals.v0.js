@@ -43,6 +43,8 @@ const padding = {top: 10, right: 10, bottom: 50, left: 50};
  */
 const canvas_width = width + SCALE * 400;
 
+let text_offset = 30 * SCALE;
+
 /**
  * @type {Object} 
  * @description A collection of nested objects containing color and scaling properties per resource 

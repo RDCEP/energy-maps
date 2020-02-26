@@ -5,7 +5,6 @@
  * @module Plants
  */
 
-let text_offset = 30 * SCALE;
 /** 
  * Instatiates a new PowerPlant object that contains properties used to power plants to the map and legend.
  * @class
