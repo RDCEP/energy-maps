@@ -5,6 +5,7 @@
  * @module Plants
  */
 
+let text_offset = 30 * SCALE;
 /** 
  * Instatiates a new PowerPlant object that contains properties used to power plants to the map and legend.
  * @class
@@ -24,6 +25,22 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
   this.fuel_type = fuel_type || '';
   this.color = color || 'rgba(0, 0, 0, 0.5)';
   this.stroke = stroke || plant_stroke;
+  this.draw_legend = function draw_power_plant_legend(ctx, x, y) {
+    ctx.fillStyle = this.color;
+    ctx.strokeStyle = this.stroke;
+    ctx.lineWidth = electricity_generation.stroke.width;
+    
+    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
+    y += 18 * SCALE;
+    ctx.beginPath();
+    draw_circle(ctx, [x, y], 7 * SCALE);
+    ctx.stroke();
+    ctx.fill();
+    
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 PowerPlant.prototype = new InfrastructureSet;
 

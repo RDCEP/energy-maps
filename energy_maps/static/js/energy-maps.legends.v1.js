@@ -294,27 +294,28 @@ const update_legend = function update_legend(ctx, layers) {
   let x_offset = 10 * SCALE;
   let y = 200 * SCALE;
   // Offset for text
-  let text_offset = 30 * SCALE;
+  // let text_offset = 30 * SCALE;
 
-  let draw_legend = function draw_legend(ctx, x, y, obj) {
-    y = obj.draw_legend;
-    console.log(obj)
-    return y;
-  }
+  // let draw_legend = function draw_legend(ctx, x, y, obj) {
+  //   y = obj.draw_legend;
+  //   console.log(obj)
+  //   return y;
+  // }
 
-  // TODO: Generalize this some how to work with all legends
-  let set_draw_legend = function(ctx, x, y, obj) {
-    y = draw_power_plant_legend(ctx, x, y, obj)
-    console.log(y)
-    return y;
-  }
+  // // TODO: Generalize this some how to work with all legends
+  // let set_draw_legend = function(ctx, x, y, obj) {
+  //   y = draw_power_plant_legend(ctx, x, y, obj)
+  //   console.log(y)
+  //   return y;
+  // }
 
   // Consider using Function.prototype.bind() to bind ctx, x, and y to the object's properties (draw function with params for stroke and width)
   for (let i = 0; i < layers.length; ++i) {
-    if (layers[i].active) { 
-      layers[i].draw_legend = set_draw_legend(ctx, x, y, layers[i]);
-      y = layers[i].draw_legend;
-      y = draw_legend(ctx, x, y, layers[i])
+    if (layers[i].active) {
+      y = layers[i].draw_legend(ctx, x, y); 
+      // layers[i].draw_legend = set_draw_legend(ctx, x, y, layers[i]);
+      // y = layers[i].draw_legend;
+      // y = draw_legend(ctx, x, y, layers[i])
       // console.log(x)
       // switch (layers[i].name) {
       //   case 'oil-well':
