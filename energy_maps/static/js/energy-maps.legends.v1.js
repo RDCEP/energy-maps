@@ -205,22 +205,22 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {string} obj - power plant object from `electricity_generation`
    */
-  const draw_power_plant_legend = function draw_power_plant_legend(ctx, x, y, obj) {
-    ctx.fillStyle = obj.color;
-    ctx.strokeStyle = obj.stroke;
-    ctx.lineWidth = electricity_generation.stroke.width;
+  // const draw_power_plant_legend = function draw_power_plant_legend(ctx, x, y, obj) {
+  //   ctx.fillStyle = obj.color;
+  //   ctx.strokeStyle = obj.stroke;
+  //   ctx.lineWidth = electricity_generation.stroke.width;
     
-    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
-    y += 18 * SCALE;
-    ctx.beginPath();
-    draw_circle(ctx, [x, y], 7 * SCALE);
-    ctx.stroke();
-    ctx.fill();
+  //   // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
+  //   y += 18 * SCALE;
+  //   ctx.beginPath();
+  //   draw_circle(ctx, [x, y], 7 * SCALE);
+  //   ctx.stroke();
+  //   ctx.fill();
     
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
+  //   let text = obj.text;
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // };
 
   /**
    * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
