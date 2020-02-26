@@ -231,13 +231,13 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {boolean} dashed - true if line should be dashed, false if solid
    * @param {string} text - the text for the layer written to the legend
    */
-  const draw_railroad_legend = function draw_railroad_legend(ctx, x, y, obj, dashed) {
-    ctx.strokeStyle = railroad.stroke;
-    ctx.lineWidth = railroad.width;
-    let text = obj.text;
-    y = draw_line(ctx, x, y, obj, dashed, text)
-    return y;
-  };
+  // const draw_railroad_legend = function draw_railroad_legend(ctx, x, y, obj, dashed) {
+  //   ctx.strokeStyle = railroad.stroke;
+  //   ctx.lineWidth = railroad.width;
+  //   let text = obj.text;
+  //   y = draw_line(ctx, x, y, obj, dashed, text)
+  //   return y;
+  // };
 
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.

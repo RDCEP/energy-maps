@@ -76,6 +76,13 @@ function Railroad(name, text, value, column, draw) {
   this.text = 'Railroads';
   this.stroke = '#767676';
   this.width = SCALE;
+  this.draw_legend = function draw_railroad_legend(ctx, x, y, dashed) {
+    ctx.strokeStyle = railroad.stroke;
+    ctx.lineWidth = railroad.width;
+    let text = this.text;
+    y = draw_line(ctx, x, y, this, dashed, text)
+    return y;
+  };
 }
 Railroad.prototype = new Coal;
 
