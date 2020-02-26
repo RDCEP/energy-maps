@@ -246,30 +246,30 @@ const update_legend = function update_legend(ctx, layers) {
    * @param {Number} y - y axis
    * @param {Object} obj - object from `grid`
    */
-  const draw_grid_ac_legend = function draw_grid_ac_legend(ctx, x, y, obj) {
+  // const draw_grid_ac_legend = function draw_grid_ac_legend(ctx, x, y, obj) {
     
-    y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = obj.color;
+  //   y += VERTICAL_INCREMENT;
+  //   ctx.strokeStyle = obj.color;
     
-    // Draw the square icon as a fat line
-    ctx.lineWidth = 14 * SCALE;
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.stroke();
+  //   // Draw the square icon as a fat line
+  //   ctx.lineWidth = 14 * SCALE;
+  //   ctx.beginPath();
+  //   ctx.moveTo(x - 7 * SCALE, y);
+  //   ctx.lineTo(x + 7 * SCALE, y);
+  //   ctx.stroke();
 
-    // FIXME: This is a kludge for drawing a white swatch for unknown kV
-    // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-    if (obj === ac_na) {
-      ctx.strokeStyle = 'rgba(76, 76, 76)';
-      ctx.lineWidth = 1 * SCALE;
-      ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
-    }
+  //   // FIXME: This is a kludge for drawing a white swatch for unknown kV
+  //   // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+  //   if (obj === ac_na) {
+  //     ctx.strokeStyle = 'rgba(76, 76, 76)';
+  //     ctx.lineWidth = 1 * SCALE;
+  //     ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+  //   }
 
-    text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
+  //   text = obj.text;
+  //   y = advance_for_type(y, ctx, text, text_offset, x);
+  //   return y;
+  // };
 
   /**
    * Draw DC electric grid legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
@@ -313,6 +313,7 @@ const update_legend = function update_legend(ctx, layers) {
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
       y = layers[i].draw_legend(ctx, x, y); 
+      console.log(layers[i])
       // layers[i].draw_legend = set_draw_legend(ctx, x, y, layers[i]);
       // y = layers[i].draw_legend;
       // y = draw_legend(ctx, x, y, layers[i])

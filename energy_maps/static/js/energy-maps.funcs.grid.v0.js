@@ -29,6 +29,41 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
 }
 Grid.prototype = new InfrastructureSet;
 
+function GridAcCollection(name, value, column, draw, collection) {
+  this.name = name || '';
+  this.value = value || 0;
+  this.column = column || '';
+  this.draw = draw || [];
+  this.collection = collection || [];
+  this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
+    for (let i = 0; i < collection.length; i++) {
+      y += VERTICAL_INCREMENT;
+      ctx.strokeStyle = collection[i].color;
+      
+      // Draw the square icon as a fat line
+      ctx.lineWidth = 14 * SCALE;
+      ctx.beginPath();
+      ctx.moveTo(x - 7 * SCALE, y);
+      ctx.lineTo(x + 7 * SCALE, y);
+      ctx.stroke();
+  
+      // FIXME: This is a kludge for drawing a white swatch for unknown kV
+      // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+      if (this === ac_na) {
+        ctx.strokeStyle = 'rgba(76, 76, 76)';
+        ctx.lineWidth = 1 * SCALE;
+        ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+      }
+  
+      text = collection[i].text;
+      y = advance_for_type(y, ctx, text, text_offset, x);
+      return y;
+    }
+  }
+
+}
+// GridAcCollection.prototype = new InfrastructureSet;
+
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
  * @param {Object} infrastructure - readfile
@@ -132,11 +167,11 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 // AC under 100
 
 // TODO: The `name` property for ac_na isn't meaningful since it doesn't have its own canvas to connect to independently. This isn't a huge issue but it's not descriptive when you look at the object's prototype in the console. Consider a rewrite of the Grid constructor. 
-let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
-  w: d3.json,
-} ]);
+// let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+//   f: draw_grid_class_ac_unk_and_under_100,
+//   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+//   w: d3.json,
+// } ]);
 
 let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
@@ -152,13 +187,13 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
 
-// AC 100-300
-
-let ac_100_300 = new InfrastructureSet('AC-lines-100-to-300-kV', '', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_100_300,
-  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_unk_and_under_100,
+  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
-} ]);
+} ], [ac_na, ac_under_100]);
+
+// AC 100-300
 
 let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
@@ -174,13 +209,13 @@ let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'el
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
 
-// AC 345-735
-
-let ac_345_735 = new InfrastructureSet('AC-lines-345-to-735-kV', '', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
-  f: draw_grid_class_ac_345_735,
-  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_100_300,
+  src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
-} ]);
+} ], [ac_100_200, ac_200_300]);
+
+// AC 345-735
 
 let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
@@ -203,12 +238,25 @@ let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electri
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
 
+let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
+  f: draw_grid_class_ac_345_735,
+  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  w: d3.json,
+} ], [ac_345, ac_500, ac_735_plus]);
+
 let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_dc,
   src: ['/static/json/elec_grid_split/grid-dc.json'],
   w: d3.json,
 } ], 'DC', 'black', 7, 1000);
 dc.dashed = false;
+dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
+  ctx.lineWidth = LEGEND_FONT_SIZE;
+  ctx.strokeStyle = this.color;
+  text = this.text;
+  y = draw_line(ctx, x, y, this, dashed, text)
+  return y;
+};
 
 let distribution = { name: 'electricity-distribution',
 value: 1_400_000_000_000,
