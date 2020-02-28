@@ -18,7 +18,7 @@
  * @param {String} stroke - rgba value to set the canvas stroke
  * @param {Number} width - width value set relative to SCALE
  */
-function Coal(name, text, value, column, draw, stroke, width) {
+function Coal(name, text, value, column, draw, stroke, width) { // TODO: Do we need this Coal base class? Probably not.
     InfrastructureSet.call(this, name, text, value, column, draw);
     this.stroke = stroke;
     this.width = width || 0;
@@ -47,6 +47,12 @@ function CoalMine(name, text, value, column, draw) {
   this.width = SCALE;
   this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
+  /**
+   * Draw coal mine legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   */
   this.draw_legend = function draw_coalmine_legend(ctx, x, y) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
@@ -76,6 +82,13 @@ function Railroad(name, text, value, column, draw) {
   this.text = 'Railroads';
   this.stroke = '#767676';
   this.width = SCALE;
+  /**
+   * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   */
   this.draw_legend = function draw_railroad_legend(ctx, x, y, dashed) {
     ctx.strokeStyle = railroad.stroke;
     ctx.lineWidth = railroad.width;

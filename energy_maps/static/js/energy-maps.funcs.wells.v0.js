@@ -30,6 +30,11 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.cross = 5 * SCALE;
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
+  /**
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   */
   this.draw_legend = function draw_well_legend(ctx, x, y) {
     console.log('well symbol');
 
@@ -68,6 +73,13 @@ function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
   this.width = width;
+  /**
+   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   */
   this.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
     ctx.strokeStyle = this.color;
     ctx.lineWidth = this.width;
@@ -99,6 +111,12 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  /**
+   * Draw gas processing legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   */
   this.draw_legend = function draw_processing_legend(ctx, x, y) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
@@ -116,6 +134,13 @@ function Refinery(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  /**
+   * Draw oil refinery legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, required to pass through but not called
+   */
   this.draw_legend = function draw_refinery_legend(ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
     draw_oil_refinery(ctx, [x, y], 200000 * this.size); // TODO: Document or extract these magic numbers
@@ -125,6 +150,24 @@ function Refinery(name, text, value, column, draw, fill, size) {
   };
 }
 Refinery.prototype = new InfrastructureSet;
+
+// TODO: Implement storage, and then add this method as a class member
+/**
+   * Draw gas storage legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {Object} obj - Infrastructure object 
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   */
+  const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) { // TODO: Reimplement storage. 
+    // Advance vertical increment
+    y += VERTICAL_INCREMENT;
+    draw_gas_storage(ctx, [x, y]);
+    let text = obj.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 
  // TODO: Add jsdoc
 const oil_and_gas = {

@@ -158,11 +158,21 @@ const hide_spinner = function hide_spinner() {
     spinner.style.display = "none";
   };
 
+/**
+ * Helper function for pipes and railroad
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ * @param {Object} obj - Transport or Railroad object 
+ * @param {boolean} dashed - true if line should be dashed, false if solid
+ * @param {string} text - the text for the layer written to the legend
+ * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
+ */
 const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
   
   y += VERTICAL_INCREMENT;
   
-  // TODO: Why do we have dashed param? Do we have any dashed lines?
+  // TODO: Implement product pipelines. They will need a dashed line. 
   if (dashed) {
     ctx.setLineDash(dashed);
   }

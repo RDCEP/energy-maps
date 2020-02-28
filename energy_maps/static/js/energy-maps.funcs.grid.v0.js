@@ -35,6 +35,12 @@ function GridAcCollection(name, value, column, draw, collection) {
   this.column = column || '';
   this.draw = draw || [];
   this.collection = collection || [];
+  /**
+   * Draw AC electric grid legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   */
   this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
     for (let i = 0; i < collection.length; i++) {
       y += VERTICAL_INCREMENT;
@@ -250,6 +256,13 @@ let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-tr
   w: d3.json,
 } ], 'DC', 'black', 7, 1000);
 dc.dashed = false;
+/**
+ * Draw DC electric grid legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ * @param {boolean} dashed - true if line should be dashed, false if solid
+ */
 dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
   ctx.lineWidth = LEGEND_FONT_SIZE;
   ctx.strokeStyle = this.color;
