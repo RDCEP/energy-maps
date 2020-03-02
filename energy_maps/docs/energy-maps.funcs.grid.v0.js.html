@@ -54,49 +54,27 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
     this.color = color || 'rgba(0, 0, 0, 0.5)';
     this.line_width = line_width || 0;
     this.nominal_voltage = nominal_voltage || 50;
+    this.z_index = 0;
 }
 Grid.prototype = new InfrastructureSet;
 
-function GridAcCollection(name, value, column, draw, collection) {
+/** 
+ * Instatiates a new GridAcCollection object that contains properties used to draw a collection of electric grid segments to the map and legend. 
+ * @class
+ * @classdesc Used to create objects that represent several units of electric grid infrastructure.
+ * @param {String} name - canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ */
+function GridAcCollection(name, value, column, draw, legend_group) {
   this.name = name || '';
   this.value = value || 0;
   this.column = column || '';
+  this.z_index = 0;
   this.draw = draw || [];
-  this.collection = collection || [];
-  /**
-   * Draw AC electric grid legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   */
-  this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
-    for (let i = 0; i &lt; collection.length; i++) {
-      y += VERTICAL_INCREMENT;
-      ctx.strokeStyle = collection[i].color;
-      
-      // Draw the square icon as a fat line
-      ctx.lineWidth = 14 * SCALE;
-      ctx.beginPath();
-      ctx.moveTo(x - 7 * SCALE, y);
-      ctx.lineTo(x + 7 * SCALE, y);
-      ctx.stroke();
-  
-      // FIXME: This is a kludge for drawing a white swatch for unknown kV
-      // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-      if (this === ac_na) {
-        ctx.strokeStyle = 'rgba(76, 76, 76)';
-        ctx.lineWidth = 1 * SCALE;
-        ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
-      }
-  
-      text = collection[i].text;
-      y = advance_for_type(y, ctx, text, text_offset, x);
-      return y;
-    }
-  }
-
+  this.draw_legend =  legend_group; 
 }
-// GridAcCollection.prototype = new InfrastructureSet;
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
@@ -156,6 +134,34 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
       }
     }
 };
+
+  /**
+   * Draw AC electric grid legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {Object} obj - Grid object instance
+   */
+function draw_legend_ac(ctx, x, y, obj) {
+  y += VERTICAL_INCREMENT;
+  ctx.strokeStyle = obj.color;
+  // Draw the square icon as a fat line
+  ctx.lineWidth = 14 * SCALE;
+  ctx.beginPath();
+  ctx.moveTo(x - 7 * SCALE, y);
+  ctx.lineTo(x + 7 * SCALE, y);
+  ctx.stroke();
+  if (obj === ac_na) {
+    // FIXME: This is a kludge for drawing a white swatch for unknown kV
+    // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+    ctx.strokeStyle = 'rgba(76, 76, 76)';
+    ctx.lineWidth = 1 * SCALE;
+    ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+  }
+  text = obj.text;
+  y = advance_for_type(y, ctx, text, text_offset, x);
+  return y;
+}
 
 /**
  * Draw grid class unknown and under 100 on the electric grid infrastructure map.
@@ -221,11 +227,23 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
+let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_na);
+  y = draw_legend_ac(ctx, x, y, ac_under_100);
+  return y;
+}
+
 let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
-} ], [ac_na, ac_under_100]);
+} ], draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
 
 // AC 100-300
 
@@ -243,11 +261,23 @@ let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'el
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
+let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_100_200);
+  y = draw_legend_ac(ctx, x, y, ac_200_300);
+  return y;
+}
+
 let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
-} ], [ac_100_200, ac_200_300]);
+} ], draw_legend_ac_100_300);
 
 // AC 345-735
 
@@ -272,11 +302,24 @@ let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electri
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
+let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_345);
+  y = draw_legend_ac(ctx, x, y, ac_500);
+  y = draw_legend_ac(ctx, x, y, ac_735_plus);
+  return y;
+}
+
 let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
-} ], [ac_345, ac_500, ac_735_plus]);
+} ], draw_legend_ac_345_735);
 
 let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_dc,
@@ -313,13 +356,13 @@ column: 'electricity-transmission-and-distribution',
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_line">draw_line</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Grid-GridAcCollection.html">GridAcCollection</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_line">draw_line</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 28 2020 16:54:05 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Mar 02 2020 13:38:49 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

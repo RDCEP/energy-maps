@@ -58,6 +58,7 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.cross = 5 * SCALE;
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
+  this.z_index = 0;
   /**
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
@@ -101,6 +102,7 @@ function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
   this.width = width;
+  this.z_index = 0;
   /**
    * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
    * @param {Object} ctx - HTML5 canvas context
@@ -139,6 +141,7 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
   /**
    * Draw gas processing legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
@@ -162,6 +165,7 @@ function Refinery(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
   /**
    * Draw oil refinery legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
@@ -558,13 +562,13 @@ column: 'oil-and-gas',
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_line">draw_line</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Coal.html">Coal</a></li><li><a href="module-Grid.html">Grid</a></li><li><a href="module-Legends.html">Legends</a></li><li><a href="module-Plants.html">Plants</a></li><li><a href="module-Wells.html">Wells</a></li></ul><h3>Namespaces</h3><ul><li><a href="Init.html">Init</a></li></ul><h3>Classes</h3><ul><li><a href="InfrastructureSet.html">InfrastructureSet</a></li><li><a href="MapBuilderUI.html">MapBuilderUI</a></li><li><a href="module-Coal-Coal.html">Coal</a></li><li><a href="module-Coal-CoalMine.html">CoalMine</a></li><li><a href="module-Coal-Railroad.html">Railroad</a></li><li><a href="module-Grid-Grid.html">Grid</a></li><li><a href="module-Grid-GridAcCollection.html">GridAcCollection</a></li><li><a href="module-Plants-PowerPlant.html">PowerPlant</a></li><li><a href="module-Wells-Processing.html">Processing</a></li><li><a href="module-Wells-Transport.html">Transport</a></li><li><a href="module-Wells-Well.html">Well</a></li></ul><h3>Global</h3><ul><li><a href="global.html#canvas_width">canvas_width</a></li><li><a href="global.html#draw_box">draw_box</a></li><li><a href="global.html#draw_circle">draw_circle</a></li><li><a href="global.html#draw_cross">draw_cross</a></li><li><a href="global.html#draw_land">draw_land</a></li><li><a href="global.html#draw_line">draw_line</a></li><li><a href="global.html#draw_polygon">draw_polygon</a></li><li><a href="global.html#draw_triangle">draw_triangle</a></li><li><a href="global.html#draw_triangle_down">draw_triangle_down</a></li><li><a href="global.html#draw_x">draw_x</a></li><li><a href="global.html#get_path">get_path</a></li><li><a href="global.html#height">height</a></li><li><a href="global.html#padding">padding</a></li><li><a href="global.html#path">path</a></li><li><a href="global.html#projection">projection</a></li><li><a href="global.html#viz">viz</a></li><li><a href="global.html#width">width</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Feb 28 2020 16:54:05 GMT-0600 (Central Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Mar 02 2020 13:38:49 GMT-0600 (Central Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

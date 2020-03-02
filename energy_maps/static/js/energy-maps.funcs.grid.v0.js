@@ -30,6 +30,15 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
 }
 Grid.prototype = new InfrastructureSet;
 
+/** 
+ * Instatiates a new GridAcCollection object that contains properties used to draw a collection of electric grid segments to the map and legend. 
+ * @class
+ * @classdesc Used to create objects that represent several units of electric grid infrastructure.
+ * @param {String} name - canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ */
 function GridAcCollection(name, value, column, draw, legend_group) {
   this.name = name || '';
   this.value = value || 0;
@@ -37,14 +46,7 @@ function GridAcCollection(name, value, column, draw, legend_group) {
   this.z_index = 0;
   this.draw = draw || [];
   this.draw_legend =  legend_group; 
-  /**
-   * Draw AC electric grid legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   */
 }
-GridAcCollection.prototype = new InfrastructureSet;
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
@@ -105,6 +107,13 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
     }
 };
 
+  /**
+   * Draw AC electric grid legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {Object} obj - Grid object instance
+   */
 function draw_legend_ac(ctx, x, y, obj) {
   y += VERTICAL_INCREMENT;
   ctx.strokeStyle = obj.color;
@@ -190,6 +199,12 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
 let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_na);
   y = draw_legend_ac(ctx, x, y, ac_under_100);
@@ -218,6 +233,12 @@ let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'el
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
 let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_100_200);
   y = draw_legend_ac(ctx, x, y, ac_200_300);
@@ -253,6 +274,12 @@ let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electri
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
 
+/**
+ * Draw AC electric grid legend to its HTML5 canvas context.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ */
 let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_345);
   y = draw_legend_ac(ctx, x, y, ac_500);
