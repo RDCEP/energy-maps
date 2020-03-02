@@ -35,6 +35,7 @@ function Well(name, text, value, column, draw, color, legend_color) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_well_legend(ctx, x, y) {
     console.log('well symbol');
@@ -81,6 +82,7 @@ function Transport(name, text, value, column, draw, stroke, width) {
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
     ctx.strokeStyle = this.color;
@@ -119,6 +121,7 @@ function Processing(name, text, value, column, draw, fill, size) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_processing_legend(ctx, x, y) {
     // Advance vertical increment
@@ -144,6 +147,7 @@ function Refinery(name, text, value, column, draw, fill, size) {
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {string} color - symbol color, required to pass through but not called
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_refinery_legend(ctx, x, y, color) {
     y += VERTICAL_INCREMENT;
@@ -163,6 +167,7 @@ Refinery.prototype = new InfrastructureSet;
    * @param {Number} y - y axis
    * @param {Object} obj - Infrastructure object 
    * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @returns {Number} y - updated y axis
    */
   const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) { // TODO: Reimplement storage. 
     // Advance vertical increment
