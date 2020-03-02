@@ -24,6 +24,7 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
   this.fuel_type = fuel_type || '';
   this.color = color || 'rgba(0, 0, 0, 0.5)';
   this.stroke = stroke || plant_stroke;
+  this.z_index = 0;
   /**
    * Draw power plant legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context

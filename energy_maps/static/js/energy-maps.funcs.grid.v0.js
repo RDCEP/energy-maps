@@ -26,6 +26,7 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
     this.color = color || 'rgba(0, 0, 0, 0.5)';
     this.line_width = line_width || 0;
     this.nominal_voltage = nominal_voltage || 50;
+    this.z_index = 0;
 }
 Grid.prototype = new InfrastructureSet;
 
@@ -33,6 +34,7 @@ function GridAcCollection(name, value, column, draw, collection) {
   this.name = name || '';
   this.value = value || 0;
   this.column = column || '';
+  this.z_index = 0;
   this.draw = draw || [];
   this.collection = collection || [];
   /**

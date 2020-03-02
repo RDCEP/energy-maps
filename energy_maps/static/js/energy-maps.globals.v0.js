@@ -77,6 +77,7 @@ function InfrastructureSet(name, text, value, column, draw) {
   this.text = text || '';
   this.value = value || 0;
   this.column = column || '';
+  this.z_index = 0;
   this.draw = draw || [{
       f: '',
       src: '',

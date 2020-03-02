@@ -30,6 +30,7 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.cross = 5 * SCALE;
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
+  this.z_index = 0;
   /**
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
@@ -73,6 +74,7 @@ function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
   this.width = width;
+  this.z_index = 0;
   /**
    * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
    * @param {Object} ctx - HTML5 canvas context
@@ -111,6 +113,7 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
   /**
    * Draw gas processing legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
@@ -134,6 +137,7 @@ function Refinery(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
   /**
    * Draw oil refinery legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context

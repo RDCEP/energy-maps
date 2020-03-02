@@ -22,6 +22,7 @@ function Coal(name, text, value, column, draw, stroke, width) { // TODO: Do we n
     InfrastructureSet.call(this, name, text, value, column, draw);
     this.stroke = stroke;
     this.width = width || 0;
+    this.z_index = 0;
 }
 Coal.prototype = new InfrastructureSet;
 
@@ -47,6 +48,7 @@ function CoalMine(name, text, value, column, draw) {
   this.width = SCALE;
   this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
+  this.z_index = 0;
   /**
    * Draw coal mine legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
@@ -82,6 +84,7 @@ function Railroad(name, text, value, column, draw) {
   this.text = 'Railroads';
   this.stroke = '#767676';
   this.width = SCALE;
+  this.z_index = 0;
   /**
    * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
    * @param {Object} ctx - HTML5 canvas context
