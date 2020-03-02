@@ -246,11 +246,17 @@ let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'el
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
 
+let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_100_200);
+  y = draw_legend_ac(ctx, x, y, ac_200_300);
+  return y;
+}
+
 let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
   src: ['/static/json/elec_grid_split/grid-100_300.json'],
   w: d3.json,
-} ], [ac_100_200, ac_200_300]);
+} ], draw_legend_ac_100_300);
 
 // AC 345-735
 
