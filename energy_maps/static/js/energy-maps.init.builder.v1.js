@@ -205,7 +205,7 @@ layers.push(hyc_plants);
 layers.push(wnd_farms);
 layers.push(solar_plants);
 layers.push(geo_plants);
-// layers.push(biofuel);
+// layers.push(biofuel); // TODO: push biofuel in when you have data with a valid scaling value
 layers.push(bio_plants);
 
 console.log(layers);
