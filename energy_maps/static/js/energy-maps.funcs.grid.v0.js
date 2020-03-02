@@ -113,6 +113,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {Object} obj - Grid object instance
+   * @returns {Number} y - updated y axis
    */
 function draw_legend_ac(ctx, x, y, obj) {
   y += VERTICAL_INCREMENT;
@@ -204,6 +205,7 @@ console.log(ac_under_100);
  * @param {Object} ctx - HTML5 canvas context
  * @param {Number} x - x axis
  * @param {Number} y - y axis
+ * @returns {Number} y - updated y axis
  */
 let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_na);
@@ -238,6 +240,7 @@ console.log(ac_200_300);
  * @param {Object} ctx - HTML5 canvas context
  * @param {Number} x - x axis
  * @param {Number} y - y axis
+ * @returns {Number} y - updated y axis
  */
 let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_100_200);
@@ -279,6 +282,7 @@ console.log(ac_735_plus);
  * @param {Object} ctx - HTML5 canvas context
  * @param {Number} x - x axis
  * @param {Number} y - y axis
+ * @returns {Number} y - updated y axis
  */
 let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
   y = draw_legend_ac(ctx, x, y, ac_345);
@@ -305,6 +309,7 @@ dc.dashed = false;
  * @param {Number} x - x axis
  * @param {Number} y - y axis
  * @param {boolean} dashed - true if line should be dashed, false if solid
+ * @returns {Number} y - updated y axis
  */
 dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
   ctx.lineWidth = LEGEND_FONT_SIZE;
