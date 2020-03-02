@@ -37,6 +37,7 @@ function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taki
  * @param {Object} ctx - HTML5 canvas context
  * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
  * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
+ * @returns {Number} y - updated y axis
  */
 function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
