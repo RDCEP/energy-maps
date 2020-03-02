@@ -281,11 +281,18 @@ let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electri
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
 
+let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_345);
+  y = draw_legend_ac(ctx, x, y, ac_500);
+  y = draw_legend_ac(ctx, x, y, ac_735_plus);
+  return y;
+}
+
 let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/json/elec_grid_split/grid-345_735.json'],
   w: d3.json,
-} ], [ac_345, ac_500, ac_735_plus]);
+} ], draw_legend_ac_345_735);
 
 let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_dc,
