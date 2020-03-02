@@ -102,33 +102,6 @@ function Railroad(name, text, value, column, draw) {
 }
 Railroad.prototype = new Coal;
 
- /**
-  * A collection of coal mine properties used to draw mines to the map and legend.
- * @type {Object} 
- * @property {string} fill - rgba value for mine fill color
- * @property {string} stroke - rgba value for mine stroke color
- * @property {Number} width - sets the width of the mine, bound to global SCALE
- * @property {Number} scale - sets the relative scale of the mine, bound to global SCALE as a fraction of its width
-  */
-// let mine_props = {
-//   fill: 'rgba(0, 0, 0, 0.5)',
-//   stroke: 'rgba(255, 255, 255, 1)',
-//   width: SCALE,
-//   scale: SCALE / 190,
-//   text: 'Coal mine'
-// }
-
-/**
- * @type {Object} 
- * @property {string} stroke - rgba value for mine stroke color
- * @property {Number} width - sets the width of the rr line, bound to global SCALE
- */
-// let railroad_props = {
-//   stroke: '#767676', 
-//   width: SCALE, 
-//   text: 'Railroads'
-// }
-
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
@@ -190,7 +163,6 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       hide_spinner(); 
     }
   });
-
 };
 
 /**
@@ -200,9 +172,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  */
 const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
-
   let rr = queued_data[0];
-
   const path = get_path(ctx);
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;
@@ -210,7 +180,6 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   path(rr);
   ctx.stroke();
   hide_spinner();
-
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
