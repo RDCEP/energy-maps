@@ -168,6 +168,7 @@ const hide_spinner = function hide_spinner() {
  * @param {boolean} dashed - true if line should be dashed, false if solid
  * @param {string} text - the text for the layer written to the legend
  * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
+ * @returns {Number} y - updated y axis
  */
 const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
   
