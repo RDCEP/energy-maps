@@ -50,6 +50,18 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
 }
 PowerPlant.prototype = new InfrastructureSet;
 
+function WindSpeed(name, text, value, column, draw, long, lat, speed) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.long = long;
+  this.lat = lat;
+  this.speed = speed;
+  // Add direction if available
+  this.draw_legend = function draw_wind_speed_legend(ctx, x, y) {
+    // do stuff
+  }
+}
+WindSpeed.prototype = new InfrastructureSet;
+
 SCALE = 1;
 let plant_stroke = 'rgba(255, 255, 255, 1)';
 
