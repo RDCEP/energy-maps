@@ -36,41 +36,13 @@ function GridAcCollection(name, value, column, draw, legend_group) {
   this.column = column || '';
   this.z_index = 0;
   this.draw = draw || [];
-  this.draw_legend =  legend_group; // function() {console.log('draw legend!')}
-  // this.collection = collection || [];
+  this.draw_legend =  legend_group; 
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    */
-  // this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
-  //   // for (let i = 0; i < collection.length; i++) {
-  //     y += VERTICAL_INCREMENT;
-  //     // ctx.strokeStyle = collection[i].color;
-  //     ctx.strokeStyle = this.color;
-      
-  //     // Draw the square icon as a fat line
-  //     ctx.lineWidth = 14 * SCALE;
-  //     ctx.beginPath();
-  //     ctx.moveTo(x - 7 * SCALE, y);
-  //     ctx.lineTo(x + 7 * SCALE, y);
-  //     ctx.stroke();
-  
-  //     // FIXME: This is a kludge for drawing a white swatch for unknown kV
-  //     // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-  //     if (this === ac_na) {
-  //       ctx.strokeStyle = 'rgba(76, 76, 76)';
-  //       ctx.lineWidth = 1 * SCALE;
-  //       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
-  //     }
-  
-  //     // text = collection[i].text;
-  //     text = this.text;
-  //     y = advance_for_type(y, ctx, text, text_offset, x);
-  //     return y;
-  //   // }
-  // }
 }
 GridAcCollection.prototype = new InfrastructureSet;
 
