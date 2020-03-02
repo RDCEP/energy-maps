@@ -54,6 +54,7 @@ function CoalMine(name, text, value, column, draw) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_coalmine_legend(ctx, x, y) {
     y += VERTICAL_INCREMENT;
@@ -91,6 +92,7 @@ function Railroad(name, text, value, column, draw) {
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_railroad_legend(ctx, x, y, dashed) {
     ctx.strokeStyle = railroad.stroke;
@@ -106,6 +108,7 @@ Railroad.prototype = new Coal;
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
  * @param {Number} scale - the desired scale value, bound to `viz` object value relative to category.
+ * @returns {Number} y - updated y axis
  */
 function setRadius(radius, scale) {
   radius = Math.sqrt(radius / Math.PI) * scale;
