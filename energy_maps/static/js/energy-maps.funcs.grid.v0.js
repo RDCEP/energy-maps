@@ -30,47 +30,49 @@ function Grid(name, text, value, column, draw, heading, color, line_width, nomin
 }
 Grid.prototype = new InfrastructureSet;
 
-function GridAcCollection(name, value, column, draw, collection) {
+function GridAcCollection(name, value, column, draw, legend_group) {
   this.name = name || '';
   this.value = value || 0;
   this.column = column || '';
   this.z_index = 0;
   this.draw = draw || [];
-  this.collection = collection || [];
+  this.draw_legend =  legend_group; // function() {console.log('draw legend!')}
+  // this.collection = collection || [];
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    */
-  this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
-    for (let i = 0; i < collection.length; i++) {
-      y += VERTICAL_INCREMENT;
-      ctx.strokeStyle = collection[i].color;
+  // this.draw_legend = function draw_grid_ac_legend(ctx, x, y) {
+  //   // for (let i = 0; i < collection.length; i++) {
+  //     y += VERTICAL_INCREMENT;
+  //     // ctx.strokeStyle = collection[i].color;
+  //     ctx.strokeStyle = this.color;
       
-      // Draw the square icon as a fat line
-      ctx.lineWidth = 14 * SCALE;
-      ctx.beginPath();
-      ctx.moveTo(x - 7 * SCALE, y);
-      ctx.lineTo(x + 7 * SCALE, y);
-      ctx.stroke();
+  //     // Draw the square icon as a fat line
+  //     ctx.lineWidth = 14 * SCALE;
+  //     ctx.beginPath();
+  //     ctx.moveTo(x - 7 * SCALE, y);
+  //     ctx.lineTo(x + 7 * SCALE, y);
+  //     ctx.stroke();
   
-      // FIXME: This is a kludge for drawing a white swatch for unknown kV
-      // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-      if (this === ac_na) {
-        ctx.strokeStyle = 'rgba(76, 76, 76)';
-        ctx.lineWidth = 1 * SCALE;
-        ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
-      }
+  //     // FIXME: This is a kludge for drawing a white swatch for unknown kV
+  //     // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+  //     if (this === ac_na) {
+  //       ctx.strokeStyle = 'rgba(76, 76, 76)';
+  //       ctx.lineWidth = 1 * SCALE;
+  //       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+  //     }
   
-      text = collection[i].text;
-      y = advance_for_type(y, ctx, text, text_offset, x);
-      return y;
-    }
-  }
-
+  //     // text = collection[i].text;
+  //     text = this.text;
+  //     y = advance_for_type(y, ctx, text, text_offset, x);
+  //     return y;
+  //   // }
+  // }
 }
-// GridAcCollection.prototype = new InfrastructureSet;
+GridAcCollection.prototype = new InfrastructureSet;
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
@@ -130,6 +132,27 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
       }
     }
 };
+
+function draw_legend_ac(ctx, x, y, obj) {
+  y += VERTICAL_INCREMENT;
+  ctx.strokeStyle = obj.color;
+  // Draw the square icon as a fat line
+  ctx.lineWidth = 14 * SCALE;
+  ctx.beginPath();
+  ctx.moveTo(x - 7 * SCALE, y);
+  ctx.lineTo(x + 7 * SCALE, y);
+  ctx.stroke();
+  if (obj === ac_na) {
+    // FIXME: This is a kludge for drawing a white swatch for unknown kV
+    // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+    ctx.strokeStyle = 'rgba(76, 76, 76)';
+    ctx.lineWidth = 1 * SCALE;
+    ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
+  }
+  text = obj.text;
+  y = advance_for_type(y, ctx, text, text_offset, x);
+  return y;
+}
 
 /**
  * Draw grid class unknown and under 100 on the electric grid infrastructure map.
@@ -195,11 +218,17 @@ let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'e
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
 
+let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(ctx, x, y) {
+  y = draw_legend_ac(ctx, x, y, ac_na);
+  y = draw_legend_ac(ctx, x, y, ac_under_100);
+  return y;
+}
+
 let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
-} ], [ac_na, ac_under_100]);
+} ], draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
 
 // AC 100-300
 
