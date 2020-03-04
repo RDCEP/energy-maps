@@ -37,6 +37,7 @@ function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taki
  * @param {Object} ctx - HTML5 canvas context
  * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
  * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
+ * @returns {Number} y - updated y axis
  */
 function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
@@ -61,234 +62,6 @@ function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: conside
  * @param {Object[]} layers - An array of objects representing resources to be rendered on top of the map canvas.
  */
 const update_legend = function update_legend(ctx, layers) {
-
-  /**
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - oil_and_gas.wells object 
-   */
-  const draw_well_legend = function draw_well_legend(ctx, x, y, obj) {
-    console.log('well symbol');
-
-    y = advance_vertical_increment(y, ctx, obj.color, obj.stroke); 
-    draw_circle(ctx, [x, y], obj.diameter * 3);
-    ctx.stroke();
-    ctx.fill();
-    
-    y = advance_for_type(y, ctx, obj.text, text_offset, x);
-    y = advance_vertical_increment(y, ctx, obj.color, oil_and_gas.wells.stroke);
-    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
-    ctx.stroke();
-    
-    let text = `${obj.text.slice(0, 3)} offshore well`
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    
-    return y;
-  };
-
-  /**
-   * Helper function for pipes and railroad
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   * @param {Number} width - width value to set for lineWidth
-   * @param {boolean} dashed - true if line should be dashed, false if solid
-   * @param {string} text - the text for the layer written to the legend
-   * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
-   */
-    const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
-    
-    y += VERTICAL_INCREMENT;
-    
-    // TODO: Why do we have dashed param? Do we have any dashed lines?
-    if (dashed) {
-      ctx.setLineDash(dashed);
-    }
-
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.strokeStyle = obj.stroke;
-    ctx.stroke();
-
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  }
-
-  /**
-   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - oil_and_gas.wells object
-   * @param {boolean} dashed - true if line should be dashed, false if solid
-   */
-  const draw_pipeline_legend = function draw_pipeline_legend(ctx, x, y, obj, dashed) {
-    ctx.strokeStyle = obj.color;
-    ctx.lineWidth = obj.width;
-    let text = obj.text;
-    y = draw_line(ctx, x, y, obj, dashed, text)
-    return y;
-  };
-
-  /**
-   * Draw gas processing legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - Infrastructure object 
-   */
-  const draw_processing_legend = function draw_processing_legend(ctx, x, y, obj) {
-    // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    draw_gas_processor(ctx, [x, y]);
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw gas storage legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - Infrastructure object 
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   */
-  const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) {
-    // Advance vertical increment
-    y += VERTICAL_INCREMENT;
-    draw_gas_storage(ctx, [x, y]);
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw oil refinery legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - Infrastructure object 
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   */
-  const draw_refinery_legend = function draw_refinery_legend(ctx, x, y, obj, color) {
-    y += VERTICAL_INCREMENT;
-    draw_oil_refinery(ctx, [x, y], 200000 * obj.size); // TODO: Document or extract these magic numbers
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw coal mine legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - Infrastructure object 
-   */
-  const draw_coalmine_legend = function draw_coalmine_legend(ctx, x, y, obj) {
-    y += VERTICAL_INCREMENT;
-    // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw power plant legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {string} obj - power plant object from `electricity_generation`
-   */
-  const draw_power_plant_legend = function draw_power_plant_legend(ctx, x, y, obj) {
-    ctx.fillStyle = obj.color;
-    ctx.strokeStyle = obj.stroke;
-    ctx.lineWidth = electricity_generation.stroke.width;
-    
-    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
-    y += 18 * SCALE;
-    ctx.beginPath();
-    draw_circle(ctx, [x, y], 7 * SCALE);
-    ctx.stroke();
-    ctx.fill();
-    
-    let text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - Infrastructure object 
-   * @param {boolean} dashed - true if line should be dashed, false if solid
-   * @param {string} text - the text for the layer written to the legend
-   */
-  const draw_railroad_legend = function draw_railroad_legend(ctx, x, y, obj, dashed) {
-    ctx.strokeStyle = railroad.stroke;
-    ctx.lineWidth = railroad.width;
-    let text = obj.text;
-    y = draw_line(ctx, x, y, obj, dashed, text)
-    return y;
-  };
-
-  /**
-   * Draw AC electric grid legend to its HTML5 canvas context.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {Object} obj - object from `grid`
-   */
-  const draw_grid_ac_legend = function draw_grid_ac_legend(ctx, x, y, obj) {
-    
-    y += VERTICAL_INCREMENT;
-    ctx.strokeStyle = obj.color;
-    
-    // Draw the square icon as a fat line
-    ctx.lineWidth = 14 * SCALE;
-    ctx.beginPath();
-    ctx.moveTo(x - 7 * SCALE, y);
-    ctx.lineTo(x + 7 * SCALE, y);
-    ctx.stroke();
-
-    // FIXME: This is a kludge for drawing a white swatch for unknown kV
-    // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
-    if (obj === ac_na) {
-      ctx.strokeStyle = 'rgba(76, 76, 76)';
-      ctx.lineWidth = 1 * SCALE;
-      ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);  
-    }
-
-    text = obj.text;
-    y = advance_for_type(y, ctx, text, text_offset, x);
-    return y;
-  };
-
-  /**
-   * Draw DC electric grid legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
-   * @param {Object} ctx - HTML5 canvas context
-   * @param {Number} x - x axis
-   * @param {Number} y - y axis
-   * @param {boolean} dashed - true if line should be dashed, false if solid
-   */
-  const draw_grid_dc_legend = function draw_grid_dc_legend(ctx, x, y, obj, dashed) {
-    ctx.lineWidth = LEGEND_FONT_SIZE;
-    ctx.strokeStyle = obj.color;
-    text = obj.text;
-    y = draw_line(ctx, x, y, obj, dashed, text)
-    return y;
-  };
-
-  // TODO: Add layer for legend
-
-    // TODO: Clear context.
   // FIXME: width in globals is now 850.
   let x = 950 * SCALE;
   let x_offset = 10 * SCALE;
@@ -375,7 +148,7 @@ const update_legend = function update_legend(ctx, layers) {
     }
   }
 
-  let draw_plants_legend = layers.filter(function(d) {
+  let draw_plants_legend = layers.filter(function(d) { // TODO: Do we still need this? What is it doing?
     return ["coal-plant", "geothermal-plant", "hydro-plant",
     "natural-gas-plant", "nuclear-plant", "petroleum-plant",
     "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
@@ -385,4 +158,4 @@ const update_legend = function update_legend(ctx, layers) {
     // y +=
   }
 
-}; // End update_legend()
+};
