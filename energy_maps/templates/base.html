@@ -7,6 +7,7 @@
     <link rel=stylesheet href={{ ASSET_URL }}>
   {% endassets %}
   <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 </head>
 <body>
 <div class=wrap>
@@ -51,5 +52,22 @@
   {% endblock %}
 {% endblock %}
 </div>
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script>
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#000"
+    },
+    "button": {
+      "background": "#f1d600"
+    }
+  },
+  "theme": "classic",
+  "content": {
+    "message": "This website uses cookies to track visits to the page. This helps us understand the importance and impact of the research and tools that we have created."
+  }
+});
+</script>
 </body>
 </html>
