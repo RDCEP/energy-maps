@@ -409,5 +409,48 @@ console.log(layers);
 
   initMenu();
   draw_base_map();
+  console.log(ctx)
+  console.log(ctx.canvas)
+let leg_canv = document.getElementById("legendcanvas") // this seems to be working because it is the top-most canvas and therefore the only one actually reachable by the mouse!
+console.log(leg_canv)
 
+  d3.select(leg_canv).call(d3.zoom()
+  .scaleExtent([1, 8])
+  .on("zoom", () => zoomed(d3.event.transform)));
+
+  function zoomed(transform) {
+    // capture the current state of the canvas
+    ctx.save();
+    // clear the 
+    ctx.clearRect(0, 0, width, height)
+    ctx.translate(transform.x, transform.y)
+    ctx.scale(transform.k, transform.k)
+    ctx.beginPath() 
+    // initMenu();
+    draw_base_map(); // any functions called in this section will fire every time a zoom event is detected on the legend canvas
+    ctx.fill();
+    ctx.restore();  
+  }
+  
 })();
+
+  // const context = DOM.context2d(width, height); // ctx should be div main map builder
+
+  // d3.select(context.canvas).call(d3.zoom()
+  //     .scaleExtent([1, 8])
+  //     .on("zoom", () => zoomed(d3.event.transform)));
+
+  // function zoomed(transform) {
+  //   context.save();
+  //   context.clearRect(0, 0, width, height);
+  //   context.translate(transform.x, transform.y);
+  //   context.scale(transform.k, transform.k);
+  //   context.beginPath();
+  //   draw_base_map();
+  //   context.fill();
+  //   context.restore();
+  // }
+
+  // zoomed(d3.zoomIdentity);
+
+  // return context.canvas;
