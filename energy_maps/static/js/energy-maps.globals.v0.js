@@ -23,7 +23,7 @@ SCALE = 1;
  * @type {number} 
  * @description Map width, set to some multiple of `SCALE`
  */
-let width = 1200 * SCALE;
+let width = 1200 * SCALE; // Note: you can't adjust this value without significantly effecting legends.
 
 /**
  * @type {number} 
