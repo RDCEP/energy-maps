@@ -412,48 +412,40 @@ console.log(layers);
   draw_base_map();
 
   let map_layer_legend_class = document.getElementsByClassName("map layer legend") // this seems to be working because it is the top-most canvas and therefore the only one actually reachable by the mouse!
-  let canv = map_layer_legend_class[0].children[0]
-  console.group(canv)
-  d3.select(canv).call(d3.zoom()
+  let target_canv = map_layer_legend_class[0].children[0];
+  let mapcanvas = document.getElementById('mapcanvas');
+  console.group(target_canv)
+  console.group(mapcanvas)
+  mapcanvas.width = '1200'
+
+  d3.select(target_canv).call(d3.zoom()
   .scaleExtent([-1, 8])
   .on("zoom", () => zoomed(d3.event.transform)));
 
+  let k, x, y
+  console.log('k = ' + k)
   function zoomed(transform) {
-    // capture the current state of the canvas
-    ctx.save();
-    // clear the canvas surface
     ctx.clearRect(0, 0, width, height)
-    // ctx.save();
-    ctx.translate(transform.x, transform.y)
-    console.log(transform)
-    ctx.scale(transform.k, transform.k)
-    ctx.beginPath()
-    draw_base_map(); // any functions called in this section will fire every time a zoom event is detected on the legend canvas
-    draw_land();
+    // TODO: revisit this equation: (position of the mouse in the window) - (position of div in the window) = (transform value)    
+    if (transform.k != k) {
+      x = 0 - transform.x;
+      y = 0 - transform.y;
+    }
+    else {
+      x = transform.x
+      y = transform.y
+    }
+    k = transform.k
+    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
     ctx.fill();
-    ctx.restore();  
   }
   zoomed(d3.zoomIdentity);
+
+  function logKey(e) {
+    console.log( `
+      Screen X/Y: ${e.screenX}, ${e.screenY}
+      Client X/Y: ${e.clientX}, ${e.clientY}`)
+  }
+  // document.addEventListener('mousemove', logKey);
   
 })();
-
-  // const context = DOM.context2d(width, height); // ctx should be div main map builder
-
-  // d3.select(context.canvas).call(d3.zoom()
-  //     .scaleExtent([1, 8])
-  //     .on("zoom", () => zoomed(d3.event.transform)));
-
-  // function zoomed(transform) {
-  //   context.save();
-  //   context.clearRect(0, 0, width, height);
-  //   context.translate(transform.x, transform.y);
-  //   context.scale(transform.k, transform.k);
-  //   context.beginPath();
-  //   draw_base_map();
-  //   context.fill();
-  //   context.restore();
-  // }
-
-  // zoomed(d3.zoomIdentity);
-
-  // return context.canvas;
