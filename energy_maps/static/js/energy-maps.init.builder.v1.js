@@ -61,7 +61,6 @@
     .attr('width', canvas_width)
     .attr('height', height);
 
-
   /**
    * @type {Object}
    * @description HTML5 canvas context for the application legend
@@ -266,7 +265,7 @@ console.log(layers);
    */
   let removeLayer = function removeLayer(lyr) {
     hide_spinner();
-    lyr.context.clearRect(0, 0, width, height);
+    lyr.context.clearRect(0, 0, canvas_width, height);
     lyr.active = false;
     decrement_asset_total(lyr.value);  
   }
@@ -395,7 +394,7 @@ console.log(layers);
   
           // TODO: Arguably the legend context should be cleared in the
           //  update_legend() function.
-          legend_ctx.clearRect(0, 0, width, height);
+          legend_ctx.clearRect(0, 0, canvas_width, height);
           update_legend(legend_ctx, layers);
   
         });
@@ -418,34 +417,42 @@ console.log(layers);
   console.group(mapcanvas)
   mapcanvas.width = '1200'
 
-  d3.select(target_canv).call(d3.zoom()
-  .scaleExtent([-1, 8])
-  .on("zoom", () => zoomed(d3.event.transform)));
+  let zoom = d3.zoom();
 
-  let k, x, y
-  console.log('k = ' + k)
+  let layer_canvases = []
+
+  for (let i = 0; i < layers.length; i++) {
+    layer_canvases[i] = document.getElementsByClassName(`map layer canvas ${layers[i].name}`)[0]
+  }
+
+  d3.select(target_canv).call(zoom
+  .scaleExtent([1, 5])
+  .on("zoom", () => {
+    zoomed(d3.event.transform)
+    let screen_x = event.clientX; // might be handy to have this in a var, we'll see!
+  }));
+
+  let k, x, y;
   function zoomed(transform) {
-    ctx.clearRect(0, 0, width, height)
+    ctx.clearRect(0, 0, canvas_width, height)
     // TODO: revisit this equation: (position of the mouse in the window) - (position of div in the window) = (transform value)    
     if (transform.k != k) {
       x = 0 - transform.x;
       y = 0 - transform.y;
     }
     else {
-      x = transform.x
-      y = transform.y
+      x = transform.x - event.clientX; // This isn't the right formula, but it's the general approach
+      y = transform.y - event.clientY;
     }
     k = transform.k
     mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+    // mapcanvas.style.transform = `scale(${k})`; // This doesn't let you drag, but it does keep things glued together.
+    for (let i = 0; i < layer_canvases.length; i++) {
+      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+      // layer_canvases[i].style.transform = `scale(${k})`;
+    }
     ctx.fill();
   }
   zoomed(d3.zoomIdentity);
-
-  function logKey(e) {
-    console.log( `
-      Screen X/Y: ${e.screenX}, ${e.screenY}
-      Client X/Y: ${e.clientX}, ${e.clientY}`)
-  }
-  // document.addEventListener('mousemove', logKey);
   
 })();
