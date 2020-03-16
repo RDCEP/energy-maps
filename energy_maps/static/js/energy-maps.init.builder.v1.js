@@ -415,11 +415,10 @@ console.log(layers);
   let mapcanvas = document.getElementById('mapcanvas');
   console.group(target_canv)
   console.group(mapcanvas)
-  mapcanvas.width = '1200'
 
   let zoom = d3.zoom();
 
-  let layer_canvases = []
+  let layer_canvases = [];
 
   for (let i = 0; i < layers.length; i++) {
     layer_canvases[i] = document.getElementsByClassName(`map layer canvas ${layers[i].name}`)[0]
@@ -430,6 +429,7 @@ console.log(layers);
   .on("zoom", () => {
     zoomed(d3.event.transform)
     let screen_x = event.clientX; // might be handy to have this in a var, we'll see!
+    let screen_y = event.clientY; // might be handy to have this in a var, we'll see!
   }));
 
   let k, x, y;
@@ -441,8 +441,8 @@ console.log(layers);
       y = 0 - transform.y;
     }
     else {
-      x = transform.x - event.clientX; // This isn't the right formula, but it's the general approach
-      y = transform.y - event.clientY;
+      x = transform.x // - event.clientX; // This isn't the right formula, but it's the general approach
+      y = transform.y // - event.clientY;
     }
     k = transform.k
     mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
