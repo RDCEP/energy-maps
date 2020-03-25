@@ -433,7 +433,7 @@ console.log(layers);
     screen_y = event.clientY; // might be handy to have this in a var, we'll see!
   }));
 
-  // This transform function doesn't let you drag, but it does keep all layers glued together and allows for a more stable transition when you zoom.
+  // This transform function doesn't let you drag, but it allows for a more stable transition when you zoom.
   let t1 = function t1() {
     mapcanvas.style.transform = `scale(${k})`;
     for (let i = 0; i < layer_canvases.length; i++) {
@@ -441,11 +441,11 @@ console.log(layers);
     }
   }
 
-  // This transform function lets you drag, but it does not bind all layers together, and the zoom is wild and unpredictable.
+  // This transform function lets you drag, but the zoom is wild and unpredictable.
   let t2 = function t2() {
     mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
     for (let i = 0; i < layer_canvases.length; i++) {
-      layer_canvases[i].style.transform = `translate(${x}px, ${y}px), scale(${k})`;
+      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
     }
   }
 
@@ -464,8 +464,8 @@ console.log(layers);
     }
     k = transform.k
 
-    t1();
-    // t2();
+    // t1();
+    t2();
 
     ctx.fill();
   }
