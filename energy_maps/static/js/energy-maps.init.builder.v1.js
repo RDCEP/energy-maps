@@ -226,8 +226,6 @@ console.log(layers);
     },
   ];
 
-  // button_columns.push({name: 'test'}) 
-
   let cols = button_columns.length;
 
   /**
@@ -411,29 +409,49 @@ console.log(layers);
   draw_base_map();
 
   let map_layer_legend_class = document.getElementsByClassName("map layer legend") // this seems to be working because it is the top-most canvas and therefore the only one actually reachable by the mouse!
+
+  // getElementsByClassName() returns an array of HTML elements, so you have to index through that array and its children to get the element you want.
   let target_canv = map_layer_legend_class[0].children[0];
+  // Use the target canvas (surface level) to drag the map canvas around
   let mapcanvas = document.getElementById('mapcanvas');
-  console.group(target_canv)
-  console.group(mapcanvas)
 
-  let zoom = d3.zoom();
+  let zoom = d3.zoom(); 
 
+  // insert canvas elements for all layers into an array
   let layer_canvases = [];
-
   for (let i = 0; i < layers.length; i++) {
     layer_canvases[i] = document.getElementsByClassName(`map layer canvas ${layers[i].name}`)[0]
   }
+  console.log(layer_canvases)
 
+  let screen_x, screen_y; // might be handy to have these stored in a var, we'll see!
   d3.select(target_canv).call(zoom
   .scaleExtent([1, 5])
   .on("zoom", () => {
     zoomed(d3.event.transform)
-    let screen_x = event.clientX; // might be handy to have this in a var, we'll see!
-    let screen_y = event.clientY; // might be handy to have this in a var, we'll see!
+    screen_x = event.clientX; // might be handy to have this in a var, we'll see!
+    screen_y = event.clientY; // might be handy to have this in a var, we'll see!
   }));
+
+  // This transform function doesn't let you drag, but it does keep all layers glued together and allows for a more stable transition when you zoom.
+  let t1 = function t1() {
+    mapcanvas.style.transform = `scale(${k})`;
+    for (let i = 0; i < layer_canvases.length; i++) {
+      layer_canvases[i].style.transform = `scale(${k})`;
+    }
+  }
+
+  // This transform function lets you drag, but it does not bind all layers together, and the zoom is wild and unpredictable.
+  let t2 = function t2() {
+    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+    for (let i = 0; i < layer_canvases.length; i++) {
+      layer_canvases[i].style.transform = `translate(${x}px, ${y}px), scale(${k})`;
+    }
+  }
 
   let k, x, y;
   function zoomed(transform) {
+    ctx.save();
     ctx.clearRect(0, 0, canvas_width, height)
     // TODO: revisit this equation: (position of the mouse in the window) - (position of div in the window) = (transform value)    
     if (transform.k != k) {
@@ -441,16 +459,14 @@ console.log(layers);
       y = 0 - transform.y;
     }
     else {
-      x = transform.x // - event.clientX; // This isn't the right formula, but it's the general approach
-      y = transform.y // - event.clientY;
+      x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
+      y = transform.y // - screen_y;
     }
     k = transform.k
-    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-    // mapcanvas.style.transform = `scale(${k})`; // This doesn't let you drag, but it does keep things glued together.
-    for (let i = 0; i < layer_canvases.length; i++) {
-      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-      // layer_canvases[i].style.transform = `scale(${k})`;
-    }
+
+    t1();
+    // t2();
+
     ctx.fill();
   }
   zoomed(d3.zoomIdentity);
