@@ -454,9 +454,9 @@ console.log(layers);
     ctx.save();
     ctx.clearRect(0, 0, canvas_width, height)
     // TODO: revisit this equation: (position of the mouse in the window) - (position of div in the window) = (transform value)    
-    if (transform.k != k) {
-      x = 0 - transform.x;
-      y = 0 - transform.y;
+    if (transform.k != k) { 
+      // (value of x before zoom - value of x after zoom) * scale factor
+      // x1 - x2 * k
     }
     else {
       x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
@@ -466,6 +466,8 @@ console.log(layers);
 
     // t1();
     t2();
+
+    // if k is different from transform.k, we will redraw all layers
 
     ctx.fill();
   }
