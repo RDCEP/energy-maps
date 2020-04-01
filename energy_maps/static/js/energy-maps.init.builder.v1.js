@@ -458,8 +458,13 @@ console.log(layers);
       // (value of x before zoom - value of x after zoom) * scale factor
       // x1 - x2 * k
       console.log('k has changed')
-      load_layer_data(coal_mine)
-      // console.log(load_layer_data(coal_mine))
+      for (let i = 0; i < lay; i++) {
+        if (layers[i].active === true) {
+          // TODO: clear the layers first
+          load_layer_data(layers[i]);
+          console.log('active layers loaded')
+        }
+      }
     }
     else {
       x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
@@ -469,10 +474,6 @@ console.log(layers);
 
     // t1();
     t2();
-
-    // if k is different from transform.k, we will redraw all layers
-      // check for/capture all active layers as js objects
-      // for each active layer, write data to its canvas context
 
     ctx.fill();
   }
