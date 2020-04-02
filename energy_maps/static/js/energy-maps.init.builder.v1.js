@@ -453,18 +453,20 @@ console.log(layers);
   function zoomed(transform) {
     ctx.save();
     ctx.clearRect(0, 0, canvas_width, height)
-    // TODO: revisit this equation: (position of the mouse in the window) - (position of div in the window) = (transform value)    
-    if (transform.k != k) { 
-      // (value of x before zoom - value of x after zoom) * scale factor
-      // x1 - x2 * k
-      console.log('k has changed')
-      for (let i = 0; i < lay; i++) {
-        if (layers[i].active === true) {
-          // TODO: clear the layers first
-          load_layer_data(layers[i]);
-          console.log('active layers loaded')
-        }
-      }
+    if (transform.k != k) {  // if the zoom level has changed,
+      // debounce to allow user to complete their desired zoom/pan level
+      setTimeout(() => { // TODO: Convert setTimeout into a custom debounce function
+        console.log('k has changed')
+        // clear all active layers and redraw
+        for (let i = 0; i < lay; i++) {
+          if (layers[i].active === true) {
+            layers[i].context.clearRect(0, 0, canvas_width, height);
+            load_layer_data(layers[i]);
+            console.log('active layers loaded')
+          }
+        }  
+      }, 1000);
+      
     }
     else {
       x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
