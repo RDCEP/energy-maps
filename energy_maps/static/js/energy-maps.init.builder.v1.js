@@ -424,14 +424,31 @@ console.log(layers);
   }
   console.log(layer_canvases)
 
-  let screen_x, screen_y; // might be handy to have these stored in a var, we'll see!
   d3.select(target_canv).call(zoom
   .scaleExtent([1, 5])
   .on("zoom", () => {
-    zoomed(d3.event.transform)
-    screen_x = event.clientX; // might be handy to have this in a var, we'll see!
-    screen_y = event.clientY; // might be handy to have this in a var, we'll see!
+    zoomed(d3.event.transform);
   }));
+
+  const debounce = (func, delay) => { // Utilize here 
+    let inDebounce;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(inDebounce);
+      inDebounce = setTimeout(() =>
+      func.apply(context, args),
+      delay);
+    };
+  };
+
+  // TODO: This one doesn't quite work, but it seems to be in the right direction, because it seems that debounce should coincide with an event handler
+  // d3.select(target_canv).call(zoom 
+  //   .scaleExtent([1, 5])
+  //   .on("zoom", debounce(function(){
+  //     zoomed(d3.event.transform)
+  //     console.log('do something')
+  //   }, 1000)));
 
   // This transform function doesn't let you drag, but it allows for a more stable transition when you zoom.
   let t1 = function t1() {
@@ -459,7 +476,7 @@ console.log(layers);
       setTimeout(() => { // TODO: Convert setTimeout into an actual debounce function
         console.log('k has changed')
         // clear all active layers and redraw
-        for (let i = 0; i < lay; i++) {
+        for (let i = 0; i < lay; i++) { // TODO: Extract this to a function, embed here as an arg to debounce
           if (layers[i].active === true) {
             layers[i].context.clearRect(0, 0, canvas_width, height);
             load_layer_data(layers[i]);
@@ -471,7 +488,7 @@ console.log(layers);
           draw_base_map();
           console.log('layers redrawn, draw base map')
         }
-      }, 1000);
+      }, 500);
       
     }
     else {
