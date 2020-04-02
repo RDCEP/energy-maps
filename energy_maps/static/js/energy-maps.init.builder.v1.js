@@ -456,7 +456,7 @@ console.log(layers);
     ctx.clearRect(0, 0, canvas_width, height)
     if (transform.k != k) {  // if the zoom level has changed,
       // debounce to allow user to complete their desired zoom/pan level
-      setTimeout(() => { // TODO: Convert setTimeout into a custom debounce function
+      setTimeout(() => { // TODO: Convert setTimeout into an actual debounce function
         console.log('k has changed')
         // clear all active layers and redraw
         for (let i = 0; i < lay; i++) {
