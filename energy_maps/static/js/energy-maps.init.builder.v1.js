@@ -450,6 +450,7 @@ console.log(layers);
   }
 
   let k, x, y;
+  let layer_redrawn = false;
   function zoomed(transform) {
     ctx.save();
     ctx.clearRect(0, 0, canvas_width, height)
@@ -463,8 +464,13 @@ console.log(layers);
             layers[i].context.clearRect(0, 0, canvas_width, height);
             load_layer_data(layers[i]);
             console.log('active layers loaded')
-          }
-        }  
+            layer_redrawn = true;
+         }
+        }
+        if (layer_redrawn === true) {
+          draw_base_map();
+          console.log('layers redrawn, draw base map')
+        }
       }, 1000);
       
     }
