@@ -502,7 +502,7 @@ let debounce2 = function debounce2(func, wait, immediate) {
       setTimeout(() => { // TODO: Convert setTimeout into an actual debounce function
         layer_redrawn = false;
         // clear all active layers and redraw
-        for (let i = 0; i < lay; i++) { // TODO: Extract this to a function, embed here as an arg to debounce
+        for (let i = 0; i < lay; i++) {
           if (layers[i].active === true) {
             layers[i].context.clearRect(0, 0, canvas_width, height);
             load_layer_data(layers[i]);
