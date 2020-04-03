@@ -424,13 +424,8 @@ console.log(layers);
   }
   console.log(layer_canvases)
 
-  d3.select(target_canv).call(zoom
-  .scaleExtent([1, 5])
-  .on("zoom", () => {
-    zoomed(d3.event.transform);
-  }));
-
-  const debounce = (func, delay) => { // Utilize here 
+  // debounce example from https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf
+  const debounce = function debounce(func, delay) { // Utilize here 
     let inDebounce;
     return function () {
       const context = this;
@@ -442,10 +437,41 @@ console.log(layers);
     };
   };
 
+// example from https://levelup.gitconnected.com/debounce-in-javascript-improve-your-applications-performance-5b01855e086
+let debounce2 = function debounce2(func, wait, immediate) {
+    var timeout;
+  
+    return function executedFunction() {
+      var context = this;
+      var args = arguments;
+        
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+  
+      var callNow = immediate && !timeout;
+    
+      clearTimeout(timeout);
+  
+      timeout = setTimeout(later, wait);
+    
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  // current default zoom
+  d3.select(target_canv).call(zoom
+  .scaleExtent([1, 5])
+  .on("zoom", () => {
+    zoomed(d3.event.transform);
+  }));
+
+  // debounce attempt
   // TODO: This one doesn't quite work, but it seems to be in the right direction, because it seems that debounce should coincide with an event handler
   // d3.select(target_canv).call(zoom 
   //   .scaleExtent([1, 5])
-  //   .on("zoom", debounce(function(){
+  //   .on("zoom", debounce2(function(){
   //     zoomed(d3.event.transform)
   //     console.log('do something')
   //   }, 1000)));
@@ -474,22 +500,19 @@ console.log(layers);
     if (transform.k != k) {  // if the zoom level has changed,
       // debounce to allow user to complete their desired zoom/pan level
       setTimeout(() => { // TODO: Convert setTimeout into an actual debounce function
-        console.log('k has changed')
+        layer_redrawn = false;
         // clear all active layers and redraw
         for (let i = 0; i < lay; i++) { // TODO: Extract this to a function, embed here as an arg to debounce
           if (layers[i].active === true) {
             layers[i].context.clearRect(0, 0, canvas_width, height);
             load_layer_data(layers[i]);
-            console.log('active layers loaded')
             layer_redrawn = true;
          }
-        }
-        if (layer_redrawn === true) {
+        }        
+        if (layer_redrawn) {
           draw_base_map();
-          console.log('layers redrawn, draw base map')
         }
       }, 500);
-      
     }
     else {
       x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
