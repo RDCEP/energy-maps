@@ -424,107 +424,96 @@ console.log(layers);
   }
   console.log(layer_canvases)
 
-  // debounce example from https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf
-  const debounce = function debounce(func, delay) { // Utilize here 
-    let inDebounce;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(inDebounce);
-      inDebounce = setTimeout(() =>
-      func.apply(context, args),
-      delay);
-    };
-  };
+  // Clear current canvas at the beginning of the zoom event
+  let last_zoom_timestamp
+  d3.select(target_canv).call(zoom
+    .on("start", () => {
+      last_zoom_timestamp = Date.now();
+      ctx.save();
+      ctx.clearRect(0, 0, canvas_width, height);
+      console.log('cleared')
+    }));
 
-// example from https://levelup.gitconnected.com/debounce-in-javascript-improve-your-applications-performance-5b01855e086
-let debounce2 = function debounce2(func, wait, immediate) {
-    var timeout;
-  
-    return function executedFunction() {
-      var context = this;
-      var args = arguments;
-        
-      var later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-  
-      var callNow = immediate && !timeout;
-    
-      clearTimeout(timeout);
-  
-      timeout = setTimeout(later, wait);
-    
-      if (callNow) func.apply(context, args);
-    };
-  };
-
-  // current default zoom
+  // Perform translation during zoom activity
   d3.select(target_canv).call(zoom
   .scaleExtent([1, 5])
   .on("zoom", () => {
+    console.log('zoom')
     zoomed(d3.event.transform);
   }));
 
-  // debounce attempt
-  // TODO: This one doesn't quite work, but it seems to be in the right direction, because it seems that debounce should coincide with an event handler
-  // d3.select(target_canv).call(zoom 
-  //   .scaleExtent([1, 5])
-  //   .on("zoom", debounce2(function(){
-  //     zoomed(d3.event.transform)
-  //     console.log('do something')
-  //   }, 1000)));
-
-  // This transform function doesn't let you drag, but it allows for a more stable transition when you zoom.
-  let t1 = function t1() {
-    mapcanvas.style.transform = `scale(${k})`;
-    for (let i = 0; i < layer_canvases.length; i++) {
-      layer_canvases[i].style.transform = `scale(${k})`;
-    }
-  }
-
-  // This transform function lets you drag, but the zoom is wild and unpredictable.
-  let t2 = function t2() {
-    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-    for (let i = 0; i < layer_canvases.length; i++) {
-      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-    }
-  }
+  // Debounce and redraw when the user is finished zooming
+  d3.select(target_canv).call(zoom
+    .on("end", () => {
+      console.log('zoom end')
+      // If it has been a half a second since the user last zoomed, redraw
+      // I think I'm doing this in the wrong part of the code. At the end, we want to track when the user last let go.
+      let current_time = Date.now();
+      if (current_time - last_zoom_timestamp > 500) {
+        console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
+        for (let i = 0; i < lay; i++) {
+            if (layers[i].active === true) {
+              layers[i].context.clearRect(0, 0, canvas_width, height);
+              load_layer_data(layers[i]);
+              layer_redrawn = true;
+           }
+        }
+      }
+    }));
 
   let k, x, y;
   let layer_redrawn = false;
   function zoomed(transform) {
-    ctx.save();
-    ctx.clearRect(0, 0, canvas_width, height)
     if (transform.k != k) {  // if the zoom level has changed,
-      // debounce to allow user to complete their desired zoom/pan level
-      setTimeout(() => { // TODO: Convert setTimeout into an actual debounce function
-        layer_redrawn = false;
-        // clear all active layers and redraw
-        for (let i = 0; i < lay; i++) {
-          if (layers[i].active === true) {
-            layers[i].context.clearRect(0, 0, canvas_width, height);
-            load_layer_data(layers[i]);
-            layer_redrawn = true;
-         }
-        }        
-        if (layer_redrawn) {
-          draw_base_map();
-        }
-      }, 500);
+        // layer_redrawn = false;
+        // for (let i = 0; i < lay; i++) {
+        //   if (layers[i].active === true) {
+        //     layers[i].context.clearRect(0, 0, canvas_width, height);
+        //     load_layer_data(layers[i]);
+        //     layer_redrawn = true;
+        //  }
+        // }        
+        // if (layer_redrawn) {
+        //   draw_base_map();
+        // }
     }
     else {
-      x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
-      y = transform.y // - screen_y;
+      x = transform.x 
+      y = transform.y 
     }
     k = transform.k
-
-    // t1();
-    t2();
+    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+    for (let i = 0; i < layer_canvases.length; i++) {
+      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
+    }
 
     ctx.fill();
   }
+  // function zoomed(transform) {
+  //   if (transform.k != k) {  // if the zoom level has changed,
+  //       layer_redrawn = false;
+  //       for (let i = 0; i < lay; i++) {
+  //         if (layers[i].active === true) {
+  //           layers[i].context.clearRect(0, 0, canvas_width, height);
+  //           load_layer_data(layers[i]);
+  //           layer_redrawn = true;
+  //        }
+  //       }        
+  //       if (layer_redrawn) {
+  //         draw_base_map();
+  //       }
+  //   }
+  //   else {
+  //     x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
+  //     y = transform.y // - screen_y;
+  //   }
+  //   k = transform.k
+
+  //   // t1();
+  //   t2();
+
+  //   ctx.fill();
+  // }
   zoomed(d3.zoomIdentity);
   
 })();
