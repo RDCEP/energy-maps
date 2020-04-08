@@ -126,12 +126,19 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 
 // create projection and path objects with which to draw geo objects
 
+let projection_scale = width * 1.1;
+let projection_width = width / 2.4;
+let projection_height = height / 2;
+
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
- */
-const projection = d3.geoAlbersUsa()
-  .scale(width*1.1)
-  .translate([width / 2.4, height / 2]);
+//  */
+// let projection = d3.geoAlbersUsa()
+//   .scale(width*1.1)
+//   .translate([width / 2.4, height / 2]);
+let projection = d3.geoAlbersUsa()
+  .scale(projection_scale)
+  .translate([projection_width, projection_height]);
 
 /**
  * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
