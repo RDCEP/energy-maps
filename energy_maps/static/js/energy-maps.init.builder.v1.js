@@ -451,15 +451,19 @@ console.log(layers);
       let current_time = Date.now();
       if (current_time - last_zoom_timestamp > 500) {
         console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
-        for (let i = 0; i < lay; i++) {
-            if (layers[i].active === true) {
-              layers[i].context.clearRect(0, 0, canvas_width, height);
-              load_layer_data(layers[i]);
-              layer_redrawn = true;
-           }
-        }
+        draw_active_layers();
       }
     }));
+
+  let draw_active_layers = function draw_active_layers() {
+    for (let i = 0; i < lay; i++) {
+      if (layers[i].active === true) {
+        layers[i].context.clearRect(0, 0, canvas_width, height);
+        load_layer_data(layers[i]);
+        layer_redrawn = true;
+     }
+    }
+  }
 
   let k, x, y;
   let layer_redrawn = false;
