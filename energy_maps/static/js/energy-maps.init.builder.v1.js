@@ -422,10 +422,10 @@ console.log(layers);
   for (let i = 0; i < layers.length; i++) {
     layer_canvases[i] = document.getElementsByClassName(`map layer canvas ${layers[i].name}`)[0]
   }
-  console.log(layer_canvases)
+  console.log(layer_canvases);
 
   // Clear current canvas at the beginning of the zoom event
-  let last_zoom_timestamp
+  let last_zoom_timestamp;
   d3.select(target_canv).call(zoom
     .on("start", () => {
       last_zoom_timestamp = Date.now();
@@ -446,15 +446,19 @@ console.log(layers);
   d3.select(target_canv).call(zoom
     .on("end", () => {
       console.log('zoom end')
-      // If it has been a half a second since the user last zoomed, redraw
-      // I think I'm doing this in the wrong part of the code. At the end, we want to track when the user last let go.
       let current_time = Date.now();
       if (current_time - last_zoom_timestamp > 500) {
         console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
         draw_active_layers();
       }
-      // projection = projection.scale(2)
-      // projection = projection.scale(projection.scale * k)
+      else if (current_time - last_zoom_timestamp <= 500) {
+        setTimeout(function() {
+          console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
+          draw_active_layers();
+        }, 500)
+        return;
+      }
+      // TODO: Update projection scale values here
       console.log(k, x, y)
     }));
 
