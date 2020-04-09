@@ -451,7 +451,7 @@ console.log(layers);
         console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
         draw_active_layers();
       }
-      else if (current_time - last_zoom_timestamp <= 500) {
+      else {
         setTimeout(function() {
           console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
           draw_active_layers();
