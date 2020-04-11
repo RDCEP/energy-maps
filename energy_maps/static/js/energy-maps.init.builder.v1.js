@@ -33,6 +33,15 @@
    */
   const mapclass = '.main.map.builder';
 
+  function fix_dpi(canvas) {
+    // get height and width of a canvas as an integer (slice to remove 'px')
+    let style_height = +getComputedStyle(canvas).getPropertyValue('height').slice(0, -2);
+    let style_width = +getComputedStyle(canvas).getPropertyValue('width').slice(0, -2); 
+    d3.select(canvas)
+      .attr('height', style_height * dpi)
+      .attr('width', style_width * dpi)
+  }
+
   // Set base map canvas
   /**
    *  @description A canvas element for the base map, attached to
@@ -466,6 +475,7 @@ console.log(layers);
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
         layers[i].context.clearRect(0, 0, canvas_width, height);
+        fix_dpi(layers[i]);
         load_layer_data(layers[i]);
         layer_redrawn = true;
      }

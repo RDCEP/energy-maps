@@ -21,6 +21,12 @@ SCALE = 1;
 
 /**
  * @type {number} 
+ * @description Device pixel ratio, used to scale our canvas with clarity relative to the user's device.
+ */
+let dpi = window.devicePixelRatio;
+
+/**
+ * @type {number} 
  * @description Map width, set to some multiple of `SCALE`
  */
 let width = 1200 * SCALE; // Note: you can't adjust this value without significantly effecting legends.
