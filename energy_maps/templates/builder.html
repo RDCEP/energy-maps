@@ -110,6 +110,12 @@
   let SCALE = {{ scale }};
 </script>
 
+{% assets 'js_underscore' %}
+
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
 {% assets 'js_d3' %}
 
 <script src="{{ ASSET_URL }}"></script>

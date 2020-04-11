@@ -18,6 +18,11 @@ assets.register('css_main',
                 Bundle('sass/main.v0.css',
                        filters='cssmin',
                        output='gen/main.css'))
+assets.register('js_underscore',
+                Bundle('js/vendors/underscore-js/underscore-min.js',
+                       'js/vendors/underscore-js/underscore.js',
+                       filters='jsmin',
+                       output='gen/js_underscore.js'))
 assets.register('js_d3',
                 Bundle('js/vendors/d3/d3.min.js',
                        'js/vendors/d3-queue/d3-queue.min.js',
