@@ -479,13 +479,8 @@ console.log(layers);
   let k, x, y;
   let layer_redrawn = false;
   function zoomed(transform) {
-    if (transform.k != k) {  // if the zoom level has changed,
-        //
-    }
-    else {
-      x = transform.x 
-      y = transform.y 
-    }
+    x = transform.x 
+    y = transform.y 
     k = transform.k
     mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
     for (let i = 0; i < layer_canvases.length; i++) {
