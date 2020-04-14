@@ -480,17 +480,7 @@ console.log(layers);
   let layer_redrawn = false;
   function zoomed(transform) {
     if (transform.k != k) {  // if the zoom level has changed,
-        // layer_redrawn = false;
-        // for (let i = 0; i < lay; i++) {
-        //   if (layers[i].active === true) {
-        //     layers[i].context.clearRect(0, 0, width, height);
-        //     load_layer_data(layers[i]);
-        //     layer_redrawn = true;
-        //  }
-        // }        
-        // if (layer_redrawn) {
-        //   draw_base_map();
-        // }
+        //
     }
     else {
       x = transform.x 
