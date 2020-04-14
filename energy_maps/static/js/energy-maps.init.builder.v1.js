@@ -31,7 +31,8 @@
    * @description HTML class on which the main map is drawn
    * @memberof Init
    */
-  const mapclass = '.main.map.builder';
+  const map_container = '.main.map.builder';
+  const base_map_class = '.map.layer.base-map';
 
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
@@ -49,7 +50,7 @@
    * @memberof Init
    */
   const base_canvas = d3
-    .select(mapclass)
+    .select(base_map_class)
     .append('canvas')
     .attr('id', 'mapcanvas')
     .attr('width', width)
@@ -360,7 +361,8 @@ console.log(layers);
    */
   let addLayerCanvas = function addLayerCanvas(lyr) {
     lyr.canvas = d3
-    .select('.map.builder')
+    // .select('.map.builder')
+    .select(base_map_class)
     .append('div')
     .attr('class', `map layer ${lyr.name}`)
     .append('canvas')
@@ -420,7 +422,7 @@ console.log(layers);
   let map_layer_legend_class = document.getElementsByClassName("map layer legend") // this seems to be working because it is the top-most canvas and therefore the only one actually reachable by the mouse!
 
   // getElementsByClassName() returns an array of HTML elements, so you have to index through that array and its children to get the element you want.
-  let target_canv = map_layer_legend_class[0].children[0];
+  let target_canv = map_layer_legend_class[0].children[0]; // this sets div id="legendcanvas" to our zoomable surface.
   // Use the target canvas (surface level) to drag the map canvas around
   let mapcanvas = document.getElementById('mapcanvas');
 
