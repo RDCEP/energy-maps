@@ -52,7 +52,7 @@
     .select(mapclass)
     .append('canvas')
     .attr('id', 'mapcanvas')
-    .attr('width', canvas_width)
+    .attr('width', width)
     .attr('height', height);
   const ctx = base_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
@@ -67,7 +67,7 @@
     .select('.map.legend')
     .append('canvas')
     .attr('id', 'legendcanvas')
-    .attr('width', canvas_width)
+    .attr('width', width)
     .attr('height', height);
 
   /**
@@ -272,7 +272,7 @@ console.log(layers);
    */
   let removeLayer = function removeLayer(lyr) {
     hide_spinner();
-    lyr.context.clearRect(0, 0, canvas_width, height);
+    lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
     decrement_asset_total(lyr.value);  
   }
@@ -365,7 +365,7 @@ console.log(layers);
     .attr('class', `map layer ${lyr.name}`)
     .append('canvas')
     .attr('class', `map layer canvas ${lyr.name}`)
-    .attr('width', canvas_width)
+    .attr('width', width)
     .attr('height', height);
   }
 
@@ -401,7 +401,7 @@ console.log(layers);
   
           // TODO: Arguably the legend context should be cleared in the
           //  update_legend() function.
-          legend_ctx.clearRect(0, 0, canvas_width, height);
+          legend_ctx.clearRect(0, 0, width, height);
           update_legend(legend_ctx, layers);
   
         });
@@ -439,7 +439,7 @@ console.log(layers);
     .on("start", () => {
       last_zoom_timestamp = Date.now();
       ctx.save();
-      ctx.clearRect(0, 0, canvas_width, height);
+      ctx.clearRect(0, 0, width, height);
       console.log('cleared')
     }));
 
@@ -469,7 +469,7 @@ console.log(layers);
   let draw_active_layers = function draw_active_layers() {
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
-        layers[i].context.clearRect(0, 0, canvas_width, height);
+        layers[i].context.clearRect(0, 0, width, height);
         load_layer_data(layers[i]);
         layer_redrawn = true;
      }
@@ -483,7 +483,7 @@ console.log(layers);
         // layer_redrawn = false;
         // for (let i = 0; i < lay; i++) {
         //   if (layers[i].active === true) {
-        //     layers[i].context.clearRect(0, 0, canvas_width, height);
+        //     layers[i].context.clearRect(0, 0, width, height);
         //     load_layer_data(layers[i]);
         //     layer_redrawn = true;
         //  }
@@ -509,7 +509,7 @@ console.log(layers);
   //       layer_redrawn = false;
   //       for (let i = 0; i < lay; i++) {
   //         if (layers[i].active === true) {
-  //           layers[i].context.clearRect(0, 0, canvas_width, height);
+  //           layers[i].context.clearRect(0, 0, width, height);
   //           load_layer_data(layers[i]);
   //           layer_redrawn = true;
   //        }
