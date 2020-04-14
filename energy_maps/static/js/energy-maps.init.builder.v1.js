@@ -454,19 +454,14 @@ console.log(layers);
   // Debounce and redraw when the user is finished zooming
   d3.select(target_canv).call(zoom
     .on("end", () => {
-      console.log('zoom end')
-      let current_time = Date.now();
-      if (current_time - last_zoom_timestamp < 500) {
-        console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}. Difference between the two is: ${current_time - last_zoom_timestamp}`);
-        draw_active_layers();
-      }
-      else {
         _.debounce(function() {
           console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}.Difference between the two is: ${current_time - last_zoom_timestamp}`);
           draw_active_layers();
+          if (layer_redrawn) {
+            draw_base_map();
+          }
         } , 500, true);
-        // return;
-      }
+       
       // TODO: Update projection scale values here
       console.log(k, x, y)
     }));
@@ -475,7 +470,6 @@ console.log(layers);
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
         layers[i].context.clearRect(0, 0, canvas_width, height);
-        fix_dpi(layers[i]);
         load_layer_data(layers[i]);
         layer_redrawn = true;
      }
