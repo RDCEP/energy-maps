@@ -50,13 +50,13 @@
    * @memberof Init
    */
   const base_canvas = d3
-    .select(base_map_class)
+    .select(map_container)
     .append('canvas')
     .attr('id', 'mapcanvas')
-    .attr('width', window.innerWidth)
-    .attr('height', window.innerHeight);
-    // .attr('width', width)
-    // .attr('height', height);
+    // .attr('width', window.innerWidth)
+    // .attr('height', window.innerHeight);
+    .attr('width', width)
+    .attr('height', height);
   const ctx = base_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
 
@@ -364,7 +364,7 @@ console.log(layers);
   let addLayerCanvas = function addLayerCanvas(lyr) {
     lyr.canvas = d3
     // .select('.map.builder')
-    .select(base_map_class)
+    .select(map_container)
     .append('div')
     .attr('class', `map layer ${lyr.name}`)
     .append('canvas')
