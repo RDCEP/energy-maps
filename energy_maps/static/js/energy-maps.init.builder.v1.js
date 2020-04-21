@@ -424,8 +424,10 @@ console.log(layers);
   let map_layer_legend_class = document.getElementsByClassName("map layer legend") // this seems to be working because it is the top-most canvas and therefore the only one actually reachable by the mouse!
 
   // getElementsByClassName() returns an array of HTML elements, so you have to index through that array and its children to get the element you want.
-  let target_canv = map_layer_legend_class[0].children[0]; // this sets div id="legendcanvas" to our zoomable surface.
+  // let target_canv = map_layer_legend_class[0].children[0]; // this sets div id="legendcanvas" to our zoomable surface.
   // Use the target canvas (surface level) to drag the map canvas around
+  let target_canv = document.getElementsByClassName("map layer zoom-target")[0]
+  console.log(target_canv);
   let mapcanvas = document.getElementById('mapcanvas');
 
   let zoom = d3.zoom(); 

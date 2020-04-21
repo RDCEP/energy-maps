@@ -82,12 +82,17 @@ label {
 }
 
 .builder {
-  width: 100vw;
-  height: 100vh;
+  width: 50vw;
+  height: 50vh;
 }
 
 .base-map {
   z-index: 0;
+}
+
+.zoom-target {
+  width: 100vw;
+  height: 100vh;
 }
 
 .layer {
