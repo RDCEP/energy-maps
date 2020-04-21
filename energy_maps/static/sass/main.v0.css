@@ -24,7 +24,6 @@ a {
 .wrap {
   width: 100vw;
   height: 100vh;
-  margin: 0 auto;
 }
 
 .wrap img {
@@ -78,6 +77,17 @@ label {
 
 .wrapper {
   position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.builder {
+  width: 100vw;
+  height: 100vh;
+}
+
+.base-map {
+  z-index: 0;
 }
 
 .layer {
@@ -153,6 +163,7 @@ label {
   border: none;
   padding: 1% 0 0 70%;
   height: 25px;
+  padding-left: 0;
 }
 
 .title.container.nav a {
