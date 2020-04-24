@@ -14,6 +14,13 @@ def index():
         # index=True,
     )
 
+@main_views.route('/responsive')
+def responsive():
+    return render_template(
+        'responsive.html',
+        scale='false',
+    )
+
 
 @main_views.route('/builder')
 @main_views.route('/builder/<float:scale>')

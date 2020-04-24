@@ -18,6 +18,10 @@ assets.register('css_main',
                 Bundle('sass/main.v0.css',
                        filters='cssmin',
                        output='gen/main.css'))
+assets.register('css_responsive',
+                Bundle('css/responsive.v0.css',
+                       filters='cssmin',
+                       output='gen/responsive.css'))
 assets.register('js_underscore',
                 Bundle('js/vendors/underscore-js/underscore-min.js',
                        'js/vendors/underscore-js/underscore.js',
