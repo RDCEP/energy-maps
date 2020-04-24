@@ -1,49 +1,61 @@
-{% extends 'base.html' %}
-{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>RDCEP: US energy infrastructure</title>
+    {% assets 'css_responsive' %}
+      <!-- Main stylesheet -->
+      <link rel=stylesheet href={{ ASSET_URL }}>
+    {% endassets %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+  </head>
+  <body>
 
-{% endblock %}
-{% block main %}
+  </body>
+  <header>
+    Header
+  </header>
+  <main>
+    Main
+  </main>
+  <div class="options-cf">
+    options
+  </div>
+  <footer>
+    Footer
+  </footer>
 
-{% endblock %}
+  {% assets 'js_underscore' %}
 
-{% block footer %}
+  <script src="{{ ASSET_URL }}"></script>
+  
+  {% endassets %}
+  
+  {% assets 'js_d3' %}
+  
+  <script src="{{ ASSET_URL }}"></script>
+  
+  {% endassets %}
+  
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+    window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#000"
+      },
+      "button": {
+        "background": "#f1d600"
+      }
+    },
+    "theme": "classic",
+    "content": {
+      "message": "This website uses cookies to track visits to the page. This helps us understand the importance and impact of the research and tools that we have created."
+    }
+    });
+  </script>
+</html>
 
-{% endblock %}
-{% block bodyjs %}
-
-<script>
-  let SCALE = {{ scale }};
-</script>
-
-{% assets 'js_underscore' %}
-
-<script src="{{ ASSET_URL }}"></script>
-
-{% endassets %}
-
-{% assets 'js_d3' %}
-
-<script src="{{ ASSET_URL }}"></script>
-
-{% endassets %}
-
-<script src="https://unpkg.com/topojson-client@3"></script>
-
-{% assets 'js_builderfucker' %}
-
-<script defer src="{{ ASSET_URL }}"></script>
-
-{% endassets %}
-
-<script>
-  function download() {
-    let download = document.getElementById("download");
-    let image = document
-      .getElementById("mapcanvas")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    download.setAttribute("href", image);
-  }
-</script>
-
-{% endblock %}

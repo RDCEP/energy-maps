@@ -1,0 +1,50 @@
+body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 5vw 40vw 15vw 5vw;
+  grid-gap: 1em;
+}
+
+header,
+footer,
+.options-cf {
+  grid-column: 1 / span 5;
+}
+
+main {
+  grid-column: 1 / span 5;
+}
+
+@media (max-width: 700px) {
+  
+  main {
+    grid-column: 1 / span 5;
+  }
+  
+}
+
+/* Demo Specific Styles */
+body {
+  margin: 0 auto;
+  max-width: 56em;
+  padding: 1em 0;
+}
+
+header,
+main,
+footer,
+.options-cf {
+  background: #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header,
+footer {
+  height: 5vw;
+}
+
+.options-cf {
+    height: 15vw;
+}
