@@ -63,6 +63,21 @@ footer {
   }
 }
 
+.headline {
+  display: flex;
+}
+#title {
+  margin-right: auto;
+  background-color: palevioletred;
+}
+.about-contact {
+  background-color: palegreen;
+}
+.info {
+  border-top: 2px solid #b2b2b2;
+  border-bottom: 1px solid #b2b2b2;
+}
+
 /* html {
   box-sizing: border-box;
 }
