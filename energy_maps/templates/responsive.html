@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RDCEP: US energy infrastructure</title>
     {% assets 'css_responsive' %}
       <!-- Main stylesheet -->
@@ -11,20 +12,23 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
   </head>
   <body>
-
+    <header>
+      <div class="title container nav headline">
+        <span id="span-title">US Energy Infrastructure Visualization</span>
+        <span><a class=about-contact href="#">About / Contact / License</a></span>
+      </div>
+    </header>
+    <main>
+      Main
+    </main>
+    <div class="options-cf">
+      options
+    </div>
+    <footer>
+      Footer
+    </footer>
   </body>
-  <header>
-    Header
-  </header>
-  <main>
-    Main
-  </main>
-  <div class="options-cf">
-    options
-  </div>
-  <footer>
-    Footer
-  </footer>
+
 
   {% assets 'js_underscore' %}
 
@@ -36,6 +40,12 @@
   
   <script src="{{ ASSET_URL }}"></script>
   
+  {% endassets %}
+
+  {% assets 'js_builderfucker' %}
+
+  <script defer src="{{ ASSET_URL }}"></script>
+
   {% endassets %}
   
   <script src="https://unpkg.com/topojson-client@3"></script>
