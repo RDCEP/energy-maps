@@ -1,55 +1,77 @@
 {% extends 'base.html' %}
 {% block header %}
-<div class="title container nav headline">
-  <span id="span-title">US Energy Infrastructure Visualization</span>
-  <a class=about-contact href="#">About / Contact / License</a>
-</div>
+  <div class=content-wrap>
+    <div class="title container cf">
+      <section class=site-title>
+        <span id="span-title">US Energy Infrastructure Visualization</span>
+      </section>
+      <section class=site-links>
+        <span><a class=about-contact
+                 href="#">About / Contact / License</a></span>
+      </section>
+    </div>
 
-<div class="title container" style="width: 1200px; height: 50px;">
-  <section class="builder-link">
-    <strong> Total Asset Value <br> out of $9.8T </strong>
-  </section>
-  <a href="/" style="display: block; width: 15%;"><img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;"></a>
-  <section class="headline" id=asset-totals>
-    $0.00
-  </section>
-  <section class="headline headline2">
-    <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
-      <i>A Physical Inventory of the U.S. Energy System</i></a>
-      <br>
-    Chen, Weisbach, Matteson,
-    Brizius, Moyer, 2020
-  </section>
-  <section class="headline headline3">
-    University of Chicago. Center for Robust <br>
-    Decision-making on Climate and Energy Policy.
-  </section>
-</div>
-<!--/ Map Builder UI -->
-{% endblock %}
-{% block main %}
-<div class="map wrapper">
-  <div class="main map builder">
-    <div class="map layer base-map"></div>
-    <div id="spinner">
-      <img src="../static/images/Rolling-1s-200px.gif" alt="loading" loading="lazy"/>
+    <div class="title container cf">
+      <section class=logo>
+        <a href="/" style="display: block;">
+          <img src="../static/images/logo.png" alt="Logo for RDCEP">
+        </a>
+      </section>
+      <section class=graph-title>
+        <span> Total Asset Value <br> out of $9.8T </span>
+      </section>
+      <section class=asset-total>
+        <span id=asset-totals>$0.00</span>
+      </section>
+      <section class=citation>
+        <span>
+        <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
+          <i>A Physical Inventory of the U.S. Energy System</i></a>
+          <br>
+        Chen, Weisbach, Matteson, Brizius, Moyer, 2020
+        </span>
+      </section>
+      <section class=affiliation>
+        <span>University of Chicago. Center for Robust <br>
+          Decision-making on Climate and Energy Policy.</span>
+      </section>
+    </div>
+    <div class="title container">
+      <section id=builder-headline><span>
+         Create a custom map of 2012 U.S. energy infrastructure:
+      </span></section>
     </div>
   </div>
-  <div class="map layer legend"></div>
-  <div class="map layer zoom-target"></div>
-  <!-- <div class="map composite"></div> -->
-
-  <p id="builder-headline">Create a custom map of 2012 U.S.
-    energy infrastructure:</p>
-
-  <div class="options cf">
-    <!-- Checkboxes render here -->
+{% endblock %}
+<!--/ Map Builder UI -->
+{% block main %}
+  <div class="map wrapper">
+    <div class="main map builder">
+      <!-- Layer divs render here -->
+      <div class="map layer base-map"></div>
+      <div id="spinner">
+        <img src="../static/images/Rolling-1s-200px.gif" alt="loading" loading="lazy"/>
+      </div>
+    </div>
+    <div class="map layer legend"></div>
+    <div class="map layer zoom-target"></div>
+    <!-- <div class="map composite"></div> -->
   </div>
-  <p id="browser-notice">Note: this application is not compatible with
-    all browsers at present; we suggest using Chrome.</p>
-</div>
-  <!-- Layer divs render here -->
-<div class=modal-screen></div>
+
+  <div class=content-wrap>
+
+    <div class="options-outer cf">
+    <div class="options cf">
+      <!-- Checkboxes render here -->
+    </div>
+    <div class=bkgd></div>
+    </div>
+
+    <p id="browser-notice">Note: this application is not compatible with
+      all browsers at present; we suggest using Chrome.</p>
+
+
+    <div class=modal-screen></div>
     <div class="about-window modal-window">
       <a href=# class=modal-close>[close]</a>
 
@@ -101,11 +123,9 @@
         licensed for public use under the Apache License, Version 2.0.</p>
     </div>
 
+  </div>
 {% endblock %}
 
-{% block footer %}
-
-{% endblock %}
 {% block bodyjs %}
 
 <script>

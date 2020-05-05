@@ -1,6 +1,6 @@
 *
   font-size: 1em
-  font-family: Arial, sans-serif
+  font-family: Roboto, Arial, sans-serif
 p,h1,h2,h3,h4,h5,h6
   font-size: 1em
 h4
@@ -11,168 +11,20 @@ p
   margin: 0 0 .5em
 a
   color: inherit
-.wrap
-  // width: 1200px
-  width: 100vw
-  height: 100vh
-  // margin: 0 auto
-  img
-    //width: 100%
-    display: block
-label
-  padding-right: 1%
-  font-family: 'Roboto', sans-serif
-.options
-  width: 100%
-  .column
-    width: 23%
-    float: left
-    position: relative
-    &+.column
-      margin: 0 0 0 .5em
-    h4
-      padding: .5em 0
-      margin: 0
-      border-top: 2px solid black
-      border-bottom: 1px solid black
-  label
-    display: block
-    border-bottom: 1px solid black
-    padding: .33em 0
-    &.inactive
-      color: #767676
-    .asset-value
-      font-size: .8em
-    input
-      position: absolute
-      right: 2px
-.wrapper
+body, html
+  height: 100%
+header
   position: relative
-  width: 100vw
-  height: 100vh
-.builder
-  width: 50vw
-  height: 50vh
-.base-map
-  z-index: 0
-.zoom-target
-  width: 100vw
-  height: 100vh
-.layer
-  fill: none
-  // width: 100vw
-  // height: 100vh
-  &.map
-    position: absolute
-    top: 0
-.canvas
-  &.gas-well
+  z-index: 2
+main
+  height: 85%
+  min-height: 480px
+  .content-wrap
     position: relative
-    top: 0
-  &.fossil-fuel-plant
-    position: absolute
-    top: 0
-.master-legend
-  width: auto!important
-#asset-totals
-  font-family: 'Roboto', sans-serif
-  font-size: 1.5rem
-  font-weight: normal;
-  padding: .5em 0
-  p
-    position: relative
-    left: 25%
-#browser-notice
-  font-style: italic
-  margin-top: 20px
-#builder-headline
-  font-family: 'Roboto', sans-serif
-  font-size: 1.3rem
-  margin: 1em 0 .5em
-#spinner
-  position: absolute
-  display: none
-  width: 200px
-  height: 200px
-  //top: 45%
-  //left: 45%
-  //width: 4em
-  //height: 4em
-  margin: 200px 0 0 375px
-  z-index: 1000
-.title
-  &.container
-    border-top: 2px solid #b2b2b2
-    border-bottom: 1px solid #b2b2b2
-    position: relative
-    width: 1200px
-    height: 50px
-    img
-      height: 40px
-      position: relative
-      top: 5px
-    &.nav
-      border: none
-      padding: 1% 0 0 70%
-      height: 25px
-      padding-left: 0
-      a
-        padding-right: 2em
-        font-weight: bold
-        font-family: 'Roboto', sans-serif
-        text-decoration: none
-        font-size: 1rem
-        line-height: 1.2em
-        top: 0
-        color: black
-      span
-        position: absolute
-        left: 0
-        color: #800000
-        font-size: 25px
-        bottom: 2px
-  .builder-link
-    position: absolute
-    left: 130px
-    top: 8px
-  .headline
-    position: absolute
-    font-weight: bold
-    font-family: 'Roboto', sans-serif
-    font-size: 1.5rem
-    line-height: 1.2em
-    top: 0
-    left: 25%
-    padding: .5em 0
-  .headline2
-    color: #b2b2b2
-    left: 35%
-    padding: 8px 0
-    font-size: .9rem
-  .headline3
-    color: #b2b2b2
-    left: 70%
-    padding: 8px 0
-    font-size: .9rem
-.boundary
-  &.ocean
-    fill: white
-  &.land
-    fill: #eeeeee
-.feature
-  &.pipe
-    stroke-width: .5
-    fill: none
-    &.oil
-      stroke: #222222
-    &.gas
-      stroke: cornflowerblue
-  &.dot
-    stroke: none
-    fill: #000000
-    &.plant
-      fill: #cccccc
+    height: 100%
 footer
+  position: relative
+  z-index: 2
   margin: 3em 0 6em
   color: #c5c5c5
   font-size: .8em
@@ -195,6 +47,173 @@ footer
     &.nsf
       width: 300px
       margin-top: 25px
+
+.wrap
+  width: 1200px
+  margin: 0 auto
+  img
+    //width: 100%
+    display: block
+.content-wrap
+  width: 1200px
+  margin: 0 auto
+
+.title
+  &.container
+    position: relative
+    width: 100%
+    height: 50px
+    padding: 5px 0
+    border-bottom: 2px solid #b2b2b2
+    &+.container
+      border-bottom: 1px solid #b2b2b2
+      &+.container
+        height: 25px
+    section
+      float: left
+      display: block
+      position: relative
+      height: 100%
+      &:first-child
+        font-size: 2em
+      span
+        position: absolute
+        bottom: 0
+    .site-title
+      width: 65%
+    .site-links
+      width: 20%
+    .logo
+      width: 10%
+      img
+        height: 40px
+        position: relative
+        top: 5px
+    .graph-title
+      width: 15%
+    .asset-total
+      width: 10%
+    .citation
+      width: 30%
+    .affiliation
+      width: 30%
+    #asset-totals
+      font-size: 1.5rem
+      font-weight: bold
+      line-height: 1
+      margin: 0
+      padding: 0
+    #builder-headline
+      font-size: 1em
+      width: 100%
+
+
+.options-outer
+  position: absolute
+  bottom: 0
+  width: 100%
+  z-index: 5
+  .bkgd
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background-color: white
+    opacity: .6
+    z-index: 1
+  .options
+    margin: 1em 1%
+    .column
+      width: 24.25%
+      float: left
+      position: relative
+      z-index: 2
+      &+.column
+        margin: 0 0 0 1%
+      h4
+        padding: .5em 0
+        margin: 0
+        border-top: 2px solid black
+        border-bottom: 1px solid black
+  label
+    display: block
+    border-bottom: 1px solid black
+    padding: .33em 0
+    &.inactive
+      color: #767676
+    .asset-value
+      font-size: .8em
+    input
+      position: absolute
+      right: 2px
+.map
+  &.wrapper
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 1
+  &.builder
+    position: absolute
+    width: 100%
+    height: 100%
+  &.layer
+    position: absolute
+    height: 100%
+    width: 100%
+    //pointer-events: none
+    &.base-map
+      //pointer-events: all
+.base-map
+  z-index: 0
+.zoom-target
+  width: 100vw
+  height: 100vh
+.layer
+  fill: none
+.canvas
+  &.gas-well
+    position: relative
+    top: 0
+  &.fossil-fuel-plant
+    position: absolute
+    top: 0
+.master-legend
+  width: auto!important
+#browser-notice
+  font-style: italic
+  margin-top: 20px
+#spinner
+  position: absolute
+  display: none
+  width: 200px
+  height: 200px
+  //top: 45%
+  //left: 45%
+  //width: 4em
+  //height: 4em
+  margin: 200px 0 0 375px
+  z-index: 1000
+.boundary
+  &.ocean
+    fill: white
+  &.land
+    fill: #eeeeee
+.feature
+  &.pipe
+    stroke-width: .5
+    fill: none
+    &.oil
+      stroke: #222222
+    &.gas
+      stroke: cornflowerblue
+  &.dot
+    stroke: none
+    fill: #000000
+    &.plant
+      fill: #cccccc
 .modal-screen
   display: none
   position: fixed
