@@ -489,7 +489,6 @@ console.log(layers);
     for (let i = 0; i < layer_canvases.length; i++) {
       layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
     }
-
     ctx.fill();
   }
   // function zoomed(transform) {
