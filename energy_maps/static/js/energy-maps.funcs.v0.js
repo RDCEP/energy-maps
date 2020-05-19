@@ -19,10 +19,10 @@ const draw_land = function draw_land(ctx, queued_data, border_only) {
 
   if (!border_only) {
     // Sphere
-    ctx.fillStyle = viz.map.ocean;
-    ctx.beginPath();
-    path({ type: "Sphere" });
-    ctx.fill();
+    // ctx.fillStyle = viz.map.ocean;
+    // ctx.beginPath();
+    // path({ type: "Sphere" });
+    // ctx.fill();
 
     // Land boundaries fill
     ctx.fillStyle = viz.map.fill;
