@@ -1,76 +1,259 @@
 * {
   font-size: 1em;
-  font-family: Arial, sans-serif;
+  font-family: Roboto, Arial, sans-serif;
 }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+p, h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
-label {
-  padding-right: 1%;
-  font-family: 'Roboto', sans-serif;
+h4 {
+  margin: 1em 0 0.5em;
 }
 
-.options {
-  width: 800px;
+p {
+  color: #222222;
+  line-height: 1.4;
+  margin: 0 0 0.5em;
 }
 
-.options > span {
-  background-color: #d4d4d4;
-  display: inline-block;
-  margin: .25em;
-  padding: .25em;
+a {
+  color: inherit;
 }
 
-.wrapper {
+body, html {
+  height: 100%;
+}
+
+header {
   position: relative;
+  z-index: 2;
 }
 
-.map.layer {
+main {
+  height: 85%;
+  min-height: 480px;
+}
+main .content-wrap {
+  position: relative;
+  height: 100%;
+}
+
+footer {
+  position: relative;
+  z-index: 2;
+  margin: 3em 0 6em;
+  color: #c5c5c5;
+  font-size: 0.8em;
+  border-top: 1px solid #ababab;
+  padding: 30px 0 60px;
+}
+footer img {
+  display: inline-block;
+  margin-right: 30px;
+}
+footer img.nsf {
+  clear: left;
+  height: 80px;
+  float: left;
+}
+footer img.rdcep {
+  height: 80px;
+  float: left;
+}
+footer p {
+  float: left;
+  color: #ababab;
+  margin-right: 30px;
+}
+footer p.nsf {
+  width: 300px;
+  margin-top: 25px;
+}
+
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+.wrap img {
+  display: block;
+}
+
+.content-wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.title.container {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  padding: 5px 0;
+  border-bottom: 2px solid #b2b2b2;
+}
+.title.container + .container {
+  border-bottom: 1px solid #b2b2b2;
+}
+.title.container + .container + .container {
+  height: 25px;
+}
+.title.container section {
+  float: left;
+  display: block;
+  position: relative;
+  height: 100%;
+}
+.title.container section:first-child {
+  font-size: 2em;
+}
+.title.container section span {
+  position: absolute;
+  bottom: 0;
+}
+.title.container .site-title {
+  width: 65%;
+}
+.title.container .site-links {
+  width: 20%;
+}
+.title.container .logo {
+  width: 10%;
+}
+.title.container .logo img {
+  height: 40px;
+  position: relative;
+  top: 5px;
+}
+.title.container .graph-title {
+  width: 15%;
+}
+.title.container .asset-total {
+  width: 10%;
+}
+.title.container .citation {
+  width: 30%;
+}
+.title.container .affiliation {
+  width: 30%;
+}
+.title.container #asset-totals {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+.title.container #builder-headline {
+  font-size: 1em;
+  width: 100%;
+}
+
+.options-outer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+}
+.options-outer .bkgd {
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0.6;
+  z-index: 1;
+}
+.options-outer .options {
+  margin: 1em 1%;
+}
+.options-outer .options .column {
+  width: 24.25%;
+  float: left;
+  position: relative;
+  z-index: 2;
+}
+.options-outer .options .column + .column {
+  margin: 0 0 0 1%;
+}
+.options-outer .options .column h4 {
+  padding: 0.5em 0;
+  margin: 0;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+.options-outer label {
+  display: block;
+  border-bottom: 1px solid black;
+  padding: 0.33em 0;
+}
+.options-outer label.inactive {
+  color: #767676;
+}
+.options-outer label .asset-value {
+  font-size: 0.8em;
+}
+.options-outer label input {
+  position: absolute;
+  right: 2px;
+}
+
+.map.wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+.map.builder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.map.layer, .map.legend {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.base-map {
+  z-index: 0;
+}
+
+.zoom-target {
+  width: 100vw;
+  height: 100vh;
+}
+
+.layer {
+  fill: none;
 }
 
 .canvas.gas-well {
   position: relative;
   top: 0;
 }
-
 .canvas.fossil-fuel-plant {
   position: absolute;
   top: 0;
 }
 
-/* .master-legend { */
-  /* max-width: 50%;
-  max-height: auto; */
-/* } */
-
-/* When you comment the .wrap stuff out, it helps center the map, but it fucks everything up 
-on the index page */
-.wrap {
-  width: 80%;
-  margin: 0 auto;
-}
-.wrap img {
-  width: 100%;
-  display: block;
-}
-
-/* Hack for an updated legend */
 .master-legend {
-  width: auto!important;
+  width: auto !important;
 }
 
-.layer {
-  fill: none;
+#browser-notice {
+  font-style: italic;
+  margin-top: 20px;
+}
+
+#spinner {
+  position: absolute;
+  display: none;
+  width: 200px;
+  height: 200px;
+  margin: 200px 0 0 375px;
+  z-index: 1000;
 }
 
 .boundary.ocean {
@@ -98,102 +281,43 @@ on the index page */
   fill: #cccccc;
 }
 
-#asset-totals {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  width: 1200px; /* to make it match the width of the header. So that the
-  left positioning of the <p> within matches the alignment of the header.
-  Width should eventually be more responsive.
-  */
+.modal-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.8;
 }
 
-#asset-totals p {
-  position: relative;
-  left: 25%;
-}
-
-#browser-notice {
-  font-style: italic;
-}
-
-#builder-headline {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.3rem;
-}
-
-#spinner {
+.modal-window {
+  display: none;
+  background-color: white;
+  border: #767676;
+  border-radius: 3px;
   position: absolute;
-  top: 45%;
-  left: 45%;
-  width: 4em;
-  height: 4em;
-  z-index: 1000;
+  top: 120px;
+  margin: 0 200px;
+  padding: 40px 60px;
+  width: 680px;
+}
+.modal-window .modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #767676;
+}
+
+.cf:before, .cf:after {
+  content: " ";
+  display: table;
+}
+.cf:after {
+  clear: both;
 }
 
 /*# sourceMappingURL=main.v0.css.map */
-
-/* Stuff from sankey site */
-
-.title.container {
-  border-top: 2px solid #b2b2b2;
-  border-bottom: 1px solid #b2b2b2;
-  position: relative;
-}
-.title.container img {
-  height: 40px;
-  position: relative;
-  top: 5px;
-}
-
-.title.container.nav {
-  border-top: 0px;
-  border-bottom: 0px;
-  left: 55.5%;
-}
-
-#span-title {
-  
-}
-
-.title.container.nav a {
-  padding-right: 2em;
-  font-weight: bold;
-  font-family: 'Roboto', sans-serif;
-  text-decoration: none;
-  font-size: 1rem;
-  line-height: 1.2em;
-  top: 0;
-  color: black;
-}
-
-.title .builder-link {
-  position: absolute;
-  left: 10%;
-  padding: 8px 8px 0;
-  text-align: center;
-}
-
-.title .headline {
-  position: absolute;
-  font-weight: bold;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.2em;
-  top: 0;
-  left: 25%;
-  padding: .5em 0;
-}
-
-.title .headline2 {
-  color: #b2b2b2;
-  left: 35%;
-  padding: 8px 0;
-  font-size: .9rem;
-}
-
-.title .headline3 {
-  color: #b2b2b2;
-  left: 70%;
-  padding: 8px 0;
-  font-size: .9rem;
-}
