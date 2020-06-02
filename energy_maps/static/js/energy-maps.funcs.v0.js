@@ -133,7 +133,7 @@ const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
 }
 
 d3.select('.about-contact').on('click', () => {
-  d3.select('.modalmodal-screen').style('display', 'block');
+  d3.select('.modal-screen').style('display', 'block');
   d3.select('.modal-window.about-window').style('display', 'block');
 });
 d3.select('.modal-close').on('click', function() {

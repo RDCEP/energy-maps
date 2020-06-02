@@ -290,6 +290,7 @@ footer p.nsf {
   left: 0;
   background-color: black;
   opacity: 0.8;
+  z-index: 990;
 }
 
 .modal-window {
@@ -302,6 +303,7 @@ footer p.nsf {
   margin: 0 200px;
   padding: 40px 60px;
   width: 680px;
+  z-index: 999;
 }
 .modal-window .modal-close {
   position: absolute;
