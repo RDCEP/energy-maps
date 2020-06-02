@@ -446,7 +446,7 @@ console.log(layers);
     .on("start", () => {
       last_zoom_timestamp = Date.now();
       ctx.save();
-      ctx.clearRect(0, 0, width, height);
+      // ctx.clearRect(0, 0, width, height);
       console.log('cleared')
     }));
 
