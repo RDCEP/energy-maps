@@ -1,3 +1,10 @@
+/**
+ * @file Provides global draw functions and any helpers for gas & oil wells, pipelines, refineries, processing, and storage.
+ * @author Benjamin Kleeman
+ * @author Nathan Matteson
+ * @module Wells
+ */
+
 /** 
  * Instatiates a new WindSpeed object that contains properties used to draw gas and oil wells to the map and legend.
  * @class
@@ -51,7 +58,19 @@ function WindSpeed(name, text, value, column, draw, color, legend_color) {
       return y;
     };
   }
-  Well.prototype = new InfrastructureSet;
+  WindSpeed.prototype = new InfrastructureSet;
+
+/**
+ * Draw gas wells to the infrastructure map.
+ * @param {Array} queued_data - readfile: '/static/json/wind-speed-georef-linear.geojson'
+ */
+const draw_wind_speed = function draw_wind_speed(queued_data) {
+    console.log('draw_wind_speed');
+  
+    get_xy(queued_data);
+    draw_well(xy, gas_well.color)
+  
+  };
 
 let wind_speed = new WindSpeed('wind-speed', 'Wind speed', 1_111_111_111_111, 'wind-speed', [ {
     f: draw_wind_speed,
