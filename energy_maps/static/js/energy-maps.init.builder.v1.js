@@ -240,6 +240,8 @@ console.log(layers);
     },
     { name: 'electricity-transmission-and-distribution',
     },
+    { name: 'wind-speed',
+    },
   ];
 
   let cols = button_columns.length;
