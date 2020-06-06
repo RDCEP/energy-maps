@@ -23,6 +23,7 @@ class FlaskConfig(object):
         'text/css',
         'text/xml',
         'application/json',
+        'application/geojson',
         'application/vnd.ms-excel',
         'application/octet-stream',
         'application/javascript',
