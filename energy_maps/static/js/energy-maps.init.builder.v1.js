@@ -221,6 +221,9 @@ layers.push(geo_plants);
 // layers.push(biofuel); // TODO: push biofuel in when you have data with a valid scaling value
 layers.push(bio_plants);
 
+// Wind
+layers.push(wind_speed);
+
 console.log(layers);
 
   /** 
