@@ -641,3 +641,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+energy_maps/static/json/wind-speed-georef-linear.geojson
