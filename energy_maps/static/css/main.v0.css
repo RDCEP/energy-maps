@@ -28,6 +28,7 @@ body, html {
 header {
   position: relative;
   z-index: 2;
+  pointer-events: none;
 }
 
 main {
