@@ -154,3 +154,5 @@ let wind_speed = new WindSpeed('wind-speed', 'Wind speed', 1_111_111_111_111, 'w
     src: [ `/static/json/wind-speed-georef-linear.geojson`],
     w: d3.json
   } ], 'rgb(255,0,0)', 'rgb(255,0,0)')
+
+  //
