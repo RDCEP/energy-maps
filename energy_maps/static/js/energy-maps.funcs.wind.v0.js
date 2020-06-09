@@ -48,10 +48,8 @@ function WindSpeed(name, text, value, column, draw, color, legend_color) {
       ctx.stroke();      
       return y;
     };
-  }
-  WindSpeed.prototype = new InfrastructureSet;
-
-
+}
+WindSpeed.prototype = new InfrastructureSet;
 
 // version based on draw_gas_processor
 const draw_wind_point = function draw_wind_point(ctx, xy, color) { 
@@ -153,7 +151,6 @@ const draw_wind_speed = function draw_wind_speed(queued_data) {
 
 let wind_speed = new WindSpeed('wind-speed', 'Wind speed', 1_111_111_111_111, 'wind-speed', [ {
     f: draw_wind_speed,
-    // src: [ `/static/json/wind-speed-georef-linear.geojson`],
     src: [ `/static/json/wind-speed-georef-linear.geojson`],
     w: d3.json
   } ], 'rgb(255,0,0)', 'rgb(255,0,0)')
