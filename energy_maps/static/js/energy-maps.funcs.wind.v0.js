@@ -1,8 +1,8 @@
 /**
- * @file Provides global draw functions and any helpers for gas & oil wells, pipelines, refineries, processing, and storage.
+ * @file Functions for modeling and drawing Wind Speed
  * @author Benjamin Kleeman
  * @author Nathan Matteson
- * @module Wells
+ * @module Wind
  */
 
 /** 
@@ -40,25 +40,29 @@ function WindSpeed(name, text, value, column, draw, color, legend_color) {
      * @returns {Number} y - updated y axis
      */
     this.draw_legend = function draw_wind_legend(ctx, x, y) {
-      console.log('wind symbol');
-  
       y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
       draw_circle(ctx, [x, y], this.diameter * 3);
       ctx.stroke();
       ctx.fill();
-      
       y = advance_for_type(y, ctx, this.text, text_offset, x);
-      y = advance_vertical_increment(y, ctx, this.color, oil_and_gas.wells.stroke);
-      draw_x(ctx, [x, y], oil_and_gas.wells.cross);
-      ctx.stroke();
-      
-      let text = `Wind speed`
-      y = advance_for_type(y, ctx, text, text_offset, x);
-      
+      ctx.stroke();      
       return y;
     };
   }
   WindSpeed.prototype = new InfrastructureSet;
+
+
+
+// version based on draw_gas_processor
+const draw_wind_point = function draw_wind_point(ctx, xy, color) { 
+    ctx.strokeStyle = color;
+    ctx.strokeWidth = SCALE;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    draw_triangle(ctx, xy, 1.5 * SCALE);
+    // ctx.stroke(); // either stroke or fill
+    ctx.fill();
+};
 
 // version based on gas wells
 // const draw_wind_point = function draw_wind_point(ctx, xy, color) { 
@@ -70,15 +74,21 @@ function WindSpeed(name, text, value, column, draw, color, legend_color) {
 //     ctx.stroke();
 // };
 
-// version based on draw_gas_processor
-const draw_wind_point = function draw_wind_point(ctx, xy, color) { 
-    ctx.strokeStyle = color;
-    ctx.strokeWidth = SCALE;
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    draw_triangle(ctx, xy, 1.5 * SCALE);
-    // ctx.stroke(); // either stroke or fill
-    ctx.fill();
+// based on gas pipes
+const draw_all_wind = function draw_all_wind(ctx, queued_data) {
+  console.log('draw_all_wind');
+
+  let wind_data = queued_data[0];
+  const path = get_path(ctx);
+
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(0, 191, 255, .5)';
+  ctx.lineWidth =  1.8 * SCALE;
+  ctx.beginPath();
+  path(wind_data);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  hide_spinner();
 };
 
 // based on gas processing
@@ -94,23 +104,6 @@ const draw_wind_point = function draw_wind_point(ctx, xy, color) {
 //       }
 //     });  
 //   };
-
-// based on gas pipes
-const draw_all_wind = function draw_all_wind(ctx, queued_data) {
-    console.log('draw_all_wind');
-
-    let wind_data = queued_data[0];
-    const path = get_path(ctx);
-
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = 'rgba(0, 191, 255, .5)';
-    ctx.lineWidth =  1.8 * SCALE;
-    ctx.beginPath();
-    path(wind_data);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    hide_spinner();
-};
 
 // Based off of gas wells
 // const draw_all_wind = function draw_all_wind(ctx, queued_data) {
