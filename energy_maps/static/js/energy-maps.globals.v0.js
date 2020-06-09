@@ -15,13 +15,15 @@ const fill_screen = false;
 // }
 // ^^^ end original width and scale definitions ^^^
 
-// alter the width variable below to change the scale of the map if you need to make UI adjustments
+// alter the width variable below to change the scale of the map
+// if you need to make UI adjustments
 
 SCALE = 1;
 
 /**
  * @type {number} 
- * @description Device pixel ratio, used to scale our canvas with clarity relative to the user's device.
+ * @description Device pixel ratio, used to scale our canvas with
+ * clarity relative to the user's device.
  */
 let dpi = window.devicePixelRatio;
 
@@ -29,13 +31,15 @@ let dpi = window.devicePixelRatio;
  * @type {number} 
  * @description Map width, set to some multiple of `SCALE`
  */
-let width = 1200 * SCALE; // Note: you can't adjust this value without significantly effecting legends.
+let width = window.innerWidth * SCALE;
+// let width = 1200 * SCALE; // Note: you can't adjust this value without
+                          // significantly effecting legends.
 
 /**
  * @type {number} 
  * @description Map height, set to some fraction of `width`
  */
-const height = width / 2;
+const height = window.innerHeight;
 
 /**
  * @type {Object} 
@@ -131,10 +135,11 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 }
 
 // create projection and path objects with which to draw geo objects
-
-let projection_scale = width * 1.1;
-let projection_width = width / 2.4;
-let projection_height = height / 2;
+let content_width = +d3.select('main .content-wrap').style('width').slice(0, -2);  // width of content area in center of screen
+let header_height = +d3.select('header').style('height').slice(0, -2);  // height of header area
+let projection_scale =  content_width * 1.2;  // scale to fill content area
+let projection_width = width / 2;
+let projection_height = header_height + projection_width / 2 - 50;  // place map below header
 
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
