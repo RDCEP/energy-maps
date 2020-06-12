@@ -82,7 +82,7 @@ const draw_all_wind = function draw_all_wind(ctx, queued_data) {
 
 let wind_speed = new WindSpeed('wind-speed', 'Wind speed', 1_111_111_111_111, 'wind-speed', [ {
     f: draw_all_wind,
-    src: [ `/static/json/wind-speed-georef-linear-visvalingam-0-percent.json`],
+    src: [ `/static/json/neighbor_euclidean_modified_4326_conversion.geojson`],
     w: d3.json
   } ], 'rgb(255,0,0)', 'rgb(255,0,0)')
 
