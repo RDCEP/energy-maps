@@ -431,8 +431,6 @@ console.log(layers);
   console.log(target_canv);
   let mapcanvas = document.getElementById('mapcanvas');
 
-  let zoom = d3.zoom(); 
-
   // insert canvas elements for all layers into an array
   let layer_canvases = [];
   for (let i = 0; i < layers.length; i++) {
@@ -442,36 +440,38 @@ console.log(layers);
 
   // Clear current canvas at the beginning of the zoom event
   let last_zoom_timestamp;
-  d3.select(target_canv).call(zoom
-    .on("start", () => {
-      last_zoom_timestamp = Date.now();
-      ctx.save();
-      // ctx.clearRect(0, 0, width, height);
-      console.log('cleared')
-    }));
+
+  let zoom_start = function zoom_start() {
+    last_zoom_timestamp = Date.now();
+  };
+
+  // let k, x, y;
+  let layer_redrawn = false;
+
+  let zoom = d3.zoom();
+
+  const zoomed = function zoomed() {
+    let transform = d3.event.transform;
+    ctx.save();
+    ctx.clearRect(0, 0, width, height);
+    ctx.translate(transform.x, transform.y);
+    ctx.scale(transform.k, transform.k);
+    draw_land(ctx, [null, simple_map_bkgd], false);
+    ctx.restore();
+  };
+
+  const zoom_end = _.debounce(function(e) {
+    console.log('zoom end');
+    draw_active_layers();
+    console.log(k, x, y)
+  }, 500, false);
 
   // Perform translation during zoom activity
   d3.select(target_canv).call(zoom
-  .scaleExtent([1, 5])
-  .on("zoom", () => {
-    console.log('zoom')
-    zoomed(d3.event.transform);
-  }));
-
-  // Debounce and redraw when the user is finished zooming
-  d3.select(target_canv).call(zoom
-    .on("end", () => {
-        _.debounce(function() {
-          console.log(`current time is: ${current_time}, last zoom was: ${last_zoom_timestamp}.Difference between the two is: ${current_time - last_zoom_timestamp}`);
-          draw_active_layers();
-          if (layer_redrawn) {
-            draw_base_map();
-          }
-        } , 500, true);
-       
-      // TODO: Update projection scale values here
-      console.log(k, x, y)
-    }));
+    .scaleExtent([1, 5])
+    .on('start', zoom_start)
+    .on('zoom', zoomed)
+    .on('end', zoom_end));
 
   let draw_active_layers = function draw_active_layers() {
     for (let i = 0; i < lay; i++) {
@@ -483,44 +483,6 @@ console.log(layers);
     }
   }
 
-  let k, x, y;
-  let layer_redrawn = false;
-  function zoomed(transform) {
-    x = transform.x 
-    y = transform.y 
-    k = transform.k
-    mapcanvas.style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-    for (let i = 0; i < layer_canvases.length; i++) {
-      layer_canvases[i].style.transform = `translate(${x}px, ${y}px) scale(${k})`;
-    }
-
-    ctx.fill();
-  }
-  // function zoomed(transform) {
-  //   if (transform.k != k) {  // if the zoom level has changed,
-  //       layer_redrawn = false;
-  //       for (let i = 0; i < lay; i++) {
-  //         if (layers[i].active === true) {
-  //           layers[i].context.clearRect(0, 0, width, height);
-  //           load_layer_data(layers[i]);
-  //           layer_redrawn = true;
-  //        }
-  //       }        
-  //       if (layer_redrawn) {
-  //         draw_base_map();
-  //       }
-  //   }
-  //   else {
-  //     x = transform.x // - screen_x; // This isn't the right formula, but it's the general approach
-  //     y = transform.y // - screen_y;
-  //   }
-  //   k = transform.k
-
-  //   // t1();
-  //   t2();
-
-  //   ctx.fill();
-  // }
-  zoomed(d3.zoomIdentity);
+  // zoomed(d3.zoomIdentity);
   
 })();

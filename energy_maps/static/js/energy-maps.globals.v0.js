@@ -135,6 +135,7 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 }
 
 // create projection and path objects with which to draw geo objects
+let simple_map_bkgd = null;  // Kludge for pan/zoom
 let content_width = +d3.select('main .content-wrap').style('width').slice(0, -2);  // width of content area in center of screen
 let header_height = +d3.select('header').style('height').slice(0, -2);  // height of header area
 let projection_scale =  content_width * 1.2;  // scale to fill content area
@@ -151,12 +152,16 @@ let projection = d3.geoAlbersUsa()
   .scale(projection_scale)
   .translate([projection_width, projection_height]);
 
+// Saw this somewhere and I think it's supposed to make drawing faster
+let path2D = new Path2D();
+
 /**
  * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
  */
 const path = d3.geoPath()
   .projection(projection)
-  .pointRadius(2);
+  .pointRadius(2)
+  .context(path2D);
 
 /**
  * @param {Object} ctx - HTML5 canvas context
@@ -206,3 +211,6 @@ const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
   y = advance_for_type(y, ctx, text, text_offset, x);
   return y;
 }
+
+// I believe these are no longer used, but I'm leaving them for now.
+let x, y, k;

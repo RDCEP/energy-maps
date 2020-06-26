@@ -17,6 +17,16 @@ const draw_land = function draw_land(ctx, queued_data, border_only) {
   let map_fill_data = queued_data[1];
   path.context(ctx);
 
+  /*
+   This is a kludge to store the outline data for the map so that
+   every call to zoom doesn't trigger a request to the server. It should be
+   done in a less shitty way, and should be drawing a simplified map (which
+   means Nate needs to get off his ass and finish Visvalingam).
+   */
+  if (!simple_map_bkgd) {
+    simple_map_bkgd = map_data;
+  }
+
   if (!border_only) {
     // Sphere
     // ctx.fillStyle = viz.map.ocean;
