@@ -135,7 +135,8 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 }
 
 // create projection and path objects with which to draw geo objects
-let simple_map_bkgd = null;  // Kludge for pan/zoom
+let simple_map_bkgd = null;         // Kludge for pan/zoom. Can;t make JSON call during pan/zoom.
+let transform = {x:0, y:0, k:1};  // Kludge for pan/zoom. Need to track transform globally.
 let content_width = +d3.select('main .content-wrap').style('width').slice(0, -2);  // width of content area in center of screen
 let header_height = +d3.select('header').style('height').slice(0, -2);  // height of header area
 let projection_scale =  content_width * 1.2;  // scale to fill content area
@@ -211,6 +212,3 @@ const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
   y = advance_for_type(y, ctx, text, text_offset, x);
   return y;
 }
-
-// I believe these are no longer used, but I'm leaving them for now.
-let x, y, k;

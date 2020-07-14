@@ -9,43 +9,52 @@
  * @param {Object} ctx - HTML5 canvas context.
  * @param {Object[]} queued_data - Dataset for the corresponding resource
  * @param {Object} border_only
+ * @param {Boolean} simple
  */
-const draw_land = function draw_land(ctx, queued_data, border_only) {
-  console.log("draw_land");
+const draw_land = function draw_land(ctx, queued_data,
+                                     border_only,
+                                     simple) {
+  console.log('draw_land');
 
-  let map_data = queued_data[0];
-  let map_fill_data = queued_data[1];
+  ctx.save();
+  ctx.clearRect(0, 0, width, height);
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.k, transform.k);
+
   path.context(ctx);
+  let geo;
 
-  /*
-   This is a kludge to store the outline data for the map so that
-   every call to zoom doesn't trigger a request to the server. It should be
-   done in a less shitty way, and should be drawing a simplified map (which
-   means Nate needs to get off his ass and finish Visvalingam).
-   */
-  if (!simple_map_bkgd) {
-    simple_map_bkgd = map_data;
+  if (!simple) {
+    let ps = topojson.presimplify(queued_data[0]);
+    geo = topojson.feature(
+      topojson.simplify(ps, .01 / transform.k**2),
+      queued_data[0].objects.nation)
+    if (!simple_map_bkgd) {
+      simple_map_bkgd = topojson.feature(
+        topojson.simplify(ps,.2),
+        queued_data[0].objects.nation);
+    }
+  } else {
+    geo = simple_map_bkgd;
   }
 
   if (!border_only) {
-    // Sphere
-    // ctx.fillStyle = viz.map.ocean;
-    // ctx.beginPath();
-    // path({ type: "Sphere" });
-    // ctx.fill();
 
     // Land boundaries fill
     ctx.fillStyle = viz.map.fill;
     ctx.beginPath();
-    path(map_fill_data);
+    path(geo);
     ctx.fill();
   } else {
     ctx.strokeStyle = viz.map.stroke;
     ctx.lineWidth = viz.map.width;
     ctx.beginPath();
-    path(map_data);
+    path(geo);
     ctx.stroke();
   }
+
+  ctx.restore();
+
 };
 
 /// Primitives

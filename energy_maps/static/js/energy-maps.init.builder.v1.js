@@ -18,15 +18,9 @@
    * @description Sets the path for the base map 
    * @memberof Init
    */
-  const fmap = '../static/json/us-geojson.json';
+  const fmap = '../static/json/states-10m.json';
 
-  /** @type {string} 
-   * @description Sets the fill for the base map
-   * @memberof Init
-   */
-  const fmapfill = '../static/json/gz_2010_us_040_00_20m.json';
-
-  /** 
+  /**
    * @type {string} 
    * @description HTML class on which the main map is drawn
    * @memberof Init
@@ -87,10 +81,11 @@
    * @memberof Init
    */
   function draw_base_map() {
+    console.log(2)
     Promise.all(
-      [d3.json(fmap), d3.json(fmapfill)]
+      [d3.json(fmap)]
     ).then(function(files) {
-      draw_land(ctx, files, false);
+      draw_land(ctx, files, false, false);
     });
     console.log('draw base map');
   }
@@ -440,33 +435,27 @@ console.log(layers);
 
   // Clear current canvas at the beginning of the zoom event
   let last_zoom_timestamp;
-
-  let zoom_start = function zoom_start() {
-    last_zoom_timestamp = Date.now();
-  };
-
   // let k, x, y;
   let layer_redrawn = false;
 
   let zoom = d3.zoom();
 
+  let zoom_start = function zoom_start() {
+    transform = {x:0, y:0, k:1};
+    last_zoom_timestamp = Date.now();
+  };
+
   const zoomed = function zoomed() {
-    let transform = d3.event.transform;
-    ctx.save();
-    ctx.clearRect(0, 0, width, height);
-    ctx.translate(transform.x, transform.y);
-    ctx.scale(transform.k, transform.k);
-    draw_land(ctx, [null, simple_map_bkgd], false);
-    ctx.restore();
+    transform = d3.event.transform;
+    draw_land(ctx, [simple_map_bkgd], false, true);
   };
 
   const zoom_end = _.debounce(function(e) {
     console.log('zoom end');
+    draw_base_map();
     draw_active_layers();
-    console.log(k, x, y)
   }, 500, false);
 
-  // Perform translation during zoom activity
   d3.select(target_canv).call(zoom
     .scaleExtent([1, 5])
     .on('start', zoom_start)
@@ -476,13 +465,15 @@ console.log(layers);
   let draw_active_layers = function draw_active_layers() {
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
+        layers[i].context.save();
         layers[i].context.clearRect(0, 0, width, height);
+        layers[i].context.translate(transform.x, transform.y);
+        layers[i].context.scale(transform.k, transform.k);
         load_layer_data(layers[i]);
+        layers[i].context.restore();
         layer_redrawn = true;
      }
     }
   }
 
-  // zoomed(d3.zoomIdentity);
-  
 })();
