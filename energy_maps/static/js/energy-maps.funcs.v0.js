@@ -26,16 +26,26 @@ const draw_land = function draw_land(ctx, queued_data,
 
   if (!simple) {
     let ps = topojson.presimplify(queued_data[0]);
+
+    // Scale map detail based on zoom level
     geo = topojson.feature(
       topojson.simplify(ps, .01 / transform.k**2),
       queued_data[0].objects.nation)
+
+    // If no simple_map_bkgd object exists, make a low resolution
+    // map to us as simple_map_bkgd
     if (!simple_map_bkgd) {
       simple_map_bkgd = topojson.feature(
         topojson.simplify(ps,.2),
         queued_data[0].objects.nation);
     }
+
   } else {
+
+    // If simple is True, we're looking only for a low res map so return
+    // simple_map_bkgd. This is used for pan/zoom.
     geo = simple_map_bkgd;
+
   }
 
   if (!border_only) {
