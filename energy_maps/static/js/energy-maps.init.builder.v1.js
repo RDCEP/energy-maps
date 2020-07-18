@@ -44,12 +44,9 @@
    * @memberof Init
    */
   const base_canvas = d3
-    // .select(map_container)
     .select(base_map_class)
     .append('canvas')
     .attr('id', 'mapcanvas')
-    // .attr('width', window.innerWidth)
-    // .attr('height', window.innerHeight);
     .attr('width', width)
     .attr('height', height);
   const ctx = base_canvas.node().getContext('2d');
