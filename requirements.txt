@@ -1,4 +1,5 @@
 flask
 flask-assets
+flask-compress
 jsmin
 cssmin
