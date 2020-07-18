@@ -88,7 +88,7 @@
   }
 
   /** 
-   * @type {string}
+   * @type {number}
    * @description the total sum of asset values for all active layers
    * @memberof Init 
    */
