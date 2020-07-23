@@ -58,19 +58,19 @@
    * @description HTML5 canvas for the application legend
    * @memberof Init
    */
-  let legend_canvas = d3
-    .select('.map.legend')
-    .append('canvas')
-    .attr('id', 'legendcanvas')
-    .attr('width', width)
-    .attr('height', height);
+  // let legend_canvas = d3
+  //   .select('.map.legend')
+  //   .append('canvas')
+  //   .attr('id', 'legendcanvas')
+  //   .attr('width', width)
+  //   .attr('height', height);
 
   /**
    * @type {Object}
    * @description HTML5 canvas context for the application legend
    * @memberof Init
    */  
-  let legend_ctx = legend_canvas.node().getContext('2d');
+  // let legend_ctx = legend_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
 
   /**
