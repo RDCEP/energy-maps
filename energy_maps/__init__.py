@@ -26,6 +26,7 @@ assets.register('js_underscore',
 assets.register('js_d3',
                 Bundle('js/vendors/d3/d3.min.js',
                        'js/vendors/d3-queue/d3-queue.min.js',
+                       'js/vendors/d3-drag/d3-drag.min.js',
                        'js/vendors/topojson-simplify/topojson-simplify.min.js',
                        filters='jsmin',
                        output='gen/js_d3.js'))
