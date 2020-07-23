@@ -14,6 +14,36 @@ const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Arial`;
 const VERTICAL_INCREMENT = 15 * SCALE;
 const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
 
+const legend_window = d3.select('.main.legend');
+const legend_menu = d3.select('.menu.legend');
+
+console.log(legend_window)
+
+const legend_drag_started = function legend_drag_started() {
+  console.log('dragging')
+
+  d3.event.on('drag', dragged).on('end', ended);
+
+  function dragged() {
+    console.log('drag', d3.event.x, d3.event.y, d3.event.dx, d3.event.dy,
+      parseInt(legend_window.style('left'), 10))
+    legend_menu
+      .style('right', `${
+        parseInt(legend_window.style('right'), 10) - d3.event.dx}px`)
+      .style('top', `${
+        parseInt(legend_window.style('top'), 10) + d3.event.dy}px`);
+  }
+
+  function ended() {
+    //
+  }
+}
+
+legend_menu
+  .style('right', `${width-1200+100}px`) // Screen width - width of .content-wrap + 100 extra pixels
+  .style('top', '300px')
+  .call(d3.drag().on('start', legend_drag_started));
+
 /**
  * Advance vertical increment for legend type (text display)
  * @param {Number} y - y axis
