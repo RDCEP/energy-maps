@@ -212,11 +212,66 @@ footer p.nsf {
   width: 100%;
   height: 100%;
 }
-.map.layer, .map.legend {
+.map.layer {
   position: absolute;
   height: 100%;
   width: 100%;
 }
+.legend.main {
+  position: absolute;
+  width: 100px;
+}
+.legend.menu {
+  cursor: move;
+  padding: 0.5em 1em;
+  border: 1px solid #cccccc;
+  border-bottom-width: 0;
+}
+.legend.menu .toggle {
+  position: absolute;
+  right: 1.414em;
+  top: 1.25em;
+  border: solid black;
+  border-width: 0 0.1em 0.1em 0;
+  display: inline-block;
+  padding: 0.33em;
+}
+.legend.menu .toggle.close {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.legend.menu .toggle.open {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.legend.menu h6 {
+  position: relative;
+  padding: 0.25em 0;
+  margin: 0;
+  z-index: 2;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+.legend.menu .canvas {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  min-height: 100px;
+  border: 1px solid #cccccc;
+  border-top-width: 0;
+}
+.legend.menu .bkgd {
+  background-color: white;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
 .base-map {
   z-index: 0;
 }
