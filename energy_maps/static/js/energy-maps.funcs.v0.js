@@ -26,21 +26,21 @@ const draw_land = function draw_land(ctx, queued_data,
   transform_layer(ctx);
 
   path.context(ctx);
-  let geo;
+  let output_geojson;
 
   if (!simple) {
-    let ps = topojson.presimplify(queued_data[0]);
+    let presimplified_data = topojson.presimplify(queued_data[0]);
 
     // Scale map detail based on zoom level
-    geo = topojson.feature(
-      topojson.simplify(ps, .01 / transform.k**2),
+    output_geojson = topojson.feature(
+      topojson.simplify(presimplified_data, .01 / transform.k**2),
       queued_data[0].objects.nation)
 
     // If no simple_map_bkgd object exists, make a low resolution
     // map to us as simple_map_bkgd
     if (!simple_map_bkgd) {
       simple_map_bkgd = topojson.feature(
-        topojson.simplify(ps,.2),
+        topojson.simplify(presimplified_data,.2),
         queued_data[0].objects.nation);
     }
 
@@ -48,7 +48,7 @@ const draw_land = function draw_land(ctx, queued_data,
 
     // If simple is True, we're looking only for a low res map so return
     // simple_map_bkgd. This is used for pan/zoom.
-    geo = simple_map_bkgd;
+    output_geojson = simple_map_bkgd;
 
   }
 
@@ -57,13 +57,13 @@ const draw_land = function draw_land(ctx, queued_data,
     // Land boundaries fill
     ctx.fillStyle = viz.map.fill;
     ctx.beginPath();
-    path(geo);
+    path(output_geojson);
     ctx.fill();
   } else {
     ctx.strokeStyle = viz.map.stroke;
     ctx.lineWidth = viz.map.width;
     ctx.beginPath();
-    path(geo);
+    path(output_geojson);
     ctx.stroke();
   }
 

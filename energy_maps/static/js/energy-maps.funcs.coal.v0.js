@@ -193,7 +193,7 @@ const draw_railroads = function draw_railroads(ctx, queued_data, simple) {
         queued_data[0].objects.railrd1020);
     }
   } else {
-    geo = simple_map_bkgd;
+    output_geojson = simple_map_bkgd;
   }
 
   ctx.strokeStyle = railroad.stroke;
