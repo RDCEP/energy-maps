@@ -4,6 +4,13 @@
  * @author Nathan Matteson
  */
 
+const transform_layer = function transform_layer(ctx) {
+  ctx.save();
+  ctx.clearRect(0, 0, width, height);
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.k, transform.k) 
+}
+
 /**
  * Draw the base map.
  * @param {Object} ctx - HTML5 canvas context.

@@ -173,16 +173,36 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas railroad"
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
-const draw_railroads = function draw_railroads(ctx, queued_data) {
+const draw_railroads = function draw_railroads(ctx, queued_data, simple) {
   console.log('draw_railroads');
-  let rr = queued_data[0];
-  const path = get_path(ctx);
+
+  transform_layer(ctx);
+
+  path.context(ctx);
+  let output_geojson;
+
+  if (!simple) {
+    let ps = topojson.presimplify(queued_data[0]);
+    output_geojson = topojson.feature(
+      topojson.simplify(ps, .01 / transform.k**2),
+      queued_data[0].objects.railrdl020);
+
+    if (!simple_map_bkgd) {
+      simple_map_bkgd = topojson.feature(
+        topojson.simplify(ps, 2),
+        queued_data[0].objects.railrd1020);
+    }
+  } else {
+    geo = simple_map_bkgd;
+  }
+
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;
   ctx.beginPath();
-  path(rr);
+  path(output_geojson);
   ctx.stroke();
   hide_spinner();
+  ctx.restore();
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
@@ -193,6 +213,6 @@ let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [
 
 let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
   f: draw_railroads,
-  src: [ '/static/json/railrdl020.geojson' ],
+  src: [ '/static/json/railrdl020.json' ],
   w: d3.json
 } ])
