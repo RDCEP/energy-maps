@@ -23,10 +23,7 @@ const draw_land = function draw_land(ctx, queued_data,
                                      simple) {
   console.log('draw_land');
 
-  ctx.save();
-  ctx.clearRect(0, 0, width, height);
-  ctx.translate(transform.x, transform.y);
-  ctx.scale(transform.k, transform.k);
+  transform_layer(ctx);
 
   path.context(ctx);
   let geo;
