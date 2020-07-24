@@ -182,14 +182,14 @@ const draw_railroads = function draw_railroads(ctx, queued_data, simple) {
   let output_geojson;
 
   if (!simple) {
-    let ps = topojson.presimplify(queued_data[0]);
+    let presimplified_data = topojson.presimplify(queued_data[0]);
     output_geojson = topojson.feature(
-      topojson.simplify(ps, .01 / transform.k**2),
+      topojson.simplify(presimplified_data, .01 / transform.k**2),
       queued_data[0].objects.railrdl020);
 
     if (!simple_map_bkgd) {
       simple_map_bkgd = topojson.feature(
-        topojson.simplify(ps, 2),
+        topojson.simplify(presimplified_data, 2),
         queued_data[0].objects.railrd1020);
     }
   } else {
