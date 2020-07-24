@@ -80,7 +80,47 @@ const set_line_width = function set_line_width(value, divisor) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
  * @param {Object} c - object member of `grid`
  */
-draw_grid_class = function draw_grid_class(ctx, queued_data, c) {
+draw_grid_class = function draw_grid_class(ctx, queued_data, c, simple) {
+  
+  transform_layer(ctx);
+  
+  path.context(ctx);
+  let output_geojson;
+
+  /**
+   * This array contains property names from the individual topojson files that we will use.
+   * They will represent the object names that we will call via `queued_data[0].objects.property_name`
+   * We may need to loop through this but I'm not sure. Just making this available for future reference!
+   * Make sure to upload topo files and update reference locations before trying to actually test this 
+   * implementation or take it any further.
+   * The topo file structure is as follows
+   * "objects": {
+    "grid-345_735": {
+      "type": "GeometryCollection",
+      "geometries": [
+        {
+   */
+  let topojson_property_names = [ // This array contains the
+    "grid-unk_under_100",
+    "grid-dc",
+    "grid-345_735"
+  ]
+
+  if (!simple) {
+    let presimplified_data = topojson.presimplify(queued_data[0]);
+    output_geojson = topojson.feature(
+      topojson.simplify(presimplified_data, .01 / transform.k**2),
+      queued_data[0].objects.property_name); // Some issues here -- how are we going to iterate through each file? Could be done but might be better to just decouple now. Or maybe each file has/will have the same property name. Check topo files to confirm. You also may be able to get away with passing an obj param to this one such as foo('grid-dc') to send the object name.
+
+    if (!simple_map_bkgd) {
+      simple_map_bkgd = topojson.feature(
+        topojson.simplify(presimplified_data, 2),
+        queued_data[0].objects.property_name);
+    }
+  } else {
+    output_geojson = simple_map_bkgd;
+  }
+
   let grid = queued_data[0];
   const path = get_path(ctx);
   let tmp_grid = {type: 'FeatureCollection', features: []};
