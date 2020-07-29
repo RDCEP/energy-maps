@@ -78,56 +78,27 @@ const set_line_width = function set_line_width(value, divisor) {
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
- * @param {Object} c - object member of `grid`
+ * @param {Object} c - grid object
  */
-draw_grid_class = function draw_grid_class(ctx, queued_data, c, simple) {
+draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   
   transform_layer(ctx);
   
   path.context(ctx);
   let output_geojson;
 
-  /**
-   * This array contains property names from the individual topojson files that we will use.
-   * They will represent the object names that we will call via `queued_data[0].objects.property_name`
-   * We may need to loop through this but I'm not sure. Just making this available for future reference!
-   * Make sure to upload topo files and update reference locations before trying to actually test this 
-   * implementation or take it any further.
-   * The topo file structure is as follows
-   * "objects": {
-    "grid-345_735": {
-      "type": "GeometryCollection",
-      "geometries": [
-        {
-   */
-  let topojson_property_names = [ // This array contains the
-    "grid-unk_under_100",
-    "grid-dc",
-    "grid-345_735"
-  ]
+  let presimplified_data = topojson.presimplify(queued_data[0]);
+  output_geojson = topojson.feature(
+    topojson.simplify(presimplified_data, .01 / transform.k**2),
+    queued_data[0].objects[key]);
 
-  if (!simple) {
-    let presimplified_data = topojson.presimplify(queued_data[0]);
-    output_geojson = topojson.feature(
-      topojson.simplify(presimplified_data, .01 / transform.k**2),
-      queued_data[0].objects.property_name); // Some issues here -- how are we going to iterate through each file? Could be done but might be better to just decouple now. Or maybe each file has/will have the same property name. Check topo files to confirm. You also may be able to get away with passing an obj param to this one such as foo('grid-dc') to send the object name.
+  
 
-    if (!simple_map_bkgd) {
-      simple_map_bkgd = topojson.feature(
-        topojson.simplify(presimplified_data, 2),
-        queued_data[0].objects.property_name);
-    }
-  } else {
-    output_geojson = simple_map_bkgd;
-  }
-
-  let grid = queued_data[0];
-  const path = get_path(ctx);
   let tmp_grid = {type: 'FeatureCollection', features: []};
   
   ctx.lineCap = 'round';
 
-  features = filter_features(grid, c);
+  features = filter_features(output_geojson, c); // we may not need this anymore, because you can just treat topojson like regular json! as can be seen with lines like queued_data[0].objects.railrdl020 and queued_data[0].objects[key]
 
   let feat_len = features.length;
   for (let i = 0; i < feat_len; ++i) {
@@ -182,8 +153,8 @@ function draw_legend_ac(ctx, x, y, obj) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-unk_under_100.json'
  */
 const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, ac_na);
-  draw_grid_class(ctx, queued_data, ac_under_100);
+  draw_grid_class(ctx, queued_data, ac_na, "grid-unk_under_100");
+  draw_grid_class(ctx, queued_data, ac_under_100, "grid-unk_under_100");
 };
 
 /**
@@ -192,8 +163,8 @@ const draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-100_300.json' 
  */
 const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, ac_100_200);
-  draw_grid_class(ctx, queued_data, ac_200_300);
+  draw_grid_class(ctx, queued_data, ac_100_200, "grid-100_300");
+  draw_grid_class(ctx, queued_data, ac_200_300, "grid-100_300");
 };
 
 /**
@@ -202,9 +173,9 @@ const draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queu
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/grid-345_735.json'
  */
 const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
-  draw_grid_class(ctx, queued_data, ac_345);
-  draw_grid_class(ctx, queued_data, ac_500);
-  draw_grid_class(ctx, queued_data, ac_735_plus);
+  draw_grid_class(ctx, queued_data, ac_345, "grid-345_735");
+  draw_grid_class(ctx, queued_data, ac_500, "grid-345_735");
+  draw_grid_class(ctx, queued_data, ac_735_plus, "grid-345_735");
 };
 
 /**
@@ -214,7 +185,7 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
   console.log('electrical-grid-dc-lines');
-  draw_grid_class(ctx, queued_data, dc);
+  draw_grid_class(ctx, queued_data, dc, "grid-dc");
 }
 
 // AC under 100
@@ -228,14 +199,14 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 
 let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 console.log(ac_na)
 
 let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
@@ -255,7 +226,7 @@ let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(c
 
 let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
+  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
 } ], draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
 
@@ -263,14 +234,14 @@ let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_
 
 let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
-  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '100-161', 'rgba(86, 180, 233)', 2, 100);
 console.log(ac_100_200); 
 
 let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
-  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
@@ -290,7 +261,7 @@ let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
 
 let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
-  src: ['/static/json/elec_grid_split/grid-100_300.json'],
+  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   w: d3.json,
 } ], draw_legend_ac_100_300);
 
@@ -298,21 +269,21 @@ let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000,
 
 let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
-  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '345', 'rgba(255, 149, 0)', 4, 350);
 console.log(ac_345); 
 
 let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
-  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '500', 'rgba(213, 113, 45)', 5, 350);
 console.log(ac_500); 
 
 let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
-  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
@@ -333,13 +304,13 @@ let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
 
 let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
-  src: ['/static/json/elec_grid_split/grid-345_735.json'],
+  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   w: d3.json,
 } ], draw_legend_ac_345_735);
 
 let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_dc,
-  src: ['/static/json/elec_grid_split/grid-dc.json'],
+  src: ['/static/topojson/elec_grid_split/grid-dc.json'],
   w: d3.json,
 } ], 'DC', 'black', 7, 1000);
 dc.dashed = false;

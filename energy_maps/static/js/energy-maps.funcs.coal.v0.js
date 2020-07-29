@@ -181,20 +181,10 @@ const draw_railroads = function draw_railroads(ctx, queued_data, simple) {
   path.context(ctx);
   let output_geojson;
 
-  if (!simple) {
-    let presimplified_data = topojson.presimplify(queued_data[0]);
-    output_geojson = topojson.feature(
-      topojson.simplify(presimplified_data, .01 / transform.k**2),
-      queued_data[0].objects.railrdl020);
-
-    if (!simple_map_bkgd) {
-      simple_map_bkgd = topojson.feature(
-        topojson.simplify(presimplified_data, 2),
-        queued_data[0].objects.railrd1020);
-    }
-  } else {
-    output_geojson = simple_map_bkgd;
-  }
+  let presimplified_data = topojson.presimplify(queued_data[0]);
+  output_geojson = topojson.feature(
+    topojson.simplify(presimplified_data, .01 / transform.k**2),
+    queued_data[0].objects.railrdl020);
 
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;
