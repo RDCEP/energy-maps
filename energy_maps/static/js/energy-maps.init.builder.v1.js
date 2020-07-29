@@ -364,7 +364,7 @@ console.log(layers);
     .append('div')
     .attr('class', `map layer ${lyr.name}`)
     .append('canvas')
-    .attr('class', `map layer canvas ${lyr.name}`)
+    .attr('class', `canvas ${lyr.name}`)
     .attr('width', width)
     .attr('height', height);
   }
