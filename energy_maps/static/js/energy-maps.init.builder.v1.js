@@ -441,6 +441,12 @@ console.log(layers);
   let zoom = d3.zoom();
 
   let zoom_start = function zoom_start() {
+    for (let i = 0; i < lay; i++) {
+      if (layers[i].active === true) {
+        layers[i].context.save();
+        layers[i].context.clearRect(0, 0, width, height);
+      }
+    }
     transform = {x:0, y:0, k:1};
     last_zoom_timestamp = Date.now();
   };
