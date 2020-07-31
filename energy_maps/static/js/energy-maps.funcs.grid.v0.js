@@ -83,18 +83,9 @@ const set_line_width = function set_line_width(value, divisor) {
 draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   
   transform_layer(ctx);
-  
-  path.context(ctx);
-  let output_geojson;
-
-  // let presimplified_data = topojson.presimplify(queued_data[0]);
-  // output_geojson = topojson.feature(
-  //   topojson.simplify(presimplified_data, .01 / transform.k**2),
-  //   queued_data[0].objects[key]);
-  
+  path.context(ctx);  
   output_geojson = simplify(key, queued_data)
   
-
   let tmp_grid = {type: 'FeatureCollection', features: []};
   
   ctx.lineCap = 'round';
