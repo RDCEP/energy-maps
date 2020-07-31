@@ -144,6 +144,8 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
+  transform_layer(ctx);
+  path.context(ctx);
   // TODO: why tf is this wells? Is this a duplicate of something related to the wells?
   let wells = queued_data[0];
 
