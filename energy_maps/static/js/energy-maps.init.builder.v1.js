@@ -443,7 +443,6 @@ console.log(layers);
   let zoom_start = function zoom_start() {
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
-        layers[i].context.save();
         layers[i].context.clearRect(0, 0, width, height);
       }
     }
@@ -471,10 +470,6 @@ console.log(layers);
   let draw_active_layers = function draw_active_layers() {
     for (let i = 0; i < lay; i++) {
       if (layers[i].active === true) {
-        layers[i].context.save();
-        layers[i].context.clearRect(0, 0, width, height);
-        layers[i].context.translate(transform.x, transform.y);
-        layers[i].context.scale(transform.k, transform.k);
         load_layer_data(layers[i]);
         layers[i].context.restore();
         layer_redrawn = true;

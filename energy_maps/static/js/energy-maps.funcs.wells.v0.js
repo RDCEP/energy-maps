@@ -251,7 +251,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   
   let oil_pipe_data = queued_data[0];
   let oil_prod_pipe_data = queued_data[1];
-  const path = get_path(ctx);
+  // const path = get_path(ctx);
   const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
         oil_product.dash + 2 * oil_product.width ];
   ctx.strokeStyle = oil_pipeline.stroke;
@@ -409,7 +409,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   console.log('draw_refining');
   transform_layer(ctx)
   path.context(ctx);
-  
+
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
 
   // TODO: Okay, what the fuck are we doing here?
