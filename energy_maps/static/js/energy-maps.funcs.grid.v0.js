@@ -87,11 +87,12 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   path.context(ctx);
   let output_geojson;
 
-  let presimplified_data = topojson.presimplify(queued_data[0]);
-  output_geojson = topojson.feature(
-    topojson.simplify(presimplified_data, .01 / transform.k**2),
-    queued_data[0].objects[key]);
-
+  // let presimplified_data = topojson.presimplify(queued_data[0]);
+  // output_geojson = topojson.feature(
+  //   topojson.simplify(presimplified_data, .01 / transform.k**2),
+  //   queued_data[0].objects[key]);
+  
+  output_geojson = simplify(key, queued_data)
   
 
   let tmp_grid = {type: 'FeatureCollection', features: []};

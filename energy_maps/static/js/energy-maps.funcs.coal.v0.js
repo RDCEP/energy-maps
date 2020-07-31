@@ -173,18 +173,12 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas railroad"
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
-const draw_railroads = function draw_railroads(ctx, queued_data, simple) {
+const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
   transform_layer(ctx);
-
   path.context(ctx);
-  let output_geojson;
-
-  let presimplified_data = topojson.presimplify(queued_data[0]);
-  output_geojson = topojson.feature(
-    topojson.simplify(presimplified_data, .01 / transform.k**2),
-    queued_data[0].objects.railrdl020);
+  output_geojson = simplify("railrdl020", queued_data);
 
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;

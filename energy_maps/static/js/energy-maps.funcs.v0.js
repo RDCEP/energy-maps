@@ -11,6 +11,15 @@ const transform_layer = function transform_layer(ctx) {
   ctx.scale(transform.k, transform.k) 
 }
 
+const simplify = function simplify(key, data) {
+  let output_geojson;
+  let presimplified_data = topojson.presimplify(data[0]);
+  output_geojson = topojson.feature(
+    topojson.simplify(presimplified_data, .01 / transform.k**2),
+    data[0].objects[key]);
+  return output_geojson;
+}
+
 /**
  * Draw the base map.
  * @param {Object} ctx - HTML5 canvas context.
