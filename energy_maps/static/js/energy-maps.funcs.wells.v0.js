@@ -243,22 +243,11 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   hide_spinner();
 };
 
-// TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
-const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
-  console.log('draw_pipes');
-  transform_layer(ctx)
-  path.context(ctx);
-  
-  let oil_pipe_data = queued_data[0];
-  let oil_prod_pipe_data = queued_data[1];
-  // const path = get_path(ctx);
+const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
+  // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
+  let oil_prod_pipe_data = queued_data[0];
   const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
-        oil_product.dash + 2 * oil_product.width ];
-  ctx.strokeStyle = oil_pipeline.stroke;
-  ctx.lineWidth = oil_pipeline.width;
-  ctx.beginPath();
-  path(oil_pipe_data);
-  ctx.stroke();
+    oil_product.dash + 2 * oil_product.width ];
   ctx.lineWidth = oil_product.width;
   ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
@@ -266,6 +255,21 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
+}
+
+// TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
+const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
+  console.log('draw_pipes');
+  transform_layer(ctx)
+  path.context(ctx);
+  
+  let oil_pipe_data = queued_data[0];
+  ctx.strokeStyle = oil_pipeline.stroke;
+  ctx.lineWidth = oil_pipeline.width;
+  ctx.beginPath();
+  path(oil_pipe_data);
+  ctx.stroke();
+  draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
   hide_spinner();
 };
 
@@ -509,10 +513,6 @@ let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000
 let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
   f: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
-}, {
-  f: draw_oil_pipes,
-  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
 
