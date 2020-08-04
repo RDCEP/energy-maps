@@ -261,6 +261,9 @@ footer p.nsf {
   border: 1px solid #cccccc;
   border-top-width: 0;
 }
+.legend.menu .tmpcanvas {
+  display: none;
+}
 .legend.menu .bkgd {
   background-color: white;
   opacity: 0.8;

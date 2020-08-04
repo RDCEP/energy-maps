@@ -72,6 +72,20 @@
   let legend_ctx = legend_canvas.node().getContext('2d');
   legend_ctx.lineCap = 'round';
 
+  const legend_tmpcanvas = d3
+    .select('.legend.tmpcanvas')
+    .append('canvas')
+    .attr('width', 400)
+    .attr('height', 1000);
+
+  /**
+   * @type {Object}
+   * @description HTML5 canvas context for the application legend
+   * @memberof Init
+   */
+  let tmplegend_ctx = legend_tmpcanvas.node().getContext('2d');
+  tmplegend_ctx.lineCap = 'round';
+
   /**
    * @description Draw the base map for the application based off of the data from fmap and fmapfill
    * @memberof Init
@@ -398,7 +412,8 @@ console.log(layers);
           // TODO: Arguably the legend context should be cleared in the
           //  update_legend() function.
           legend_ctx.clearRect(0, 0, width, height);
-          update_legend(legend_ctx, layers);
+          tmplegend_ctx.clearRect(0, 0, width, height);
+          update_legend(tmplegend_ctx, legend_ctx, layers);
   
         });
   

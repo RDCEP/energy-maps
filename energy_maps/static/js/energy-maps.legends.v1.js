@@ -87,11 +87,15 @@ function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: conside
    */
 
 /**
- * Update the entire legend. Call each relevant draw function and render them in the appropriate order
+ * Update the entire legend. Call each relevant draw function and
+ * render them in the appropriate order. Legend is drawn to the hidden
+ * tmpctx context so that the height can be calculated before the legend
+ * is then copied to the visible context.
+ * @param {Object} tmpctx - HTML5 canvas context
  * @param {Object} ctx - HTML5 canvas context
  * @param {Object[]} layers - An array of objects representing resources to be rendered on top of the map canvas.
  */
-const update_legend = function update_legend(ctx, layers) {
+const update_legend = function update_legend(tmpctx, ctx, layers) {
   // FIXME: width in globals is now 850.
   console.log('update_lend:', layers)
   let x = 32 * SCALE;
@@ -101,7 +105,7 @@ const update_legend = function update_legend(ctx, layers) {
   // let text_offset = 30 * SCALE; // TODO: Figure out why this was here and reinstate or delete
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
-      y = layers[i].draw_legend(ctx, x, y); 
+      y = layers[i].draw_legend(tmpctx, x, y);
       console.log(layers[i])
     }
   }
@@ -115,10 +119,9 @@ const update_legend = function update_legend(ctx, layers) {
     // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * electricity_generation.scale);
     // y +=
   }
-
-  let tmp_legend = ctx.getImageData(0 ,0 , 400, y+60);
-
-  d3.select('.legend.canvas canvas').attr('height', y+60);
-  ctx.putImageData(tmp_legend, 0, 0);
+  d3.select('.legend.canvas canvas')
+    .attr('height', y+20)
+    .node().getContext('2d')
+    .drawImage(d3.select('.legend.tmpcanvas canvas').node(), 0, 0);
 
 };
