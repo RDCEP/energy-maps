@@ -20,13 +20,10 @@ const legend_menu = d3.select('.menu.legend');
 console.log(legend_window)
 
 const legend_drag_started = function legend_drag_started() {
-  console.log('dragging')
 
   d3.event.on('drag', dragged).on('end', ended);
 
   function dragged() {
-    console.log('drag', d3.event.x, d3.event.y, d3.event.dx, d3.event.dy,
-      parseInt(legend_window.style('left'), 10))
     legend_menu
       .style('right', `${
         parseInt(legend_window.style('right'), 10) - d3.event.dx}px`)
@@ -40,7 +37,10 @@ const legend_drag_started = function legend_drag_started() {
 }
 
 legend_menu
-  .style('right', `${width-1200+100}px`) // Screen width - width of .content-wrap + 100 extra pixels
+  // Set horizontal position on page load.
+  // Screen width - width of .content-wrap + 100 extra pixels
+  .style('right', `${(width-1200)/2+100}px`)
+  // Set vertical position on page load.
   .style('top', '300px')
   .call(d3.drag().on('start', legend_drag_started));
 
@@ -93,9 +93,10 @@ function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: conside
  */
 const update_legend = function update_legend(ctx, layers) {
   // FIXME: width in globals is now 850.
-  let x = 950 * SCALE;
+  console.log('update_lend:', layers)
+  let x = 32 * SCALE;
   let x_offset = 10 * SCALE;
-  let y = 200 * SCALE;
+  let y = 10 * SCALE;
   // Offset for text
   // let text_offset = 30 * SCALE; // TODO: Figure out why this was here and reinstate or delete
   for (let i = 0; i < layers.length; ++i) {
@@ -114,5 +115,10 @@ const update_legend = function update_legend(ctx, layers) {
     // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * electricity_generation.scale);
     // y +=
   }
+
+  let tmp_legend = ctx.getImageData(0 ,0 , 400, y+60);
+
+  d3.select('.legend.canvas canvas').attr('height', y+60);
+  ctx.putImageData(tmp_legend, 0, 0);
 
 };

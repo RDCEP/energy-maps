@@ -170,7 +170,7 @@ footer
 .legend
   &.main
     position: absolute
-    width: 100px
+    width: 400px
   &.menu
     cursor: move
     padding: .5em 1em
@@ -202,18 +202,21 @@ footer
       top: 100%
       left: -1px
       right: -1px
-      min-height: 100px
+      min-height: 0px
       border: 1px solid #cccccc
       border-top-width: 0
     .bkgd
       background-color: white
-      opacity: .6
+      opacity: .8
       position: absolute
       top: 0
       right: 0
       bottom: 0
       left: 0
       z-index: 1
+  canvas
+    position: relative
+    z-index: 2
 .base-map
   z-index: 0
 .zoom-target
