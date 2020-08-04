@@ -110,15 +110,6 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
     }
   }
 
-  let draw_plants_legend = layers.filter(function(d) { // TODO: Do we still need this? What is it doing?
-    return ["coal-plant", "geothermal-plant", "hydro-plant",
-    "natural-gas-plant", "nuclear-plant", "petroleum-plant",
-    "solar-PV", "wind-farms",].indexOf(d[0]) > -1;
-  }).length > 0;
-  if (draw_plants_legend) {
-    // draw_circle(ctx, xy, Math.sqrt(r / Math.PI) * electricity_generation.scale);
-    // y +=
-  }
   d3.select('.legend.canvas canvas')
     .attr('height', y+20)
     .node().getContext('2d')
