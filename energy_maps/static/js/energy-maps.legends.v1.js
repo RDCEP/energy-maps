@@ -16,8 +16,9 @@ const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
 
 const legend_window = d3.select('.main.legend');
 const legend_menu = d3.select('.menu.legend');
+const legend_toggle = d3.select('.legend.toggle');
 
-console.log(legend_window)
+console.log(legend_toggle.node())
 
 const legend_drag_started = function legend_drag_started() {
 
@@ -43,6 +44,18 @@ legend_menu
   // Set vertical position on page load.
   .style('top', '300px')
   .call(d3.drag().on('start', legend_drag_started));
+
+legend_toggle.on('click', function() {
+  let closed = d3.select(this).classed('open');
+  // Toggle legend visibility
+  d3.select('.legend.canvas canvas')
+    .classed('closed', closed)
+    .classed('closed', !closed);
+  // Toggle state of visibility icon
+  d3.select(this)
+    .classed('open', !closed)
+    .classed('close', closed);
+});
 
 /**
  * Advance vertical increment for legend type (text display)

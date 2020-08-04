@@ -172,10 +172,11 @@ footer
     position: absolute
     width: 400px
   &.menu
-    cursor: move
     padding: .5em 1em
     border: 1px solid #cccccc
     border-bottom-width: 0
+    cursor: move
+    z-index: 1
     .toggle
       position: absolute
       right: 1.414em
@@ -184,12 +185,15 @@ footer
       border-width: 0 .1em .1em 0
       display: inline-block
       padding: .33em
+      cursor: pointer!important
+      z-index: 10
       &.close
         transform: rotate(-135deg)
         -webkit-transform: rotate(-135deg)
       &.open
-        transform: rotate(-135deg)
-        -webkit-transform: rotate(-135deg)
+        top: 1em
+        transform: rotate(45deg)
+        -webkit-transform: rotate(45deg)
     h6
       position: relative
       padding: .25em 0
@@ -205,6 +209,8 @@ footer
       min-height: 0px
       border: 1px solid #cccccc
       border-top-width: 0
+      .closed
+        height: 0
     .tmpcanvas
       display: none
     .bkgd

@@ -222,10 +222,11 @@ footer p.nsf {
   width: 400px;
 }
 .legend.menu {
-  cursor: move;
   padding: 0.5em 1em;
   border: 1px solid #cccccc;
   border-bottom-width: 0;
+  cursor: move;
+  z-index: 1;
 }
 .legend.menu .toggle {
   position: absolute;
@@ -235,14 +236,17 @@ footer p.nsf {
   border-width: 0 0.1em 0.1em 0;
   display: inline-block;
   padding: 0.33em;
+  cursor: pointer !important;
+  z-index: 10;
 }
 .legend.menu .toggle.close {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
 }
 .legend.menu .toggle.open {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
+  top: 1em;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 .legend.menu h6 {
   position: relative;
@@ -260,6 +264,9 @@ footer p.nsf {
   min-height: 0px;
   border: 1px solid #cccccc;
   border-top-width: 0;
+}
+.legend.menu .canvas .closed {
+  height: 0;
 }
 .legend.menu .tmpcanvas {
   display: none;
