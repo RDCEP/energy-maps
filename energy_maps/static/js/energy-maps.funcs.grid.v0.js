@@ -80,7 +80,7 @@ const set_line_width = function set_line_width(value, divisor) {
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
  * @param {Object} c - grid object
  */
-draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
+const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   
   transform_layer(ctx);
   path.context(ctx);  
@@ -108,6 +108,7 @@ draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
         hide_spinner(); 
       }
     }
+  ctx.restore();
 };
 
   /**

@@ -241,6 +241,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   ctx.stroke();
   ctx.setLineDash([]);
   hide_spinner();
+  ctx.restore();
 };
 
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
@@ -271,6 +272,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx.stroke();
   draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
   hide_spinner();
+  ctx.restore();
 };
 
 // TODO: Simplify well drawing functions by adding relevant properties to nested objects
@@ -369,7 +371,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
       hide_spinner();
      }
   });
-
+  ctx.restore();
 };
 
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
@@ -388,6 +390,8 @@ const draw_processing = function draw_processing(ctx, queued_data) {
       hide_spinner(); 
     }
   });
+
+  ctx.restore();
 
   // gstor.forEach(function(d) {
   //   let xy = projection([+d.lon, +d.lat]);
@@ -445,7 +449,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     draw_circle(ctx, xy, oil_refinery.size * d.r);
     ctx.stroke();
   });
-
+  ctx.restore();
 };
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {

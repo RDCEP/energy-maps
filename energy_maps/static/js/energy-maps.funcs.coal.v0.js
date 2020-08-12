@@ -168,6 +168,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       hide_spinner(); 
     }
   });
+  ctx.restore();
 };
 
 /**
