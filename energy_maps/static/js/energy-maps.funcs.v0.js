@@ -76,7 +76,7 @@ const draw_land = function draw_land(ctx, queued_data,
     ctx.stroke();
   }
 
-  ctx.restore();
+  //;
 
 };
 

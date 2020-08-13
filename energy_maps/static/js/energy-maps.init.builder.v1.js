@@ -160,6 +160,10 @@
       Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
           lyr.draw[i].f(lyr.context, files);
+          return lyr;
+        })
+        .then(function(lyr) {
+          lyr.context.restore();
         });
     }
   };
@@ -457,6 +461,12 @@ console.log(layers);
 
   const zoom_end = _.debounce(function(e) {
     console.log('zoom end');
+    for (let i = 0; i < lay; i++) {
+      if (layers[i].active === true) {
+        layers[i].context.save()
+        transform_layer(layers[i].context);
+      }
+    };
     draw_base_map();
     draw_active_layers();
   }, 500, false);
@@ -468,13 +478,20 @@ console.log(layers);
     .on('end', zoom_end));
 
   let draw_active_layers = function draw_active_layers() {
-    for (let i = 0; i < lay; i++) {
-      if (layers[i].active === true) {
-        load_layer_data(layers[i]);
-        layers[i].context.restore();
-        layer_redrawn = true;
-     }
-    }
-  }
-
+    Promise.all(layers)
+      .then(function(layer) {
+        if (layer.active === true) {
+          layer.context.save();
+          transform_layer(layer.context);
+          return layer;
+        }
+      })
+      .then(function(layer) {
+        load_layer_data(layer);
+        return layer})
+      .then(function(layer) {
+          layer.context.restore();
+          layer_redrawn = true;
+        });
+  };
 })();

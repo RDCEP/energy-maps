@@ -168,7 +168,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       hide_spinner(); 
     }
   });
-  ctx.restore();
+  // //;
 };
 
 /**
@@ -189,7 +189,7 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   path(output_geojson);
   ctx.stroke();
   hide_spinner();
-  ctx.restore();
+  //;
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {

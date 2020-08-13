@@ -156,7 +156,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       hide_spinner(); 
     }
   });
-  ctx.restore();
+  //;
 };
 
 // TODO: Determine purpose and add jsdoc
