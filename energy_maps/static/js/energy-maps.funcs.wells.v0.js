@@ -227,7 +227,6 @@ const get_xy = function get_xy(queued_data) {
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   console.log('draw_gas_pipes');
   
-  transform_layer(ctx)
   path.context(ctx);
 
   let pipe_data = queued_data[0];
@@ -261,7 +260,6 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
 // TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
-  transform_layer(ctx)
   path.context(ctx);
   
   let oil_pipe_data = queued_data[0];
@@ -341,7 +339,6 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   console.log('draw_all_wells');
 
-  transform_layer(ctx)
   path.context(ctx);
 
   let wells = queued_data[0];
@@ -377,7 +374,6 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
-  transform_layer(ctx)
   path.context(ctx);
 
   let gproc = queued_data[0]; // gas processing
@@ -415,7 +411,6 @@ const draw_storage = function draw_storage(ctx, queued_data) {
 
 const draw_refining = function draw_refining(ctx, queued_data) {
   console.log('draw_refining');
-  transform_layer(ctx)
   path.context(ctx);
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
