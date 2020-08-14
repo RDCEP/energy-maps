@@ -71,7 +71,6 @@ const update_legend = function update_legend(ctx, layers) {
   for (let i = 0; i < layers.length; ++i) {
     if (layers[i].active) {
       y = layers[i].draw_legend(ctx, x, y); 
-      console.log(layers[i])
     }
   }
 
