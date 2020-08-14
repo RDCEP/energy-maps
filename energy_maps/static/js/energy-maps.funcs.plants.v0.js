@@ -139,6 +139,7 @@ const get_fuel_type = function get_fuel_type(data, fuel) {
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
+  path.context(ctx);
   let plants = queued_data[0];
   get_fuel_type(plants, fuel);
   draw_white_layer(plants, fuel, ctx);
@@ -154,7 +155,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       hide_spinner(); 
     }
   });
-
+  //;
 };
 
 // TODO: Determine purpose and add jsdoc

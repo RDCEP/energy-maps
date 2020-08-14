@@ -144,6 +144,7 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
+  path.context(ctx);
   // TODO: why tf is this wells? Is this a duplicate of something related to the wells?
   let wells = queued_data[0];
 
@@ -166,6 +167,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       hide_spinner(); 
     }
   });
+  // //;
 };
 
 /**
@@ -175,14 +177,17 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  */
 const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
-  let rr = queued_data[0];
-  const path = get_path(ctx);
+
+  path.context(ctx);
+  output_geojson = simplify("railrdl020", queued_data);
+
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;
   ctx.beginPath();
-  path(rr);
+  path(output_geojson);
   ctx.stroke();
   hide_spinner();
+  //;
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
@@ -193,6 +198,6 @@ let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [
 
 let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
   f: draw_railroads,
-  src: [ '/static/json/railrdl020.geojson' ],
+  src: [ '/static/json/railrdl020.json' ],
   w: d3.json
 } ])
