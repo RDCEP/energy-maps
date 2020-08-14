@@ -24,8 +24,43 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
   this.fuel_type = fuel_type || '';
   this.color = color || 'rgba(0, 0, 0, 0.5)';
   this.stroke = stroke || plant_stroke;
+  this.z_index = 0;
+  /**
+   * Draw power plant legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   */
+  this.draw_legend = function draw_power_plant_legend(ctx, x, y) {
+    ctx.fillStyle = this.color;
+    ctx.strokeStyle = this.stroke;
+    ctx.lineWidth = electricity_generation.stroke.width;
+
+    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
+    y += 18 * SCALE;
+    ctx.beginPath();
+    draw_circle(ctx, [x, y], 7 * SCALE);
+    ctx.stroke();
+    ctx.fill();
+
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 PowerPlant.prototype = new InfrastructureSet;
+
+function WindSpeed(name, text, value, column, draw, long, lat, speed) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.long = long;
+  this.lat = lat;
+  this.speed = speed;
+  // Add direction if available
+  this.draw_legend = function draw_wind_speed_legend(ctx, x, y) {
+    // do stuff
+  }
+}
+WindSpeed.prototype = new InfrastructureSet;
 
 SCALE = 1;
 let plant_stroke = 'rgba(255, 255, 255, 1)';
@@ -61,6 +96,40 @@ function draw_white_layer(plants, fuel, ctx) {
 }
 
 /**
+ * Helper function for draw_single_plant(). Draw the standard layer for each symbol.
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} xy - xy coordinates
+ * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant()
+ * @param {Object} d - data element filtered by fuel type from the readfile
+ */
+const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
+  let color = fuel.color;
+  if (fuel == bio_plants) {
+    // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
+    draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
+    // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
+  }
+  else {
+    draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+  }
+}
+
+/**
+ * Helper function for draw_single_plant(). Returns the desired subset of `data`, filtered by fuel type.
+ * @param {Object} data - data from the readfile, passes through from draw_single_plant()
+ * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant() // TODO: update params
+ * @param {Object} ctx - HTML5 canvas context
+ * @returns {Object} features - the desired data set, narrowed by fuel type
+ */
+const get_fuel_type = function get_fuel_type(data, fuel) {
+  features = data.features
+    .filter(function (d) {
+      return d.properties.primary_fu === fuel.fuel_type;
+    });
+    return features;
+}
+
+/**
  * Draw a single set of power plants relative to their class.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Object} queued_data - the readfile
@@ -70,13 +139,9 @@ function draw_white_layer(plants, fuel, ctx) {
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
+  path.context(ctx);
   let plants = queued_data[0];
-
-  features = plants.features
-    .filter(function (d) {
-      return d.properties.primary_fu === fuel.fuel_type;
-    });
-
+  get_fuel_type(plants, fuel);
   draw_white_layer(plants, fuel, ctx);
   // Draw the standard layer
   features.forEach(function(d, i) {
@@ -84,14 +149,13 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     if (xy === null) {
       //
     } else {
-      let color = fuel.color;
-      draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+      draw_standard_layer(ctx, xy, fuel, d);
     }
     if (i === features.length - 1) { 
       hide_spinner(); 
     }
   });
-
+  //;
 };
 
 // TODO: Determine purpose and add jsdoc
@@ -150,6 +214,10 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
+const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
+  draw_single_plant(ctx, queued_data, bio_plants)
+};
+
 // Instantiate PowerPlants
 
 let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
@@ -199,6 +267,13 @@ let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22
   src: ['/static/json/power_plants_split/power_plants-GEO.json'],
   w: d3.json,
 } ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+
+let bio_plants = new PowerPlant('biofuel', 'Biofuel power plant', 51_000_000_000, 'electricity-generation', [ {
+  f: draw_bio_plants,
+  src: ['/static/json/power_plants_split/power_plants-BIO.json'],
+  w: d3.json,
+} ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
+
 
 let biofuel = { 
   name: 'biofuel',

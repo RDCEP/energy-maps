@@ -18,10 +18,11 @@
  * @param {String} stroke - rgba value to set the canvas stroke
  * @param {Number} width - width value set relative to SCALE
  */
-function Coal(name, text, value, column, draw, stroke, width) {
+function Coal(name, text, value, column, draw, stroke, width) { // TODO: Do we need this Coal base class? Probably not.
     InfrastructureSet.call(this, name, text, value, column, draw);
     this.stroke = stroke;
     this.width = width || 0;
+    this.z_index = 0;
 }
 Coal.prototype = new InfrastructureSet;
 
@@ -47,6 +48,22 @@ function CoalMine(name, text, value, column, draw) {
   this.width = SCALE;
   this.fill = 'rgba(0, 0, 0, 0.5)';
   this.scale = SCALE / 190;
+  this.z_index = 0;
+  /**
+   * Draw coal mine legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_coalmine_legend(ctx, x, y) {
+    y += VERTICAL_INCREMENT;
+    // TODO: decouple this func invocation from oil 
+    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 CoalMine.prototype = new Coal;
 
@@ -68,40 +85,30 @@ function Railroad(name, text, value, column, draw) {
   this.text = 'Railroads';
   this.stroke = '#767676';
   this.width = SCALE;
+  this.z_index = 0;
+  /**
+   * Draw railroad legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_railroad_legend(ctx, x, y, dashed) {
+    ctx.strokeStyle = railroad.stroke;
+    ctx.lineWidth = railroad.width;
+    let text = this.text;
+    y = draw_line(ctx, x, y, this, dashed, text)
+    return y;
+  };
 }
 Railroad.prototype = new Coal;
-
- /**
-  * A collection of coal mine properties used to draw mines to the map and legend.
- * @type {Object} 
- * @property {string} fill - rgba value for mine fill color
- * @property {string} stroke - rgba value for mine stroke color
- * @property {Number} width - sets the width of the mine, bound to global SCALE
- * @property {Number} scale - sets the relative scale of the mine, bound to global SCALE as a fraction of its width
-  */
-// let mine_props = {
-//   fill: 'rgba(0, 0, 0, 0.5)',
-//   stroke: 'rgba(255, 255, 255, 1)',
-//   width: SCALE,
-//   scale: SCALE / 190,
-//   text: 'Coal mine'
-// }
-
-/**
- * @type {Object} 
- * @property {string} stroke - rgba value for mine stroke color
- * @property {Number} width - sets the width of the rr line, bound to global SCALE
- */
-// let railroad_props = {
-//   stroke: '#767676', 
-//   width: SCALE, 
-//   text: 'Railroads'
-// }
 
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
  * @param {Number} scale - the desired scale value, bound to `viz` object value relative to category.
+ * @returns {Number} y - updated y axis
  */
 function setRadius(radius, scale) {
   radius = Math.sqrt(radius / Math.PI) * scale;
@@ -137,6 +144,7 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
+  path.context(ctx);
   // TODO: why tf is this wells? Is this a duplicate of something related to the wells?
   let wells = queued_data[0];
 
@@ -159,7 +167,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
       hide_spinner(); 
     }
   });
-
+  // //;
 };
 
 /**
@@ -170,16 +178,16 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
-  let rr = queued_data[0];
+  path.context(ctx);
+  output_geojson = simplify("railrdl020", queued_data);
 
-  const path = get_path(ctx);
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width;
   ctx.beginPath();
-  path(rr);
+  path(output_geojson);
   ctx.stroke();
   hide_spinner();
-
+  //;
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
@@ -190,6 +198,6 @@ let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [
 
 let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
   f: draw_railroads,
-  src: [ '/static/json/railrdl020.geojson' ],
+  src: [ '/static/json/railrdl020.json' ],
   w: d3.json
 } ])

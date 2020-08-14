@@ -19,7 +19,6 @@
   </script>
 </head>
 <body>
-<div class=wrap>
 {% block body %}
   <header>
   {% block header %}
@@ -50,17 +49,18 @@
   </main>
   <footer class=cf>
   {% block footer %}
-  {% endblock %}
-    <img src=/static/images/nsf.png class="nsf" alt='NSF logo'/>
-    <p class=nsf>Funded under NSF Decision Making Under Uncertainty Program.
-      Award No. 0951576</p>
-    <img src=/static/images/rdcep.png class="rdcep" alt='RDCEP logo'/>
 
+    <div class=content-wrap>
+      <img src=/static/images/nsf.png class="nsf" alt='NSF logo'/>
+      <p class=nsf>Funded under NSF Decision Making Under Uncertainty Program.
+        Award No. 0951576</p>
+      <img src=/static/images/rdcep.png class="rdcep" alt='RDCEP logo'/>
+    </div>
+  {% endblock %}
   </footer>
   {% block bodyjs %}
   {% endblock %}
 {% endblock %}
-</div>
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 <script>
 window.cookieconsent.initialise({

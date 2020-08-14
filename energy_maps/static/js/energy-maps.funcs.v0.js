@@ -4,38 +4,80 @@
  * @author Nathan Matteson
  */
 
+const transform_layer = function transform_layer(ctx, transform) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.k, transform.k);
+}
+
+const simplify = function simplify(key, data) {
+  let output_geojson;
+  let presimplified_data = topojson.presimplify(data[0]);
+  output_geojson = topojson.feature(
+    topojson.simplify(presimplified_data, .01 / transform.k**2),
+    data[0].objects[key]);
+  return output_geojson;
+}
+
 /**
  * Draw the base map.
  * @param {Object} ctx - HTML5 canvas context.
  * @param {Object[]} queued_data - Dataset for the corresponding resource
  * @param {Object} border_only
+ * @param {Boolean} simple
  */
-const draw_land = function draw_land(ctx, queued_data, border_only) {
-  console.log("draw_land");
-
-  let map_data = queued_data[0];
-  let map_fill_data = queued_data[1];
+const draw_land = function draw_land(ctx, queued_data,
+                                     transform,
+                                     border_only,
+                                     simple) {
+  ctx.save()
+  transform_layer(ctx, transform);
+  ctx.clearRect(0,0,width, height);
   path.context(ctx);
+  let output_geojson;
+
+  if (!simple) {
+    let presimplified_data = topojson.presimplify(queued_data[0]);
+
+    // Scale map detail based on zoom level
+    output_geojson = topojson.feature(
+      topojson.simplify(presimplified_data, .01 / transform.k**2),
+      queued_data[0].objects.nation)
+
+    // If no simple_map_bkgd object exists, make a low resolution
+    // map to us as simple_map_bkgd
+    if (!simple_map_bkgd) {
+      simple_map_bkgd = topojson.feature(
+        topojson.simplify(presimplified_data,.2),
+        queued_data[0].objects.nation);
+    }
+
+  } else {
+
+    // If simple is True, we're looking only for a low res map so return
+    // simple_map_bkgd. This is used for pan/zoom.
+    output_geojson = simple_map_bkgd;
+
+  }
 
   if (!border_only) {
-    // Sphere
-    ctx.fillStyle = viz.map.ocean;
-    ctx.beginPath();
-    path({ type: "Sphere" });
-    ctx.fill();
 
     // Land boundaries fill
     ctx.fillStyle = viz.map.fill;
     ctx.beginPath();
-    path(map_fill_data);
+    path(output_geojson);
     ctx.fill();
   } else {
     ctx.strokeStyle = viz.map.stroke;
     ctx.lineWidth = viz.map.width;
     ctx.beginPath();
-    path(map_data);
+    path(output_geojson);
     ctx.stroke();
   }
+
+  ctx.restore();
+  //;
+
 };
 
 /// Primitives

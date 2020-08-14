@@ -30,6 +30,31 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.cross = 5 * SCALE;
   this.diameter = SCALE / 2;
   this.stroke = SCALE;
+  this.z_index = 0;
+  /**
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_well_legend(ctx, x, y) {
+    console.log('well symbol');
+
+    y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
+    draw_circle(ctx, [x, y], this.diameter * 3);
+    ctx.stroke();
+    ctx.fill();
+    
+    y = advance_for_type(y, ctx, this.text, text_offset, x);
+    y = advance_vertical_increment(y, ctx, this.color, oil_and_gas.wells.stroke);
+    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
+    ctx.stroke();
+    
+    let text = `${this.text.slice(0, 3)} offshore well`
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    
+    return y;
+  };
 }
 Well.prototype = new InfrastructureSet;
 
@@ -50,6 +75,22 @@ function Transport(name, text, value, column, draw, stroke, width) {
   InfrastructureSet.call(this, name, text, value, column, draw);
   this.stroke = stroke;
   this.width = width;
+  this.z_index = 0;
+  /**
+   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = this.width;
+    let text = this.text;
+    y = draw_line(ctx, x, y, this, dashed, text)
+    return y;
+  };
 }
 Transport.prototype = new InfrastructureSet;
 
@@ -74,8 +115,68 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
+  /**
+   * Draw gas processing legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_processing_legend(ctx, x, y) {
+    // Advance vertical increment
+    y += VERTICAL_INCREMENT;
+    draw_gas_processor(ctx, [x, y]);
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 }
 Processing.prototype = new InfrastructureSet;
+
+function Refinery(name, text, value, column, draw, fill, size) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.fill = fill;
+  this.size = size;
+  this.stroke = 'rgba(255, 255, 255, 1)';
+  this.strokeWidth = SCALE * .75;
+  this.z_index = 0;
+  /**
+   * Draw oil refinery legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {string} color - symbol color, required to pass through but not called
+   * @returns {Number} y - updated y axis
+   */
+  this.draw_legend = function draw_refinery_legend(ctx, x, y, color) {
+    y += VERTICAL_INCREMENT;
+    draw_oil_refinery(ctx, [x, y], 200000 * this.size); // TODO: Document or extract these magic numbers
+    let text = this.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
+}
+Refinery.prototype = new InfrastructureSet;
+
+// TODO: Implement storage, and then add this method as a class member
+/**
+   * Draw gas storage legend to its HTML5 canvas context.
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {Object} obj - Infrastructure object 
+   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @returns {Number} y - updated y axis
+   */
+  const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) { // TODO: Reimplement storage. 
+    // Advance vertical increment
+    y += VERTICAL_INCREMENT;
+    draw_gas_storage(ctx, [x, y]);
+    let text = obj.text;
+    y = advance_for_type(y, ctx, text, text_offset, x);
+    return y;
+  };
 
  // TODO: Add jsdoc
 const oil_and_gas = {
@@ -125,9 +226,11 @@ const get_xy = function get_xy(queued_data) {
  */
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   console.log('draw_gas_pipes');
+  
+  path.context(ctx);
 
   let pipe_data = queued_data[0];
-  const path = get_path(ctx);
+  // const path = get_path(ctx);
 
   ctx.lineCap = 'round';
   ctx.strokeStyle = gas_pipeline.stroke;
@@ -137,22 +240,14 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   ctx.stroke();
   ctx.setLineDash([]);
   hide_spinner();
+  //;
 };
 
-// TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
-const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
-  console.log('draw_pipes');
-
-  let oil_pipe_data = queued_data[0];
-  let oil_prod_pipe_data = queued_data[1];
-  const path = get_path(ctx);
+const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
+  // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
+  let oil_prod_pipe_data = queued_data[0];
   const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
-        oil_product.dash + 2 * oil_product.width ];
-  ctx.strokeStyle = oil_pipeline.stroke;
-  ctx.lineWidth = oil_pipeline.width;
-  ctx.beginPath();
-  path(oil_pipe_data);
-  ctx.stroke();
+    oil_product.dash + 2 * oil_product.width ];
   ctx.lineWidth = oil_product.width;
   ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
@@ -160,7 +255,22 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
+}
+
+// TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
+const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
+  console.log('draw_pipes');
+  path.context(ctx);
+  
+  let oil_pipe_data = queued_data[0];
+  ctx.strokeStyle = oil_pipeline.stroke;
+  ctx.lineWidth = oil_pipeline.width;
+  ctx.beginPath();
+  path(oil_pipe_data);
+  ctx.stroke();
+  draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
   hide_spinner();
+  //;
 };
 
 // TODO: Simplify well drawing functions by adding relevant properties to nested objects
@@ -229,6 +339,8 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   console.log('draw_all_wells');
 
+  path.context(ctx);
+
   let wells = queued_data[0];
 
   wells.forEach(function(d, i) {
@@ -256,12 +368,13 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
       hide_spinner();
      }
   });
-
+  //;
 };
 
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
+  path.context(ctx);
 
   let gproc = queued_data[0]; // gas processing
   // let gstor = queued_data[1]; // gas storage
@@ -273,6 +386,8 @@ const draw_processing = function draw_processing(ctx, queued_data) {
       hide_spinner(); 
     }
   });
+
+  //;
 
   // gstor.forEach(function(d) {
   //   let xy = projection([+d.lon, +d.lat]);
@@ -296,6 +411,7 @@ const draw_storage = function draw_storage(ctx, queued_data) {
 
 const draw_refining = function draw_refining(ctx, queued_data) {
   console.log('draw_refining');
+  path.context(ctx);
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
 
@@ -328,7 +444,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     draw_circle(ctx, xy, oil_refinery.size * d.r);
     ctx.stroke();
   });
-
+  //;
 };
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
@@ -397,16 +513,12 @@ let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000
   f: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
-}, {
-  f: draw_oil_pipes,
-  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 
-let oil_refinery = new Processing('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
+let oil_refinery = new Refinery('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
   f: draw_refining,
   src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
   w: d3.json

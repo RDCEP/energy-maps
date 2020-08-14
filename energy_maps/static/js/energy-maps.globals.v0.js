@@ -15,21 +15,31 @@ const fill_screen = false;
 // }
 // ^^^ end original width and scale definitions ^^^
 
-// alter the width variable below to change the scale of the map if you need to make UI adjustments
+// alter the width variable below to change the scale of the map
+// if you need to make UI adjustments
 
 SCALE = 1;
 
 /**
  * @type {number} 
+ * @description Device pixel ratio, used to scale our canvas with
+ * clarity relative to the user's device.
+ */
+let dpi = window.devicePixelRatio;
+
+/**
+ * @type {number} 
  * @description Map width, set to some multiple of `SCALE`
  */
-let width = 1200 * SCALE;
+let width = window.innerWidth * SCALE;
+// let width = 1200 * SCALE; // Note: you can't adjust this value without
+                          // significantly effecting legends.
 
 /**
  * @type {number} 
  * @description Map height, set to some fraction of `width`
  */
-const height = width / 2;
+const height = window.innerHeight;
 
 /**
  * @type {Object} 
@@ -42,6 +52,8 @@ const padding = {top: 10, right: 10, bottom: 50, left: 50};
  * @description Global canvas width, set to some multiple of the sum of `width` and `scale`
  */
 const canvas_width = width + SCALE * 400;
+
+let text_offset = 30 * SCALE;
 
 /**
  * @type {Object} 
@@ -75,6 +87,7 @@ function InfrastructureSet(name, text, value, column, draw) {
   this.text = text || '';
   this.value = value || 0;
   this.column = column || '';
+  this.z_index = 0;
   this.draw = draw || [{
       f: '',
       src: '',
@@ -122,20 +135,34 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 }
 
 // create projection and path objects with which to draw geo objects
+let simple_map_bkgd = null;         // Kludge for pan/zoom. Can;t make JSON call during pan/zoom.
+let transform = {x:0, y:0, k:1};  // Kludge for pan/zoom. Need to track transform globally.
+let content_width = +d3.select('main .content-wrap').style('width').slice(0, -2);  // width of content area in center of screen
+let header_height = +d3.select('header').style('height').slice(0, -2);  // height of header area
+let projection_scale =  content_width * 1.2;  // scale to fill content area
+let projection_width = width / 2;
+let projection_height = header_height + projection_width / 2 - 50;  // place map below header
 
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
- */
-const projection = d3.geoAlbersUsa()
-  .scale(width*1.1)
-  .translate([width / 2.4, height / 2]);
+//  */
+// let projection = d3.geoAlbersUsa()
+//   .scale(width*1.1)
+//   .translate([width / 2.4, height / 2]);
+let projection = d3.geoAlbersUsa()
+  .scale(projection_scale)
+  .translate([projection_width, projection_height]);
+
+// Saw this somewhere and I think it's supposed to make drawing faster
+let path2D = new Path2D();
 
 /**
  * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
  */
 const path = d3.geoPath()
   .projection(projection)
-  .pointRadius(2);
+  .pointRadius(2)
+  .context(path2D);
 
 /**
  * @param {Object} ctx - HTML5 canvas context
@@ -155,3 +182,33 @@ const show_spinner = function show_spinner() {
 const hide_spinner = function hide_spinner() {
     spinner.style.display = "none";
   };
+
+/**
+ * Helper function for pipes and railroad
+ * @param {Object} ctx - HTML5 canvas context
+ * @param {Number} x - x axis
+ * @param {Number} y - y axis
+ * @param {Object} obj - Transport or Railroad object 
+ * @param {boolean} dashed - true if line should be dashed, false if solid
+ * @param {string} text - the text for the layer written to the legend
+ * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
+ * @returns {Number} y - updated y axis
+ */
+const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
+  
+  y += VERTICAL_INCREMENT;
+  
+  // TODO: Implement product pipelines. They will need a dashed line. 
+  if (dashed) {
+    ctx.setLineDash(dashed);
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(x - 7 * SCALE, y);
+  ctx.lineTo(x + 7 * SCALE, y);
+  ctx.strokeStyle = obj.stroke;
+  ctx.stroke();
+
+  y = advance_for_type(y, ctx, text, text_offset, x);
+  return y;
+}
