@@ -4,11 +4,10 @@
  * @author Nathan Matteson
  */
 
-const transform_layer = function transform_layer(ctx) {
-  ctx.save();
+const transform_layer = function transform_layer(ctx, transform) {
   ctx.clearRect(0, 0, width, height);
   ctx.translate(transform.x, transform.y);
-  ctx.scale(transform.k, transform.k) 
+  ctx.scale(transform.k, transform.k);
 }
 
 const simplify = function simplify(key, data) {
@@ -28,12 +27,12 @@ const simplify = function simplify(key, data) {
  * @param {Boolean} simple
  */
 const draw_land = function draw_land(ctx, queued_data,
+                                     transform,
                                      border_only,
                                      simple) {
-  console.log('draw_land');
-
-  transform_layer(ctx);
-
+  ctx.save()
+  transform_layer(ctx, transform);
+  ctx.clearRect(0,0,width, height);
   path.context(ctx);
   let output_geojson;
 
@@ -76,6 +75,7 @@ const draw_land = function draw_land(ctx, queued_data,
     ctx.stroke();
   }
 
+  ctx.restore();
   //;
 
 };
