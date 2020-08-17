@@ -132,6 +132,8 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
   // TODO: what happens if r <= 8? Is this to filter out points that are so small that they are insignificant?
+  // This is a very very crude filter. It should probably start filtering
+  // out things that are too small based on the current scale of zoom.
   if (r > 8) {
     ctx.stroke();
   }
@@ -146,6 +148,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
   path.context(ctx);
   // TODO: why tf is this wells? Is this a duplicate of something related to the wells?
+  // Copy-and-paste like a mofo, bruh.
   let wells = queued_data[0];
 
   // Sort in descending order so large mines don't
