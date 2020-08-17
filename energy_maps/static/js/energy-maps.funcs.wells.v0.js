@@ -258,6 +258,8 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
 }
 
 // TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
+// The `path` should take care of any lines that need drawing. As long as it
+// is set to draw on the correct context.
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
   path.context(ctx);
@@ -414,8 +416,13 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   path.context(ctx);
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
+                                      // Yes.
 
   // TODO: Okay, what the fuck are we doing here?
+  // An oil refinery can produce oil through a variety of processes. Some
+  // of them we don't care about. We're filtering those that we do
+  // care about, and adding those to the total which is represented by
+  // the radius of the map symbol (which is variable r).
   oref.forEach(function(d, i) {
     let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
       'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
