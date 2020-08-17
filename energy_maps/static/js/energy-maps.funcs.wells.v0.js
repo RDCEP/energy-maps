@@ -441,7 +441,8 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
     ctx.lineWidth = oil_and_gas.processing.stroke.width;
     ctx.beginPath();
-    draw_circle(ctx, xy, oil_refinery.size * d.r);
+    // draw the outline
+    draw_polygon(6, ctx, oil_refinery.size * d.r, xy)
     ctx.stroke();
   });
   //;
