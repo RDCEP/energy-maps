@@ -135,7 +135,6 @@ const get_fuel_type = function get_fuel_type(data, fuel) {
  * @param {Object} queued_data - the readfile
  * @param {Object} fuel - fuel object from `electricity_generation`
  */
-// TODO: Is this drawing one single plant, or one single set of plants? Change jsdoc if necessary
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
@@ -281,72 +280,3 @@ let biofuel = {
   draw: false,
   column: 'electricity-generation',
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// FIXME: MOVE TO A STATIC MAPS FUNCS DIR/FILE OR DELETE LATER
-// UNTIL A DECISION IS MADE, THIS CODE IS SAFE TO IGNORE (COMMENT LEFT 01/15/2020)
-// Old code, used for drawing the static images. Replace with code
-// that just calls each function
-const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
-  console.log('draw_power_plants');
-
-  let plants = queued_data[0];
-
-  // Toggle fuels for fossil vs non-fossil fuels
-  let fuels = ['PET', 'NG', 'COAL'];
-  if (nff) {
-    fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
-  }
-
-  plants.features.filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    })
-    .forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
-    });
-  plants.features
-    .filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    }).forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      if (xy === null) {
-        //
-      } else {
-        let color = fuel.color;
-        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-      }
-    });
-};
-
-const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
-  // draw_power_plants(ctx, queued_data, false) // old implementation
-  // suggested implementation below:
-  draw_petro_plants(ctx, queued_data);
-  draw_ng_plants(ctx, queued_data);
-  draw_coal_plants(ctx, queued_data);
-};
-
-const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
-  // draw_power_plants(ctx, queued_data, true) old implementation
-  // suggested implementation below:
-  draw_solar_plants(ctx, queued_data);
-  draw_wind_farms(ctx, queued_data);
-  draw_nuclear_plants(ctx, queued_data);
-  draw_geo_plants(ctx, queued_data);
-  draw_hydro_plants(ctx, queued_data);
-};
