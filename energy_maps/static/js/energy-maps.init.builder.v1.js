@@ -176,6 +176,41 @@ let init = (function() {
     }
   };
 
+  /**
+   * Draw state boundaries to the infrastructure map.
+   * @param {Object} ctx - HTML5 canvas context"
+   * @param {Array} queued_data - readfile: '/static/jsonstates-10m.json'
+   */
+  const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
+    console.log('draw state boundaries')
+
+    path.context(ctx);
+
+    let state_data = queued_data[0];
+
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = state_boundaries.stroke;
+    ctx.lineWidth = state_boundaries.width;
+    ctx.beginPath();
+    path(state_data);
+    ctx.stroke()
+    hide_spinner();
+  };
+
+  let state_boundaries = new InfrastructureSet('state-boundaries', 'State boundaries', 0, 'coal');
+  state_boundaries.draw = [{
+    f: draw_state_boundaries,
+    src: ['/static/json/states-10m.json'],
+    w: d3.json
+  }];
+  state_boundaries.stroke = 'rgba(0, 0, 0)';
+  state_boundaries.width = 6;
+  state_boundaries.draw_legend = function(){console.log('draw state boundaries legend')};
+
+  layers.push(state_boundaries);
+  console.log(state_boundaries);
+  console.log(coal_mine);
+
   // Coal
   layers.push(coal_mine);
   layers.push(railroad);
