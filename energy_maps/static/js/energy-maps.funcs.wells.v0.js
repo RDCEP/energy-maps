@@ -343,31 +343,31 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 
   let wells = queued_data[0];
 
+  wells = wells.filter(function(d) { return +d.zoom <= +transform.k; });
   wells.forEach(function(d, i) {
-    // xy converts latitude and longitude string values into numeric values 
-    let xy = projection([+d.lon, +d.lat]);
-    if (xy === null) {
-      return;
-    } else {
-      if (d.oilgas === 'GAS') {
-        if (d.class === 'Off') {
-          draw_off_well(ctx, xy, gas_well.color);
-        } else {
-          draw_well(ctx, xy, gas_well.color);
-        }
+      let xy = projection([+d.lon, +d.lat]);
+      if (xy === null) {
+        return;
       } else {
-        
-        if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_well.color);
+        if (d.oilgas === 'GAS') {
+          if (d.class === 'Off') {
+            draw_off_well(ctx, xy, gas_well.color);
+          } else {
+            draw_well(ctx, xy, gas_well.color);
+          }
         } else {
-          draw_well(ctx, xy, oil_well.color);
+          if (d.class === 'Off') {
+            draw_off_well(ctx, xy, oil_well.color);
+          } else {
+            draw_well(ctx, xy, oil_well.color);
+          }
         }
       }
-    }
-    if (i === wells.length - 1) { 
-      hide_spinner();
-     }
-  });
+      if (i === wells.length - 1) {
+
+        hide_spinner();
+      }
+    });
   //;
 };
 
@@ -478,8 +478,7 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
 
 let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
   f: draw_all_wells,
-  src: [ `/static/csv/wells_gas1.csv`,
-         `/static/csv/wells_gas2.csv` ],
+  src: [ `/static/csv/wells_gas.2.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
