@@ -104,6 +104,27 @@ function Railroad(name, text, value, column, draw) {
 }
 Railroad.prototype = new Coal;
 
+/** 
+ * Instatiates a new StateBoundary object that contains properties used to draw state boundary lines to the map.
+ * @class
+ * @classdesc Used to create objects that represent state boundaries.
+ * @extends InfrastructureSet
+ * @param {String} name - canvas ID
+ * @param {String} text - text displayed in the legend
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render the visualization
+ * @property {String} stroke - rgba value to set the canvas stroke
+ * @property {Number} width - width value set relative to SCALE
+ */
+function StateBoundary(name, text, value, column, draw, stroke, width) {
+  InfrastructureSet.call(this, name, text, value, column, draw);
+  this.stroke = stroke;
+  this.width = width;
+  this.z_index = 0;
+}
+StateBoundary.prototype = new InfrastructureSet;
+
 /**
  * Helper function for draw_mine() to Scale out the radius relative to the desired size
  * @param {Number} r - starting radius
@@ -190,6 +211,25 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   //;
 };
 
+/**
+ * Draw railroads on the coal infrastructure map.
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas railroad"
+ * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
+ */
+const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
+  console.log('draw_state_boundaries');
+
+  path.context(ctx);
+  output_geojson = simplify("states", queued_data);
+
+  ctx.strokeStyle = state_boundaries.stroke;
+  ctx.lineWidth = state_boundaries.width;
+  ctx.beginPath();
+  path(output_geojson);
+  ctx.stroke();
+  hide_spinner();
+};
+
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
   f: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
@@ -201,3 +241,9 @@ let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
   src: [ '/static/json/railrdl020.json' ],
   w: d3.json
 } ])
+
+  let state_boundaries = new StateBoundary('state-boundaries', 'State boundaries', 0, 'coal', [{
+    f: draw_state_boundaries,
+    src: ['/static/json/states-10m.json'],
+    w: d3.json
+  }], 'rgba(68, 108, 179, 1)', 1.5);
