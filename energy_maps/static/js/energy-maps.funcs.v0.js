@@ -37,7 +37,6 @@ const update_boundaries = function update_boundaries(ctx) {
   boundaries.east = east_south[0] + 1;
   boundaries.south = east_south[1] - 1;
   boundaries.west = west_north[0] - 1;
-  console.log(boundaries)
 }
 
 /**
