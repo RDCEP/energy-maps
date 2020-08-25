@@ -20,6 +20,26 @@ const simplify = function simplify(key, data) {
 }
 
 /**
+   * @description Updates the boundaries object to track the current
+   * north-most, east-most,south-most,and est-most point of the map.
+   * FIXME: Because of the curvature of the projection, these points
+   *  may not be actual extrema. For now we're adding a degree on all sides.
+   *  Since this is currently used only for cropping data, it should be good
+   *  enough, but it's ugly and should be fixed.
+   */
+const update_boundaries = function update_boundaries(ctx) {
+  let west_north = path.context(ctx).projection().invert(
+      [-transform.x / transform.k, -transform.y / transform.k])
+  let east_south = path.context(ctx).projection().invert(
+      [(-transform.x + window.innerWidth) / transform.k,
+       (-transform.y + window.innerHeight) / transform.k])
+  boundaries.north = west_north[1] + 1;
+  boundaries.east = east_south[0] + 1;
+  boundaries.south = east_south[1] - 1;
+  boundaries.west = west_north[0] - 1;
+}
+
+/**
  * Draw the base map.
  * @param {Object} ctx - HTML5 canvas context.
  * @param {Object[]} queued_data - Dataset for the corresponding resource
@@ -36,7 +56,11 @@ const draw_land = function draw_land(ctx, queued_data,
   path.context(ctx);
   let output_geojson;
 
-  if (!simple) {
+  if (simple) {
+    // If simple is True, we're looking only for a low res map so return
+    // simple_map_bkgd. This is used for pan/zoom.
+    output_geojson = simple_map_bkgd;
+  } else {
     let presimplified_data = topojson.presimplify(queued_data[0]);
 
     // Scale map detail based on zoom level
@@ -52,11 +76,12 @@ const draw_land = function draw_land(ctx, queued_data,
         queued_data[0].objects.nation);
     }
 
-  } else {
-
-    // If simple is True, we're looking only for a low res map so return
-    // simple_map_bkgd. This is used for pan/zoom.
-    output_geojson = simple_map_bkgd;
+    // TODO: This could go right after `transform_layer()` but it only
+    //  needs to run at the end of a zoom event when the map is finally
+    //  drawn at the proper level of detail. There's no reason to call it
+    //  during the zoom. But it's weird that it's here and not with the
+    //  other layer transformation.
+    update_boundaries(ctx);
 
   }
 
@@ -76,7 +101,6 @@ const draw_land = function draw_land(ctx, queued_data,
   }
 
   ctx.restore();
-  //;
 
 };
 
