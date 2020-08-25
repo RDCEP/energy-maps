@@ -242,7 +242,7 @@ let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
   w: d3.json
 } ])
 
-  let state_boundaries = new StateBoundary('state-boundaries', 'State boundaries', 0, 'coal', [{
+  let state_boundaries = new StateBoundary('state-boundaries', 'State boundaries', 0, 'layers', [{
     f: draw_state_boundaries,
     src: ['/static/json/states-10m.json'],
     w: d3.json

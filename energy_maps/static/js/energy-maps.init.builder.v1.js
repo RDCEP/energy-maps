@@ -229,14 +229,16 @@ let init = (function() {
    * @memberof Init
    */
   const button_columns = [
-    { name: 'oil-and-gas',
+    [{ name: 'oil-and-gas',
+    }],
+    [{ name: 'coal',
     },
-    { name: 'coal',
-    },
-    { name: 'electricity-generation',
-    },
-    { name: 'electricity-transmission-and-distribution',
-    },
+    { name: 'layers'
+    }],
+    [{ name: 'electricity-generation',
+    }],
+    [{ name: 'electricity-transmission-and-distribution',
+    }],
   ];
 
   let cols = button_columns.length;
@@ -247,14 +249,19 @@ let init = (function() {
    */
   let initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
-      let col = button_columns[i];
-      d3.select('.options')
+      let column_divs = d3.select('.options')
         .append('div')
-        .attr('class', () => { return `column ${col.name}`; })
-        .append('h4')
-        .text((d) => { return `${capitalize_first_letter(col.name
-          .replace(/ /g, '\u00A0')
-          .replace(/-/g, '\u00A0'))}`; })
+        .attr('class', () => {return `column`})
+      for (let j = 0; j < button_columns[i].length; j++) {
+        // apend to that column 
+        let col = button_columns[i][j];
+        let column_headers = column_divs.append('div')
+          .attr('class', () => { return `${col.name}`})
+          .append('h4')
+          .text((d) => { return `${capitalize_first_letter(col.name
+            .replace(/ /g, '\u00A0')
+            .replace(/-/g, '\u00A0'))}`; })
+      }
     }
   }
 
