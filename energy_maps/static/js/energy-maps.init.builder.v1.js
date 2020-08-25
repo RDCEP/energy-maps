@@ -463,7 +463,7 @@ let init = (function() {
   }, 500, false);
 
   d3.select(target_canv).call(d3.zoom()
-    .scaleExtent([1, 5])
+    .scaleExtent([1, 50])
     .on('start', zoom_start)
     .on('zoom', zoomed)
     .on('end', zoom_end));
