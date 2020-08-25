@@ -485,23 +485,25 @@ let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas'
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
-          f: draw_all_wells,
-          src: [ `/static/csv/wells_oil.csv` ],
-          w: d3.csv
-        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+  f: draw_all_wells,
+  src: [ `/static/csv/wells_oil.csv` ],
+  w: d3.csv
+} ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
         
-let foreign_oil_wells = { name: 'foreign-oil-wells',
-value: 931_000_000_000,
-draw: false,
-column: 'oil-and-gas',
+let foreign_oil_wells = {
+  name: 'foreign-oil-wells',
+  value: 931_000_000_000,
+  draw: false,
+  column: 'oil-and-gas',
 }
 
-let foreign_gas_wells = { name: 'foreign-gas-wells',
-      value: 63_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    }
+let foreign_gas_wells = {
+  name: 'foreign-gas-wells',
+  value: 63_000_000_000,
+  draw: false,
+  column: 'oil-and-gas',
+}
 
 let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
   f: draw_gas_pipes,
@@ -531,13 +533,13 @@ let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_0
 } ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',
-value: 181_000_000_000,
-draw: false,
+  value: 181_000_000_000,
+  draw: false,
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
 // draw: [ {
 //   f: draw_storage,
 //   src: [ `/static/csv/nproc.csv`],
 //   w: d3.csv
 // } ],
-column: 'oil-and-gas',
+  column: 'oil-and-gas',
 } 
