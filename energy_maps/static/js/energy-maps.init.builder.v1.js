@@ -409,10 +409,11 @@ let init = (function() {
             removeLayer(lyr, transform);
             console.log(lyr.checkbox)
           }
-
-          legend_ctx.clearRect(0, 0, width, height);
-          tmplegend_ctx.clearRect(0, 0, width, height);
-          update_legend(tmplegend_ctx, legend_ctx, layers);
+          if (!(lyr instanceof StateBoundary)) {
+            legend_ctx.clearRect(0, 0, width, height);
+            tmplegend_ctx.clearRect(0, 0, width, height);
+            update_legend(tmplegend_ctx, legend_ctx, layers);
+          }
 
         });
       }
