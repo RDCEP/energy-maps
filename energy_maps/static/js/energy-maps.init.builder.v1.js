@@ -484,6 +484,25 @@ let init = (function() {
     }
   };
 
+  const window_resize = _.debounce(function(e) {
+    console.log('resize')
+    width = window.innerWidth * SCALE;
+    height = window.innerHeight * SCALE;
+    base_canvas
+      .attr('width', width)
+      .attr('height', height);
+    for (let i = 0; i < lay; i++) {
+      layers[i].canvas
+        .attr('width', width)
+        .attr('height', height);
+      layers[i].context.clearRect(0, 0, width, height);
+    }
+    draw_base_map(transform);
+    draw_active_layers(transform);
+  }, 500, false);
+
+  d3.select(window).on('resize', window_resize);
+
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
     let style_height = +getComputedStyle(canvas).getPropertyValue('height').slice(0, -2);
