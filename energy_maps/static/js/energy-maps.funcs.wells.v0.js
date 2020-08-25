@@ -38,7 +38,6 @@ function Well(name, text, value, column, draw, color, legend_color) {
    * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_well_legend(ctx, x, y) {
-    console.log('well symbol');
 
     y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
     draw_circle(ctx, [x, y], this.diameter * 3);
@@ -337,13 +336,16 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 };
 
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
-  console.log('draw_all_wells');
-
   path.context(ctx);
 
   let wells = queued_data[0];
 
-  wells = wells.filter(function(d) { return +d.zoom <= +transform.k; });
+  wells = wells
+    .filter(function(d) { return +d.zoom <= +transform.k; })
+    .filter(function(d) {
+      return boundaries.south <= +d.lat && +d.lat <= boundaries.north })
+    .filter(function(d) {
+      return boundaries.west <= +d.lon && +d.lon <= boundaries.east });
   wells.forEach(function(d, i) {
       let xy = projection([+d.lon, +d.lat]);
       if (xy === null) {
@@ -478,14 +480,13 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
 
 let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
   f: draw_all_wells,
-  src: [ `/static/csv/wells_gas.2.csv` ],
+  src: [ `/static/csv/wells_gas.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
           f: draw_all_wells,
-          src: [ `/static/csv/wells_oil1.csv`,
-                 `/static/csv/wells_oil2.csv` ],
+          src: [ `/static/csv/wells_oil.csv` ],
           w: d3.csv
         } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
