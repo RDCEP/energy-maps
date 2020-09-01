@@ -40,9 +40,11 @@ const legend_drag_started = function legend_drag_started() {
 legend_menu
   // Set horizontal position on page load.
   // Screen width - width of .content-wrap + 100 extra pixels
-  .style('right', `${(width-1200)/2+100}px`)
+  // .style('right', `${(width-1200)/3.2+85}px`) when combined with .style('top', '150px') seems to look decent on a 23" monitor but it's dynamic so idk.
+  // .style('right', `14%`)
+  .style('right', `${document.getElementsByClassName('content-wrap')[0].offsetWidth-970}px`)
   // Set vertical position on page load.
-  .style('top', '300px')
+  .style('top', '150px')
   .call(d3.drag().on('start', legend_drag_started));
 
 legend_toggle.on('click', function() {
