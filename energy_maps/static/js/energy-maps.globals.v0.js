@@ -39,7 +39,7 @@ let width = window.innerWidth * SCALE;
  * @type {number} 
  * @description Map height, set to some fraction of `width`
  */
-const height = window.innerHeight;
+let height = window.innerHeight;
 
 /**
  * @type {Object} 
