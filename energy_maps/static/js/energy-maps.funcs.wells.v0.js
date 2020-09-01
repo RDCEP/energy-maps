@@ -38,7 +38,6 @@ function Well(name, text, value, column, draw, color, legend_color) {
    * @returns {Number} y - updated y axis
    */
   this.draw_legend = function draw_well_legend(ctx, x, y) {
-    console.log('well symbol');
 
     y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
     draw_circle(ctx, [x, y], this.diameter * 3);
@@ -337,37 +336,40 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 };
 
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
-  console.log('draw_all_wells');
-
   path.context(ctx);
 
   let wells = queued_data[0];
 
+  wells = wells
+    .filter(function(d) { return +d.zoom <= +transform.k; })
+    .filter(function(d) {
+      return boundaries.south <= +d.lat && +d.lat <= boundaries.north })
+    .filter(function(d) {
+      return boundaries.west <= +d.lon && +d.lon <= boundaries.east });
   wells.forEach(function(d, i) {
-    // xy converts latitude and longitude string values into numeric values 
-    let xy = projection([+d.lon, +d.lat]);
-    if (xy === null) {
-      return;
-    } else {
-      if (d.oilgas === 'GAS') {
-        if (d.class === 'Off') {
-          draw_off_well(ctx, xy, gas_well.color);
-        } else {
-          draw_well(ctx, xy, gas_well.color);
-        }
+      let xy = projection([+d.lon, +d.lat]);
+      if (xy === null) {
+        return;
       } else {
-        
-        if (d.class === 'Off') {
-          draw_off_well(ctx, xy, oil_well.color);
+        if (d.oilgas === 'GAS') {
+          if (d.class === 'Off') {
+            draw_off_well(ctx, xy, gas_well.color);
+          } else {
+            draw_well(ctx, xy, gas_well.color);
+          }
         } else {
-          draw_well(ctx, xy, oil_well.color);
+          if (d.class === 'Off') {
+            draw_off_well(ctx, xy, oil_well.color);
+          } else {
+            draw_well(ctx, xy, oil_well.color);
+          }
         }
       }
-    }
-    if (i === wells.length - 1) { 
-      hide_spinner();
-     }
-  });
+      if (i === wells.length - 1) {
+
+        hide_spinner();
+      }
+    });
   //;
 };
 
@@ -479,30 +481,30 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
 
 let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
   f: draw_all_wells,
-  src: [ `/static/csv/wells_gas1.csv`,
-         `/static/csv/wells_gas2.csv` ],
+  src: [ `/static/csv/wells_gas.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
-          f: draw_all_wells,
-          src: [ `/static/csv/wells_oil1.csv`,
-                 `/static/csv/wells_oil2.csv` ],
-          w: d3.csv
-        } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+  f: draw_all_wells,
+  src: [ `/static/csv/wells_oil.csv` ],
+  w: d3.csv
+} ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
         
-let foreign_oil_wells = { name: 'foreign-oil-wells',
-value: 931_000_000_000,
-draw: false,
-column: 'oil-and-gas',
+let foreign_oil_wells = {
+  name: 'foreign-oil-wells',
+  value: 931_000_000_000,
+  draw: false,
+  column: 'oil-and-gas',
 }
 
-let foreign_gas_wells = { name: 'foreign-gas-wells',
-      value: 63_000_000_000,
-      draw: false,
-      column: 'oil-and-gas',
-    }
+let foreign_gas_wells = {
+  name: 'foreign-gas-wells',
+  value: 63_000_000_000,
+  draw: false,
+  column: 'oil-and-gas',
+}
 
 let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
   f: draw_gas_pipes,
@@ -532,13 +534,13 @@ let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_0
 } ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',
-value: 181_000_000_000,
-draw: false,
+  value: 181_000_000_000,
+  draw: false,
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
 // draw: [ {
 //   f: draw_storage,
 //   src: [ `/static/csv/nproc.csv`],
 //   w: d3.csv
 // } ],
-column: 'oil-and-gas',
+  column: 'oil-and-gas',
 } 

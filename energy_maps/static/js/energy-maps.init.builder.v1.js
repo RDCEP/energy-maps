@@ -229,14 +229,16 @@ let init = (function() {
    * @memberof Init
    */
   const button_columns = [
-    { name: 'oil-and-gas',
+    [{ name: 'oil-and-gas',
+    }],
+    [{ name: 'coal',
     },
-    { name: 'coal',
-    },
-    { name: 'electricity-generation',
-    },
-    { name: 'electricity-transmission-and-distribution',
-    },
+    { name: 'layers'
+    }],
+    [{ name: 'electricity-generation',
+    }],
+    [{ name: 'electricity-transmission-and-distribution',
+    }],
   ];
 
   let cols = button_columns.length;
@@ -247,14 +249,19 @@ let init = (function() {
    */
   let initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
-      let col = button_columns[i];
-      d3.select('.options')
+      let column_divs = d3.select('.options')
         .append('div')
-        .attr('class', () => { return `column ${col.name}`; })
-        .append('h4')
-        .text((d) => { return `${capitalize_first_letter(col.name
-          .replace(/ /g, '\u00A0')
-          .replace(/-/g, '\u00A0'))}`; })
+        .attr('class', () => {return `column`})
+      for (let j = 0; j < button_columns[i].length; j++) {
+        // apend to that column 
+        let col = button_columns[i][j];
+        let column_headers = column_divs.append('div')
+          .attr('class', () => { return `${col.name}`})
+          .append('h4')
+          .text((d) => { return `${capitalize_first_letter(col.name
+            .replace(/ /g, '\u00A0')
+            .replace(/-/g, '\u00A0'))}`; })
+      }
     }
   }
 
@@ -402,10 +409,11 @@ let init = (function() {
             removeLayer(lyr, transform);
             console.log(lyr.checkbox)
           }
-
-          legend_ctx.clearRect(0, 0, width, height);
-          tmplegend_ctx.clearRect(0, 0, width, height);
-          update_legend(tmplegend_ctx, legend_ctx, layers);
+          if (!(lyr instanceof StateBoundary)) {
+            legend_ctx.clearRect(0, 0, width, height);
+            tmplegend_ctx.clearRect(0, 0, width, height);
+            update_legend(tmplegend_ctx, legend_ctx, layers);
+          }
 
         });
       }
@@ -455,7 +463,7 @@ let init = (function() {
   }, 500, false);
 
   d3.select(target_canv).call(d3.zoom()
-    .scaleExtent([1, 5])
+    .scaleExtent([1, 50])
     .on('start', zoom_start)
     .on('zoom', zoomed)
     .on('end', zoom_end));
@@ -483,6 +491,25 @@ let init = (function() {
       }
     }
   };
+
+  const window_resize = _.debounce(function(e) {
+    console.log('resize')
+    width = window.innerWidth * SCALE;
+    height = window.innerHeight * SCALE;
+    base_canvas
+      .attr('width', width)
+      .attr('height', height);
+    for (let i = 0; i < lay; i++) {
+      layers[i].canvas
+        .attr('width', width)
+        .attr('height', height);
+      layers[i].context.clearRect(0, 0, width, height);
+    }
+    draw_base_map(transform);
+    draw_active_layers(transform);
+  }, 500, false);
+
+  d3.select(window).on('resize', window_resize);
 
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
