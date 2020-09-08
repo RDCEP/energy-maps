@@ -38,7 +38,7 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
     output_geojson = simplify("states", queued_data);
   
     ctx.strokeStyle = state_boundaries.stroke;
-    ctx.lineWidth = state_boundaries.width;
+    ctx.lineWidth = state_boundaries.width / transform.k;
     ctx.beginPath();
     path(output_geojson);
     ctx.stroke();
