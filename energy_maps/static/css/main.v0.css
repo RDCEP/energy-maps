@@ -179,6 +179,7 @@ footer p.nsf {
   position: absolute;
 }
 .window.menu {
+  cursor: move;
   padding: 0.5em 1em;
   border: 1px solid #cccccc;
   border-bottom-width: 0;
@@ -290,7 +291,6 @@ footer p.nsf {
   z-index: 901;
 }
 .legend.menu {
-  cursor: move;
   z-index: 1;
 }
 .legend.menu h6 {
