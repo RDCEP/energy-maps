@@ -233,7 +233,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 
   ctx.lineCap = 'round';
   ctx.strokeStyle = gas_pipeline.stroke;
-  ctx.lineWidth = gas_pipeline.width;
+  ctx.lineWidth = gas_pipeline.width / transform.k;
   ctx.beginPath();
   path(pipe_data);
   ctx.stroke();
@@ -247,7 +247,7 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   let oil_prod_pipe_data = queued_data[0];
   const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
     oil_product.dash + 2 * oil_product.width ];
-  ctx.lineWidth = oil_product.width;
+  ctx.lineWidth = oil_product.width / transform.k;
   ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
   ctx.beginPath();
@@ -263,7 +263,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   
   let oil_pipe_data = queued_data[0];
   ctx.strokeStyle = oil_pipeline.stroke;
-  ctx.lineWidth = oil_pipeline.width;
+  ctx.lineWidth = oil_pipeline.width / transform.k;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
