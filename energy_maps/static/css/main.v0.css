@@ -41,13 +41,15 @@ main .content-wrap {
 }
 
 footer {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
   margin: 3em 0 6em;
   color: #c5c5c5;
   font-size: 0.8em;
   border-top: 1px solid #ababab;
   padding: 30px 0 60px;
+  bottom: 0;
 }
 footer img {
   display: inline-block;
@@ -155,63 +157,13 @@ footer p.nsf {
   width: 100%;
 }
 
-.options-outer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  z-index: 5;
-}
-.options-outer .bkgd {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: white;
-  opacity: 0.6;
-  z-index: 1;
-}
-.options-outer .options {
-  margin: 1em 1%;
-}
-.options-outer .options .column {
-  width: 24.25%;
-  float: left;
-  position: relative;
-  z-index: 2;
-}
-.options-outer .options .column + .column {
-  margin: 0 0 0 1%;
-}
-.options-outer .options .column h4 {
-  padding: 0.5em 0;
-  margin: 0;
-  border-top: 2px solid black;
-  border-bottom: 1px solid black;
-}
-.options-outer label {
-  display: block;
-  border-bottom: 1px solid black;
-  padding: 0.33em 0;
-}
-.options-outer label.inactive {
-  color: #767676;
-}
-.options-outer label .asset-value {
-  font-size: 0.8em;
-}
-.options-outer label input {
-  position: absolute;
-  right: 2px;
-}
-
 .map.wrapper {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
+  z-index: 800;
 }
 .map.builder {
   position: absolute;
@@ -223,18 +175,15 @@ footer p.nsf {
   height: 100%;
   width: 100%;
 }
-.legend.main {
+.window.main {
   position: absolute;
-  width: 400px;
 }
-.legend.menu {
+.window.menu {
   padding: 0.5em 1em;
   border: 1px solid #cccccc;
   border-bottom-width: 0;
-  cursor: move;
-  z-index: 1;
 }
-.legend.menu .toggle {
+.window.menu .toggle {
   position: absolute;
   right: 1.414em;
   top: 1.25em;
@@ -245,14 +194,104 @@ footer p.nsf {
   cursor: pointer !important;
   z-index: 10;
 }
-.legend.menu .toggle.close {
+.window.menu .toggle.close {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
 }
-.legend.menu .toggle.open {
+.window.menu .toggle.open {
   top: 1em;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+.window.menu .canvas {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  right: -1px;
+  min-height: 0px;
+  border: 1px solid #cccccc;
+  border-top-width: 0;
+}
+.window.menu .canvas.closed {
+  height: 0;
+  overflow: hidden;
+}
+.window .bkgd {
+  background-color: white;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+.window h6 {
+  position: relative;
+  padding: 0.25em 0;
+  margin: 0;
+  z-index: 2;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+
+.options.main {
+  width: 100%;
+  z-index: 900;
+}
+.options.main.menu {
+  position: absolute;
+  top: 60%;
+  right: -1em;
+  padding-bottom: 0;
+}
+.options.main .canvas {
+  padding: 0 1em 0.5em;
+}
+.options.main .bkgd {
+  opacity: 0.6;
+}
+.options.main h6 {
+  border-bottom: none;
+}
+.options.main .options .column {
+  width: 24.25%;
+  float: left;
+  position: relative;
+  z-index: 2;
+}
+.options.main .options .column + .column {
+  margin: 0 0 0 1%;
+}
+.options.main .options .column h4 {
+  padding: 0.5em 0;
+  margin: 0;
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+.options.main label {
+  display: block;
+  border-bottom: 1px solid black;
+  padding: 0.33em 0;
+}
+.options.main label.inactive {
+  color: #767676;
+}
+.options.main label .asset-value {
+  font-size: 0.8em;
+}
+.options.main label input {
+  position: absolute;
+  right: 2px;
+}
+
+.legend.main {
+  width: 400px;
+  z-index: 901;
+}
+.legend.menu {
+  cursor: move;
+  z-index: 1;
 }
 .legend.menu h6 {
   position: relative;
@@ -262,30 +301,8 @@ footer p.nsf {
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
-.legend.menu .canvas {
-  position: absolute;
-  top: 100%;
-  left: -1px;
-  right: -1px;
-  min-height: 0px;
-  border: 1px solid #cccccc;
-  border-top-width: 0;
-}
-.legend.menu .canvas .closed {
-  height: 0;
-}
 .legend.menu .tmpcanvas {
   display: none;
-}
-.legend.menu .bkgd {
-  background-color: white;
-  opacity: 0.8;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
 }
 .legend canvas {
   position: relative;

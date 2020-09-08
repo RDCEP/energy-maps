@@ -249,7 +249,7 @@ let init = (function() {
    */
   let initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
-      let column_divs = d3.select('.options')
+      let column_divs = d3.select('.options.canvas')
         .append('div')
         .attr('class', () => {return `column`})
       for (let j = 0; j < button_columns[i].length; j++) {
@@ -519,5 +519,55 @@ let init = (function() {
       .attr('height', style_height * dpi)
       .attr('width', style_width * dpi)
   }
+
+  const toggles = d3.selectAll('.window .toggle');
+
+  toggles.on('click', function() {
+    console.log('click')
+    let closed = d3.select(this).classed('open');
+    // Toggle legend visibility
+    d3.select(this.parentNode).select('.canvas')
+      .classed('closed', closed)
+      .classed('closed', !closed);
+    // Toggle state of visibility icon
+    d3.select(this)
+      .classed('open', !closed)
+      .classed('close', closed);
+  });
+
+  const window_menus = d3.selectAll('.window.menu');
+
+  const window_drag_started = function window_drag_started() {
+
+    d3.event.on('drag', dragged).on('end', ended);
+
+    function dragged() {
+      let that = d3.select(this);
+      that
+        .style('right', `${
+          parseInt(that.style('right'), 10) - d3.event.dx}px`)
+        .style('top', `${
+          parseInt(that.style('top'), 10) + d3.event.dy}px`);
+    }
+
+    function ended() {
+      //
+    }
+  }
+
+  window_menus
+    // Set horizontal position of legend on page load.
+    // Screen width - width of .content-wrap + 100 extra pixels
+    .style('right', function() { if (d3.select(this).classed('legend')) {
+      return `${(width-1200)/2+100}px`;
+    }})
+    // Set vertical position of legend on page load.
+    .style('top', function() { if (d3.select(this).classed('legend')) {
+      return `${300}px`;
+    }})
+    .call(d3.drag().on('start', window_drag_started));
+
+
+
 
 })();

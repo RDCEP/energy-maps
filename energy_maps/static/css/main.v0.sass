@@ -24,13 +24,15 @@ main
     position: relative
     height: 100%
 footer
-  position: relative
-  z-index: 2
+  position: absolute
+  width: 100%
+  z-index: 1
   margin: 3em 0 6em
   color: #c5c5c5
   font-size: .8em
   border-top: 1px solid #ababab
   padding: 30px 0 60px
+  bottom: 0
   img
     display: inline-block
     margin-right: 30px
@@ -112,23 +114,93 @@ footer
       font-size: 1em
       width: 100%
 
+.map
+  &.wrapper
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 800
+  &.builder
+    position: absolute
+    width: 100%
+    height: 100%
+  &.layer
+    position: absolute
+    height: 100%
+    width: 100%
+    //pointer-events: none
+    &.base-map
+      //pointer-events: all
 
-.options-outer
-  position: absolute
-  bottom: 0
-  width: 100%
-  z-index: 5
+.window
+  &.main
+    position: absolute
+  &.menu
+    padding: .5em 1em
+    border: 1px solid #cccccc
+    border-bottom-width: 0
+    .toggle
+      position: absolute
+      right: 1.414em
+      top: 1.25em
+      border: solid black
+      border-width: 0 .1em .1em 0
+      display: inline-block
+      padding: .33em
+      cursor: pointer!important
+      z-index: 10
+      &.close
+        transform: rotate(-135deg)
+        -webkit-transform: rotate(-135deg)
+      &.open
+        top: 1em
+        transform: rotate(45deg)
+        -webkit-transform: rotate(45deg)
+    .canvas
+      position: absolute
+      top: 100%
+      left: -1px
+      right: -1px
+      min-height: 0px
+      border: 1px solid #cccccc
+      border-top-width: 0
+      &.closed
+        height: 0
+        overflow: hidden
   .bkgd
+    background-color: white
+    opacity: .8
     position: absolute
     top: 0
     right: 0
     bottom: 0
     left: 0
-    background-color: white
-    opacity: .6
     z-index: 1
+  h6
+    position: relative
+    padding: .25em 0
+    margin: 0
+    z-index: 2
+    border-top: 2px solid black
+    border-bottom: 1px solid black
+
+.options.main
+  width: 100%
+  z-index: 900
+  &.menu
+    position: absolute
+    top: 60%
+    right: -1em
+    padding-bottom: 0
+  .canvas
+    padding: 0 1em .5em
+  .bkgd
+    opacity: .6
+  h6
+    border-bottom: none
   .options
-    margin: 1em 1%
     .column
       width: 24.25%
       float: left
@@ -152,52 +224,14 @@ footer
     input
       position: absolute
       right: 2px
-.map
-  &.wrapper
-    position: fixed
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
-    z-index: 1
-  &.builder
-    position: absolute
-    width: 100%
-    height: 100%
-  &.layer
-    position: absolute
-    height: 100%
-    width: 100%
-    //pointer-events: none
-    &.base-map
-      //pointer-events: all
+
 .legend
   &.main
-    position: absolute
     width: 400px
+    z-index: 901
   &.menu
-    padding: .5em 1em
-    border: 1px solid #cccccc
-    border-bottom-width: 0
     cursor: move
     z-index: 1
-    .toggle
-      position: absolute
-      right: 1.414em
-      top: 1.25em
-      border: solid black
-      border-width: 0 .1em .1em 0
-      display: inline-block
-      padding: .33em
-      cursor: pointer!important
-      z-index: 10
-      &.close
-        transform: rotate(-135deg)
-        -webkit-transform: rotate(-135deg)
-      &.open
-        top: 1em
-        transform: rotate(45deg)
-        -webkit-transform: rotate(45deg)
     h6
       position: relative
       padding: .25em 0
@@ -205,30 +239,12 @@ footer
       z-index: 2
       border-top: 2px solid black
       border-bottom: 1px solid black
-    .canvas
-      position: absolute
-      top: 100%
-      left: -1px
-      right: -1px
-      min-height: 0px
-      border: 1px solid #cccccc
-      border-top-width: 0
-      .closed
-        height: 0
     .tmpcanvas
       display: none
-    .bkgd
-      background-color: white
-      opacity: .8
-      position: absolute
-      top: 0
-      right: 0
-      bottom: 0
-      left: 0
-      z-index: 1
   canvas
     position: relative
     z-index: 2
+
 .base-map
   z-index: 0
 .zoom-target
