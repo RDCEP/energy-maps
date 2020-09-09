@@ -453,7 +453,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
   ctx.fillStyle = gas_processing.fill;
-  draw_triangle(ctx, xy, gas_processing.size / transform.k);
+  draw_triangle(ctx, xy, gas_processing.size);
   ctx.fill();
 };
 
