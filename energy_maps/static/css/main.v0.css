@@ -23,11 +23,11 @@ a {
 
 body, html {
   height: 100%;
+  margin: 0;
 }
 
 header {
   position: relative;
-  z-index: 2;
   pointer-events: none;
 }
 
@@ -41,15 +41,13 @@ main .content-wrap {
 }
 
 footer {
-  position: absolute;
   width: 100%;
   z-index: 1;
-  margin: 3em 0 6em;
+  margin: 3em 0;
   color: #c5c5c5;
   font-size: 0.8em;
   border-top: 1px solid #ababab;
-  padding: 30px 0 60px;
-  bottom: 0;
+  padding: 2em 0;
 }
 footer img {
   display: inline-block;
@@ -87,70 +85,91 @@ footer p.nsf {
   margin: 0 auto;
 }
 
+.bkgd {
+  background-color: white;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .title.container {
   position: relative;
   width: 100%;
-  height: 50px;
-  padding: 5px 0;
-  border-bottom: 2px solid #b2b2b2;
+  padding-top: 1em;
 }
 .title.container + .container {
-  border-bottom: 1px solid #b2b2b2;
+  margin: 0 0 0 100px;
+  padding: 0 0 0 1em;
 }
-.title.container + .container + .container {
-  height: 25px;
+.title.container + .container section {
+  margin: 0 0 0.33em 0;
 }
-.title.container section {
-  float: left;
-  display: block;
-  position: relative;
-  height: 100%;
+.title.container .bkgd {
+  opacity: 0.5;
+  z-index: 905;
 }
-.title.container section:first-child {
-  font-size: 2em;
-}
-.title.container section span {
-  position: absolute;
-  bottom: 0;
+.title.container .shim {
+  padding: 1em;
 }
 .title.container .site-title {
-  width: 65%;
+  font-size: 2em;
+  line-height: 1em;
+  z-index: 905;
+  position: relative;
+  width: 70%;
+  margin-left: 100px;
 }
-.title.container .site-links {
-  width: 20%;
+.title.container .site-title h1 {
+  margin: 0;
+}
+.title.container .site-logo {
+  width: 100px;
+  position: absolute;
+  right: 100%;
+  bottom: -8px;
+  z-index: 905;
+}
+.title.container .site-logo a {
+  position: relative;
+  z-index: 905;
+}
+.title.container .site-logo img {
+  height: 40px;
+}
+.title.container .graph-title {
+  position: absolute;
+  line-height: 1em;
+  bottom: 0;
+  z-index: 905;
+  font-size: 0.5em;
+  padding-left: 2em;
+}
+.title.container .graph-title span + span {
+  position: absolute;
+  bottom: 1em;
+  display: block;
+  left: 100%;
+  padding-left: 0.25em;
+  width: 300px;
+}
+.title.container .graph-title span + span + span {
+  position: absolute;
+  bottom: 0;
 }
 .title.container .site-links .about-contact {
   pointer-events: auto;
 }
-.title.container .logo {
+.title.container #asset-totals {
+  font-size: 2.4em;
   width: 10%;
-}
-.title.container .logo img {
-  height: 40px;
-  position: relative;
-  top: 5px;
-}
-.title.container .graph-title {
-  width: 15%;
-}
-.title.container .asset-total {
-  width: 10%;
-}
-.title.container .citation {
-  width: 30%;
+  z-index: 905;
+  font-weight: bold;
 }
 .title.container .citation a {
   pointer-events: auto;
-}
-.title.container .affiliation {
-  width: 30%;
-}
-.title.container #asset-totals {
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1;
-  margin: 0;
-  padding: 0;
 }
 .title.container #builder-headline {
   font-size: 1em;
@@ -217,21 +236,10 @@ footer p.nsf {
   height: 0;
   overflow: hidden;
 }
-.window .bkgd {
-  background-color: white;
-  opacity: 0.8;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-}
 .window h6 {
   position: relative;
   padding: 0.25em 0;
   margin: 0;
-  z-index: 2;
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
@@ -345,7 +353,9 @@ footer p.nsf {
   display: none;
   width: 200px;
   height: 200px;
-  margin: 200px 0 0 375px;
+  left: 50%;
+  top: 30%;
+  margin-left: -100px;
   z-index: 1000;
 }
 

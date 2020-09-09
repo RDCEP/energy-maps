@@ -13,9 +13,9 @@ a
   color: inherit
 body, html
   height: 100%
+  margin: 0
 header
   position: relative
-  z-index: 2
   pointer-events: none
 main
   height: 85%
@@ -24,15 +24,15 @@ main
     position: relative
     height: 100%
 footer
-  position: absolute
+  //position: absolute
   width: 100%
   z-index: 1
-  margin: 3em 0 6em
+  margin: 3em 0
   color: #c5c5c5
   font-size: .8em
   border-top: 1px solid #ababab
-  padding: 30px 0 60px
-  bottom: 0
+  padding: 2em 0
+  //bottom: 0
   img
     display: inline-block
     margin-right: 30px
@@ -60,56 +60,83 @@ footer
 .content-wrap
   width: 1200px
   margin: 0 auto
-
+.bkgd
+  background-color: white
+  opacity: .8
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
 .title
+  //section
+  //  float: left
   &.container
     position: relative
     width: 100%
-    height: 50px
-    padding: 5px 0
-    border-bottom: 2px solid #b2b2b2
+    padding-top: 1em
     &+.container
-      border-bottom: 1px solid #b2b2b2
-      &+.container
-        height: 25px
-    section
-      float: left
-      display: block
-      position: relative
-      height: 100%
-      &:first-child
-        font-size: 2em
-      span
-        position: absolute
-        bottom: 0
+      margin: 0 0 0 100px
+      padding: 0 0 0 1em
+      section
+        margin: 0 0 .33em 0
+
+    .bkgd
+      opacity: .5
+      z-index: 905
+    .shim
+      padding: 1em
     .site-title
-      width: 65%
-    .site-links
-      width: 20%
-      .about-contact
-        pointer-events: auto
-    .logo
-      width: 10%
+      font-size: 2em
+      line-height: 1em
+      z-index: 905
+      position: relative
+      width: 70%
+      margin-left: 100px
+      h1
+        margin: 0
+    .site-logo
+      width: 100px
+      position: absolute
+      right: 100%
+      bottom: -8px
+      z-index: 905
+      a
+        position: relative
+        z-index: 905
       img
         height: 40px
-        position: relative
-        top: 5px
+        //top: 5px
     .graph-title
-      width: 15%
-    .asset-total
+      position: absolute
+      line-height: 1em
+      bottom: 0
+      z-index: 905
+      font-size: .5em
+      padding-left: 2em
+      span+span
+        position: absolute
+        bottom: 1em
+        display: block
+        left: 100%
+        padding-left: .25em
+        width: 300px
+      span+span+span
+        position: absolute
+        bottom: 0
+    .site-links
+      .about-contact
+        pointer-events: auto
+
+    #asset-totals
+      font-size: 2.4em
       width: 10%
+      z-index: 905
+      font-weight: bold
     .citation
-      width: 30%
       a
         pointer-events: auto
-    .affiliation
-      width: 30%
-    #asset-totals
-      font-size: 1.5rem
-      font-weight: bold
-      line-height: 1
-      margin: 0
-      padding: 0
+
     #builder-headline
       font-size: 1em
       width: 100%
@@ -170,20 +197,10 @@ footer
       &.closed
         height: 0
         overflow: hidden
-  .bkgd
-    background-color: white
-    opacity: .8
-    position: absolute
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
-    z-index: 1
   h6
     position: relative
     padding: .25em 0
     margin: 0
-    z-index: 2
     border-top: 2px solid black
     border-bottom: 1px solid black
 
@@ -269,11 +286,9 @@ footer
   display: none
   width: 200px
   height: 200px
-  //top: 45%
-  //left: 45%
-  //width: 4em
-  //height: 4em
-  margin: 200px 0 0 375px
+  left: 50%
+  top: 30%
+  margin-left: -100px
   z-index: 1000
 .boundary
   &.ocean
