@@ -115,7 +115,7 @@ footer p.nsf {
   padding: 1em;
 }
 .title.container .site-title {
-  font-size: 2em;
+  font-size: 2.4em;
   line-height: 1em;
   z-index: 905;
   position: relative;
@@ -123,13 +123,15 @@ footer p.nsf {
   margin-left: 100px;
 }
 .title.container .site-title h1 {
+  position: relative;
   margin: 0;
 }
 .title.container .site-logo {
-  width: 100px;
+  width: 4rem;
   position: absolute;
+  padding-right: 5px;
   right: 100%;
-  bottom: -8px;
+  top: 0;
   z-index: 905;
 }
 .title.container .site-logo a {
@@ -137,7 +139,7 @@ footer p.nsf {
   z-index: 905;
 }
 .title.container .site-logo img {
-  height: 40px;
+  width: 100%;
 }
 .title.container .graph-title {
   position: absolute;
@@ -158,6 +160,9 @@ footer p.nsf {
 .title.container .graph-title span + span + span {
   position: absolute;
   bottom: 0;
+}
+.title.container .site-links {
+  font-size: 1rem;
 }
 .title.container .site-links .about-contact {
   pointer-events: auto;
