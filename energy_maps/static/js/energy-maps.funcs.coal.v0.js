@@ -59,7 +59,7 @@ function CoalMine(name, text, value, column, draw) {
   this.draw_legend = function draw_coalmine_legend(ctx, x, y) {
     y += VERTICAL_INCREMENT;
     // TODO: decouple this func invocation from oil 
-    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size); // TODO: Document or extract these magic numbers
+    draw_mine(ctx, [x, y], false, 1000000000*oil_refinery.size, true); // TODO: Document or extract these magic numbers
     let text = this.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -121,19 +121,28 @@ function setRadius(radius, scale) {
  * @param {Array} xy - Array of xy coordinates 
  * @param {Object} color
  * @param {Number} r - Radius. 
+ * @param {Boolean} is_legend - Flag to determine whether the mine is being drawn to the legend.
  */
-const draw_mine = function draw_mine(ctx, xy, color, r) {
+const draw_mine = function draw_mine(ctx, xy, color, r, is_legend) {
   const NUM_SIDES_MINE = 5;
-  r = setRadius(r, coal_mine.scale);
+  // Without this condition, the mine scales on the legend too.
+  if (is_legend) {
+    r = setRadius(r, coal_mine.scale)  
+  } else {
+    r = setRadius(r, coal_mine.scale / transform.k);
+  }
   ctx.strokeStyle = coal_mine.stroke;
-  ctx.strokeWidth = coal_mine.width;
+  ctx.strokeWidth = coal_mine.width / transform.k;
   ctx.fillStyle = coal_mine.fill;
   ctx.beginPath();
   draw_polygon(NUM_SIDES_MINE, ctx, r, xy)
   ctx.fill();
-  // TODO: what happens if r <= 8? Is this to filter out points that are so small that they are insignificant?
-  if (r > 8) {
-    ctx.stroke();
+
+  const draw_white_outline = function draw_white_outline() {
+    let OUTLINE_THRESHOLD = 8 / transform.k;
+    if (r > OUTLINE_THRESHOLD) {
+      ctx.stroke();
+    }
   }
 };
 
@@ -145,29 +154,26 @@ const draw_mine = function draw_mine(ctx, xy, color, r) {
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
   path.context(ctx);
-  // TODO: why tf is this wells? Is this a duplicate of something related to the wells?
-  let wells = queued_data[0];
+  let mines = queued_data[0];
 
   // Sort in descending order so large mines don't
   // obscure small mines. Unary '+' operator used to return the numeric rather
   // than string values to tot_prod
-  wells.sort(function(a, b) {
+  mines.sort(function(a, b) {
     return d3.descending(+a.tot_prod, +b.tot_prod);
   });
 
-  wells.forEach(function(d, i) {
+  mines.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
     if (xy === null) {
       //
     } else {
-      // console.log(d.tot_prod);
       draw_mine(ctx, xy, viz.black, +d.tot_prod);
     }
-    if (i === wells.length - 1) { 
+    if (i === mines.length - 1) { 
       hide_spinner(); 
     }
   });
-  // //;
 };
 
 /**
@@ -182,12 +188,11 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   output_geojson = simplify("railrdl020", queued_data);
 
   ctx.strokeStyle = railroad.stroke;
-  ctx.lineWidth = railroad.width;
+  ctx.lineWidth = railroad.width / transform.k;
   ctx.beginPath();
   path(output_geojson);
   ctx.stroke();
   hide_spinner();
-  //;
 };
 
 let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {

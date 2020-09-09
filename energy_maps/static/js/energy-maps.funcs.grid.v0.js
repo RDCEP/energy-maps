@@ -71,7 +71,7 @@ const filter_features = function filter_features(infrastructure, c) {
  */
 const set_line_width = function set_line_width(value, divisor) {
   // TODO: Set nominal voltage as a property of the grid object
-  return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1))));
+  return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1)))) / transform.k;
 }
 
 /**

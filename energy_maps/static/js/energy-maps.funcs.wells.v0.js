@@ -233,7 +233,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 
   ctx.lineCap = 'round';
   ctx.strokeStyle = gas_pipeline.stroke;
-  ctx.lineWidth = gas_pipeline.width;
+  ctx.lineWidth = gas_pipeline.width / transform.k;
   ctx.beginPath();
   path(pipe_data);
   ctx.stroke();
@@ -247,7 +247,7 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   let oil_prod_pipe_data = queued_data[0];
   const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
     oil_product.dash + 2 * oil_product.width ];
-  ctx.lineWidth = oil_product.width;
+  ctx.lineWidth = oil_product.width / transform.k;
   ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
   ctx.beginPath();
@@ -263,7 +263,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   
   let oil_pipe_data = queued_data[0];
   ctx.strokeStyle = oil_pipeline.stroke;
-  ctx.lineWidth = oil_pipeline.width;
+  ctx.lineWidth = oil_pipeline.width / transform.k;
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
@@ -291,18 +291,18 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
   ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas.wells.stroke;
+  ctx.strokeWidth = oil_and_gas.wells.stroke / transform.k;
   ctx.fillStyle = color;
   ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas.wells.diameter);
+  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k);
   ctx.stroke();
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas.wells.stroke;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
   ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas.wells.cross);
+  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k);
   ctx.stroke();
 };
 
@@ -439,12 +439,12 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   oref.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
-    draw_oil_refinery(ctx, xy, d.r);
+    draw_oil_refinery(ctx, xy, d.r / transform.k);
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
-    ctx.lineWidth = oil_and_gas.processing.stroke.width;
+    ctx.lineWidth = oil_and_gas.processing.stroke.width / transform.k;
     ctx.beginPath();
     // draw the outline
-    draw_polygon(6, ctx, oil_refinery.size * d.r, xy)
+    draw_polygon(6, ctx, oil_refinery.size * d.r / transform.k, xy)
     ctx.stroke();
   });
   //;
