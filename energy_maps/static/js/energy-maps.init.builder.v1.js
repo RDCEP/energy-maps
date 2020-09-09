@@ -450,6 +450,7 @@ let init = (function() {
     for (let i = 0; i < lay; i++) {
       layers[i].context.clearRect(0, 0, width, height);
     }
+    transform = d3.event.transform;
   };
 
   const zoomed = function zoomed() {
