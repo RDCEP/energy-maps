@@ -462,11 +462,19 @@ let init = (function() {
     draw_active_layers(transform);
   }, 500, false);
 
-  // d3.select(target_canv).call(d3.zoom()
-  //   .scaleExtent([1, 50])
-  //   .on('start', zoom_start)
-  //   .on('zoom', zoomed)
-  //   .on('end', zoom_end));
+  let dev_url = "http://127.0.0.1:5000/builder_zoom_beta"
+  let dev_url_after_clicking_modal = "http://127.0.0.1:5000/builder_zoom_beta#"
+  let prod_url = "http://us.infrastructure.rdcep.org/builder_zoom_beta"
+  let prod_url_after_clicking_modal = "http://us.infrastructure.rdcep.org/builder_zoom_beta#"
+  
+  if (window.location.href == dev_url || window.location.href == dev_url_after_clicking_modal || window.location.href == prod_url || window.location.href == prod_url_after_clicking_modal) {
+    console.log("zoom enabled in beta")  
+    d3.select(target_canv).call(d3.zoom()
+      .scaleExtent([1, 50])
+      .on('start', zoom_start)
+      .on('zoom', zoomed)
+      .on('end', zoom_end));
+  }
 
   // FIXME: This probably doesn't belong here in the code.
   // From: https://stackoverflow.com/questions/41607804/promise-each-without-bluebird
