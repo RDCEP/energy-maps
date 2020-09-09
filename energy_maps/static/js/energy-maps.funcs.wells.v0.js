@@ -291,18 +291,18 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
   ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas.wells.stroke;
+  ctx.strokeWidth = oil_and_gas.wells.stroke / transform.k;
   ctx.fillStyle = color;
   ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas.wells.diameter);
+  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k);
   ctx.stroke();
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas.wells.stroke;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
   ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas.wells.cross);
+  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k);
   ctx.stroke();
 };
 
@@ -439,12 +439,12 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   oref.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
-    draw_oil_refinery(ctx, xy, d.r);
+    draw_oil_refinery(ctx, xy, d.r / transform.k);
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
-    ctx.lineWidth = oil_and_gas.processing.stroke.width;
+    ctx.lineWidth = oil_and_gas.processing.stroke.width / transform.k;
     ctx.beginPath();
     // draw the outline
-    draw_polygon(6, ctx, oil_refinery.size * d.r, xy)
+    draw_polygon(6, ctx, oil_refinery.size * d.r / transform.k, xy)
     ctx.stroke();
   });
   //;
@@ -453,7 +453,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 const draw_gas_processor = function draw_gas_processor(ctx, xy) {
   ctx.beginPath();
   ctx.fillStyle = gas_processing.fill;
-  draw_triangle(ctx, xy, gas_processing.size);
+  draw_triangle(ctx, xy, gas_processing.size / transform.k);
   ctx.fill();
 };
 
