@@ -563,7 +563,8 @@ let init = (function() {
     }})
     // Set vertical position of legend on page load.
     .style('top', function() { if (d3.select(this).classed('legend')) {
-      return `${300}px`;
+      let header_height = d3.select('header').node().offsetHeight;
+      return `${header_height}px`;
     }})
     .call(d3.drag().on('start', window_drag_started));
 
