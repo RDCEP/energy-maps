@@ -140,9 +140,9 @@ let transform = {x:0, y:0, k:1};    // Kludge for pan/zoom. Need to track transf
 let boundaries = {north: null, east: null, south: null, west:null}
 let content_width = d3.select('main .content-wrap').node().offsetWidth;  // width of content area in center of screen
 let header_height = d3.select('header').node().offsetHeight;  // height of header area
-let projection_scale =  content_width * 1.2;  // scale to fill content area
+let projection_scale =  content_width;  // scale to fill content area
 let projection_width = width / 2;
-let projection_height = projection_width / 2 + header_height
+let projection_height = projection_width / 3 + header_height;
 
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
