@@ -142,7 +142,7 @@ let content_width = d3.select('main .content-wrap').node().offsetWidth;  // widt
 let header_height = d3.select('header').node().offsetHeight;  // height of header area
 let projection_scale =  content_width * 1.2;  // scale to fill content area
 let projection_width = width / 2;
-let projection_height = header_height + projection_width / 2 + 50;  // place map below header
+let projection_height = projection_width / 2 + header_height
 
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
