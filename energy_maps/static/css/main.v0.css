@@ -27,7 +27,9 @@ body, html {
 }
 
 header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  width: 100%;
   pointer-events: none;
 }
 
@@ -41,13 +43,14 @@ main .content-wrap {
 }
 
 footer {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   z-index: 1;
-  margin: 3em 0;
   color: #c5c5c5;
   font-size: 0.8em;
   border-top: 1px solid #ababab;
-  padding: 2em 0;
+  padding: 1em 0 1.5em;
 }
 footer img {
   display: inline-block;
@@ -55,11 +58,11 @@ footer img {
 }
 footer img.nsf {
   clear: left;
-  height: 80px;
+  height: 40px;
   float: left;
 }
 footer img.rdcep {
-  height: 80px;
+  height: 40px;
   float: left;
 }
 footer p {
@@ -69,7 +72,7 @@ footer p {
 }
 footer p.nsf {
   width: 300px;
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .wrap {
@@ -98,7 +101,6 @@ footer p.nsf {
 .title.container {
   position: relative;
   width: 100%;
-  padding-top: 1em;
 }
 .title.container + .container {
   margin: 0 0 0 100px;

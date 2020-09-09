@@ -15,7 +15,9 @@ body, html
   height: 100%
   margin: 0
 header
-  position: relative
+  position: absolute
+  top: 0
+  width: 100%
   pointer-events: none
 main
   height: 85%
@@ -24,24 +26,24 @@ main
     position: relative
     height: 100%
 footer
-  //position: absolute
+  position: absolute
+  bottom: 0
   width: 100%
   z-index: 1
-  margin: 3em 0
   color: #c5c5c5
   font-size: .8em
   border-top: 1px solid #ababab
-  padding: 2em 0
+  padding: 1em 0 1.5em
   //bottom: 0
   img
     display: inline-block
     margin-right: 30px
     &.nsf
       clear: left
-      height: 80px
+      height: 40px
       float: left
     &.rdcep
-      height: 80px
+      height: 40px
       float: left
   p
     float: left
@@ -49,7 +51,7 @@ footer
     margin-right: 30px
     &.nsf
       width: 300px
-      margin-top: 25px
+      margin-top: 5px
 
 .wrap
   width: 1200px
@@ -74,7 +76,6 @@ footer
   &.container
     position: relative
     width: 100%
-    padding-top: 1em
     &+.container
       margin: 0 0 0 100px
       padding: 0 0 0 1em

@@ -569,7 +569,4 @@ let init = (function() {
     }})
     .call(d3.drag().on('start', window_drag_started));
 
-
-
-
 })();
