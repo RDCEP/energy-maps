@@ -42,6 +42,7 @@ main .content-wrap {
 }
 
 footer {
+  position: absolute;
   width: 100%;
   z-index: 1;
   margin: 3em 0;
@@ -112,75 +113,31 @@ footer p.nsf {
 }
 
 .title.container + .container {
-  margin: 0 0 0 100px;
-  padding: 0 0 0 1em;
+  border-bottom: 1px solid #b2b2b2;
 }
 
-.title.container + .container section {
-  margin: 0 0 .33em 0;
+.title.container + .container + .container {
+  height: 25px;
 }
 
-.title.container .bkgd {
-  opacity: .5;
-  z-index: 905;
+.title.container section {
+  float: left;
+  display: block;
+  position: relative;
+  height: 100%;
 }
 
-.title.container .shim {
-  padding: 1em 1em .5em;
+.title.container section:first-child {
+  font-size: 2em;
+}
+
+.title.container section span {
+  position: absolute;
+  bottom: 0;
 }
 
 .title.container .site-title {
-  font-size: 2.4em;
-  line-height: 1em;
-  z-index: 905;
-  position: relative;
-  margin-left: 100px;
-}
-
-.title.container .site-title h1 {
-  position: relative;
-  margin: 0;
-}
-
-.title.container .site-logo {
-  width: 4rem;
-  position: absolute;
-  padding-right: 5px;
-  right: 100%;
-  top: 0;
-  z-index: 905;
-}
-
-.title.container .site-logo a {
-  position: relative;
-  z-index: 905;
-}
-
-.title.container .site-logo img {
-  width: 100%;
-}
-
-.title.container .graph-title {
-  position: absolute;
-  line-height: 1em;
-  bottom: 0;
-  z-index: 905;
-  font-size: .5em;
-  padding-left: 2em;
-}
-
-.title.container .graph-title span + span {
-  position: absolute;
-  bottom: 1em;
-  display: block;
-  left: 100%;
-  padding-left: .25em;
-  width: 300px;
-}
-
-.title.container .graph-title span + span + span {
-  position: absolute;
-  bottom: 0;
+  width: 65%;
 }
 
 .title.container .site-links {
@@ -193,20 +150,42 @@ footer p.nsf {
   pointer-events: auto;
 }
 
+.title.container .logo {
+  width: 10%;
+}
+
+.title.container .logo img {
+  height: 40px;
+  position: relative;
+  top: 5px;
+}
+
+.title.container .graph-title {
+  width: 15%;
+}
+
+.title.container .asset-total {
+  width: 10%;
+}
+
 .title.container .citation {
-  font-size: 1rem;
-  margin-right: 2em;
+  width: 30%;
 }
 
 .title.container .citation a {
   pointer-events: auto;
 }
 
+.title.container .affiliation {
+  width: 30%;
+}
+
 .title.container #asset-totals {
-  font-size: 2.4em;
-  width: 10%;
-  z-index: 905;
+  font-size: 1.5rem;
   font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .title.container #builder-headline {
@@ -288,6 +267,7 @@ footer p.nsf {
   position: relative;
   padding: .25em 0;
   margin: 0;
+  z-index: 2;
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
