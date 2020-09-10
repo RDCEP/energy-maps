@@ -16,6 +16,7 @@ body, html
   margin: 0
 header
   position: relative
+  // z-index: 2
   pointer-events: none
 main
   height: 85%
@@ -31,8 +32,8 @@ footer
   color: #c5c5c5
   font-size: .8em
   border-top: 1px solid #ababab
-  padding: 2em 0
-  //bottom: 0
+  padding:  2em 0
+  // bottom: 0
   img
     display: inline-block
     margin-right: 30px
@@ -74,7 +75,10 @@ footer
   &.container
     position: relative
     width: 100%
-    padding-top: 1em
+    height: 50px
+    padding: 5px 0
+    border-bottom: 2px solid #b2b2b2
+    z-index: 801
     &+.container
       margin: 0 0 0 100px
       padding: 0 0 0 1em
@@ -127,7 +131,9 @@ footer
         position: absolute
         bottom: 0
     .site-links
-      font-size: 1rem
+      width: 20%
+      z-index: 799
+      pointer-events: auto
       .about-contact
         pointer-events: auto
     .citation
@@ -203,6 +209,15 @@ footer
       &.closed
         height: 0
         overflow: hidden
+  // .bkgd
+  //   background-color: white
+  //   opacity: .8
+  //   position: absolute
+  //   top: 0
+  //   right: 0
+  //   bottom: 0
+  //   left: 0
+  //   z-index: 1
   h6
     position: relative
     padding: .25em 0
@@ -295,6 +310,10 @@ footer
   left: 50%
   top: 30%
   margin-left: -100px
+  //top: 45%
+  //left: 45%
+  //width: 4em
+  //height: 4em
   z-index: 1000
 .boundary
   &.ocean

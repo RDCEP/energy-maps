@@ -105,7 +105,10 @@ footer p.nsf {
 .title.container {
   position: relative;
   width: 100%;
-  padding-top: 1em;
+  height: 50px;
+  padding: 5px 0;
+  border-bottom: 2px solid #b2b2b2;
+  z-index: 801;
 }
 
 .title.container + .container {
@@ -181,7 +184,9 @@ footer p.nsf {
 }
 
 .title.container .site-links {
-  font-size: 1rem;
+  width: 20%;
+  z-index: 799;
+  pointer-events: auto;
 }
 
 .title.container .site-links .about-contact {

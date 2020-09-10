@@ -1,44 +1,40 @@
 {% extends 'base.html' %}
 {% block header %}
   <div class=content-wrap>
-
     <div class="title container cf">
-      <div class=bkgd></div>
-      <div class="shim cf">
-
-        <section class=site-title>
-          <h1 class="span-title">US Energy Infrastructure Visualization (beta)
-              <a href="/" style="display: block;" class=site-logo>
-              <img src="../static/images/rdcep_logo.png" alt="Logo for RDCEP">
-            </a>
-            <span class=graph-title>
-              <span id=asset-totals>$0.00</span>
-              <span>total asset value</span>
-              <span>out of $9.8T</span>
-            </span>
-          </h1>
-          <div>
-            <span class=citation>
-              <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
-                <i>A Physical Inventory of the U.S. Energy System</i></a>
-                Chen, Weisbach, Matteson, Brizius, Moyer, 2020.
-            </span>
-            <span class=site-links><a class=about-contact
-                       href=#>About / Contact / License</a></span>
-          </div>
-        </section>
-      </div>
-
+      <section class=site-title>
+        <span id="span-title">US Energy Infrastructure Visualization (beta)</span>
+      </section>
+      <section class=site-links>
+        <span><a class=about-contact
+                 href="#">About / Contact / License</a></span>
+      </section>
     </div>
 
     <div class="title container cf">
-
-      <section class=affiliation>
-        <span>Center for Robust
-          Decision-making on Climate and Energy Policy.</span>
-        <span>University of Chicago.</span>
+      <section class=logo>
+        <a href="/" style="display: block;">
+          <img src="../static/images/logo.png" alt="Logo for RDCEP">
+        </a>
       </section>
-
+      <section class=graph-title>
+        <span> Total Asset Value <br> out of $9.8T </span>
+      </section>
+      <section class=asset-total>
+        <span id=asset-totals>$0.00</span>
+      </section>
+      <section class=citation>
+        <span>
+        <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
+          <i>A Physical Inventory of the U.S. Energy System</i></a>
+          <br>
+        Chen, Weisbach, Matteson, Brizius, Moyer, 2020
+        </span>
+      </section>
+      <section class=affiliation>
+        <span>University of Chicago. Center for Robust <br>
+          Decision-making on Climate and Energy Policy.</span>
+      </section>
     </div>
     <!-- <div class="title container">
       <section id=builder-headline><span>
@@ -76,9 +72,9 @@
   <div class=content-wrap>
 
     <div class="options window main menu cf">
-      <div class="options bkgd"></div>
       <h6>Map options</h6>
       <span class="legend toggle close"></span>
+      <div class="options bkgd"></div>
       <div class="options canvas cf">
         <div class="bkgd"></div>
         <!-- Checkboxes render here -->
@@ -134,7 +130,6 @@
         the inventory itself to Liz Moyer ( moyer@uchicago.edu). We
         would especially welcome input from energy experts on individual
         sections of the documentation.</p>
-      
       <p>
         <a href="/" style="bottom:20px;left:55px">Return to current stable version.</a>
       </p>
