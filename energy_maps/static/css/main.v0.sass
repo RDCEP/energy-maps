@@ -13,9 +13,10 @@ a
   color: inherit
 body, html
   height: 100%
+  margin: 0
 header
   position: relative
-  z-index: 2
+  // z-index: 2
   pointer-events: none
 main
   height: 85%
@@ -27,12 +28,12 @@ footer
   position: absolute
   width: 100%
   z-index: 1
-  margin: 3em 0 6em
+  margin: 3em 0
   color: #c5c5c5
   font-size: .8em
   border-top: 1px solid #ababab
-  padding: 30px 0 60px
-  bottom: 0
+  padding:  2em 0
+  // bottom: 0
   img
     display: inline-block
     margin-right: 30px
@@ -60,7 +61,14 @@ footer
 .content-wrap
   width: 1200px
   margin: 0 auto
-
+.bkgd
+  background-color: white
+  opacity: .8
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
 .title
   &.container
     position: relative
@@ -68,6 +76,7 @@ footer
     height: 50px
     padding: 5px 0
     border-bottom: 2px solid #b2b2b2
+    z-index: 801
     &+.container
       border-bottom: 1px solid #b2b2b2
       &+.container
@@ -86,6 +95,8 @@ footer
       width: 65%
     .site-links
       width: 20%
+      z-index: 799
+      pointer-events: auto
       .about-contact
         pointer-events: auto
     .logo
@@ -170,15 +181,15 @@ footer
       &.closed
         height: 0
         overflow: hidden
-  .bkgd
-    background-color: white
-    opacity: .8
-    position: absolute
-    top: 0
-    right: 0
-    bottom: 0
-    left: 0
-    z-index: 1
+  // .bkgd
+  //   background-color: white
+  //   opacity: .8
+  //   position: absolute
+  //   top: 0
+  //   right: 0
+  //   bottom: 0
+  //   left: 0
+  //   z-index: 1
   h6
     position: relative
     padding: .25em 0
@@ -228,7 +239,7 @@ footer
 
 .legend
   &.main
-    width: 400px
+    width: 260px
     z-index: 901
   &.menu
     z-index: 1
@@ -269,11 +280,13 @@ footer
   display: none
   width: 200px
   height: 200px
+  left: 50%
+  top: 30%
+  margin-left: -100px
   //top: 45%
   //left: 45%
   //width: 4em
   //height: 4em
-  margin: 200px 0 0 375px
   z-index: 1000
 .boundary
   &.ocean

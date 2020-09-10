@@ -161,10 +161,11 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
 // TODO: Determine purpose and add jsdoc
 const draw_power_plant = function draw_power_plant(ctx, xy, color, r) {
   ctx.strokeStyle = electricity_generation.stroke.light;
-  ctx.lineWidth = electricity_generation.stroke.width;
+  ctx.lineWidth = electricity_generation.stroke.width / transform.k;
   ctx.fillStyle = color;
   // TODO: extract math to variable or function
   r = Math.sqrt(r / Math.PI) * electricity_generation.scale;
+  r = r/transform.k;
   ctx.beginPath();
   // Draw larger circle for stroke, so that stroke aligns to outside of
   //  of circumference

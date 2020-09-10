@@ -23,6 +23,13 @@ def builder(scale='false'):
         scale=scale,
     )
 
+@main_views.route('/builder_zoom_beta')
+@main_views.route('/builder_zoom_beta/<float:scale>')
+def zoom_beta(scale='false'):
+    return render_template(
+        'builder_zoom_beta.html',
+        scale=scale,
+    )
 
 @main_views.route('/static')
 def static_images():

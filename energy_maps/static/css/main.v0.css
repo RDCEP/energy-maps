@@ -8,13 +8,13 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 h4 {
-  margin: 1em 0 0.5em;
+  margin: 1em 0 .5em;
 }
 
 p {
   color: #222222;
   line-height: 1.4;
-  margin: 0 0 0.5em;
+  margin: 0 0 .5em;
 }
 
 a {
@@ -23,11 +23,11 @@ a {
 
 body, html {
   height: 100%;
+  margin: 0;
 }
 
 header {
   position: relative;
-  z-index: 2;
   pointer-events: none;
 }
 
@@ -35,6 +35,7 @@ main {
   height: 85%;
   min-height: 480px;
 }
+
 main .content-wrap {
   position: relative;
   height: 100%;
@@ -44,31 +45,35 @@ footer {
   position: absolute;
   width: 100%;
   z-index: 1;
-  margin: 3em 0 6em;
+  margin: 3em 0;
   color: #c5c5c5;
-  font-size: 0.8em;
+  font-size: .8em;
   border-top: 1px solid #ababab;
-  padding: 30px 0 60px;
-  bottom: 0;
+  padding: 2em 0;
 }
+
 footer img {
   display: inline-block;
   margin-right: 30px;
 }
+
 footer img.nsf {
   clear: left;
   height: 80px;
   float: left;
 }
+
 footer img.rdcep {
   height: 80px;
   float: left;
 }
+
 footer p {
   float: left;
   color: #ababab;
   margin-right: 30px;
 }
+
 footer p.nsf {
   width: 300px;
   margin-top: 25px;
@@ -78,6 +83,7 @@ footer p.nsf {
   width: 1200px;
   margin: 0 auto;
 }
+
 .wrap img {
   display: block;
 }
@@ -87,64 +93,93 @@ footer p.nsf {
   margin: 0 auto;
 }
 
+.bkgd {
+  background-color: white;
+  opacity: .8;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .title.container {
   position: relative;
   width: 100%;
   height: 50px;
   padding: 5px 0;
   border-bottom: 2px solid #b2b2b2;
+  z-index: 801;
 }
+
 .title.container + .container {
   border-bottom: 1px solid #b2b2b2;
 }
+
 .title.container + .container + .container {
   height: 25px;
 }
+
 .title.container section {
   float: left;
   display: block;
   position: relative;
   height: 100%;
 }
+
 .title.container section:first-child {
   font-size: 2em;
 }
+
 .title.container section span {
   position: absolute;
   bottom: 0;
 }
+
 .title.container .site-title {
   width: 65%;
 }
+
 .title.container .site-links {
   width: 20%;
+  z-index: 799;
+  pointer-events: auto;
 }
+
 .title.container .site-links .about-contact {
   pointer-events: auto;
 }
+
 .title.container .logo {
   width: 10%;
 }
+
 .title.container .logo img {
   height: 40px;
   position: relative;
   top: 5px;
 }
+
 .title.container .graph-title {
   width: 15%;
 }
+
 .title.container .asset-total {
   width: 10%;
 }
+
 .title.container .citation {
   width: 30%;
 }
+
 .title.container .citation a {
   pointer-events: auto;
 }
+
 .title.container .affiliation {
   width: 30%;
 }
+
 .title.container #asset-totals {
   font-size: 1.5rem;
   font-weight: bold;
@@ -152,6 +187,7 @@ footer p.nsf {
   margin: 0;
   padding: 0;
 }
+
 .title.container #builder-headline {
   font-size: 1em;
   width: 100%;
@@ -165,45 +201,53 @@ footer p.nsf {
   left: 0;
   z-index: 800;
 }
+
 .map.builder {
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .map.layer {
   position: absolute;
   height: 100%;
   width: 100%;
 }
+
 .window.main {
   position: absolute;
 }
+
 .window.menu {
   cursor: move;
-  padding: 0.5em 1em;
+  padding: .5em 1em;
   border: 1px solid #cccccc;
   border-bottom-width: 0;
 }
+
 .window.menu .toggle {
   position: absolute;
   right: 1.414em;
   top: 1.25em;
   border: solid black;
-  border-width: 0 0.1em 0.1em 0;
+  border-width: 0 .1em .1em 0;
   display: inline-block;
-  padding: 0.33em;
+  padding: .33em;
   cursor: pointer !important;
   z-index: 10;
 }
+
 .window.menu .toggle.close {
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
 }
+
 .window.menu .toggle.open {
   top: 1em;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
 .window.menu .canvas {
   position: absolute;
   top: 100%;
@@ -213,23 +257,15 @@ footer p.nsf {
   border: 1px solid #cccccc;
   border-top-width: 0;
 }
+
 .window.menu .canvas.closed {
   height: 0;
   overflow: hidden;
 }
-.window .bkgd {
-  background-color: white;
-  opacity: 0.8;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-}
+
 .window h6 {
   position: relative;
-  padding: 0.25em 0;
+  padding: .25em 0;
   margin: 0;
   z-index: 2;
   border-top: 2px solid black;
@@ -240,70 +276,85 @@ footer p.nsf {
   width: 100%;
   z-index: 900;
 }
+
 .options.main.menu {
   position: absolute;
   top: 60%;
   right: -1em;
   padding-bottom: 0;
 }
+
 .options.main .canvas {
-  padding: 0 1em 0.5em;
+  padding: 0 1em .5em;
 }
+
 .options.main .bkgd {
-  opacity: 0.6;
+  opacity: .6;
 }
+
 .options.main h6 {
   border-bottom: none;
 }
+
 .options.main .options .column {
   width: 24.25%;
   float: left;
   position: relative;
   z-index: 2;
 }
+
 .options.main .options .column + .column {
   margin: 0 0 0 1%;
 }
+
 .options.main .options .column h4 {
-  padding: 0.5em 0;
+  padding: .5em 0;
   margin: 0;
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
+
 .options.main label {
   display: block;
   border-bottom: 1px solid black;
-  padding: 0.33em 0;
+  padding: .33em 0;
 }
+
 .options.main label.inactive {
   color: #767676;
 }
+
 .options.main label .asset-value {
-  font-size: 0.8em;
+  font-size: .8em;
 }
+
 .options.main label input {
   position: absolute;
   right: 2px;
 }
 
 .legend.main {
-  width: 400px;
+  width: 260px;
   z-index: 901;
 }
+
 .legend.menu {
   z-index: 1;
 }
+
 .legend.menu h6 {
   position: relative;
-  padding: 0.25em 0;
+  padding: .25em 0;
   margin: 0;
   z-index: 2;
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
+
 .legend.menu .tmpcanvas {
   display: none;
 }
+
 .legend canvas {
   position: relative;
   z-index: 2;
@@ -326,6 +377,7 @@ footer p.nsf {
   position: relative;
   top: 0;
 }
+
 .canvas.fossil-fuel-plant {
   position: absolute;
   top: 0;
@@ -345,31 +397,38 @@ footer p.nsf {
   display: none;
   width: 200px;
   height: 200px;
-  margin: 200px 0 0 375px;
+  left: 50%;
+  top: 30%;
+  margin-left: -100px;
   z-index: 1000;
 }
 
 .boundary.ocean {
   fill: white;
 }
+
 .boundary.land {
   fill: #eeeeee;
 }
 
 .feature.pipe {
-  stroke-width: 0.5;
+  stroke-width: .5;
   fill: none;
 }
+
 .feature.pipe.oil {
   stroke: #222222;
 }
+
 .feature.pipe.gas {
   stroke: cornflowerblue;
 }
+
 .feature.dot {
   stroke: none;
   fill: #000000;
 }
+
 .feature.dot.plant {
   fill: #cccccc;
 }
@@ -382,7 +441,7 @@ footer p.nsf {
   bottom: 0;
   left: 0;
   background-color: black;
-  opacity: 0.8;
+  opacity: .8;
   z-index: 990;
 }
 
@@ -398,21 +457,22 @@ footer p.nsf {
   width: 680px;
   z-index: 999;
 }
+
 .modal-window .modal-close {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 0.8em;
+  font-size: .8em;
   font-weight: bold;
   color: #767676;
 }
 
 .cf:before, .cf:after {
-  content: " ";
+  content: ' ';
   display: table;
 }
+
 .cf:after {
   clear: both;
 }
-
 /*# sourceMappingURL=main.v0.css.map */
