@@ -183,7 +183,7 @@ const oil_and_gas = {
 //     width: SCALE / 6,
     cross: 5 * SCALE,
     diameter: SCALE / 2,
-//     stroke: SCALE
+    stroke: SCALE
   },
   processing: {
 // Gas storage is left here because we may want this info to implement it later
