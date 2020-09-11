@@ -291,7 +291,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
   ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas.wells.stroke / transform.k;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
   ctx.fillStyle = color;
   ctx.beginPath();
   draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k);
