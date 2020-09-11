@@ -40,13 +40,13 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.draw_legend = function draw_well_legend(ctx, x, y) {
 
     y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
-    draw_circle(ctx, [x, y], this.diameter * 3);
+    draw_circle(ctx, [x, y], this.diameter * 4);
     ctx.stroke();
     ctx.fill();
-    
+    ctx.lineWidth = oil_and_gas.wells.stroke * 2
     y = advance_for_type(y, ctx, this.text, text_offset, x);
     y = advance_vertical_increment(y, ctx, this.color, oil_and_gas.wells.stroke);
-    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
+    draw_x(ctx, [x, y], oil_and_gas.wells.cross * 1.5);
     ctx.stroke();
     
     let text = `${this.text.slice(0, 3)} offshore well`
