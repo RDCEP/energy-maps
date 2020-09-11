@@ -291,18 +291,18 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k ** .5;
   ctx.fillStyle = color;
   ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k);
+  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k ** .5);
   ctx.stroke();
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k ** .5;
   ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k);
+  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k ** .5);
   ctx.stroke();
 };
 
