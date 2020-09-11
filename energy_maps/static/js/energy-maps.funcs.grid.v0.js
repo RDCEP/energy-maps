@@ -123,6 +123,7 @@ function draw_legend_ac(ctx, x, y, obj) {
   y += VERTICAL_INCREMENT;
   ctx.strokeStyle = obj.color;
   // Draw the square icon as a fat line
+  ctx.lineCap ='butt';
   ctx.lineWidth = 14 * SCALE;
   ctx.beginPath();
   ctx.moveTo(x - 7 * SCALE, y);
@@ -137,6 +138,7 @@ function draw_legend_ac(ctx, x, y, obj) {
   }
   text = obj.text;
   y = advance_for_type(y, ctx, text, text_offset, x);
+  ctx.lineCap ='butt';
   return y;
 }
 
@@ -318,8 +320,10 @@ dc.dashed = false;
 dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
   ctx.lineWidth = LEGEND_FONT_SIZE;
   ctx.strokeStyle = this.color;
+  ctx.Linecap = 'butt'
   text = this.text;
   y = draw_line(ctx, x, y, this, dashed, text)
+  ctx.strokeLinecap = 'round'
   return y;
 };
 

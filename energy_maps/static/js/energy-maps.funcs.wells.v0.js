@@ -40,13 +40,13 @@ function Well(name, text, value, column, draw, color, legend_color) {
   this.draw_legend = function draw_well_legend(ctx, x, y) {
 
     y = advance_vertical_increment(y, ctx, this.color, this.stroke); 
-    draw_circle(ctx, [x, y], this.diameter * 3);
+    draw_circle(ctx, [x, y], this.diameter * 4);
     ctx.stroke();
     ctx.fill();
-    
+    ctx.lineWidth = oil_and_gas.wells.stroke * 2
     y = advance_for_type(y, ctx, this.text, text_offset, x);
     y = advance_vertical_increment(y, ctx, this.color, oil_and_gas.wells.stroke);
-    draw_x(ctx, [x, y], oil_and_gas.wells.cross);
+    draw_x(ctx, [x, y], oil_and_gas.wells.cross * 1.5);
     ctx.stroke();
     
     let text = `${this.text.slice(0, 3)} offshore well`
@@ -183,7 +183,7 @@ const oil_and_gas = {
 //     width: SCALE / 6,
     cross: 5 * SCALE,
     diameter: SCALE / 2,
-//     stroke: SCALE
+    stroke: SCALE
   },
   processing: {
 // Gas storage is left here because we may want this info to implement it later
@@ -291,18 +291,18 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 
 const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
   ctx.strokeStyle = color;
-  ctx.strokeWidth = oil_and_gas.wells.stroke / transform.k;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k ** .5;
   ctx.fillStyle = color;
   ctx.beginPath();
-  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k);
+  draw_circle(ctx, xy, oil_and_gas.wells.diameter / transform.k ** .5);
   ctx.stroke();
 };
 
 const draw_off_well = function draw_off_well(ctx, xy, color) {
   ctx.strokeStyle = color;
-  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k;
+  ctx.lineWidth = oil_and_gas.wells.stroke / transform.k ** .5;
   ctx.beginPath();
-  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k);
+  draw_x(ctx, xy, oil_and_gas.wells.cross / transform.k ** .5);
   ctx.stroke();
 };
 
