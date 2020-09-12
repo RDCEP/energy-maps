@@ -125,7 +125,7 @@ function Processing(name, text, value, column, draw, fill, size) {
   this.draw_legend = function draw_processing_legend(ctx, x, y) {
     // Advance vertical increment
     y += VERTICAL_INCREMENT;
-    draw_gas_processor(ctx, [x, y]);
+    draw_gas_processor(ctx, [x, y], 5);
     let text = this.text;
     y = advance_for_type(y, ctx, text, text_offset, x);
     return y;
@@ -383,7 +383,7 @@ const draw_processing = function draw_processing(ctx, queued_data) {
 
   gproc.forEach(function(d, i) {
     let xy = projection([+d.lon, +d.lat]);
-    draw_gas_processor(ctx, xy);
+    draw_gas_processor(ctx, xy, gas_processing.size);
     if (i === gproc.length - 1) { 
       hide_spinner(); 
     }
@@ -450,10 +450,10 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   //;
 };
 
-const draw_gas_processor = function draw_gas_processor(ctx, xy) {
+const draw_gas_processor = function draw_gas_processor(ctx, xy, side) {
   ctx.beginPath();
   ctx.fillStyle = gas_processing.fill;
-  draw_triangle(ctx, xy, gas_processing.size);
+  draw_triangle(ctx, xy, side);
   ctx.fill();
 };
 
