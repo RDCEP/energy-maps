@@ -39,9 +39,14 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
   
     ctx.strokeStyle = state_boundaries.stroke;
     ctx.lineWidth = state_boundaries.width / transform.k;
+    ctx.setLineDash([
+      state_boundaries.width / transform.k,
+      state_boundaries.width / transform.k * 3
+    ]);
     ctx.beginPath();
     path(output_geojson);
     ctx.stroke();
+    ctx.setLineDash([]);
     hide_spinner();
   };
 
@@ -49,4 +54,7 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
     f: draw_state_boundaries,
     src: ['/static/json/states-10m.json'],
     w: d3.json
-  }], 'rgba(68, 108, 179, 1)', 1.5);
+  }],
+    // 'rgba(68, 108, 179, 1)',
+    'rgba(255, 255, 255, 1)',
+    1.5);
