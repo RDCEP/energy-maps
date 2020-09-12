@@ -67,7 +67,7 @@ function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: conside
  */
 const update_legend = function update_legend(tmpctx, ctx, layers) {
   // FIXME: width in globals is now 850.
-  console.log('update_lend:', layers)
+  console.log('update_legend:', layers)
   let x = 32 * SCALE;
   let x_offset = 10 * SCALE;
   let y = 10 * SCALE;

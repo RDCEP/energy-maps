@@ -244,9 +244,11 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
+  console.log('draw_oil_prod_pipes');
+  path.context(ctx);
   let oil_prod_pipe_data = queued_data[0];
-  const OIL_PRODUCT_LINE_DASH = [ oil_product.dash, 
-    oil_product.dash + 2 * oil_product.width ];
+  let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
+    (oil_product.dash + 2 * oil_product.width) / transform.k ];
   ctx.lineWidth = oil_product.width / transform.k;
   ctx.strokeStyle = oil_product.stroke;
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
@@ -254,6 +256,7 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
+  hide_spinner();
 }
 
 // TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
@@ -491,7 +494,6 @@ let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', 
   w: d3.csv
 } ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
-        
 let foreign_oil_wells = {
   name: 'foreign-oil-wells',
   value: 931_000_000_000,
@@ -518,8 +520,27 @@ let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000
   w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
 
-let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
+let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [{
+  f: draw_oil_prod_pipes,
+  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+  w: d3.json
+} ], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
+oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
+  ctx.strokeStyle = this.color;
+  ctx.lineWidth = this.width;
+  let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
+    (oil_product.dash + 2 * oil_product.width) / transform.k ];
+  console.log(OIL_PRODUCT_LINE_DASH)
+  ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
+  let text = this.text;
+  //FIXME: The `dash` argument to `draw_line()` is overloaded and shouldn't be.
+  // it takes either `false` or an iterable that describes a dash.
+  y = draw_line(ctx, x, y, this, OIL_PRODUCT_LINE_DASH, text)
+  ctx.setLineDash([]);
+  return y;
+
+};
 
 let oil_refinery = new Refinery('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
   f: draw_refining,

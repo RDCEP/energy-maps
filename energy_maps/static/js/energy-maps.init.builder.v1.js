@@ -200,7 +200,7 @@ let init = (function() {
   layers.push(foreign_gas_wells);
   layers.push(gas_pipeline);
   layers.push(oil_pipeline);
-  //console.log(oil_product_pipeline);
+  layers.push(oil_product_pipeline);
   layers.push(oil_refinery);
   layers.push(gas_processing);
   layers.push(oil_and_gas_storage);
