@@ -442,12 +442,12 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   oref.forEach(function(d) {
     let xy = projection(d.geometry.coordinates);
-    draw_oil_refinery(ctx, xy, d.r / transform.k);
+    draw_oil_refinery(ctx, xy, d.r / transform.k ** .5);
     ctx.strokeStyle = oil_and_gas.processing.stroke.light;
     ctx.lineWidth = oil_and_gas.processing.stroke.width / transform.k;
     ctx.beginPath();
     // draw the outline
-    draw_polygon(6, ctx, oil_refinery.size * d.r / transform.k, xy)
+    draw_polygon(6, ctx, oil_refinery.size * d.r / transform.k ** .5, xy)
     ctx.stroke();
   });
   //;
