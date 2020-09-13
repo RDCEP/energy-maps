@@ -83,7 +83,11 @@ const set_line_width = function set_line_width(value, divisor) {
 const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   
   // transform_layer(ctx);
-  path.context(ctx);  
+  path.context(ctx);
+  let region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+
   output_geojson = simplify(key, queued_data)
   
   let tmp_grid = {type: 'FeatureCollection', features: []};

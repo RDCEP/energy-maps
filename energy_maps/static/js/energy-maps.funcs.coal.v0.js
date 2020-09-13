@@ -153,7 +153,12 @@ const draw_mine = function draw_mine(ctx, xy, color, r, is_legend) {
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
+
   path.context(ctx);
+  let region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+
   let mines = queued_data[0];
 
   // Sort in descending order so large mines don't
@@ -185,6 +190,10 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
   path.context(ctx);
+  let region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+
   output_geojson = simplify("railrdl020", queued_data);
 
   ctx.strokeStyle = railroad.stroke;
