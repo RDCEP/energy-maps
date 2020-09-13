@@ -93,7 +93,6 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
   ctx.lineWidth = 0;
   for (let i=0; i<bands.length; ++i) {
-    console.log(bands[i])
     output_geojson = topojson.feature(
       topojson.simplify(presimplified_data, .01 / transform.k**2),
       queued_data[0].objects[bands[i]]);

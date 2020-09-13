@@ -322,7 +322,6 @@ let init = (function() {
    * @memberof Init
    */
   let initMenuAssetValue = function initMenuAssetValue(lyr) {
-    console.log(lyr.value)
     if (lyr.value !== 0) {
       checkbox_span.append('span')
         .attr('class', 'asset-value')
@@ -477,21 +476,19 @@ let init = (function() {
   d3.select('.zoom-in').on('click', function() {
     let increment = .1
     let k = transform.k + increment
-    let x = transform.x + projection_width * (transform.k - k) / 2
-    let y = transform.y + projection_height * (transform.k - k) / 2
-    console.log(k, x, y)
+    let x = (transform.x + projection_width * (transform.k - k) / 2) / k
+    let y = (transform.y + projection_height * (transform.k - k) / 2) / k
     let initial_transform = d3.zoomIdentity
       .scale(k)
       .translate(x, y)
     d3.select(target_canv).call(zoom.transform, initial_transform);
-    console.log(transform)
   });
 
   d3.select('.zoom-out').on('click', function() {
     let increment = .1
     let k = transform.k - increment
-    let x = transform.x + projection_width * (transform.k - k) / 2
-    let y = transform.y + projection_height * (transform.k - k) / 2
+    let x = (transform.x + projection_width * (transform.k - k) / 2) / k + transform.x
+    let y = (transform.y + projection_height * (transform.k - k) / 2) / k + transform.y
     let initial_transform = d3.zoomIdentity
       .scale(k)
       .translate(x - transform.x, y - transform.y)
