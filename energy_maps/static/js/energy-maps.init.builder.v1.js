@@ -466,11 +466,37 @@ let init = (function() {
     draw_active_layers(transform);
   }, 500, false);
 
-  d3.select(target_canv).call(d3.zoom()
+  const zoom = d3.zoom()
     .scaleExtent([1, 50])
     .on('start', zoom_start)
     .on('zoom', zoomed)
-    .on('end', zoom_end));
+    .on('end', zoom_end)
+
+  d3.select(target_canv).call(zoom);
+
+  d3.select('.zoom-in').on('click', function() {
+    let increment = .1
+    let k = transform.k + increment
+    let x = transform.x + projection_width * (transform.k - k) / 2
+    let y = transform.y + projection_height * (transform.k - k) / 2
+    console.log(k, x, y)
+    let initial_transform = d3.zoomIdentity
+      .scale(k)
+      .translate(x, y)
+    d3.select(target_canv).call(zoom.transform, initial_transform);
+    console.log(transform)
+  });
+
+  d3.select('.zoom-out').on('click', function() {
+    let increment = .1
+    let k = transform.k - increment
+    let x = transform.x + projection_width * (transform.k - k) / 2
+    let y = transform.y + projection_height * (transform.k - k) / 2
+    let initial_transform = d3.zoomIdentity
+      .scale(k)
+      .translate(x - transform.x, y - transform.y)
+    d3.select(target_canv).call(zoom.transform, initial_transform);
+  });
 
   // FIXME: This probably doesn't belong here in the code.
   // From: https://stackoverflow.com/questions/41607804/promise-each-without-bluebird

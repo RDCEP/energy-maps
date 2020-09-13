@@ -302,6 +302,27 @@ footer p.nsf {
   position: absolute;
   right: 2px;
 }
+.options.main .zoom-buttons {
+  position: absolute;
+  margin-right: 0.5em;
+  right: 100%;
+  top: 0;
+  width: 2em;
+  font-size: 1em;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+}
+.options.main .zoom-buttons .zoom-in, .options.main .zoom-buttons .zoom-out {
+  cursor: pointer;
+  z-index: 910;
+  position: relative;
+  padding: 0.5em;
+  display: block;
+}
+.options.main .zoom-buttons .zoom-in:hover, .options.main .zoom-buttons .zoom-out:hover {
+  background-color: #d6d6d6;
+}
 
 .legend.main {
   width: 320px;
