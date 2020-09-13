@@ -43,7 +43,7 @@ main .content-wrap {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 1;
@@ -255,13 +255,12 @@ footer p.nsf {
 }
 
 .options.main {
-  width: 100%;
+  width: 1200px;
   z-index: 900;
 }
 .options.main.menu {
-  position: absolute;
+  position: fixed;
   top: 60%;
-  right: -1em;
   padding-bottom: 0;
 }
 .options.main .canvas {

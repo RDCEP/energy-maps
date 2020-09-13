@@ -548,6 +548,7 @@ let init = (function() {
     function dragged() {
       let that = d3.select(this);
       that
+        .style('bottom', null)
         .style('right', `${
           parseInt(that.style('right'), 10) - d3.event.dx}px`)
         .style('top', `${
@@ -560,10 +561,11 @@ let init = (function() {
   }
 
   window_menus
-    // Set horizontal position of legend on page load.
-    // Screen width - width of .content-wrap + 100 extra pixels
+    // Set horizontal position of draggable windows on page load.
     .style('right', function() { if (d3.select(this).classed('legend')) {
       return `${(width-1200)/2+100}px`;
+    } else if (d3.select(this).classed('options')) {
+      return `${(width-1200)/2}px`;
     }})
     // Set vertical position of legend on page load.
     .style('top', function() { if (d3.select(this).classed('legend')) {
