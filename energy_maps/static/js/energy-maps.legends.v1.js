@@ -73,7 +73,9 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
   let y = 10 * SCALE;
   // Offset for text
   // let text_offset = 30 * SCALE; // TODO: Figure out why this was here and reinstate or delete
-  for (let i = 0; i < layers.length; ++i) {
+  //NOTE: Reversing layers so that the bottom layer of the map is on the
+  // bottom of the legend.
+  for (let i = layers.length-1; i >= 0; --i) {
     if (layers[i].active && !(layers[i] instanceof StateBoundary)) {
       console.log(layers[i])
       y = layers[i].draw_legend(tmpctx, x, y);

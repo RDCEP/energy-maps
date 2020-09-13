@@ -176,6 +176,7 @@ let init = (function() {
     }
   };
 
+  layers.push(wind_map);
   layers.push(state_boundaries);
 
   // Coal
