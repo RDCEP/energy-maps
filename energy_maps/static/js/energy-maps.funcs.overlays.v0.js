@@ -105,6 +105,7 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   hide_spinner();
 };
 
+/** Draw wind capacity map legend **/
 const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
   y += VERTICAL_INCREMENT * 1.5;
   //TODO: This is ugly. It duplicates colors and labels from `draw_wind_map()`
@@ -132,9 +133,9 @@ const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
   ctx.font = LEGEND_FONT;
   ctx.textAlign = 'right'
   ctx.fillText(`${bands[bands.length-1]}`, x, y);
-  x /= 2
+  x = (x + text_offset) / 2
   ctx.textAlign = 'center'
-  ctx.fillText('Wind speed', text_offset + x, y);
+  ctx.fillText('Avg. wind speed', x, y);
   x = 0
   ctx.textAlign = 'left'
   ctx.fillText(`${bands[0]}`, text_offset + x, y);
