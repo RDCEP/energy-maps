@@ -56,13 +56,15 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
   console.log('draw_state_boundaries');
 
   path.context(ctx);
-  output_geojson = simplify("states", queued_data);
+  output_geojson = simplify("states-no-overlap", queued_data);
 
   ctx.strokeStyle = state_boundaries.stroke;
   ctx.lineWidth = state_boundaries.width / transform.k;
   ctx.setLineDash([
-    state_boundaries.width / transform.k,
-    state_boundaries.width / transform.k * 3
+    // state_boundaries.width / transform.k,
+    // state_boundaries.width / transform.k * 3
+    0,
+    state_boundaries.width / transform.k * 2
   ]);
   ctx.beginPath();
   path(output_geojson);
@@ -151,7 +153,8 @@ let state_boundaries = new StateBoundary(
     w: d3.json
   }],
   // 'rgba(68, 108, 179, 1)',
-  'rgba(255, 255, 255, 1)',
+  // 'rgba(255, 255, 255, 1)',
+  'rgba(54, 54, 54, 1)',
   1.5
 );
 
