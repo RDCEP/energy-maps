@@ -360,10 +360,6 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 
   wells = wells
     .filter(function(d) { return +d.zoom <= +transform.k; })
-    .filter(function(d) {
-      return boundaries.south <= +d.lat && +d.lat <= boundaries.north })
-    .filter(function(d) {
-      return boundaries.west <= +d.lon && +d.lon <= boundaries.east });
   wells.forEach(function(d, i) {
       let xy = projection([+d.lon, +d.lat]);
       if (xy === null) {
