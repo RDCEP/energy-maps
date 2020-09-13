@@ -219,6 +219,8 @@ let init = (function() {
   layers.push(bio_plants);
 
   let lay = layers.length;
+  //TODO: Why is this here? Shouldn't it be passed to funcs as we
+  // create checkboxes?
   let checkbox_span;
 
   /**
@@ -254,7 +256,6 @@ let init = (function() {
         .append('div')
         .attr('class', () => {return `column`})
       for (let j = 0; j < button_columns[i].length; j++) {
-        // apend to that column 
         let col = button_columns[i][j];
         let column_headers = column_divs.append('div')
           .attr('class', () => { return `${col.name}`})
@@ -321,17 +322,18 @@ let init = (function() {
    * @memberof Init
    */
   let initMenuAssetValue = function initMenuAssetValue(lyr) {
-    checkbox_span
-    .append('span')
-    .attr('class', 'asset-value')
-    // FIXME: This is a horrible kludge in order to get space before units.
-    //  Need to write a proper formatter.
-    .text(` ($${capitalize_first_letter(
-      d3.format('.2~s')(lyr.value)
-        .replace(/G/, ' B')
-        .replace(/T/, ' T'))})`)
-    .append('span');
-    return checkbox_span;
+    console.log(lyr.value)
+    if (lyr.value !== 0) {
+      checkbox_span.append('span')
+        .attr('class', 'asset-value')
+        // FIXME: This is a horrible kludge in order to get space before units.
+        //  Need to write a proper formatter.
+        .text(` ($${capitalize_first_letter(
+          d3.format('.2~s')(lyr.value)
+            .replace(/G/, ' B')
+            .replace(/T/, ' T'))})`);
+      return checkbox_span;
+    }
   }
 
   /**

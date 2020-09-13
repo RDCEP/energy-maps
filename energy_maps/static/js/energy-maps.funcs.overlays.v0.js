@@ -103,34 +103,8 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   hide_spinner();
 };
 
-let state_boundaries = new StateBoundary(
-  'state-boundaries',
-  'State boundaries',
-  0,
-  'layers',
-  [{
-    f: draw_state_boundaries,
-    src: ['/static/json/states-10m.json'],
-    w: d3.json
-  }],
-  // 'rgba(68, 108, 179, 1)',
-  'rgba(255, 255, 255, 1)',
-  1.5
-);
-
-let wind_map = new WindMap(
-  'wind-map',
-  'Wind capacity',
-  0,
-  'layers',
-  [{
-    f: draw_wind_map,
-    src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
-    w: d3.json
-  }],
-);
-wind_map.draw_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
-  y += VERTICAL_INCREMENT;
+const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
+  y += VERTICAL_INCREMENT * 1.5;
   //TODO: This is ugly. It duplicates colors and labels from `draw_wind_map()`
   let wind_map_colors = [
     '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
@@ -165,4 +139,32 @@ wind_map.draw_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
   ctx.linecap = 'round'
   return y;
 };
+
+let state_boundaries = new StateBoundary(
+  'state-boundaries',
+  'State boundaries',
+  null,
+  'layers',
+  [{
+    f: draw_state_boundaries,
+    src: ['/static/json/states-10m.json'],
+    w: d3.json
+  }],
+  // 'rgba(68, 108, 179, 1)',
+  'rgba(255, 255, 255, 1)',
+  1.5
+);
+
+let wind_map = new WindMap(
+  'wind-capacity',
+  'Wind capacity',
+  null,
+  'layers',
+  [{
+    f: draw_wind_map,
+    src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
+    w: d3.json
+  }],
+);
+wind_map.draw_legend = draw_wind_map_legend;
 
