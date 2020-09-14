@@ -464,8 +464,8 @@ let init = (function() {
 
   let dev_url = "http://127.0.0.1:5000/builder_zoom_beta"
   let dev_url_after_clicking_modal = "http://127.0.0.1:5000/builder_zoom_beta#"
-  let prod_url = "http://us.infrastructure.rdcep.org/builder_zoom_beta"
-  let prod_url_after_clicking_modal = "http://us.infrastructure.rdcep.org/builder_zoom_beta#"
+  let prod_url = "http://dev.infrastructure.rdcep.org/"
+  let prod_url_after_clicking_modal = "http://dev.infrastructure.rdcep.org/#"
   
   if (window.location.href == dev_url || window.location.href == dev_url_after_clicking_modal || window.location.href == prod_url || window.location.href == prod_url_after_clicking_modal) {
     console.log("zoom enabled in beta")  
