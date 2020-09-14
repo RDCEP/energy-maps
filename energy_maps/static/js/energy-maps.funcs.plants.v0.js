@@ -242,61 +242,61 @@ const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
 
 // Instantiate PowerPlants
 
-let coal_plants = new PowerPlant('coal-plant', 'Coal power plant', 1_092_000_000_000, 'electricity-generation', [ {
+let coal_plants = new PowerPlant('coal-plants', 'Coal power plants', 1_092_000_000_000, 'electricity-generation', [ {
   f: draw_coal_plants,
   src: ['/static/json/power_plants_split/power_plants-COAL.json'],
   w: d3.json,
 } ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-let ng_plants = new PowerPlant('natural-gas-plant', 'Natural gas power plant', 488_000_000_000, 'electricity-generation', [ {
+let ng_plants = new PowerPlant('natural-gas-plants', 'Natural gas power plants', 488_000_000_000, 'electricity-generation', [ {
   f: draw_ng_plants,
     src: ['/static/json/power_plants_split/power_plants-NG.json'],
     w: d3.json,
 } ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 
-let pet_plants = new PowerPlant('petroleum-plant', 'Petroleum power plant', 64_000_000_000, 'electricity-generation', [ {
+let pet_plants = new PowerPlant('petroleum-plants', 'Petroleum power plants', 64_000_000_000, 'electricity-generation', [ {
   f: draw_petro_plants,
   src: ['/static/json/power_plants_split/power_plants-PET.json'],
   w: d3.json,
 } ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
 
-let nuc_plants = new PowerPlant('nuclear-plant', 'Nuclear power plant', 597_000_000_000, 'electricity-generation', [ {
+let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear power plants', 597_000_000_000, 'electricity-generation', [ {
   f: draw_nuclear_plants,
   src: ['/static/json/power_plants_split/power_plants-NUC.json'],
   w: d3.json,
 } ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
 
-let hyc_plants = new PowerPlant('hydro-plant', 'Hydro power plant', 597_000_000_000, 'electricity-generation', [ {
+let hyc_plants = new PowerPlant('hydro-plants', 'Hydro power plants', 597_000_000_000, 'electricity-generation', [ {
   f: draw_hydro_plants,
   src: ['/static/json/power_plants_split/power_plants-HYC.json'],
   w: d3.json,
 } ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
 
-let wnd_farms = new PowerPlant('wind-farms', 'Wind farm', 132_000_000_000, 'electricity-generation', [ {
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', [ {
   f: draw_wind_farms,
   src: ['/static/json/power_plants_split/power_plants-WND.json'],
   w: d3.json,
 } ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
 
-let solar_plants = new PowerPlant('solar-PV', 'Solar power plant', 14_000_000_000, 'electricity-generation', [ {
+let solar_plants = new PowerPlant('solar-PV', 'Solar power plants', 14_000_000_000, 'electricity-generation', [ {
   f: draw_solar_plants,
   src: ['/static/json/power_plants_split/power_plants-SUN.json'],
   w: d3.json,
 } ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
 
-let geo_plants = new PowerPlant('geothermal-plant', 'Geothermal power plant', 22_000_000_000, 'electricity-generation', [ {
+let geo_plants = new PowerPlant('geothermal-plants', 'Geothermal power plants', 22_000_000_000, 'electricity-generation', [ {
   f: draw_geo_plants,
   src: ['/static/json/power_plants_split/power_plants-GEO.json'],
   w: d3.json,
 } ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 
-let bio_plants = new PowerPlant('biofuel', 'Biofuel power plant', 51_000_000_000, 'electricity-generation', [ {
+let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
   f: draw_bio_plants,
   src: ['/static/json/power_plants_split/power_plants-BIO.json'],
   w: d3.json,
 } ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
-let biofuel = {
+let biofuel = { 
   name: 'biofuel',
   value: 51_000_000_000,
   draw: false,
