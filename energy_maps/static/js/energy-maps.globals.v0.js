@@ -146,12 +146,14 @@ let projection_height = projection_width / 2 + header_height
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
 //  */
-// let projection = d3.geoAlbersUsa()
-//   .scale(width*1.1)
-//   .translate([width / 2.4, height / 2]);
 let projection = d3.geoAlbersUsa()
   .scale(projection_scale)
-  .translate([projection_width, projection_height]);
+  .translate([
+    projection_width,
+    // Half the width is the height, half of that gets us to the center, and
+    // add the height of the header so that maps sits below it.
+    projection_scale / 4 + header_height
+  ]);
 
 // Saw this somewhere and I think it's supposed to make drawing faster
 let path2D = new Path2D();
