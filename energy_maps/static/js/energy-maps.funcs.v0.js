@@ -1,15 +1,28 @@
 /**
- * @file Provides global functions and any helpers for the more specialized drawing functions contained in other *.funcs files.
+ * @file Provides global functions and any helpers for the more specialized
+ * drawing functions contained in other *.funcs files.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
  */
 
+/**
+ * Apply transformation to a single layer. Used at the end of a zoom event.
+ * @param ctx
+ * @param transform
+ */
 const transform_layer = function transform_layer(ctx, transform) {
   ctx.clearRect(0, 0, width, height);
   ctx.translate(transform.x, transform.y);
   ctx.scale(transform.k, transform.k);
 }
 
+/**
+ * Simplify a TopoJSON object based on the scale factor of the current
+ * zoom event.
+ * @param key
+ * @param data
+ * @returns {*}
+ */
 const simplify = function simplify(key, data) {
   let output_geojson;
   let presimplified_data = topojson.presimplify(data[0]);
@@ -170,10 +183,13 @@ const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
   }
 }
 
+/// Modal window with about, license, etc.
+
 d3.select('.about-contact').on('click', () => {
   d3.select('.modal-screen').style('display', 'block');
   d3.select('.modal-window.about-window').style('display', 'block');
 });
+
 d3.select('.modal-close').on('click', function() {
   d3.select(this.parentNode).style('display', 'none');
   d3.select('.modal-screen').style('display', 'none');

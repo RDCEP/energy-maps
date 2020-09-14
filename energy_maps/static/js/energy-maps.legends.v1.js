@@ -23,7 +23,7 @@ const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
  * @param {Number} x - x axis
  * @returns {Number} y - updated y axis
  */
-function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
+const advance_for_type = function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
   y += VERTICAL_TYPE_INCREMENT;
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
@@ -39,7 +39,7 @@ function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taki
  * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
  * @returns {Number} y - updated y axis
  */
-function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
+const advance_vertical_increment = function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
   y += VERTICAL_INCREMENT;
   ctx.strokeStyle = color;
   ctx.lineWidth = lineWidth;
@@ -63,7 +63,8 @@ function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: conside
  * is then copied to the visible context.
  * @param {Object} tmpctx - HTML5 canvas context
  * @param {Object} ctx - HTML5 canvas context
- * @param {Object[]} layers - An array of objects representing resources to be rendered on top of the map canvas.
+ * @param {Object[]} layers - An array of objects representing resources
+ * to be rendered on top of the map canvas.
  */
 const update_legend = function update_legend(tmpctx, ctx, layers) {
   // FIXME: width in globals is now 850.
@@ -71,8 +72,7 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
   let x = 32 * SCALE;
   let x_offset = 10 * SCALE;
   let y = 10 * SCALE;
-  // Offset for text
-  // let text_offset = 30 * SCALE; // TODO: Figure out why this was here and reinstate or delete
+
   //NOTE: Reversing layers so that the bottom layer of the map is on the
   // bottom of the legend.
   for (let i = layers.length-1; i >= 0; --i) {

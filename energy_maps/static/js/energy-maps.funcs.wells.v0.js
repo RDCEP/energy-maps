@@ -1,20 +1,24 @@
 /**
- * @file Provides global draw functions and any helpers for gas & oil wells, pipelines, refineries, processing, and storage.
+ * @file Provides global draw functions and any helpers for gas & oil wells,
+ * pipelines, refineries, processing, and storage.
  * @author Benjamin Kleeman
  * @author Nathan Matteson
  * @module Wells
  */
 
 /** 
- * Instatiates a new Well object that contains properties used to draw gas and oil wells to the map and legend.
+ * Instantiates a new Well object that contains properties used to draw gas
+ * and oil wells to the map and legend.
  * @class
- * @classdesc Used to create objects that represent gas and oil well infrastructure.
+ * @classdesc Used to create objects that represent gas and oil well
+ * infrastructure.
  * @extends InfrastructureSet
  * @param {String} name - canvas ID
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
  * @param {String} color - rgba value
  * @param {String} legend_color - rgba value
  * @property {Number} width - scaled value for symbols on the map
@@ -58,15 +62,18 @@ function Well(name, text, value, column, draw, color, legend_color) {
 Well.prototype = new InfrastructureSet;
 
 /** 
- * Instatiates a new Transport object that contains properties used to draw gas and oil pipelines to the map and legend.
+ * Instantiates a new Transport object that contains properties used to draw
+ * gas and oil pipelines to the map and legend.
  * @class
- * @classdesc Used to create objects that represent gas and oil pipeline infrastructure.
+ * @classdesc Used to create objects that represent gas and oil pipeline
+ * infrastructure.
  * @extends InfrastructureSet
  * @param {String} name - canvas ID
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
  * @param {String} stroke - rgba value
  * @param {Number} width - scaled value for symbols on the map
  */
@@ -76,7 +83,8 @@ function Transport(name, text, value, column, draw, stroke, width) {
   this.width = width;
   this.z_index = 0;
   /**
-   * Draw pipeline legend to its HTML5 canvas context. All params passed to draw_line() as a helper.
+   * Draw pipeline legend to its HTML5 canvas context. All params passed
+   * to draw_line() as a helper.
    * @param {Object} ctx - HTML5 canvas context
    * @param {Number} x - x axis
    * @param {Number} y - y axis
@@ -94,15 +102,18 @@ function Transport(name, text, value, column, draw, stroke, width) {
 Transport.prototype = new InfrastructureSet;
 
 /** 
- * Instatiates a new Processing object that contains properties used to draw resource processing infrastructure to the map and legend.
+ * Instatiates a new Processing object that contains properties used
+ * to draw resource processing infrastructure to the map and legend.
  * @class
- * @classdesc Used to create objects that represent resource processing infrastructure.
+ * @classdesc Used to create objects that represent resource processing
+ * infrastructure.
  * @extends InfrastructureSet
  * @param {String} name - canvas ID
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
  * @param {String} fill - rgba value
  * @param {Number} size - scaled value for symbols on the map
  * @property {String} stroke - stroke color
@@ -165,7 +176,8 @@ Refinery.prototype = new InfrastructureSet;
    * @param {Number} x - x axis
    * @param {Number} y - y axis
    * @param {Object} obj - Infrastructure object 
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+   * @param {string} color - symbol color, bound to `viz` object
+ * (some still loosely implemented)
    * @returns {Number} y - updated y axis
    */
   const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) { // TODO: Reimplement storage. 
@@ -205,16 +217,18 @@ const oil_product = {
 };
 
 /**
- * @description Get a set of xy coordinates on the map projection for each element in the dataset.
+ * @description Get a set of xy coordinates on the map projection
+ * for each element in the dataset.
  * @param {array} queued_data - the supplied dataset
  * @returns {Number[]} xy - Set of xy coordinates
  */
 const get_xy = function get_xy(queued_data) {
-  let data = queued_data[0]; // generalize it so it doesn't just apply to wells, and also strike the queued data assignment bc some require two data sets
+  // generalize it so it doesn't just apply to wells, and also strike
+  // the queued data assignment bc some require two data sets
+  let data = queued_data[0];
   
   data.forEach(function(d) { 
-    let xy = projection([+d.lon, +d.lat]);
-    return xy 
+    return projection([+d.lon, +d.lat]);
   });
 }
 
@@ -267,7 +281,8 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   hide_spinner();
 }
 
-// TODO: Is there a railroad or other line drawing function that we can abstract multiple line drawing functions out to?
+// TODO: Is there a railroad or other line drawing function that we can
+//  abstract multiple line drawing functions out to?
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
 
@@ -304,7 +319,9 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
 //   ctx.stroke();
 // }
 
-const draw_well = function draw_well(ctx, xy, color) { // TODO: Consider passing an obj so you can call its stroke, diameter, and color props
+// TODO: Consider passing an obj so you can call its stroke, diameter,
+//  and color props
+const draw_well = function draw_well(ctx, xy, color) {
   ctx.strokeStyle = color;
   ctx.lineWidth = oil_and_gas.wells.stroke / transform.k ** .5;
   ctx.fillStyle = color;
@@ -323,7 +340,8 @@ const draw_off_well = function draw_off_well(ctx, xy, color) {
 
 /**
  * Draw gas wells to the infrastructure map.
- * @param {Array} queued_data - readfile: '/static/csv/wells_gas1.csv' & '/static/csv/wells_gas2.csv'
+ * @param {Array} queued_data - readfile: '/static/csv/wells_gas1.csv'
+ * & '/static/csv/wells_gas2.csv'
  */
 const draw_gas_wells = function draw_gas_wells(queued_data) {
   console.log('draw_gas_wells');
@@ -335,7 +353,8 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
 
 /**
  * Draw oil wells to the infrastructure map.
- * @param {Array} queued_data - readfile: '/static/csv/wells_oil1.csv' & '/static/csv/wells_oil2.csv'
+ * @param {Array} queued_data - readfile: '/static/csv/wells_oil1.csv'
+ * & '/static/csv/wells_oil2.csv'
  */
 const draw_oil_wells = function draw_oil_wells(queued_data) {
   console.log('draw_oil_wells');
@@ -361,33 +380,32 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   wells = wells
     .filter(function(d) { return +d.zoom <= +transform.k; })
   wells.forEach(function(d, i) {
-      let xy = projection([+d.lon, +d.lat]);
-      if (xy === null) {
-        return;
-      } else {
-        if (d.oilgas === 'GAS') {
-          if (d.class === 'Off') {
-            draw_off_well(ctx, xy, gas_well.color);
-          } else {
-            draw_well(ctx, xy, gas_well.color);
-          }
+    let xy = projection([+d.lon, +d.lat]);
+    if (xy === null) {
+      return;
+    } else {
+      if (d.oilgas === 'GAS') {
+        if (d.class === 'Off') {
+          draw_off_well(ctx, xy, gas_well.color);
         } else {
-          if (d.class === 'Off') {
-            draw_off_well(ctx, xy, oil_well.color);
-          } else {
-            draw_well(ctx, xy, oil_well.color);
-          }
+          draw_well(ctx, xy, gas_well.color);
+        }
+      } else {
+        if (d.class === 'Off') {
+          draw_off_well(ctx, xy, oil_well.color);
+        } else {
+          draw_well(ctx, xy, oil_well.color);
         }
       }
-      if (i === wells.length - 1) {
-
-        hide_spinner();
-      }
-    });
-  //;
+    }
+    if (i === wells.length - 1) {
+      hide_spinner();
+    }
+  });
 };
 
-// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// TODO: Split up the JSON files based on whatever property marks
+//  processing vs. storage
 const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
 
@@ -416,7 +434,8 @@ const draw_processing = function draw_processing(ctx, queued_data) {
 
 };
 
-// TODO: Split up the JSON files based on whatever property marks processing vs. storage
+// TODO: Split up the JSON files based on whatever property marks
+//  processing vs. storage
 const draw_storage = function draw_storage(ctx, queued_data) {
   let gstor = queued_data[0]; // gas storage
   gstor.forEach(function(d, i) {
@@ -488,7 +507,8 @@ const draw_gas_storage = function draw_gas_storage(ctx, xy) {
 
 /**
  * Draw oil refinery to the infrastructure map as a hexagon
- * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer oil-refinery"
+ * @param {Object} ctx - HTML5 canvas context: bound to canvas
+ * "map.layer.oil-refinery"
  * @param {Array} xy - Array of xy coordinates 
  * @param {Number} r 
  */
@@ -558,7 +578,6 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   y = draw_line(ctx, x, y, this, OIL_PRODUCT_LINE_DASH, text)
   ctx.setLineDash([]);
   return y;
-
 };
 
 let oil_refinery = new Refinery('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
@@ -583,4 +602,4 @@ let oil_and_gas_storage = { name: 'oil-and-gas-storage',
 //   w: d3.csv
 // } ],
   column: 'oil-and-gas',
-} 
+}

@@ -6,15 +6,18 @@
  */
 
 /** 
- * Instatiates a new PowerPlant object that contains properties used to power plants to the map and legend.
+ * Instantiates a new PowerPlant object that contains properties used
+ * to power plants to the map and legend.
  * @class
- * @classdesc Used to create objects that represent electricity-generating infrastructure.
+ * @classdesc Used to create objects that represent electricity-generating
+ * infrastructure.
  * @extends InfrastructureSet
  * @param {String} name - canvas ID
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
  * @param {String} fuel_type - class heading from the data file
  * @param {String} color - rgba value used to draw the grid line
  * @param {String} stroke - rgba value used for symbol outlines and opacity
@@ -36,7 +39,10 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
     ctx.strokeStyle = this.stroke;
     ctx.lineWidth = electricity_generation.stroke.width;
 
-    // TODO: The vertical increment spacing is different for power plants because their icons are larger than others. Should we apply one uniform spacing increment for all layers or should we keep it the way it is?
+    // TODO: The vertical increment spacing is different for power plants
+    //  because their icons are larger than others. Should we apply one
+    //  uniform spacing increment for all layers or should we keep it
+    //  the way it is?
     y += 18 * SCALE;
     ctx.beginPath();
     draw_circle(ctx, [x, y], 7 * SCALE);
@@ -67,28 +73,33 @@ let plant_stroke = 'rgba(255, 255, 255, 1)';
 
  /**
  * A collection of power plant classifications used for filtering.
- * @type {Object} 
- * @property {Object} stroke - contains rgba and scale values to assign to ctx.strokeStyle 
- * @property {Number} scale - sets the scale of all plants to a multiple of global SCALE 
+ * @type {Object}
+ * @property {Object} stroke - contains rgba and scale values to assign
+  * to ctx.strokeStyle
+ * @property {Number} scale - sets the scale of all plants to a multiple
+  * of global SCALE
  */
 let electricity_generation = {
   stroke: {
     light: 'rgba(255, 255, 255, 1)',
-  //   natural_gas: 'darkblue',
-  //   sun: 'darkorange',
-  //   dark: 'rgba(0, 0, 0, 1)', // TODO: Is this prop used anywhere?
     width: .66 * SCALE
   },
-  scale: .3 * SCALE, //old_scale: .9 * SCALE, // TODO: figure out if needed
-}; 
+  // TODO: figure out if needed
+  // This is used in the `draw_power_plant()` function
+  scale: .3 * SCALE
+};
 
 /**
- * Helper function for draw_single_plant(). Draw the white background for each symbol.
- * @param {Object} plants - data from the readfile, passes through from draw_single_plant()
- * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant()
+ * Helper function for draw_single_plant(). Draw the white background
+ * for each symbol.
+ * @param {Object} plants - data from the readfile, passes through from
+ * draw_single_plant()
+ * @param {Object} fuel - fuel object from `electricity_generation`, passes
+ * through from draw_single_plant()
  * @param {Object} ctx - HTML5 canvas context
+ * @param {Array} features
  */
-function draw_white_layer(plants, fuel, ctx) {
+function draw_white_layer(plants, fuel, ctx, features) {
   features.forEach(function (d) {
     let xy = projection(d.geometry.coordinates);
     draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
@@ -96,18 +107,22 @@ function draw_white_layer(plants, fuel, ctx) {
 }
 
 /**
- * Helper function for draw_single_plant(). Draw the standard layer for each symbol.
+ * Helper function for draw_single_plant(). Draw the standard layer for
+ * each symbol.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Number} xy - xy coordinates
- * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant()
+ * @param {Object} fuel - fuel object from `electricity_generation`,
+ * passes through from draw_single_plant()
  * @param {Object} d - data element filtered by fuel type from the readfile
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  if (fuel == bio_plants) {
-    // TODO: come up with a meaningful scaling metric. Can the PADD district help us in some way, at least to come up with the actual data? Perhaps we need to provide some disclaimer about the size of biofuel plants?
+  if (fuel === bio_plants) {
+    // TODO: come up with a meaningful scaling metric. Can the PADD
+    //  district help us in some way, at least to come up with the
+    //  actual data? Perhaps we need to provide some disclaimer about
+    //  the size of biofuel plants?
     draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
-    // draw_power_plant(ctx, xy, color, +d.geometry.coordinates[1]);
   }
   else {
     draw_power_plant(ctx, xy, color, +d.properties.total_cap);
@@ -115,18 +130,20 @@ const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
 }
 
 /**
- * Helper function for draw_single_plant(). Returns the desired subset of `data`, filtered by fuel type.
- * @param {Object} data - data from the readfile, passes through from draw_single_plant()
- * @param {Object} fuel - fuel object from `electricity_generation`, passes through from draw_single_plant() // TODO: update params
+ * Helper function for draw_single_plant(). Returns the desired subset
+ * of `data`, filtered by fuel type.
+ * @param {Object} data - data from the readfile, passes through
+ * from draw_single_plant()
+ * @param {Object} fuel - fuel object from `electricity_generation`,
+ * passes through from draw_single_plant() // TODO: update params
  * @param {Object} ctx - HTML5 canvas context
  * @returns {Object} features - the desired data set, narrowed by fuel type
  */
 const get_fuel_type = function get_fuel_type(data, fuel) {
-  features = data.features
+  return data.features
     .filter(function (d) {
       return d.properties.primary_fu === fuel.fuel_type;
     });
-    return features;
 }
 
 /**
@@ -135,7 +152,8 @@ const get_fuel_type = function get_fuel_type(data, fuel) {
  * @param {Object} queued_data - the readfile
  * @param {Object} fuel - fuel object from `electricity_generation`
  */
-// TODO: Is this drawing one single plant, or one single set of plants? Change jsdoc if necessary
+// TODO: Is this drawing one single plant, or one single set of plants?
+//  Change jsdoc if necessary
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
 
@@ -145,8 +163,8 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   ctx.clip(region);
 
   let plants = queued_data[0];
-  get_fuel_type(plants, fuel);
-  draw_white_layer(plants, fuel, ctx);
+  let features = get_fuel_type(plants, fuel);
+  draw_white_layer(plants, fuel, ctx, features);
   // Draw the standard layer
   features.forEach(function(d, i) {
     let xy = projection(d.geometry.coordinates);
@@ -155,11 +173,10 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
     } else {
       draw_standard_layer(ctx, xy, fuel, d);
     }
-    if (i === features.length - 1) { 
-      hide_spinner(); 
+    if (i === features.length - 1) {
+      hide_spinner();
     }
   });
-  //;
 };
 
 // TODO: Determine purpose and add jsdoc
@@ -279,79 +296,9 @@ let bio_plants = new PowerPlant('biofuel', 'Biofuel power plant', 51_000_000_000
   w: d3.json,
 } ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
-
-let biofuel = { 
+let biofuel = {
   name: 'biofuel',
   value: 51_000_000_000,
   draw: false,
   column: 'electricity-generation',
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// FIXME: MOVE TO A STATIC MAPS FUNCS DIR/FILE OR DELETE LATER
-// UNTIL A DECISION IS MADE, THIS CODE IS SAFE TO IGNORE (COMMENT LEFT 01/15/2020)
-// Old code, used for drawing the static images. Replace with code
-// that just calls each function
-const draw_power_plants = function draw_power_plants(ctx, queued_data, nff) {
-  console.log('draw_power_plants');
-
-  let plants = queued_data[0];
-
-  // Toggle fuels for fossil vs non-fossil fuels
-  let fuels = ['PET', 'NG', 'COAL'];
-  if (nff) {
-    fuels = ['SUN', 'WND', 'NUC', 'GEO', 'HYC'];
-  }
-
-  plants.features.filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    })
-    .forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
-    });
-  plants.features
-    .filter(function(d) {
-      return fuels.indexOf(d.properties.primary_fu) > -1;
-    }).forEach(function(d) {
-      let xy = projection(d.geometry.coordinates);
-      if (xy === null) {
-        //
-      } else {
-        let color = fuel.color;
-        draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-      }
-    });
-};
-
-const draw_ff_plants = function draw_ff_plants(ctx, queued_data) {
-  // draw_power_plants(ctx, queued_data, false) // old implementation
-  // suggested implementation below:
-  draw_petro_plants(ctx, queued_data);
-  draw_ng_plants(ctx, queued_data);
-  draw_coal_plants(ctx, queued_data);
-};
-
-const draw_nff_plants = function draw_nff_plants(ctx, queued_data) {
-  // draw_power_plants(ctx, queued_data, true) old implementation
-  // suggested implementation below:
-  draw_solar_plants(ctx, queued_data);
-  draw_wind_farms(ctx, queued_data);
-  draw_nuclear_plants(ctx, queued_data);
-  draw_geo_plants(ctx, queued_data);
-  draw_hydro_plants(ctx, queued_data);
-};
