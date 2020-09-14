@@ -43,7 +43,7 @@ Coal.prototype = new InfrastructureSet;
 */
 function CoalMine(name, text, value, column, draw) {
 Coal.call(this, name, text, value, column, draw);
-this.text = 'Coal mine';
+this.text = 'Coal mines';
 this.stroke = 'rgba(255, 255, 255, 1)';
 this.width = SCALE;
 this.fill = 'rgba(0, 0, 0, 0.5)';
@@ -195,13 +195,13 @@ ctx.stroke();
 hide_spinner();
 };
 
-let coal_mine = new CoalMine('coal-mine', 'Coal mine', 57_000_000_000, 'coal', [ {
+let coal_mine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', [ {
 f: draw_coal_mines,
 src: [ '/static/csv/coal.csv' ],
 w: d3.csv
 } ]);
 
-let railroad = new Railroad('railroad', 'Railroad', 137_000_000_000, 'coal', [ {
+let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', [ {
 f: draw_railroads,
 src: [ '/static/json/railrdl020.json' ],
 w: d3.json

@@ -49,7 +49,7 @@ function Well(name, text, value, column, draw, color, legend_color) {
     draw_x(ctx, [x, y], oil_and_gas.wells.cross);
     ctx.stroke();
     
-    let text = `${this.text.slice(0, 3)} offshore well`
+    let text = `${this.text.slice(0, 3)} offshore wells`
     y = advance_for_type(y, ctx, text, text_offset, x);
     
     return y;
@@ -479,13 +479,13 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.fill();
 };
 
-let gas_well = new Well('gas-well', 'Gas well', 1_059_000_000_000, 'oil-and-gas', [ {
+let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-gas', [ {
   f: draw_all_wells,
   src: [ `/static/csv/wells_gas.csv` ],
   w: d3.csv
 } ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
-let oil_well = new Well('oil-well', 'Oil well', 654_000_000_000, 'oil-and-gas', [ {
+let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [ {
   f: draw_all_wells,
   src: [ `/static/csv/wells_oil.csv` ],
   w: d3.csv
@@ -506,22 +506,22 @@ let foreign_gas_wells = {
   column: 'oil-and-gas',
 }
 
-let gas_pipeline = new Transport('gas-pipeline', 'Gas pipeline', 940_000_000_000, 'oil-and-gas', [ {
+let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [ {
   f: draw_gas_pipes,
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
   w: d3.json
 } ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
-let oil_pipeline = new Transport('oil-pipeline', 'Oil pipeline', 170_000_000_000, 'oil-and-gas', [ {
+let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [ {
   f: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
 
-let oil_product_pipeline = new Transport('oil-product-pipeline', 'Oil product pipeline', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
+let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 
-let oil_refinery = new Refinery('oil-refinery', 'Oil refinery', 373_000_000_000, 'oil-and-gas', [ {
+let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [ {
   f: draw_refining,
   src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
   w: d3.json
