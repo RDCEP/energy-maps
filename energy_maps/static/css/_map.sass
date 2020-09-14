@@ -1,0 +1,65 @@
+.map
+  &.wrapper
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 800
+  &.builder
+    position: absolute
+    width: 100%
+    height: 100%
+  &.layer
+    position: absolute
+    height: 100%
+    width: 100%
+    //pointer-events: none
+    &.base-map
+      //pointer-events: all
+.base-map
+  z-index: 0
+.zoom-target
+  width: 100vw
+  height: 100vh
+.layer
+  fill: none
+.canvas
+  &.gas-well
+    position: relative
+    top: 0
+  &.fossil-fuel-plant
+    position: absolute
+    top: 0
+.master-legend
+  width: auto!important
+#browser-notice
+  font-style: italic
+  margin-top: 20px
+#spinner
+  position: absolute
+  display: none
+  width: 200px
+  height: 200px
+  left: 50%
+  top: 30%
+  margin-left: -100px
+  z-index: 1000
+.boundary
+  &.ocean
+    fill: white
+  &.land
+    fill: #eeeeee
+.feature
+  &.pipe
+    stroke-width: .5
+    fill: none
+    &.oil
+      stroke: #222222
+    &.gas
+      stroke: cornflowerblue
+  &.dot
+    stroke: none
+    fill: #000000
+    &.plant
+      fill: #cccccc

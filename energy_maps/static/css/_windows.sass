@@ -1,0 +1,118 @@
+@use 'layout'
+
+.window
+  &.main
+    position: absolute
+  &.menu
+    cursor: move
+    padding: .5em 1em
+    border: 1px solid #cccccc
+    border-bottom-width: 0
+    .toggle
+      position: absolute
+      right: 1.414em
+      top: 1.25em
+      border: solid black
+      border-width: 0 .1em .1em 0
+      display: inline-block
+      padding: .33em
+      cursor: pointer!important
+      z-index: 10
+      &.close
+        transform: rotate(-135deg)
+        -webkit-transform: rotate(-135deg)
+      &.open
+        top: 1em
+        transform: rotate(45deg)
+        -webkit-transform: rotate(45deg)
+    .canvas
+      position: absolute
+      top: 100%
+      left: -1px
+      right: -1px
+      min-height: 0px
+      border: 1px solid #cccccc
+      border-top-width: 0
+      &.closed
+        height: 0
+        overflow: hidden
+  h6
+    position: relative
+    padding: .25em 0
+    margin: 0
+    border-top: 2px solid black
+    border-bottom: 1px solid black
+
+.options.main
+  width: 1200px
+  z-index: 900
+  &.menu
+    position: fixed
+    top: 60%
+    padding-bottom: 0
+  .canvas
+    padding: 0 1em .5em
+  .bkgd
+    opacity: .6
+  h6
+    border-bottom: none
+  .options
+    .column
+      width: 24.25%
+      float: left
+      position: relative
+      z-index: 2
+      &+.column
+        margin: 0 0 0 1%
+      h4
+        padding: .5em 0
+        margin: 0
+        border-top: 2px solid black
+        border-bottom: 1px solid black
+  label
+    display: block
+    border-bottom: 1px solid black
+    padding: .33em 0
+    &.inactive
+      color: #767676
+    .asset-value
+      font-size: .8em
+    input
+      position: absolute
+      right: 2px
+  .zoom-buttons
+    position: absolute
+    margin-right: .5em
+    right: 100%
+    top: 0
+    width: 2em
+    font-size: 1em
+    text-align: center
+    font-weight: bold
+    border: 1px solid #cccccc
+    .zoom-in, .zoom-out
+      cursor: pointer
+      z-index: 910
+      position: relative
+      padding: .5em
+      display: block
+      &:hover
+        background-color: #d6d6d6
+.legend
+  &.main
+    width: 320px
+    z-index: 901
+  &.menu
+    z-index: 1
+    h6
+      position: relative
+      padding: .25em 0
+      margin: 0
+      z-index: 2
+      border-top: 2px solid black
+      border-bottom: 1px solid black
+    .tmpcanvas
+      display: none
+  canvas
+    position: relative
+    z-index: 2

@@ -1,0 +1,81 @@
+@use 'layout'
+
+*
+  font-size: 1em
+  font-family: Roboto, Arial, sans-serif
+p,h1,h2,h3,h4,h5,h6
+  font-size: 1em
+h4
+  margin: 1em 0 .5em
+p
+  color: layout.$dark_grey
+  line-height: 1.4
+  margin: 0 0 .5em
+a
+  color: inherit
+body, html
+  height: 100%
+  margin: 0
+header
+  position: absolute
+  top: 0
+  width: 100%
+  pointer-events: none
+main
+  height: 85%
+  min-height: 480px
+  .content-wrap
+    position: relative
+    height: 100%
+footer
+  position: fixed
+  bottom: 0
+  width: 100%
+  z-index: 1
+  color: layout.$grey
+  font-size: .8em
+  border-top: 1px solid layout.$grey
+  padding: 1em 0 1.5em
+  //bottom: 0
+  img
+    display: inline-block
+    margin-right: 30px
+    &.nsf
+      clear: left
+      height: 40px
+      float: left
+    &.rdcep
+      height: 40px
+      float: left
+  p
+    float: left
+    color: #ababab
+    margin-right: 30px
+    &.nsf
+      width: 300px
+      margin-top: 5px
+
+.wrap
+  width: layout.$width
+  margin: 0 auto
+  img
+    //width: 100%
+    display: block
+.content-wrap
+  width: layout.$width
+  margin: 0 auto
+.bkgd
+  background-color: white
+  opacity: .8
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+.cf
+  &:before, &:after
+    content: ' '
+    display: table
+  &:after
+    clear: both
