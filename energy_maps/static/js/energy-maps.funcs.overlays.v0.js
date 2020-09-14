@@ -74,7 +74,7 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
   path(output_geojson);
   ctx.stroke();
   ctx.setLineDash([]);
-  hide_spinner();
+  finish_loading_layer();
 };
 
 /**
@@ -106,7 +106,7 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
     path(output_geojson);
     ctx.fill();
   }
-  hide_spinner();
+  finish_loading_layer();
 };
 
 /** Draw wind capacity map legend **/

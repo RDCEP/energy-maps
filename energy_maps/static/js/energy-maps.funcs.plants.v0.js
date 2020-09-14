@@ -174,7 +174,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       draw_standard_layer(ctx, xy, fuel, d);
     }
     if (i === features.length - 1) {
-      hide_spinner();
+      finish_loading_layer();
     }
   });
 };

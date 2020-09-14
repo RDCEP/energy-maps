@@ -173,7 +173,7 @@ let init = (function() {
   // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
-      show_spinner();
+      start_loading_layer();
       Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
           lyr.context.restore();

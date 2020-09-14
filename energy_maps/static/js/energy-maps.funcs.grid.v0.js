@@ -127,7 +127,7 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
     ctx.stroke();
 
     if (i === feat_len - 1) {
-      hide_spinner();
+      finish_loading_layer();
     }
   }
 };

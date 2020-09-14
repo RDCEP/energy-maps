@@ -194,6 +194,18 @@ const show_spinner = function show_spinner() {
 const hide_spinner = function hide_spinner() {
   spinner.style.display = 'none';
 };
+let processing_layers = 0;
+const start_loading_layer = function start_loading_layer() {
+  show_spinner();
+  processing_layers++;
+};
+const finish_loading_layer = function finish_loading_layer() {
+  processing_layers--;
+  if (processing_layers <= 0) {
+    processing_layers = 0;
+    hide_spinner();
+  }
+};
 
 /**
  * Helper function for pipeline and railroad legend symbols
