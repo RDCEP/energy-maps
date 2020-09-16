@@ -562,8 +562,6 @@ let init = (function() {
       .classed('close', closed);
   });
 
-  const window_menus = d3.selectAll('.window.menu');
-
   const window_drag_started = function window_drag_started() {
 
     d3.event.on('drag', dragged).on('end', ended);
@@ -583,7 +581,7 @@ let init = (function() {
     }
   }
 
-  window_menus
+  d3.selectAll('.window.menu')
     // Set horizontal position of draggable windows on page load.
     .style('right', function() { if (d3.select(this).classed('legend')) {
       return `${(width-1200)/2+100}px`;
@@ -596,5 +594,10 @@ let init = (function() {
       return `${header_height}px`;
     }})
     .call(d3.drag().on('start', window_drag_started));
+
+  d3.selectAll('.window .canvas')
+    .call(d3.drag().on('start', function () {
+      d3.event.stopPropagation();
+    }));
 
 })();
