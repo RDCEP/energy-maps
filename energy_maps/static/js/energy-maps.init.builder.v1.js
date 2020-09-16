@@ -567,8 +567,13 @@ let init = (function() {
         .style('bottom', null)
         .style('right', `${
           parseInt(that.style('right'), 10) - d3.event.dx}px`)
-        .style('top', `${
-          parseInt(that.style('top'), 10) + d3.event.dy}px`);
+        .style('top', function() {
+          let y = parseInt(that.style('top'), 10);
+          if (y > height - 50) {
+            return `${height - 50}px`;
+          }
+          return `${y + d3.event.dy}px`;
+        });
     }
 
     function ended() {
