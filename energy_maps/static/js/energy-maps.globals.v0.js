@@ -6,18 +6,11 @@
 
 const fill_screen = false;
 
-// vvv Original width and scale definitions vvv
-// let width = 2000 * SCALE;
-
-// if (!SCALE) {
-//   width = screen.width;
-//   SCALE = width / 2000;
-// }
-// ^^^ end original width and scale definitions ^^^
-
-// alter the width variable below to change the scale of the map
-// if you need to make UI adjustments
-
+/**
+ * @type {number}
+ * @description Originally used for scaling static print-based maps.
+ * Currently unused.
+ */
 SCALE = 1;
 
 /**
@@ -32,8 +25,6 @@ let dpi = window.devicePixelRatio;
  * @description Map width, set to some multiple of `SCALE`
  */
 let width = window.innerWidth * SCALE;
-// let width = 1200 * SCALE; // Note: you can't adjust this value without
-                          // significantly effecting legends.
 
 /**
  * @type {number} 
@@ -53,6 +44,11 @@ const padding = {top: 10, right: 10, bottom: 50, left: 50};
  */
 const canvas_width = width + SCALE * 400;
 
+/**
+ * @type {number}
+ * @description Distance to inset text from the left edge of the legend.
+ * Carves out room for legend symbols, while keeping text aligned.
+ */
 let text_offset = 30 * SCALE;
 
 /**
@@ -69,18 +65,20 @@ const viz = {
     ocean: '#ffffff',
     width: SCALE
   }
-
 };
 
 /** 
- * Instantiates a new generic object that contains properties used to draw infrastructure data to the map and legend.
+ * Instantiates a new generic object that contains properties used to draw
+ * infrastructure data to the map and legend.
  * @class
- * @classdesc Base class that allows derived classes to create objects that represent data sets for specific types of infrastructure.
+ * @classdesc Base class that allows derived classes to create objects that
+ * represent data sets for specific types of infrastructure.
  * @param {String} name - canvas ID
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render the visualization
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
  */
 function InfrastructureSet(name, text, value, column, draw) {
   this.name = name || '';
@@ -98,12 +96,15 @@ function InfrastructureSet(name, text, value, column, draw) {
 /** 
  * Instantiates a user interface object that allows you to create a new map.
  * @class
- * @classdesc Base class that allows derived classes to create objects that represent data sets for specific types of infrastructure.
- * @param {Object} map - a map projection on a canvas object? that's probably what this should return... TBD
+ * @classdesc Base class that allows derived classes to create objects that
+ * represent data sets for specific types of infrastructure.
+ * @param {Object} map - a map projection on a canvas object? that's
+ * probably what this should return... TBD
  * @param {Number} columns - Number of columns rendered to the menu... TBD
  * @param {Object} toggle - checkboxes or something... TBD
  */
-function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real thing
+//TODO: Actually make this a real thing
+function MapBuilderUI(map, columns, toggle) {
   this.map = map;
   this.columns = columns;
   this.toggle = toggle;
@@ -135,17 +136,23 @@ function MapBuilderUI(map, columns, toggle) { //TODO: Actually make this a real 
 }
 
 // create projection and path objects with which to draw geo objects
-let simple_map_bkgd = null;         // Kludge for pan/zoom. Can;t make JSON call during pan/zoom.
-let transform = {x:0, y:0, k:1};    // Kludge for pan/zoom. Need to track transform globally.
-let content_width = d3.select('main .content-wrap').node().offsetWidth;  // width of content area in center of screen
-let header_height = d3.select('header').node().offsetHeight;  // height of header area
-let projection_scale =  content_width * 1.2;  // scale to fill content area
+// Kludge for pan/zoom. Can't make JSON call during pan/zoom.
+let simple_map_bkgd = null;
+// Kludge for pan/zoom. Need to track transform globally.
+let transform = {x:0, y:0, k:1};
+// width of content area in center of screen
+let content_width = d3.select('main .content-wrap').node().offsetWidth;
+// height of header area
+let header_height = d3.select('header').node().offsetHeight;
+// scale to fill content area
+let projection_scale =  content_width * 1.2;
 let projection_width = width / 2;
 let projection_height = projection_width / 2 + header_height
 
 /**
- * @description D3 geoAlbersUsa projection object set to custom scale and translation offset
-//  */
+ * @description D3 geoAlbersUsa projection object set to custom scale
+ * and translation offset
+**/
 let projection = d3.geoAlbersUsa()
   .scale(projection_scale)
   .translate([
@@ -155,8 +162,7 @@ let projection = d3.geoAlbersUsa()
     projection_scale / 4 + header_height
   ]);
 
-// Saw this somewhere and I think it's supposed to make drawing faster
-let path2D = new Path2D();
+path2D = new Path2D();
 
 /**
  * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
@@ -177,16 +183,32 @@ const get_path = function get_path(ctx) {
     .context(ctx);
 };
 
+/**
+ * @type {HTMLElement}
+ * @description Spinner element that appears while layers are loading.
+ */
 const spinner = document.getElementById('spinner');
 const show_spinner = function show_spinner() {
-  spinner.style.display = "block";
+  spinner.style.display = 'block';
 };
 const hide_spinner = function hide_spinner() {
-    spinner.style.display = "none";
-  };
+  spinner.style.display = 'none';
+};
+let processing_layers = 0;
+const start_loading_layer = function start_loading_layer() {
+  show_spinner();
+  processing_layers++;
+};
+const finish_loading_layer = function finish_loading_layer() {
+  processing_layers--;
+  if (processing_layers <= 0) {
+    processing_layers = 0;
+    hide_spinner();
+  }
+};
 
 /**
- * Helper function for pipes and railroad
+ * Helper function for pipeline and railroad legend symbols
  * @param {Object} ctx - HTML5 canvas context
  * @param {Number} x - x axis
  * @param {Number} y - y axis
@@ -213,4 +235,5 @@ const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
 
   y = advance_for_type(y, ctx, text, text_offset, x);
   return y;
+
 }

@@ -5,7 +5,7 @@
 */
 
 let init = (function() {
-/**
+  /**
    * init functionality
    * @alias Init
    * @namespace Init
@@ -39,6 +39,7 @@ let init = (function() {
     .attr('id', 'mapcanvas')
     .attr('width', width)
     .attr('height', height);
+
   const ctx = base_canvas.node().getContext('2d');
   ctx.LineCap = 'round';
 
@@ -83,48 +84,55 @@ let init = (function() {
   let asset_total_sum = 0;
 
   /** // TODO: Update this documentation. It's handy for now but not accurate.
-   * @description An array of objects representing resources to be rendered on top of the map canvas.
-   * @property {string}   name               - A canvas id.
-   * @property {Number}   value              - Asset value in USD.
-   * @property {Array}    draw               - An array of objects containing properties accessed by load_layer_data().
-   * @property {function} draw.f             - A draw function bound to each object.
-   * @property {string}   draw.src           - A reference to the data source (json or csv).
-   * @property {function} draw.w             - A call to a d3 data parse function.
-   * @property {string}   column             -The class of the column that the layer's checkbox is written to.
+   * @description An array of objects representing resources to be rendered
+   * on top of the map canvas.
+   * @property {string}   name        - A canvas id.
+   * @property {Number}   value       - Asset value in USD.
+   * @property {Array}    draw        - An array of objects containing
+   *                                    properties accessed by
+   *                                    load_layer_data().
+   * @property {function} draw.f      - A draw function bound to each object.
+   * @property {string}   draw.src    - A reference to the data source
+   *                                    (json or csv).
+   * @property {function} draw.w      - A call to a d3 data parse function.
+   * @property {string}   column      - The class of the column that the
+   *                                    layer's checkbox is written to.
    * @memberof Init
    */
   let layers = [];
 
   /**
-   * @description Draw the base map for the application based off of the data from fmap and fmapfill
+   * @description Draw the base map for the application based off
+   * of the data from fmap and fmapfill
    * @memberof Init
    */
-  function draw_base_map(transform) {
+  const draw_base_map = function draw_base_map(transform) {
     Promise.all(
       [d3.json(fmap)]
     ).then(function(files) {
       draw_land(ctx, files, transform, false, false);
     });
-  }
+  };
 
   /** Add the passed value to the asset total array and compute the new value
    * @param  {Number} value - the value to add to asset total value
    * @memberof Init
    */
-  function increment_asset_total(value) {
+  const increment_asset_total = function increment_asset_total(value) {
     asset_total_sum += value;
     display_asset_total();
-  }
+  };
 
   /**
-   * Remove the passed value from the asset total array and compute the new value
+   * Remove the passed value from the asset total array and compute
+   * the new value
    * @param  {Number} value - the value to subtract from asset total value
    * @memberof Init
    */
-  function decrement_asset_total(value) {
+  const decrement_asset_total = function decrement_asset_total(value) {
     asset_total_sum -= value;
     display_asset_total();
-  }
+  };
 
   /**
    * Display total asset value of all active layers.
@@ -132,15 +140,14 @@ let init = (function() {
    * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
    * @memberof Init
    */
-  function display_asset_total() {
+  const display_asset_total = function display_asset_total() {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
-    document.getElementById("asset-totals")
+    document.getElementById('asset-totals')
       .innerHTML = `${d3.format('$.2~s')(asset_total_sum)
       .replace(/G/, ' B')
-      .replace(/T/, ' T')}`
-    ;
-  }
+      .replace(/T/, ' T')}`;
+  };
 
   /**
    * @param  {String} s - the supplied character string to be formatted
@@ -152,7 +159,8 @@ let init = (function() {
   };
 
   /**
-   * @description Call all draw methods for a given layer and render it to its canvas element.
+   * @description Call all draw methods for a given layer and render it
+   * to its canvas element.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
@@ -165,7 +173,7 @@ let init = (function() {
   // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
-      show_spinner();
+      start_loading_layer();
       Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
           lyr.context.restore();
@@ -247,17 +255,18 @@ let init = (function() {
   let cols = button_columns.length;
 
   /**
-   * @description Initialize and display all menu columns that divide checkboxes into categories.
+   * @description Initialize and display all menu columns that divide
+   * checkboxes into categories.
    * @memberof Init
    */
-  let initMenuColumns = function initMenuColumns() {
+  const initMenuColumns = function initMenuColumns() {
     for (let i = 0; i < cols; ++i) {
       let column_divs = d3.select('.options.canvas')
         .append('div')
         .attr('class', () => {return `column`})
       for (let j = 0; j < button_columns[i].length; j++) {
         let col = button_columns[i][j];
-        let column_headers = column_divs.append('div')
+        column_divs.append('div')
           .attr('class', () => { return `${col.name}`})
           .append('h4')
           .text((d) => { return `${capitalize_first_letter(col.name
@@ -265,30 +274,30 @@ let init = (function() {
             .replace(/-/g, '\u00A0'))}`; })
       }
     }
-  }
+  };
 
   /**
    * @description Add a layer to the screen.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let addLayer = function addLayer(lyr, transform) {
+  const addLayer = function addLayer(lyr, transform) {
     load_layer_data(lyr, transform);
     lyr.active = true;
     increment_asset_total(lyr.value);
-  }
+  };
 
   /**
    * @description Remove a layer from the screen.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let removeLayer = function removeLayer(lyr) {
+  const removeLayer = function removeLayer(lyr) {
     hide_spinner();
     lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
     decrement_asset_total(lyr.value);
-  }
+  };
 
   initMenuColumns();
 
@@ -297,11 +306,12 @@ let init = (function() {
   /**
    * @description Generate a label for a checkbox in the menu.
    * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - an HTML5 label tag with a class that corresponds to the `lyr` object
+   * @return {Object} checkbox_span - an HTML5 label tag with a class
+   * that corresponds to the `lyr` object
    * and a descriptive formatted text string.
    * @memberof Init
    */
-  let initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
+  const initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
@@ -312,16 +322,17 @@ let init = (function() {
         .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
         .replace(/-/g, '\u00A0'))}\u00A0`)
     return checkbox_span;
-  }
+  };
 
   /**
    * @description Generate an asset value for a checkbox in the menu.
    * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - an HTML5 span tag with that displays total asset value for the menu item.
+   * @return {Object} checkbox_span - an HTML5 span tag with that displays
+   * total asset value for the menu item.
    * abbreviated in either billions or trillions. Child of a parent label tag.
    * @memberof Init
    */
-  let initMenuAssetValue = function initMenuAssetValue(lyr) {
+  const initMenuAssetValue = function initMenuAssetValue(lyr) {
     if (lyr.value !== 0) {
       checkbox_span.append('span')
         .attr('class', 'asset-value')
@@ -333,20 +344,21 @@ let init = (function() {
             .replace(/T/, ' T'))})`);
       return checkbox_span;
     }
-  }
+  };
 
   /**
    * @description Generate a menu item.
    * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - HTML5 label and span as children of a column
+   * @return {Object} checkbox_span - HTML5 label and span as children
+   * of a column
    * div in the menu.
    * @memberof Init
    */
-  let initMenuItem = function initMenuItem(lyr) {
+  const initMenuItem = function initMenuItem(lyr) {
     initMenuCheckboxLabel(lyr);
     initMenuAssetValue(lyr);
     return checkbox_span;
-  }
+  };
 
   /**
    * @description Generate each checkbox in the menu.
@@ -355,20 +367,20 @@ let init = (function() {
    * containing a checkbox input tag.
    * @memberof Init
    */
-  let initMenuCheckbox = function initMenuCheckbox(lyr) {
+  const initMenuCheckbox = function initMenuCheckbox(lyr) {
     lyr.checkbox = checkbox_span.append('input')
     .attr('type', 'checkbox')
     .attr('class', `checkbox ${lyr.name}`)
     .attr('data-assetvalue', lyr.value);
     return lyr.checkbox;
-  }
+  };
 
   /**
    * @description Generate a canvas in the DOM for a given layer.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let addLayerCanvas = function addLayerCanvas(lyr) {
+  const addLayerCanvas = function addLayerCanvas(lyr) {
     lyr.canvas = d3
       .select(map_container)
       .append('div')
@@ -377,18 +389,18 @@ let init = (function() {
       .attr('class', `canvas ${lyr.name}`)
       .attr('width', width)
       .attr('height', height);
-  }
+  };
 
   /**
    * @description Generate a canvas context in the DOM for a given layer.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  let addCanvasContext = function addCanvasContext(lyr) {
+  const addCanvasContext = function addCanvasContext(lyr) {
     lyr.context = lyr.canvas.node().getContext('2d');
     lyr.context.lineCap = 'round';
     lyr.active = false;
-  }
+  };
 
   let initMenu = (function initMenu() {
     for (let i = 0; i < lay; i++) {
@@ -424,28 +436,11 @@ let init = (function() {
       addCanvasContext(lyr)
 
     }
-  });
+  })();
 
-  initMenu();
   draw_base_map(transform);
 
-  // this seems to be working because it is the top-most canvas and therefore
-  // the only one actually reachable by the mouse!
-  let map_layer_legend_class = document.getElementsByClassName("map layer legend")
-
-  // getElementsByClassName() returns an array of HTML elements, so you have
-  // to index through that array and its children to get the element you want.
-  // let target_canv = map_layer_legend_class[0].children[0];
-  // this sets div id="legendcanvas" to our zoomable surface.
-  // Use the target canvas (surface level) to drag the map canvas around
-  let target_canv = document.getElementsByClassName("map layer zoom-target")[0]
-  let mapcanvas = document.getElementById('mapcanvas');
-
-  // insert canvas elements for all layers into an array
-  let layer_canvases = [];
-  for (let i = 0; i < layers.length; i++) {
-    layer_canvases[i] = document.getElementsByClassName(`map layer canvas ${layers[i].name}`)[0]
-  }
+  const target_canvas = d3.select('.map.layer.zoom-target');
 
   const zoom_start = function zoom_start() {
     transform = {x:0, y:0, k:1};
@@ -471,7 +466,7 @@ let init = (function() {
     .on('zoom', zoomed)
     .on('end', zoom_end)
 
-  d3.select(target_canv).call(zoom);
+  target_canvas.call(zoom);
 
   d3.select('.zoom-in').on('click', function() {
     let increment = .1
@@ -481,7 +476,7 @@ let init = (function() {
     let initial_transform = d3.zoomIdentity
       .scale(k)
       .translate(x, y)
-    d3.select(target_canv).call(zoom.transform, initial_transform);
+    target_canvas.call(zoom.transform, initial_transform);
   });
 
   d3.select('.zoom-out').on('click', function() {
@@ -492,7 +487,7 @@ let init = (function() {
     let initial_transform = d3.zoomIdentity
       .scale(k)
       .translate(x - transform.x, y - transform.y)
-    d3.select(target_canv).call(zoom.transform, initial_transform);
+    target_canvas.call(zoom.transform, initial_transform);
   });
 
   // FIXME: This probably doesn't belong here in the code.
