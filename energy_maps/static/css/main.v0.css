@@ -278,6 +278,9 @@ footer p.nsf {
   border-top: 2px solid black;
   border-bottom: 1px solid black;
 }
+.options.main .options .column div + div h4 {
+  border-top: 1px solid black;
+}
 .options.main label {
   display: block;
   border-bottom: 1px solid black;
