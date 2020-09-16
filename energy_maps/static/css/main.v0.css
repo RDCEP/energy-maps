@@ -224,6 +224,7 @@ footer p.nsf {
   -webkit-transform: rotate(45deg);
 }
 .window.menu .canvas {
+  cursor: auto;
   position: absolute;
   top: 100%;
   left: -1px;
