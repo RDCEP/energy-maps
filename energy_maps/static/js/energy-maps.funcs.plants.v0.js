@@ -290,11 +290,11 @@ let geo_plants = new PowerPlant('geothermal-plants', 'Geothermal power plants', 
   w: d3.json,
 } ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 
-let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
-  f: draw_bio_plants,
-  src: ['/static/json/power_plants_split/power_plants-BIO.json'],
-  w: d3.json,
-} ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
+// let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
+//   f: draw_bio_plants,
+//   src: ['/static/json/power_plants_split/power_plants-BIO.json'],
+//   w: d3.json,
+// } ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
 let biofuel = { 
   name: 'biofuel',
