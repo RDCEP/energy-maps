@@ -117,16 +117,7 @@ function draw_white_layer(plants, fuel, ctx, features) {
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  if (fuel === bio_plants) {
-    // TODO: come up with a meaningful scaling metric. Can the PADD
-    //  district help us in some way, at least to come up with the
-    //  actual data? Perhaps we need to provide some disclaimer about
-    //  the size of biofuel plants?
-    draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
-  }
-  else {
-    draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-  }
+  draw_power_plant(ctx, xy, color, +d.properties.total_cap);
 }
 
 /**
@@ -234,10 +225,6 @@ const draw_solar_plants = function draw_solar_plants(ctx, queued_data) {
 
 const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
-};
-
-const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, bio_plants)
 };
 
 // Instantiate PowerPlants
