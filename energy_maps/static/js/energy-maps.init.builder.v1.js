@@ -173,7 +173,7 @@ let init = (function() {
   // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
     for (let i = 0; i < lyr.draw.length; ++i) {
-      show_spinner();
+      start_loading_layer();
       Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
         .then(function(files) {
           lyr.context.restore();
@@ -557,8 +557,6 @@ let init = (function() {
       .classed('close', closed);
   });
 
-  const window_menus = d3.selectAll('.window.menu');
-
   const window_drag_started = function window_drag_started() {
 
     d3.event.on('drag', dragged).on('end', ended);
@@ -569,8 +567,13 @@ let init = (function() {
         .style('bottom', null)
         .style('right', `${
           parseInt(that.style('right'), 10) - d3.event.dx}px`)
-        .style('top', `${
-          parseInt(that.style('top'), 10) + d3.event.dy}px`);
+        .style('top', function() {
+          let y = parseInt(that.style('top'), 10);
+          if (y > height - 50) {
+            return `${height - 50}px`;
+          }
+          return `${y + d3.event.dy}px`;
+        });
     }
 
     function ended() {
@@ -578,7 +581,7 @@ let init = (function() {
     }
   }
 
-  window_menus
+  d3.selectAll('.window.menu')
     // Set horizontal position of draggable windows on page load.
     .style('right', function() { if (d3.select(this).classed('legend')) {
       return `${(width-1200)/2+100}px`;
@@ -591,5 +594,10 @@ let init = (function() {
       return `${header_height}px`;
     }})
     .call(d3.drag().on('start', window_drag_started));
+
+  d3.selectAll('.window .canvas')
+    .call(d3.drag().on('start', function () {
+      d3.event.stopPropagation();
+    }));
 
 })();

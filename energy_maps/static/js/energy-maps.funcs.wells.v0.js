@@ -255,7 +255,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   path(pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
-  hide_spinner();
+  finish_loading_layer();
   //;
 };
 
@@ -278,7 +278,7 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   path(oil_prod_pipe_data);
   ctx.stroke();
   ctx.setLineDash([]);
-  hide_spinner();
+  finish_loading_layer();
 }
 
 // TODO: Is there a railroad or other line drawing function that we can
@@ -298,7 +298,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   path(oil_pipe_data);
   ctx.stroke();
   draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
-  hide_spinner();
+  finish_loading_layer();
   //;
 };
 
@@ -399,7 +399,7 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
       }
     }
     if (i === wells.length - 1) {
-      hide_spinner();
+      finish_loading_layer();
     }
   });
 };
@@ -421,7 +421,7 @@ const draw_processing = function draw_processing(ctx, queued_data) {
     let xy = projection([+d.lon, +d.lat]);
     draw_gas_processor(ctx, xy, gas_processing.size);
     if (i === gproc.length - 1) { 
-      hide_spinner(); 
+      finish_loading_layer();
     }
   });
 
@@ -470,7 +470,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
     }
     d.r = r;
     if (i === oref.length - 1) { 
-      hide_spinner(); 
+      finish_loading_layer();
     }
   });
 

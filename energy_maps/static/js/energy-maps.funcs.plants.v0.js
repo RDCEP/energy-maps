@@ -117,16 +117,7 @@ function draw_white_layer(plants, fuel, ctx, features) {
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  if (fuel === bio_plants) {
-    // TODO: come up with a meaningful scaling metric. Can the PADD
-    //  district help us in some way, at least to come up with the
-    //  actual data? Perhaps we need to provide some disclaimer about
-    //  the size of biofuel plants?
-    draw_power_plant(ctx, xy, color, +d.properties.PADD * 300);
-  }
-  else {
-    draw_power_plant(ctx, xy, color, +d.properties.total_cap);
-  }
+  draw_power_plant(ctx, xy, color, +d.properties.total_cap);
 }
 
 /**
@@ -174,7 +165,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
       draw_standard_layer(ctx, xy, fuel, d);
     }
     if (i === features.length - 1) {
-      hide_spinner();
+      finish_loading_layer();
     }
   });
 };
@@ -236,10 +227,6 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
-const draw_bio_plants = function draw_bio_plants(ctx, queued_data) {
-  draw_single_plant(ctx, queued_data, bio_plants)
-};
-
 // Instantiate PowerPlants
 
 let coal_plants = new PowerPlant('coal-plants', 'Coal power plants', 1_092_000_000_000, 'electricity-generation', [ {
@@ -290,11 +277,11 @@ let geo_plants = new PowerPlant('geothermal-plants', 'Geothermal power plants', 
   w: d3.json,
 } ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 
-let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
-  f: draw_bio_plants,
-  src: ['/static/json/power_plants_split/power_plants-BIO.json'],
-  w: d3.json,
-} ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
+// let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
+//   f: draw_bio_plants,
+//   src: ['/static/json/power_plants_split/power_plants-BIO.json'],
+//   w: d3.json,
+// } ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
 let biofuel = { 
   name: 'biofuel',
