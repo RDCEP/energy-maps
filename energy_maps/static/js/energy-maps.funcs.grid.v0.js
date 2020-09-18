@@ -54,6 +54,7 @@ function GridAcCollection(name, value, column, draw, legend_group) {
   this.draw = draw || [];
   this.draw_legend =  legend_group; 
 }
+GridAcCollection.prototype = new Grid;
 
 /**
  * Get the features you want from your GeoJSON FeatureCollection.
@@ -90,9 +91,10 @@ const set_line_width = function set_line_width(value, divisor) {
  * Draw a grid class on the electric grid infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
  * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
- * @param {Object} c - grid object
+ * @param {Object} obj - grid object
+ * @param {String} key - lookup value from data
  */
-const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
+const draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
   
   // transform_layer(ctx);
   path.context(ctx);
@@ -110,7 +112,7 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
   // we may not need this anymore, because you can just treat topojson
   // like regular json! as can be seen with lines like
   // queued_data[0].objects.railrdl020 and queued_data[0].objects[key]
-  features = filter_features(output_geojson, c);
+  features = filter_features(output_geojson, obj);
 
   let feat_len = features.length;
 
@@ -120,7 +122,7 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, c, key) {
 
     // TODO: Add descriptive comment here to explain the args
     ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-    ctx.strokeStyle = c.color;
+    ctx.strokeStyle = obj.color;
 
     ctx.beginPath();
     path(tmp_grid);
