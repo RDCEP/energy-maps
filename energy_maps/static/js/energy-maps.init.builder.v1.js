@@ -81,7 +81,7 @@ let init = (function() {
    * @description the total sum of asset values for all active layers
    * @memberof Init
    */
-  let asset_total_sum = 0;
+  // let asset_total_sum = 0;
 
   /** // TODO: Update this documentation. It's handy for now but not accurate.
    * @description An array of objects representing resources to be rendered
@@ -114,25 +114,15 @@ let init = (function() {
     });
   };
 
-  /** Add the passed value to the asset total array and compute the new value
-   * @param  {Number} value - the value to add to asset total value
-   * @memberof Init
-   */
-  const increment_asset_total = function increment_asset_total(value) {
-    asset_total_sum += value;
-    display_asset_total();
-  };
-
-  /**
-   * Remove the passed value from the asset total array and compute
-   * the new value
-   * @param  {Number} value - the value to subtract from asset total value
-   * @memberof Init
-   */
-  const decrement_asset_total = function decrement_asset_total(value) {
-    asset_total_sum -= value;
-    display_asset_total();
-  };
+  const sum_asset_totals = function sum_asset_totals() {
+    let asset_total_sum = 0;
+    for (let i = 0; i < lay; i++) {
+      if (layers[i].active) {
+        asset_total_sum += layers[i].value;
+      }
+    }
+    return asset_total_sum;
+  }
 
   /**
    * Display total asset value of all active layers.
@@ -140,11 +130,11 @@ let init = (function() {
    * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
    * @memberof Init
    */
-  const display_asset_total = function display_asset_total() {
+  const display_asset_total = function display_asset_total(total) {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
     document.getElementById('asset-totals')
-      .innerHTML = `${d3.format('$.2~s')(asset_total_sum)
+      .innerHTML = `${d3.format('$.2~s')(sum_asset_totals())
       .replace(/G/, ' B')
       .replace(/T/, ' T')}`;
   };
@@ -284,7 +274,7 @@ let init = (function() {
   const addLayer = function addLayer(lyr, transform) {
     load_layer_data(lyr, transform);
     lyr.active = true;
-    increment_asset_total(lyr.value);
+    display_asset_total();
   };
 
   /**
@@ -296,7 +286,7 @@ let init = (function() {
     hide_spinner();
     lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
-    decrement_asset_total(lyr.value);
+    display_asset_total();
   };
 
   initMenuColumns();
