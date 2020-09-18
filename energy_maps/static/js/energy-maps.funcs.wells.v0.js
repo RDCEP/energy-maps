@@ -102,6 +102,27 @@ function Transport(name, text, value, column, draw, stroke, width) {
 Transport.prototype = new InfrastructureSet;
 
 /** 
+ * Instantiates a new TransportCollection object that contains properties used
+ * to draw a collection of pipelines to the map and legend.
+ * @class
+ * @classdesc Used to create objects that represent multiple units of 
+ * pipeline infrastructure.
+ * @param {String} name - canvas ID
+ * @param {Number} value - asset value in USD
+ * @param {String} column - class attribute for corresponding column
+ * @param {Array} draw - properties used to parse the data and render
+ * the visualization
+ */
+function TransportCollection(name, value, column, draw, legend_group) {
+  this.name = name || '';
+  this.value = value || 0;
+  this.column = column || '';
+  this.z_index = 0;
+  this.draw = draw || [];
+  this.draw_legend =  legend_group; 
+}
+
+/** 
  * Instatiates a new Processing object that contains properties used
  * to draw resource processing infrastructure to the map and legend.
  * @class
@@ -262,12 +283,10 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
   console.log('draw_oil_prod_pipes');
-
   path.context(ctx);
   let region = new Path2D();
   region.rect(0, 0, width, height);
   ctx.clip(region);
-
   let oil_prod_pipe_data = queued_data[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
     (oil_product.dash + 2 * oil_product.width) / transform.k ];
@@ -281,11 +300,41 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   finish_loading_layer();
 }
 
+const draw_transport_collection = function draw_transport_collection(ctx, queued_data, obj, dashed) {
+  console.log('draw_pipe_collection');
+  path.context(ctx)
+  let region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+
+  let pipe_data = queued_data[0];
+
+  if (dashed) {
+    let LINE_DASH = [ obj.dash / transform.k,
+      (obj.dash + 2 * obj.width) / transform.k ];
+      ctx.setLineDash(LINE_DASH);
+  };  
+
+  ctx.strokeStyle = obj.stroke;
+  ctx.lineWidth = obj.width / transform.k;
+  ctx.beginPath();
+  path(pipe_data);
+  ctx.stroke();
+  if (dashed) {
+    ctx.setLineDash([]);
+  }
+  finish_loading_layer();
+}
+
+const draw_oil_pipe_collection = function draw_oil_pipe_collection(ctx, queued_data) {
+  draw_transport_collection(ctx, queued_data, oil_pipeline, false);
+  draw_transport_collection(ctx, queued_data, oil_product_pipeline, true);
+}
+
 // TODO: Is there a railroad or other line drawing function that we can
 //  abstract multiple line drawing functions out to?
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
-
   path.context(ctx);
   let region = new Path2D();
   region.rect(0, 0, width, height);
@@ -297,7 +346,6 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
-  draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
   finish_loading_layer();
   //;
 };
@@ -554,13 +602,13 @@ let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_0
 } ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [ {
-  f: draw_oil_pipes,
+  f: draw_oil_pipe_collection,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
 } ], '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
-  f: draw_oil_prod_pipes,
+  f: draw_oil_pipe_collection,
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
 } ], '#3CB371', 2 * SCALE);
