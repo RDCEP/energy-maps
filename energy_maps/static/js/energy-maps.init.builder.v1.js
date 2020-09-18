@@ -130,7 +130,7 @@ let init = (function() {
    * Numeral.js (http://numeraljs.com/#format) was previously used for currency formatting.
    * @memberof Init
    */
-  const display_asset_total = function display_asset_total(total) {
+  const display_asset_total = function display_asset_total() {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
     document.getElementById('asset-totals')
