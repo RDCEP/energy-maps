@@ -364,6 +364,7 @@ dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
 };
 
 let distribution = { name: 'electricity-distribution',
+  text: 'Electricity dist',
   value: 1_400_000_000_000,
   draw: false,
   column: 'electricity-transmission-and-distribution',
