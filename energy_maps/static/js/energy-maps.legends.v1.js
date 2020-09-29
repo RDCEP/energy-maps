@@ -68,6 +68,7 @@ const advance_vertical_increment = function advance_vertical_increment(y, ctx, c
  */
 const update_legend = function update_legend(tmpctx, ctx, layers) {
   // FIXME: width in globals is now 850.
+  legend.hidden = false;
   console.log('update_legend:', layers)
   let x = 32 * SCALE;
   let x_offset = 10 * SCALE;
@@ -86,5 +87,4 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
     .attr('height', y+20)
     .node().getContext('2d')
     .drawImage(d3.select('.legend.tmpcanvas canvas').node(), 0, 0);
-
 };

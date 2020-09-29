@@ -277,7 +277,10 @@ let init = (function() {
   const addLayer = function addLayer(lyr, transform) {
     load_layer_data(lyr, transform);
     lyr.active = true;
+    // let active_layers = [];
+    active_layers.push(lyr);
     display_asset_total();
+    return active_layers;
   };
 
   /**
@@ -290,6 +293,7 @@ let init = (function() {
     lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
     display_asset_total();
+    active_layers.pop(lyr);
   };
 
   initMenuColumns();
@@ -430,6 +434,9 @@ let init = (function() {
             legend_ctx.clearRect(0, 0, width, height);
             tmplegend_ctx.clearRect(0, 0, width, height);
             update_legend(tmplegend_ctx, legend_ctx, layers);
+            if (active_layers.length == 0) {
+              legend.hidden = true;
+            }
           }
 
         });
