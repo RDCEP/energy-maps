@@ -146,6 +146,7 @@ let content_width = d3.select('main .content-wrap').node().offsetWidth;
 let header_height = d3.select('header').node().offsetHeight;
 // scale to fill content area
 let projection_scale =  content_width * 1.2;
+// Possible option -- Looks good on small laptop but terrible on monitors: let projection_scale =  content_width * 0.7;
 let projection_width = width / 2;
 let projection_height = projection_width / 2 + header_height
 
