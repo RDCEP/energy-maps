@@ -46,8 +46,9 @@ Grid.prototype = new InfrastructureSet;
  * @param {Array} draw - properties used to parse the data and render
  * the visualization
  */
-function GridAcCollection(name, value, column, draw, legend_group) {
+function GridAcCollection(name, text, value, column, draw, legend_group) {
   this.name = name || '';
+  this.text = text || '';
   this.value = value || 0;
   this.column = column || '';
   this.z_index = 0;
@@ -253,7 +254,7 @@ let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(c
   return y;
 }
 
-let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   w: d3.json,
@@ -288,7 +289,7 @@ let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
   return y;
 }
 
-let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
+let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100 - 300 kV', 167_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_100_300,
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   w: d3.json,
@@ -331,7 +332,7 @@ let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
   return y;
 }
 
-let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
+let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345 - 735 kV', 137_000_000_000, 'electricity-transmission-and-distribution', [ {
   f: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   w: d3.json,
