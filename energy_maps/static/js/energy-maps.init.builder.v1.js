@@ -251,14 +251,19 @@ let init = (function() {
    */
   const button_columns = [
     [{ name: 'oil-and-gas',
+    text: 'Oil and gas'
     }],
     [{ name: 'coal',
+    text: 'Coal'
     },
-    { name: 'layers'
+    { name: 'layers',
+    text: 'Layers'
     }],
     [{ name: 'electricity-generation',
+    text: 'Electricity generation'
     }],
     [{ name: 'electricity-transmission-and-distribution',
+        text: 'Electricity trans. & dist.'
     }],
   ];
 
@@ -279,9 +284,7 @@ let init = (function() {
         column_divs.append('div')
           .attr('class', () => { return `${col.name}`})
           .append('h4')
-          .text((d) => { return `${capitalize_first_letter(col.name
-            .replace(/ /g, '\u00A0')
-            .replace(/-/g, '\u00A0'))}`; })
+          .text(col.text)
       }
     }
   };
@@ -297,7 +300,9 @@ let init = (function() {
     if (lyr === oil_pipeline) {
       oil_product_pipeline.active = true;
     }
+    active_layers.push(lyr);
     display_asset_total();
+    return active_layers;
   };
 
   /**
@@ -314,6 +319,7 @@ let init = (function() {
       oil_product_pipeline.active = false;
     }
     display_asset_total();
+    active_layers.pop(lyr);
   };
 
   initMenuColumns();
@@ -329,15 +335,25 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
+    console.log(lyr.text)
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
       return (!lyr.draw || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
     })
-    .text(`${capitalize_first_letter(
-      lyr.name
-        .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-        .replace(/-/g, '\u00A0'))}\u00A0`)
+    if (lyr.text) {
+      checkbox_span.text(lyr.text)
+    } else {
+      checkbox_span.text(`${capitalize_first_letter(
+          lyr.name
+            .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
+            .replace(/-/g, '\u00A0'))}\u00A0`)
+    }
+    // checkbox_span.text(lyr.text)
+    // .text(`${capitalize_first_letter(
+    //   lyr.name
+    //     .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
+    //     .replace(/-/g, '\u00A0'))}\u00A0`)
     return checkbox_span;
   };
 
@@ -448,6 +464,9 @@ let init = (function() {
             legend_ctx.clearRect(0, 0, width, height);
             tmplegend_ctx.clearRect(0, 0, width, height);
             update_legend(tmplegend_ctx, legend_ctx, layers);
+            if (active_layers.length == 0) {
+              legend.hidden = true;
+            }
           }
         });
       }
@@ -606,7 +625,7 @@ let init = (function() {
     .style('right', function() { if (d3.select(this).classed('legend')) {
       return `${(width-1200)/2+100}px`;
     } else if (d3.select(this).classed('options')) {
-      return `${(width-1200)/2}px`;
+      return `${(width-950)/2}px`;
     }})
     // Set vertical position of legend on page load.
     .style('top', function() { if (d3.select(this).classed('legend')) {

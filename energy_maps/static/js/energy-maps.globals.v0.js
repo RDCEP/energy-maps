@@ -208,6 +208,9 @@ const finish_loading_layer = function finish_loading_layer() {
   }
 };
 
+let active_layers = [];
+let legend = document.getElementsByClassName('legend window main menu')[0];
+
 /**
  * Helper function for pipeline and railroad legend symbols
  * @param {Object} ctx - HTML5 canvas context
