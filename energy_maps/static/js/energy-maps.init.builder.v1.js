@@ -243,7 +243,7 @@ let init = (function() {
     text: 'Electricity generation'
     }],
     [{ name: 'electricity-transmission-and-distribution',
-        text: 'Electricity trans & dist'
+        text: 'Electricity trans. & dist.'
     }],
   ];
 
