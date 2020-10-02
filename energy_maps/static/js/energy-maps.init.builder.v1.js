@@ -596,7 +596,7 @@ let init = (function() {
     .style('right', function() { if (d3.select(this).classed('legend')) {
       return `${(width-1200)/2+100}px`;
     } else if (d3.select(this).classed('options')) {
-      return `${(width-800)/2}px`;
+      return `${(width-950)/2}px`;
     }})
     // Set vertical position of legend on page load.
     .style('top', function() { if (d3.select(this).classed('legend')) {
