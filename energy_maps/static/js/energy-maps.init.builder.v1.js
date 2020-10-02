@@ -162,15 +162,35 @@ let init = (function() {
   // functions are called they only operate on that data rather than collect
   // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
-    for (let i = 0; i < lyr.draw.length; ++i) {
+    if (lyr === oil_pipeline) {
       start_loading_layer();
-      Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
+          Promise.all(oil_pipeline.draw[0].src.map(x => oil_pipeline.draw[0].w(x)))
+            .then(function(files) {
+              oil_pipeline.context.restore();
+              oil_pipeline.context.save();
+              transform_layer(oil_pipeline.context, transform);
+              oil_pipeline.draw[0].f(oil_pipeline.context, files);
+            });
+
+      start_loading_layer();
+      Promise.all(oil_product_pipeline.draw[0].src.map(x => oil_product_pipeline.draw[0].w(x)))
         .then(function(files) {
-          lyr.context.restore();
-          lyr.context.save();
-          transform_layer(lyr.context, transform);
-          lyr.draw[i].f(lyr.context, files);
+          oil_product_pipeline.context.restore();
+          oil_product_pipeline.context.save();
+          transform_layer(oil_product_pipeline.context, transform);
+          oil_product_pipeline.draw[0].f(oil_product_pipeline.context, files);
         });
+    } else {
+        for (let i = 0; i < lyr.draw.length; ++i) {
+          start_loading_layer();
+          Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
+            .then(function(files) {
+              lyr.context.restore();
+              lyr.context.save();
+              transform_layer(lyr.context, transform);
+              lyr.draw[i].f(lyr.context, files);
+            });
+        }
     }
   };
 
@@ -274,6 +294,9 @@ let init = (function() {
   const addLayer = function addLayer(lyr, transform) {
     load_layer_data(lyr, transform);
     lyr.active = true;
+    if (lyr === oil_pipeline) {
+      oil_product_pipeline.active = true;
+    }
     display_asset_total();
   };
 
@@ -286,6 +309,10 @@ let init = (function() {
     hide_spinner();
     lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
+    if (lyr === oil_pipeline) {    
+      oil_product_pipeline.context.clearRect(0, 0, width, height);
+      oil_product_pipeline.active = false;
+    }
     display_asset_total();
   };
 
@@ -305,7 +332,7 @@ let init = (function() {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
-      return (!lyr.draw) ? `${lyr.name} inactive` : `${lyr.name}`
+      return (!lyr.draw || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
     })
     .text(`${capitalize_first_letter(
       lyr.name
@@ -399,7 +426,11 @@ let init = (function() {
       
       initMenuItem(lyr);
 
-      if (lyr.draw) {
+      if (lyr.draw && (lyr != oil_product_pipeline)) { // TODO: What a horrible way of checking for one corner case of which we have several
+                                                       // There are now multiple objects that need to be rendered in the menu but need to be grey
+                                                       // and also have no checkbox. We can't rely on lyr.draw === true anymore. Each obj should
+                                                       // probably have a property that determines whether it gets a checkbox or not...
+                                                       // like `obj.requires_checkbox = false` or something like that.
         initMenuCheckbox(lyr);
         lyr.checkbox.on('change', function() {
 
@@ -418,7 +449,6 @@ let init = (function() {
             tmplegend_ctx.clearRect(0, 0, width, height);
             update_legend(tmplegend_ctx, legend_ctx, layers);
           }
-
         });
       }
 

@@ -262,12 +262,10 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
   console.log('draw_oil_prod_pipes');
-
   path.context(ctx);
   let region = new Path2D();
   region.rect(0, 0, width, height);
   ctx.clip(region);
-
   let oil_prod_pipe_data = queued_data[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
     (oil_product.dash + 2 * oil_product.width) / transform.k ];
@@ -285,7 +283,6 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
 //  abstract multiple line drawing functions out to?
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
-
   path.context(ctx);
   let region = new Path2D();
   region.rect(0, 0, width, height);
@@ -297,9 +294,26 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx.beginPath();
   path(oil_pipe_data);
   ctx.stroke();
-  draw_oil_prod_pipes(ctx, '/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson');
   finish_loading_layer();
-  //;
+  
+  // Prod pipes
+  console.log('draw_oil_prod_pipes');
+  ctx = oil_product_pipeline.context;
+  path.context(ctx);
+  region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+  let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw.src)[0];
+  let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
+    (oil_product.dash + 2 * oil_product.width) / transform.k ];
+  ctx.lineWidth = oil_product.width / transform.k;
+  ctx.strokeStyle = oil_product.stroke;
+  ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
+  ctx.beginPath();
+  path(oil_prod_pipe_data);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  finish_loading_layer();
 };
 
 // TODO: Simplify well drawing functions by adding relevant properties to nested objects
@@ -552,18 +566,18 @@ let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_0
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
   w: d3.json
 } ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
-
+// TODO: Combine pipelines into one checkbox selection
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [ {
   f: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
-} ], '#3CB371', 1.5 * SCALE);
+}], '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
   f: draw_oil_prod_pipes,
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
-} ], '#3CB371', 2 * SCALE);
+}], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
   ctx.strokeStyle = this.color;
