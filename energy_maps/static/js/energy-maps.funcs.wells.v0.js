@@ -310,6 +310,8 @@ const draw_transport_collection = function draw_transport_collection(ctx, queued
   let pipe_data = queued_data[0];
 
   if (dashed) {
+    // ctx = oil_product_pipeline.context;
+    // pipe_data = d3.json(`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`)
     let LINE_DASH = [ obj.dash / transform.k,
       (obj.dash + 2 * obj.width) / transform.k ];
       ctx.setLineDash(LINE_DASH);
@@ -327,7 +329,10 @@ const draw_transport_collection = function draw_transport_collection(ctx, queued
 }
 
 const draw_oil_pipe_collection = function draw_oil_pipe_collection(ctx, queued_data) {
+  // draw_oil_pipes(ctx, queued_data)
+  // draw_oil_prod_pipes(ctx, queued_data)
   draw_transport_collection(ctx, queued_data, oil_pipeline, false);
+  // draw_transport_collection(oil_product_pipeline.context, `/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`, oil_product_pipeline, true);
   draw_transport_collection(ctx, queued_data, oil_product_pipeline, true);
 }
 
@@ -347,7 +352,25 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   path(oil_pipe_data);
   ctx.stroke();
   finish_loading_layer();
-  //;
+  
+  // Prod pipes
+  console.log('draw_oil_prod_pipes');
+  ctx = oil_product_pipeline.context;
+  path.context(ctx);
+  region = new Path2D();
+  region.rect(0, 0, width, height);
+  ctx.clip(region);
+  let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw.src)[0];
+  let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
+    (oil_product.dash + 2 * oil_product.width) / transform.k ];
+  ctx.lineWidth = oil_product.width / transform.k;
+  ctx.strokeStyle = oil_product.stroke;
+  ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
+  ctx.beginPath();
+  path(oil_prod_pipe_data);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  finish_loading_layer();
 };
 
 // TODO: Simplify well drawing functions by adding relevant properties to nested objects
@@ -600,18 +623,23 @@ let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_0
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
   w: d3.json
 } ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
-
+// TODO: Combine pipelines into one checkbox selection
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [ {
-  f: draw_oil_pipe_collection,
+  f: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
-} ], '#3CB371', 1.5 * SCALE);
+}, 
+// {
+//   f: draw_transport_collection,
+//   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+//   w: d3.json
+/*}*/ ], '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
-  f: draw_oil_pipe_collection,
+  f: draw_oil_prod_pipes,
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   w: d3.json
-} ], '#3CB371', 2 * SCALE);
+}], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
   ctx.strokeStyle = this.color;
