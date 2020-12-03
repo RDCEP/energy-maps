@@ -476,8 +476,14 @@ let init = (function() {
 
     }
   })();
+  
+  // Load base map and any layers you want on by default
 
   draw_base_map(transform);
+  addLayer(state_boundaries, transform);
+  let state_boundaries_checkbox = document.getElementsByClassName("state-boundaries")[3];
+  state_boundaries_checkbox.checked = true;
+  console.log(state_boundaries)
 
   const target_canvas = d3.select('.map.layer.zoom-target');
 
