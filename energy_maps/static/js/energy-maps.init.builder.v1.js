@@ -506,7 +506,7 @@ let init = (function() {
   }, 500, false);
 
   const zoom = d3.zoom()
-    .scaleExtent([1, 50])
+    .scaleExtent([0, 50])
     .on('start', zoom_start)
     .on('zoom', zoomed)
     .on('end', zoom_end)
