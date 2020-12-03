@@ -185,7 +185,7 @@ const draw_polygon = function draw_polygon(sides, ctx, r, xy) {
 
 /// Modal window with about, license, etc.
 
-d3.select('.about-contact').on('click', () => {
+d3.select('.site-links').on('click', () => {
   d3.select('.modal-screen').style('display', 'block');
   d3.select('.modal-window.about-window').style('display', 'block');
 });
