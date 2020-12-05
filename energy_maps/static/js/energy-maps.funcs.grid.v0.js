@@ -100,7 +100,7 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
   // transform_layer(ctx);
   path.context(ctx);
   let region = new Path2D();
-  region.rect(0, 0, width, height);
+  region.rect(-transform.x, -transform.y, width, height);
   ctx.clip(region);
 
   output_geojson = simplify(key, queued_data)
