@@ -649,4 +649,9 @@ let init = (function() {
       d3.event.stopPropagation();
     }));
 
+  d3.selectAll('.checkbox')
+    .on('mousedown', function () {
+      d3.event.stopPropagation();
+    });
+
 })();
