@@ -160,7 +160,9 @@ let projection = d3.geoAlbersUsa()
     projection_width,
     // Half the width is the height, half of that gets us to the center, and
     // add the height of the header so that maps sits below it.
-    projection_scale / 4 + header_height
+    // Then subtract a random and pointless amount because we've been
+    // told to and are bone-fucking-tired.
+    projection_scale / 4 + header_height - 30
   ]);
 
 path2D = new Path2D();
