@@ -187,7 +187,11 @@ let init = (function() {
             .then(function(files) {
               lyr.context.restore();
               lyr.context.save();
+              return files;
+            }).then(files => {
               transform_layer(lyr.context, transform);
+              return files
+            }).then(files => {
               lyr.draw[i].f(lyr.context, files);
             });
         }

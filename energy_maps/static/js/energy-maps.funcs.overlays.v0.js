@@ -86,7 +86,7 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
 
   path.context(ctx);
   let region = new Path2D();
-  region.rect(0, 0, width, height);
+  region.rect(-transform.x, -transform.y, width, height);
   ctx.clip(region);
 
   let output_geojson;
