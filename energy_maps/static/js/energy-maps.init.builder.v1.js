@@ -486,27 +486,51 @@ let init = (function() {
   console.log(state_boundaries)
 
   const target_canvas = d3.select('.map.layer.zoom-target');
+  let zoom_event = {
+    debounced: false,
+    x: 0,
+    y: 0,
+    dx: 0,
+    dy: 0
+  };
 
   const zoom_start = function zoom_start() {
-    transform = {x:0, y:0, k:1};
-    for (let i = 0; i < lay; i++) {
-      layers[i].context.clearRect(0, 0, width, height);
-    }
-    transform = d3.event.transform;
+    let mouse_position = d3.mouse(this);
+    zoom_event.x = mouse_position[0];
+    zoom_event.y = mouse_position[1];
   };
 
   const zoomed = function zoomed() {
-    transform = d3.event.transform;
-    draw_land(ctx, [simple_map_bkgd], transform, false, true);
+    if (!zoom_event.debounced) {
+      let mouse_position = d3.mouse(this);
+      zoom_event.dx = zoom_event.x - mouse_position[0];
+      zoom_event.dy = zoom_event.y - mouse_position[1];
+      if (Math.sqrt(Math.pow(zoom_event.dx, 2) + Math.pow(zoom_event.dy, 2)) > 10) {
+        zoom_event.debounced = true;
+        transform = {x: 0, y: 0, k: 1};
+        for (let i = 0; i < lay; i++) {
+          layers[i].context.clearRect(0, 0, width, height);
+        }
+        transform = d3.event.transform;
+      }
+    } else {
+      transform = d3.event.transform;
+      draw_land(ctx, [simple_map_bkgd], transform, false, true);
+    }
+
   };
 
   const zoom_end = _.debounce(function(e) {
-    draw_base_map(transform);
-    draw_active_layers(transform);
+    if (zoom_event.debounced) {
+      draw_base_map(transform);
+      draw_active_layers(transform);
+      zoom_event = {debounced: false, x: 0, y: 0, dx: 0, dy: 0 };
+    }
   }, 500, false);
 
   const zoom = d3.zoom()
     .scaleExtent([0, 50])
+    .clickDistance(10)
     .on('start', zoom_start)
     .on('zoom', zoomed)
     .on('end', zoom_end)
