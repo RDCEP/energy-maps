@@ -163,23 +163,19 @@ let init = (function() {
   // and parse it each time.
   const load_layer_data = function load_layer_data(lyr) {
     if (lyr === oil_pipeline) {
-      start_loading_layer();
-          Promise.all(oil_pipeline.draw[0].src.map(x => oil_pipeline.draw[0].w(x)))
-            .then(function(files) {
-              oil_pipeline.context.restore();
-              oil_pipeline.context.save();
-              transform_layer(oil_pipeline.context, transform);
-              oil_pipeline.draw[0].f(oil_pipeline.context, files);
-            });
-
-      start_loading_layer();
-      Promise.all(oil_product_pipeline.draw[0].src.map(x => oil_product_pipeline.draw[0].w(x)))
-        .then(function(files) {
-          oil_product_pipeline.context.restore();
-          oil_product_pipeline.context.save();
-          transform_layer(oil_product_pipeline.context, transform);
-          oil_product_pipeline.draw[0].f(oil_product_pipeline.context, files);
-        });
+      let lyrs = [oil_pipeline, oil_product_pipeline];
+      for (let i = 0; i < lyrs.length; ++i) {
+        start_loading_layer();
+        Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
+          .then(function(files) {
+            lyrs[i].context.restore();
+            lyrs[i].context.save();
+            return files;
+          }).then(files => {
+            transform_layer(lyrs[i].context, transform);
+            lyrs[i].draw[0].f(lyrs[i].context, files);
+          });
+      }
     } else {
         for (let i = 0; i < lyr.draw.length; ++i) {
           start_loading_layer();
@@ -316,10 +312,10 @@ let init = (function() {
    */
   const removeLayer = function removeLayer(lyr) {
     hide_spinner();
-    lyr.context.clearRect(0, 0, width, height);
+    lyr.context.clearRect(-transform.x, -transform.y, width, height);
     lyr.active = false;
-    if (lyr === oil_pipeline) {    
-      oil_product_pipeline.context.clearRect(0, 0, width, height);
+    if (lyr === oil_pipeline) {
+      oil_product_pipeline.context.clearRect(-transform.x, -transform.y, width, height);
       oil_product_pipeline.active = false;
     }
     display_asset_total();
@@ -468,7 +464,7 @@ let init = (function() {
             legend_ctx.clearRect(0, 0, width, height);
             tmplegend_ctx.clearRect(0, 0, width, height);
             update_legend(tmplegend_ctx, legend_ctx, layers);
-            if (active_layers.length == 0) {
+            if (active_layers.length === 0) {
               legend.hidden = true;
             }
           }
@@ -492,9 +488,10 @@ let init = (function() {
   const target_canvas = d3.select('.map.layer.zoom-target');
 
   const zoom_start = function zoom_start() {
-    transform = {x:0, y:0, k:1};
+    // transform = {x:0, y:0, k:1};
+    console.log(transform);
     for (let i = 0; i < lay; i++) {
-      layers[i].context.clearRect(0, 0, width, height);
+      layers[i].context.clearRect(-transform.x, -transform.y, width, height);
     }
     transform = d3.event.transform;
   };
