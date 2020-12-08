@@ -63,16 +63,17 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
   path.context(ctx);
   let output_geojson = simplify("states-no-overlap", queued_data);
 
-  ctx.strokeStyle = state_boundaries.stroke;
+  // ctx.strokeStyle = state_boundaries.stroke;
+  ctx.strokeStyle = '#c4c4c4';
   ctx.lineWidth = state_boundaries.width / transform.k;
-  ctx.setLineDash([
-    0,
-    state_boundaries.width / transform.k * 2
-  ]);
+  // ctx.setLineDash([
+  //   0,
+  //   state_boundaries.width / transform.k * 2
+  // ]);
   ctx.beginPath();
   path(output_geojson);
   ctx.stroke();
-  ctx.setLineDash([]);
+  // ctx.setLineDash([]);
   finish_loading_layer();
 };
 
