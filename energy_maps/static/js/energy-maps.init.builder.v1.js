@@ -603,6 +603,10 @@ let init = (function() {
       .classed('close', closed);
   });
 
+  toggles.on('mousedown', function() {
+    d3.event.stopPropagation();
+  });
+
   const window_drag_started = function window_drag_started() {
 
     d3.event.on('drag', dragged).on('end', ended);
