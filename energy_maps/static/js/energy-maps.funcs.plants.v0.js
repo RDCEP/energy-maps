@@ -149,7 +149,7 @@ const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
   console.log('draw_single_plant');
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let plants = queued_data[0];

@@ -242,7 +242,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let pipe_data = queued_data[0];
@@ -264,7 +264,7 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   console.log('draw_oil_prod_pipes');
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
   let oil_prod_pipe_data = queued_data[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
@@ -285,7 +285,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   console.log('draw_pipes');
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let oil_pipe_data = queued_data[0];
@@ -301,7 +301,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx = oil_product_pipeline.context;
   path.context(ctx);
   region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
   let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw.src)[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
@@ -386,7 +386,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let wells = queued_data[0];
@@ -425,7 +425,7 @@ const draw_processing = function draw_processing(ctx, queued_data) {
 
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let gproc = queued_data[0]; // gas processing
@@ -467,7 +467,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
 
   path.context(ctx);
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
