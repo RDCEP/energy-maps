@@ -80,7 +80,7 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
 /**
  * Draw wind map contours on the infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
- * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
+ * @param {Object} queued_data - Dataset for the corresponding resource
  */
 const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   console.log('draw_wind_map');
