@@ -88,13 +88,13 @@ let init = (function() {
    * on top of the map canvas.
    * @property {string}   name        - A canvas id.
    * @property {Number}   value       - Asset value in USD.
-   * @property {Array}    draw        - An array of objects containing
+   * @property {Array}    draw_props        - An array of objects containing
    *                                    properties accessed by
    *                                    load_layer_data().
-   * @property {function} draw.f      - A draw function bound to each object.
-   * @property {string}   draw.src    - A reference to the data source
+   * @property {function} draw_props.draw_layer - A draw function bound to each object.
+   * @property {string}   draw_props.src    - A reference to the data source
    *                                    (json or csv).
-   * @property {function} draw.w      - A call to a d3 data parse function.
+   * @property {function} draw_props.d3_fetch      - A call to a d3 data parse function.
    * @property {string}   column      - The class of the column that the
    *                                    layer's checkbox is written to.
    * @memberof Init
@@ -149,7 +149,7 @@ let init = (function() {
   };
 
   /**
-   * @description Call all draw methods for a given layer and render it
+   *  
    * to its canvas element.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
@@ -161,6 +161,42 @@ let init = (function() {
   // and store each object in a variable, so that when our draw
   // functions are called they only operate on that data rather than collect
   // and parse it each time.
+
+  const refactored_load_layer_data = function refactored_load_layer_data(lyr) {
+    if (lyr === oil_pipeline) {
+      let lyrs = [oil_pipeline, oil_product_pipeline];
+      for (i in lyrs) {
+        start_loading_layer();
+        Promise.all(i.draw_props.src.map(x => i.draw_props.d3_fetch(x)))
+          .then(files => {
+            i.context.restore();
+            i.context.save();
+            return files;
+          }).then(files => {
+            transform_layer(i.context, transform);
+            return files;
+          }).then(files => {
+            i.draw_props.draw_layer(i.context, files);
+          });
+      }
+    }
+    else {
+      start_loading_layer()
+      // parse through all draw methods for a given layer
+      Promise.all(lyr.draw_props.src.map(x => lyr.draw_props.d3_fetch(x))) // map the source file to the appropriate d3 load function (d3.json or d3.csv)
+        .then(files => {
+          lyr.context.restore();
+          lyr.context.save();
+          return files;
+        }).then(files => {
+          transform_layer(lyr.context, transform);
+          return files;
+        }).then(files => {
+          lyr.draw_props.draw_layer(lyr.context, files);
+        });
+    }
+  }
+
   const load_layer_data = function load_layer_data(lyr) {
     if (lyr === oil_pipeline) {
       let lyrs = [oil_pipeline, oil_product_pipeline];
@@ -171,7 +207,7 @@ let init = (function() {
             lyrs[i].context.restore();
             lyrs[i].context.save();
             return files;
-          }).then(files => {
+          }).then(files => { // this is probably for turning the spinny loading symbol on and off at right time
             transform_layer(lyrs[i].context, transform);
             lyrs[i].draw[0].f(lyrs[i].context, files);
           });
@@ -339,7 +375,8 @@ let init = (function() {
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
-      return (!lyr.draw || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
+      // return (!lyr.draw || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
+      return (!lyr.draw_props || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
     })
     if (lyr.text) {
       checkbox_span.text(lyr.text)
@@ -442,7 +479,7 @@ let init = (function() {
       
       initMenuItem(lyr);
 
-      if (lyr.draw && (lyr != oil_product_pipeline)) { // TODO: What a horrible way of checking for one corner case of which we have several
+      if (lyr.draw_props && (lyr != oil_product_pipeline)) { // TODO: What a horrible way of checking for one corner case of which we have several
                                                        // There are now multiple objects that need to be rendered in the menu but need to be grey
                                                        // and also have no checkbox. We can't rely on lyr.draw === true anymore. Each obj should
                                                        // probably have a property that determines whether it gets a checkbox or not...

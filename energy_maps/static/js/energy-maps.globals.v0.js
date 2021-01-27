@@ -77,20 +77,24 @@ const viz = {
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  */
-function InfrastructureSet(name, text, value, column, draw) {
+function InfrastructureSet(name, text, value, column, draw_props) {
   this.name = name || '';
   this.text = text || '';
   this.value = value || 0;
   this.column = column || '';
   this.z_index = 0;
-  this.draw = draw || [{
-      f: '',
-      src: '',
-      w: ''
-  }];
+  this.draw_props = draw_props || [{
+    draw_layer:'',
+    src: '',
+    d3_fetch:''
+  }] || {
+    draw_layer:'',
+    src: '',
+    d3_fetch:''
+  }
 }
 
 /** 
@@ -198,6 +202,9 @@ const hide_spinner = function hide_spinner() {
   spinner.style.display = 'none';
 };
 let processing_layers = 0;
+/**
+ * @description Show the spinner and queue the layer for processing
+ */
 const start_loading_layer = function start_loading_layer() {
   show_spinner();
   processing_layers++;
