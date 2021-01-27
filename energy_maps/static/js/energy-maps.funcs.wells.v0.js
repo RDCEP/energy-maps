@@ -566,12 +566,6 @@ let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_0
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
   d3_fetch: d3.json
 }, 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
-// TODO: Combine pipelines into one checkbox selection
-let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', {
-  draw_layer: draw_oil_pipes,
-  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-  d3_fetch: d3.json
-}, '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', {
   draw_layer: draw_oil_prod_pipes,
@@ -593,6 +587,13 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   ctx.setLineDash([]);
   return y;
 };
+
+let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_oil_pipes,
+  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+  d3_fetch: d3.json,
+  next_layer: oil_product_pipeline
+}, '#3CB371', 1.5 * SCALE);
 
 let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', {
   draw_layer: draw_refining,

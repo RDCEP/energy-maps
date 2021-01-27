@@ -149,88 +149,28 @@ let init = (function() {
   };
 
   /**
-   *  
-   * to its canvas element.
+   * @description Call all draw methods for a given layer and render it
+   * to its canvas element. Uses a recursive call in special cases.
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  // CODE SMELL: Inspect this for tight coupling.
-  // It could be nice to map out the draw methods in one method and actually
-  // call them in another if we can do so feasibly. This would complement
-  // A strategy in which we abstract data loading out of our draw functions
-  // and store each object in a variable, so that when our draw
-  // functions are called they only operate on that data rather than collect
-  // and parse it each time.
-
-  // this is the refactored version
   const load_layer_data = function load_layer_data(lyr) {
-    if (lyr === oil_pipeline) {
-      let lyrs = [oil_pipeline, oil_product_pipeline];
-      for (let i = 0; i < lyrs.length; i++) {
-        start_loading_layer();
-        Promise.all(lyrs[i].draw_props.src.map(x => lyrs[i].draw_props.d3_fetch(x)))
-          .then(files => {
-            lyrs[i].context.restore();
-            lyrs[i].context.save();
-            return files;
-          }).then(files => {
-            transform_layer(lyrs[i].context, transform);
-            lyrs[i].draw_props.draw_layer(lyrs[i].context, files);
-            // return files;
-          // }).then(files => {
-            // lyrs[i].draw_props.draw_layer(lyrs[i].context, files);
-          });
-      }
-    }
-    else {
-      start_loading_layer()
-      // parse through all draw methods for a given layer
-      Promise.all(lyr.draw_props.src.map(x => lyr.draw_props.d3_fetch(x))) // map the source file to the appropriate d3 load function (d3.json or d3.csv)
-        .then(files => {
-          lyr.context.restore();
-          lyr.context.save();
-          return files;
-        }).then(files => {
-          transform_layer(lyr.context, transform);
-          return files;
-        }).then(files => {
-          lyr.draw_props.draw_layer(lyr.context, files);
-        });
+    Promise.all(lyr.draw_props.src.map(x => lyr.draw_props.d3_fetch(x)))
+    .then(files => {
+      lyr.context.restore();
+      lyr.context.save();
+      return files;
+    }).then(files => {
+      transform_layer(lyr.context, transform);
+      return files;
+    }).then(files => {
+      lyr.draw_props.draw_layer(lyr.context, files);
+    });
+
+    if (lyr.draw_props.next_layer) {
+      load_layer_data(lyr.draw_props.next_layer)
     }
   }
-  // This is the original version 
-  // const load_layer_data = function load_layer_data(lyr) {
-  //   if (lyr === oil_pipeline) {
-  //     let lyrs = [oil_pipeline, oil_product_pipeline];
-  //     for (let i = 0; i < lyrs.length; ++i) {
-  //       start_loading_layer();
-  //       Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
-  //         .then(function(files) {
-  //           lyrs[i].context.restore();
-  //           lyrs[i].context.save();
-  //           return files;
-  //         }).then(files => { // this is probably for turning the spinny loading symbol on and off at right time
-  //           transform_layer(lyrs[i].context, transform);
-  //           lyrs[i].draw[0].f(lyrs[i].context, files);
-  //         });
-  //     }
-  //   } else {
-  //       for (let i = 0; i < lyr.draw.length; ++i) {
-  //         start_loading_layer();
-  //         Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
-  //           .then(function(files) {
-  //             lyr.context.restore();
-  //             lyr.context.save();
-  //             return files;
-  //           }).then(files => {
-  //             transform_layer(lyr.context, transform);
-  //             return files
-  //           }).then(files => {
-  //             lyr.draw[i].f(lyr.context, files);
-  //           });
-  //       }
-  //   }
-  // };
 
   layers.push(wind_map);
   layers.push(state_boundaries);
