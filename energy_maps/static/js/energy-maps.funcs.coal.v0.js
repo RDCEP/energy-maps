@@ -15,13 +15,13 @@
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @param {String} stroke - rgba value to set the canvas stroke
  * @param {Number} width - width value set relative to SCALE
  */
-function Coal(name, text, value, column, draw, stroke, width) { // TODO: Do we need this Coal base class? Probably not.
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function Coal(name, text, value, column, draw_props, stroke, width) { // TODO: Do we need this Coal base class? Probably not.
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.stroke = stroke;
   this.width = width || 0;
   this.z_index = 0;
@@ -38,15 +38,15 @@ Coal.prototype = new InfrastructureSet;
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @property {String} stroke - rgba value to set the canvas stroke
  * @property {Number} width - width value set relative to SCALE
  * @property {String} fill - rgba value to set the polygon fill color
  * @property {Number} scale - scale value applied to each polygon 
  */
-function CoalMine(name, text, value, column, draw) {
-  Coal.call(this, name, text, value, column, draw);
+function CoalMine(name, text, value, column, draw_props) {
+  Coal.call(this, name, text, value, column, draw_props);
   this.text = this.text;
   this.stroke = 'rgba(255, 255, 255, 1)';
   this.width = SCALE;
@@ -82,13 +82,13 @@ CoalMine.prototype = new Coal;
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @property {String} stroke - rgba value to set the canvas stroke
  * @property {Number} width - width value set relative to SCALE
  */
-function Railroad(name, text, value, column, draw) {
-  Coal.call(this, name, text, value, column, draw);
+function Railroad(name, text, value, column, draw_props) {
+  Coal.call(this, name, text, value, column, draw_props);
   this.text = this.text;
   this.stroke = '#767676';
   this.width = SCALE;
@@ -218,14 +218,14 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   finish_loading_layer();
 };
 
-let coal_mine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', [ {
+let coal_mine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', {
   draw_layer: draw_coal_mines,
   src: [ '/static/csv/coal.csv' ],
   d3_fetch: d3.csv
-} ]);
+});
 
-let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', [ {
+let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', {
   draw_layer: draw_railroads,
   src: [ '/static/json/railrdl020.json' ],
   d3_fetch: d3.json
-} ]);
+});
