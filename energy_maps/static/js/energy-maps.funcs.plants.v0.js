@@ -16,14 +16,14 @@
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @param {String} fuel_type - class heading from the data file
  * @param {String} color - rgba value used to draw the grid line
  * @param {String} stroke - rgba value used for symbol outlines and opacity
  */
-function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function PowerPlant(name, text, value, column, draw_props, fuel_type, color, stroke) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.fuel_type = fuel_type || '';
   this.color = color || 'rgba(0, 0, 0, 0.5)';
   this.stroke = stroke || plant_stroke;
@@ -56,8 +56,8 @@ function PowerPlant(name, text, value, column, draw, fuel_type, color, stroke) {
 }
 PowerPlant.prototype = new InfrastructureSet;
 
-function WindSpeed(name, text, value, column, draw, long, lat, speed) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function WindSpeed(name, text, value, column, draw_props, long, lat, speed) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.long = long;
   this.lat = lat;
   this.speed = speed;
@@ -228,53 +228,53 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 
 // Instantiate PowerPlants
 
-let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [ {
+let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', {
   draw_layer: draw_coal_plants,
   src: ['/static/json/power_plants_split/power_plants-COAL.json'],
   d3_fetch: d3.json,
-} ], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
+}, 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [ {
+let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', {
   draw_layer: draw_ng_plants,
     src: ['/static/json/power_plants_split/power_plants-NG.json'],
     d3_fetch: d3.json,
-} ], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
+}, 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 
-let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', 64_000_000_000, 'electricity-generation', [ {
+let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', 64_000_000_000, 'electricity-generation', {
   draw_layer: draw_petro_plants,
   src: ['/static/json/power_plants_split/power_plants-PET.json'],
   d3_fetch: d3.json,
-} ], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
+}, 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
 
-let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', 597_000_000_000, 'electricity-generation', [ {
+let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', 597_000_000_000, 'electricity-generation', {
   draw_layer: draw_nuclear_plants,
   src: ['/static/json/power_plants_split/power_plants-NUC.json'],
   d3_fetch: d3.json,
-} ], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
+}, 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
 
-let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', 597_000_000_000, 'electricity-generation', [ {
+let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', 597_000_000_000, 'electricity-generation', {
   draw_layer: draw_hydro_plants,
   src: ['/static/json/power_plants_split/power_plants-HYC.json'],
   d3_fetch: d3.json,
-} ], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
+}, 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
 
-let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', [ {
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', {
   draw_layer: draw_wind_farms,
   src: ['/static/json/power_plants_split/power_plants-WND.json'],
   d3_fetch: d3.json,
-} ], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
+}, 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
 
-let solar_plants = new PowerPlant('solar-PV', 'Solar PV', 14_000_000_000, 'electricity-generation', [ {
+let solar_plants = new PowerPlant('solar-PV', 'Solar PV', 14_000_000_000, 'electricity-generation', {
   draw_layer: draw_solar_plants,
   src: ['/static/json/power_plants_split/power_plants-SUN.json'],
   d3_fetch: d3.json,
-} ], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
+}, 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
 
-let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_000, 'electricity-generation', [ {
+let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_000, 'electricity-generation', {
   draw_layer: draw_geo_plants,
   src: ['/static/json/power_plants_split/power_plants-GEO.json'],
   d3_fetch: d3.json,
-} ], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
+}, 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 
 // let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
 //   draw_layer: draw_bio_plants,
@@ -285,6 +285,6 @@ let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_0
 let biofuel = { 
   name: 'biofuel',
   value: 51_000_000_000,
-  draw: false,
+  draw_props: false,
   column: 'electricity-generation',
 }
