@@ -16,13 +16,13 @@
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @property {String} stroke - rgba value to set the canvas stroke
  * @property {Number} width - width value set relative to SCALE
  */
-function StateBoundary(name, text, value, column, draw, stroke, width) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function StateBoundary(name, text, value, column, draw_props, stroke, width) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.stroke = stroke;
   this.width = width;
   this.z_index = 0;
@@ -39,13 +39,13 @@ StateBoundary.prototype = new InfrastructureSet;
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @property {String} stroke - rgba value to set the canvas stroke
  * @property {Number} width - width value set relative to SCALE
  */
-function WindMap(name, text, value, column, draw, stroke, width) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function WindMap(name, text, value, column, draw_props, stroke, width) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.stroke = stroke;
   this.width = width;
   this.z_index = 0;
@@ -151,11 +151,11 @@ let state_boundaries = new StateBoundary(
   'State boundaries',
   null,
   'layers',
-  [{
+  {
     draw_layer: draw_state_boundaries,
     src: ['/static/json/states-10m.json'],
     d3_fetch: d3.json
-  }],
+  },
   'rgba(54, 54, 54, 1)',
   1.5
 );
@@ -165,10 +165,10 @@ let wind_map = new WindMap(
   'Wind capacity',
   null,
   'layers',
-  [{
+  {
     draw_layer: draw_wind_map,
     src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
     d3_fetch: d3.json
-  }],
+  },
 );
 wind_map.draw_legend = draw_wind_map_legend;
