@@ -152,7 +152,7 @@ let state_boundaries = new StateBoundary(
   null,
   'layers',
   [{
-    f: draw_state_boundaries,
+    draw_layer: draw_state_boundaries,
     src: ['/static/json/states-10m.json'],
     w: d3.json
   }],
@@ -166,7 +166,7 @@ let wind_map = new WindMap(
   null,
   'layers',
   [{
-    f: draw_wind_map,
+    draw_layer: draw_wind_map,
     src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
     w: d3.json
   }],
