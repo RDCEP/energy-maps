@@ -162,21 +162,23 @@ let init = (function() {
   // functions are called they only operate on that data rather than collect
   // and parse it each time.
 
-  const refactored_load_layer_data = function refactored_load_layer_data(lyr) {
+  // this is the refactored version
+  const load_layer_data = function load_layer_data(lyr) {
     if (lyr === oil_pipeline) {
       let lyrs = [oil_pipeline, oil_product_pipeline];
-      for (i in lyrs) {
+      for (let i = 0; i < lyrs.length; i++) {
         start_loading_layer();
-        Promise.all(i.draw_props.src.map(x => i.draw_props.d3_fetch(x)))
+        Promise.all(lyrs[i].draw_props.src.map(x => lyrs[i].draw_props.d3_fetch(x)))
           .then(files => {
-            i.context.restore();
-            i.context.save();
+            lyrs[i].context.restore();
+            lyrs[i].context.save();
             return files;
           }).then(files => {
-            transform_layer(i.context, transform);
-            return files;
-          }).then(files => {
-            i.draw_props.draw_layer(i.context, files);
+            transform_layer(lyrs[i].context, transform);
+            lyrs[i].draw_props.draw_layer(lyrs[i].context, files);
+            // return files;
+          // }).then(files => {
+            // lyrs[i].draw_props.draw_layer(lyrs[i].context, files);
           });
       }
     }
@@ -196,39 +198,39 @@ let init = (function() {
         });
     }
   }
-
-  const load_layer_data = function load_layer_data(lyr) {
-    if (lyr === oil_pipeline) {
-      let lyrs = [oil_pipeline, oil_product_pipeline];
-      for (let i = 0; i < lyrs.length; ++i) {
-        start_loading_layer();
-        Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
-          .then(function(files) {
-            lyrs[i].context.restore();
-            lyrs[i].context.save();
-            return files;
-          }).then(files => { // this is probably for turning the spinny loading symbol on and off at right time
-            transform_layer(lyrs[i].context, transform);
-            lyrs[i].draw[0].f(lyrs[i].context, files);
-          });
-      }
-    } else {
-        for (let i = 0; i < lyr.draw.length; ++i) {
-          start_loading_layer();
-          Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
-            .then(function(files) {
-              lyr.context.restore();
-              lyr.context.save();
-              return files;
-            }).then(files => {
-              transform_layer(lyr.context, transform);
-              return files
-            }).then(files => {
-              lyr.draw[i].f(lyr.context, files);
-            });
-        }
-    }
-  };
+  // This is the original version 
+  // const load_layer_data = function load_layer_data(lyr) {
+  //   if (lyr === oil_pipeline) {
+  //     let lyrs = [oil_pipeline, oil_product_pipeline];
+  //     for (let i = 0; i < lyrs.length; ++i) {
+  //       start_loading_layer();
+  //       Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
+  //         .then(function(files) {
+  //           lyrs[i].context.restore();
+  //           lyrs[i].context.save();
+  //           return files;
+  //         }).then(files => { // this is probably for turning the spinny loading symbol on and off at right time
+  //           transform_layer(lyrs[i].context, transform);
+  //           lyrs[i].draw[0].f(lyrs[i].context, files);
+  //         });
+  //     }
+  //   } else {
+  //       for (let i = 0; i < lyr.draw.length; ++i) {
+  //         start_loading_layer();
+  //         Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
+  //           .then(function(files) {
+  //             lyr.context.restore();
+  //             lyr.context.save();
+  //             return files;
+  //           }).then(files => {
+  //             transform_layer(lyr.context, transform);
+  //             return files
+  //           }).then(files => {
+  //             lyr.draw[i].f(lyr.context, files);
+  //           });
+  //       }
+  //   }
+  // };
 
   layers.push(wind_map);
   layers.push(state_boundaries);
