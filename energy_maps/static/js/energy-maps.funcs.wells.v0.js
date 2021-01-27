@@ -573,11 +573,11 @@ let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_0
   d3_fetch: d3.json
 }, '#3CB371', 1.5 * SCALE);
 
-let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
+let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', {
   draw_layer: draw_oil_prod_pipes,
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json
-}], '#3CB371', 2 * SCALE);
+}, '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
   ctx.strokeStyle = this.color;
