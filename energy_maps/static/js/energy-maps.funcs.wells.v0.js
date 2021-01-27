@@ -17,7 +17,7 @@
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @param {String} color - rgba value
  * @param {String} legend_color - rgba value
@@ -26,8 +26,8 @@
  * @property {Number} diameter - scaled value for circular symbols on the map
  * @property {Number} stroke - stroke width
  */
-function Well(name, text, value, column, draw, color, legend_color) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function Well(name, text, value, column, draw_props, color, legend_color) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.color = color;
   this.legend_color = legend_color;
   this.width = SCALE / 6;
@@ -72,13 +72,13 @@ Well.prototype = new InfrastructureSet;
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @param {String} stroke - rgba value
  * @param {Number} width - scaled value for symbols on the map
  */
-function Transport(name, text, value, column, draw, stroke, width) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function Transport(name, text, value, column, draw_props, stroke, width) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.stroke = stroke;
   this.width = width;
   this.z_index = 0;
@@ -112,15 +112,15 @@ Transport.prototype = new InfrastructureSet;
  * @param {String} text - text displayed in the legend
  * @param {Number} value - asset value in USD
  * @param {String} column - class attribute for corresponding column
- * @param {Array} draw - properties used to parse the data and render
+ * @param {Array} draw_props - properties used to parse the data and render
  * the visualization
  * @param {String} fill - rgba value
  * @param {Number} size - scaled value for symbols on the map
  * @property {String} stroke - stroke color
  * @property {Number} strokeWidth - stroke width
  */
-function Processing(name, text, value, column, draw, fill, size) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function Processing(name, text, value, column, draw_props, fill, size) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.fill = fill;
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
@@ -144,8 +144,8 @@ function Processing(name, text, value, column, draw, fill, size) {
 }
 Processing.prototype = new InfrastructureSet;
 
-function Refinery(name, text, value, column, draw, fill, size) {
-  InfrastructureSet.call(this, name, text, value, column, draw);
+function Refinery(name, text, value, column, draw_props, fill, size) {
+  InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.fill = fill;
   this.size = size;
   this.stroke = 'rgba(255, 255, 255, 1)';
@@ -303,7 +303,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   region = new Path2D();
   region.rect(-transform.x, -transform.y, width, height);
   ctx.clip(region);
-  let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw.src)[0];
+  let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw_props.src)[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
     (oil_product.dash + 2 * oil_product.width) / transform.k ];
   ctx.lineWidth = oil_product.width / transform.k;
@@ -535,48 +535,48 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.fill();
 };
 
-let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-gas', [ {
-  f: draw_all_wells,
+let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_all_wells,
   src: [ `/static/csv/wells_gas.csv` ],
-  w: d3.csv
-} ], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
+  d3_fetch: d3.csv
+}, 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
-let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [ {
-  f: draw_all_wells,
+let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_all_wells,
   src: [ `/static/csv/wells_oil.csv` ],
-  w: d3.csv
-} ], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
+  d3_fetch: d3.csv
+}, 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
 let foreign_oil_wells = {
   name: 'foreign-oil-wells',
   value: 931_000_000_000,
-  draw: false,
+  draw_props: false,
   column: 'oil-and-gas',
 }
 
 let foreign_gas_wells = {
   name: 'foreign-gas-wells',
   value: 63_000_000_000,
-  draw: false,
+  draw_props: false,
   column: 'oil-and-gas',
 }
 
-let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [ {
-  f: draw_gas_pipes,
+let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_gas_pipes,
   src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
-  w: d3.json
-} ], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
+  d3_fetch: d3.json
+}, 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 // TODO: Combine pipelines into one checkbox selection
-let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [ {
-  f: draw_oil_pipes,
+let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_oil_pipes,
   src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
-}], '#3CB371', 1.5 * SCALE);
+  d3_fetch: d3.json
+}, '#3CB371', 1.5 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
-  f: draw_oil_prod_pipes,
+  draw_layer: draw_oil_prod_pipes,
   src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-  w: d3.json
+  d3_fetch: d3.json
 }], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
 oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dashed) {
@@ -594,26 +594,26 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   return y;
 };
 
-let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [ {
-  f: draw_refining,
+let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_refining,
   src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
-  w: d3.json
-}], 'rgba(60, 179, 113, .7)', .006 * SCALE);
+  d3_fetch: d3.json
+}, 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
-let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [ {
-  f: draw_processing,
+let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', {
+  draw_layer: draw_processing,
   src: [ `/static/csv/nproc.csv`],
-  w: d3.csv
-} ], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+  d3_fetch: d3.csv
+}, 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',
   value: 181_000_000_000,
-  draw: false,
+  draw_props: false,
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
-// draw: [ {
-//   f: draw_storage,
+// drad3_fetch: {
+//   draw_layer: draw_storage,
 //   src: [ `/static/csv/nproc.csv`],
-//   w: d3.csv
-// } ],
+//   d3_fetch: d3.csv
+// },
   column: 'oil-and-gas',
 }
