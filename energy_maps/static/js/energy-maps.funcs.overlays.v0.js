@@ -151,11 +151,11 @@ let state_boundaries = new StateBoundary(
   'State boundaries',
   null,
   'layers',
-  {
+  [{
     draw_layer: draw_state_boundaries,
     src: ['/static/json/states-10m.json'],
     d3_fetch: d3.json
-  },
+  }],
   'rgba(54, 54, 54, 1)',
   1.5
 );
@@ -165,10 +165,10 @@ let wind_map = new WindMap(
   'Wind capacity',
   null,
   'layers',
-  {
+  [{
     draw_layer: draw_wind_map,
     src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
     d3_fetch: d3.json
-  },
+  }],
 );
 wind_map.draw_legend = draw_wind_map_legend;

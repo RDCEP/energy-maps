@@ -154,23 +154,97 @@ let init = (function() {
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-  const load_layer_data = function load_layer_data(lyr) {
-    Promise.all(lyr.draw_props.src.map(x => lyr.draw_props.d3_fetch(x)))
-    .then(files => {
-      lyr.context.restore();
-      lyr.context.save();
-      return files;
-    }).then(files => {
-      transform_layer(lyr.context, transform);
-      return files;
-    }).then(files => {
-      lyr.draw_props.draw_layer(lyr.context, files);
-    });
 
-    if (lyr.draw_props.next_layer) {
-      load_layer_data(lyr.draw_props.next_layer)
+    const load_layer_data = function load_layer_data(lyr) {
+    if (lyr === oil_pipeline) {
+      let lyrs = [oil_pipeline, oil_product_pipeline];
+      for (let i = 0; i < lyrs.length; ++i) {
+        start_loading_layer();
+        Promise.all(lyrs[i].draw_props[0].src.map(x => lyrs[i].draw_props[0].d3_fetch(x)))
+          .then(function(files) {
+            lyrs[i].context.restore();
+            lyrs[i].context.save();
+            return files;
+          }).then(files => {
+            transform_layer(lyrs[i].context, transform);
+            lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
+          });
+      }
+    } else {
+        for (let i = 0; i < lyr.draw_props.length; ++i) {
+          start_loading_layer();
+          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
+            .then(function(files) {
+              lyr.context.restore();
+              lyr.context.save();
+              return files;
+            }).then(files => {
+              transform_layer(lyr.context, transform);
+              return files
+            }).then(files => {
+              lyr.draw_props[i].draw_layer(lyr.context, files);
+            });
+        }
     }
-  }
+  };
+  
+
+  // Cleanest refactored version
+  // const load_layer_data = function load_layer_data(lyr) {
+  //   for (let i = 0; i < lyr.draw_props.length; ++i) {
+  //     Promise.all(lyr.draw_props[0].src.map(x => lyr.draw_props[0].d3_fetch(x)))
+  //     .then(files => {
+  //       lyr.context.restore();
+  //       lyr.context.save();
+  //       return files;
+  //     }).then(files => {
+  //       transform_layer(lyr.context, transform);
+  //       return files;
+  //     }).then(files => {
+  //       lyr.draw_props[0].draw_layer(lyr.context, files);
+  //     });
+
+  //     if (lyr.draw_props.length > 1) {
+  //       load_layer_data(lyr.draw_props[0].next_layer)
+  //     }
+  //   }
+  // }
+
+  // Original version from before refactor -- 
+  // keeping this in case the lyr.draw_props.next_layer thing above doesn't work
+
+  // const load_layer_data = function load_layer_data(lyr) {
+  //   if (lyr === oil_pipeline) {
+  //     let lyrs = [oil_pipeline, oil_product_pipeline];
+  //     for (let i = 0; i < lyrs.length; ++i) {
+  //       start_loading_layer();
+  //       Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
+  //         .then(function(files) {
+  //           lyrs[i].context.restore();
+  //           lyrs[i].context.save();
+  //           return files;
+  //         }).then(files => {
+  //           transform_layer(lyrs[i].context, transform);
+  //           lyrs[i].draw[0].f(lyrs[i].context, files);
+  //         });
+  //     }
+  //   } else {
+  //       for (let i = 0; i < lyr.draw.length; ++i) {
+  //         start_loading_layer();
+  //         Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
+  //           .then(function(files) {
+  //             lyr.context.restore();
+  //             lyr.context.save();
+  //             return files;
+  //           }).then(files => {
+  //             transform_layer(lyr.context, transform);
+  //             return files
+  //           }).then(files => {
+  //             lyr.draw[i].f(lyr.context, files);
+  //           });
+  //       }
+  //   }
+  // };
 
   layers.push(wind_map);
   layers.push(state_boundaries);

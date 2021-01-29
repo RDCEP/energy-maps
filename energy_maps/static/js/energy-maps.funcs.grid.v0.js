@@ -229,18 +229,18 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 //   w: d3.json,
 // } ]);
 
-let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   d3_fetch: d3.json,
-}, 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
+}], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 console.log(ac_na)
 
-let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   d3_fetch: d3.json,
-}, 'Under 100', 'rgba(255, 255, 170)', 1, 50);
+}], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 console.log(ac_under_100);
 
 /**
@@ -256,26 +256,26 @@ let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(c
   return y;
 }
 
-let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', 102_000_000_000, 'electricity-transmission-and-distribution', {
+let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', 102_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   d3_fetch: d3.json,
-}, draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
+}], draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
 
 // AC 100-300
 
-let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   d3_fetch: d3.json,
-}, '100-161', 'rgba(86, 180, 233)', 2, 100);
+}], '100-161', 'rgba(86, 180, 233)', 2, 100);
 console.log(ac_100_200); 
 
-let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   d3_fetch: d3.json,
-}, '220-287', 'rgba(55, 126, 184)', 3, 250);
+}], '220-287', 'rgba(55, 126, 184)', 3, 250);
 console.log(ac_200_300); 
 
 /**
@@ -291,33 +291,33 @@ let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
   return y;
 }
 
-let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', 167_000_000_000, 'electricity-transmission-and-distribution', {
+let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', 167_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   d3_fetch: d3.json,
-}, draw_legend_ac_100_300);
+}], draw_legend_ac_100_300);
 
 // AC 345-735
 
-let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
-}, '345', 'rgba(255, 149, 0)', 4, 350);
+}], '345', 'rgba(255, 149, 0)', 4, 350);
 console.log(ac_345); 
 
-let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
-}, '500', 'rgba(213, 113, 45)', 5, 350);
+}], '500', 'rgba(213, 113, 45)', 5, 350);
 console.log(ac_500); 
 
-let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', {
+let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
-}, '735 and Above', 'rgba(228, 53, 5)', 6, 750);
+}], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 console.log(ac_735_plus); 
 
 /**
@@ -334,17 +334,17 @@ let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
   return y;
 }
 
-let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', 137_000_000_000, 'electricity-transmission-and-distribution', {
+let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', 137_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
-}, draw_legend_ac_345_735);
+}], draw_legend_ac_345_735);
 
-let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', {
+let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_dc,
   src: ['/static/topojson/elec_grid_split/grid-dc.json'],
   d3_fetch: d3.json,
-}, 'DC', 'black', 7, 1000);
+}], 'DC', 'black', 7, 1000);
 dc.dashed = false;
 /**
  * Draw DC electric grid legend to its HTML5 canvas context.
