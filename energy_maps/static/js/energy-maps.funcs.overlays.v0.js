@@ -86,9 +86,7 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   console.log('draw_wind_map');
 
   path.context(ctx);
-  let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
-  ctx.clip(region);
+  clip_region(ctx);
 
   let output_geojson;
   let presimplified_data = topojson.presimplify(queued_data[0]);

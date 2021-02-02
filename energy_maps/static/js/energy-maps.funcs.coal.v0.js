@@ -168,9 +168,7 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
   console.log('draw_coal_mines');
 
   path.context(ctx);
-  let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
-  ctx.clip(region);
+  clip_region(ctx);
 
   let mines = queued_data[0];
 
@@ -204,9 +202,7 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
   console.log('draw_railroads');
 
   path.context(ctx);
-  let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
-  ctx.clip(region);
+  clip_region(ctx);
 
   let output_geojson = simplify("railrdl020", queued_data);
 

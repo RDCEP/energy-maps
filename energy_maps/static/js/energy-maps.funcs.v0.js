@@ -17,6 +17,17 @@ const transform_layer = function transform_layer(ctx, transform) {
 }
 
 /**
+ * Clip the region of a single layer to prevent each draw event from parsing extraneous data.
+ * @param {Object} ctx 
+ */
+const clip_region = function clip_region(ctx) {
+  let region = new Path2D();
+  region.rect(-transform.x, -transform.y, width, height);
+  ctx.clip(region);
+  console.log("transform values on clip:", transform.x, transform.y)
+}
+
+/**
  * Simplify a TopoJSON object based on the scale factor of the current
  * zoom event.
  * @param key
