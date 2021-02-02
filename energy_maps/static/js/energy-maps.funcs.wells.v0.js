@@ -241,7 +241,7 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   console.log('draw_gas_pipes');
   
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
   let pipe_data = queued_data[0];
   // const path = get_path(ctx);
@@ -379,7 +379,7 @@ const draw_oil_wells = function draw_oil_wells(queued_data) {
 
 const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
   let wells = queued_data[0];
 
@@ -416,7 +416,7 @@ const draw_processing = function draw_processing(ctx, queued_data) {
   console.log('draw_processing');
 
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
   let gproc = queued_data[0]; // gas processing
   // let gstor = queued_data[1]; // gas storage
@@ -456,7 +456,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   console.log('draw_refining');
 
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
   let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
 

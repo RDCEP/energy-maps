@@ -21,9 +21,7 @@ const transform_layer = function transform_layer(ctx, transform) {
  * @param {Object} ctx 
  */
 const clip_region = function clip_region(ctx) {
-  let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
-  ctx.clip(region);
+  clip_region(ctx)
   console.log("transform values on clip:", transform.x, transform.y)
 }
 
