@@ -24,7 +24,6 @@ const clip_region = function clip_region(ctx) {
   let region = new Path2D();
   region.rect(-transform.x, -transform.y, width, height);
   ctx.clip(region);
-  console.log("transform values on clip:", transform.x, transform.y)
 }
 
 /**

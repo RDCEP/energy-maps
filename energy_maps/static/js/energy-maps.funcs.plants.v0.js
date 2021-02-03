@@ -146,7 +146,6 @@ const get_fuel_type = function get_fuel_type(data, fuel) {
 // TODO: Is this drawing one single plant, or one single set of plants?
 //  Change jsdoc if necessary
 const draw_single_plant = function draw_single_plant(ctx, queued_data, fuel) {
-  console.log('draw_single_plant');
   path.context(ctx);
   clip_region(ctx)
 

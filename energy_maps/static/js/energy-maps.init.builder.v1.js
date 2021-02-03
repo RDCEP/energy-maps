@@ -387,7 +387,6 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
-    console.log(lyr.text)
     checkbox_span = d3.select(`.${lyr.column}`)
     .append('label')
     .attr('class', () => {
@@ -508,10 +507,8 @@ let init = (function() {
 
           if (checkbox.checked) {
             addLayer(lyr, transform);
-            console.log(lyr.checkbox)
           } else {
             removeLayer(lyr, transform);
-            console.log(lyr.checkbox)
           }
           if (!(lyr instanceof StateBoundary)) {
             legend_ctx.clearRect(0, 0, width, height);
@@ -536,13 +533,10 @@ let init = (function() {
   addLayer(state_boundaries, transform);
   let state_boundaries_checkbox = document.getElementsByClassName("state-boundaries")[3];
   state_boundaries_checkbox.checked = true;
-  console.log(state_boundaries)
 
   const target_canvas = d3.select('.map.layer.zoom-target');
 
   const zoom_start = function zoom_start() {
-    // transform = {x:0, y:0, k:1};
-    console.log(transform);
     for (let i = 0; i < lay; i++) {
       layers[i].context.clearRect(-transform.x, -transform.y, width, height);
     }
@@ -614,7 +608,6 @@ let init = (function() {
   };
 
   const window_resize = _.debounce(function(e) {
-    console.log('resize')
     width = window.innerWidth * SCALE;
     height = window.innerHeight * SCALE;
     base_canvas
@@ -644,7 +637,6 @@ let init = (function() {
   const toggles = d3.selectAll('.window .toggle');
 
   toggles.on('click', function() {
-    console.log('click')
     let closed = d3.select(this).classed('open');
     // Toggle legend visibility
     d3.select(this.parentNode).select('.canvas')

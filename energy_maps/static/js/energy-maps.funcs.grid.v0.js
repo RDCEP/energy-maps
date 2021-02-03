@@ -212,7 +212,6 @@ const draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queu
  * '/json/elec_grid_split/grid-dc'
  */
 const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
-  console.log('electrical-grid-dc-lines');
   draw_grid_class(ctx, queued_data, dc, "grid-dc");
 }
 
@@ -232,14 +231,12 @@ let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricit
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   d3_fetch: d3.json,
 }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
-console.log(ac_na)
 
 let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
   src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
   d3_fetch: d3.json,
 }], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
-console.log(ac_under_100);
 
 /**
  * Draw AC electric grid legend to its HTML5 canvas context.
@@ -267,14 +264,12 @@ let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'el
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   d3_fetch: d3.json,
 }], '100-161', 'rgba(86, 180, 233)', 2, 100);
-console.log(ac_100_200); 
 
 let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
   src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
   d3_fetch: d3.json,
 }], '220-287', 'rgba(55, 126, 184)', 3, 250);
-console.log(ac_200_300); 
 
 /**
  * Draw AC electric grid legend to its HTML5 canvas context.
@@ -302,21 +297,18 @@ let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
 }], '345', 'rgba(255, 149, 0)', 4, 350);
-console.log(ac_345); 
 
 let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
 }], '500', 'rgba(213, 113, 45)', 5, 350);
-console.log(ac_500); 
 
 let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
   src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
   d3_fetch: d3.json,
 }], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
-console.log(ac_735_plus); 
 
 /**
  * Draw AC electric grid legend to its HTML5 canvas context.

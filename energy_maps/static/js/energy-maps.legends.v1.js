@@ -69,7 +69,6 @@ const advance_vertical_increment = function advance_vertical_increment(y, ctx, c
 const update_legend = function update_legend(tmpctx, ctx, layers) {
   // FIXME: width in globals is now 850.
   legend.hidden = false;
-  console.log('update_legend:', layers)
   let x = 32 * SCALE;
   let x_offset = 10 * SCALE;
   let y = 10 * SCALE;
@@ -78,7 +77,6 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
   // bottom of the legend.
   for (let i = layers.length-1; i >= 0; --i) {
     if (layers[i].active && !(layers[i] instanceof StateBoundary)) {
-      console.log(layers[i])
       y = layers[i].draw_legend(tmpctx, x, y);
     }
   }

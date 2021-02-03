@@ -165,7 +165,6 @@ const draw_mine = function draw_mine(ctx, xy, color, r, is_legend) {
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
-  console.log('draw_coal_mines');
 
   path.context(ctx);
   clip_region(ctx);
@@ -199,7 +198,6 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
 const draw_railroads = function draw_railroads(ctx, queued_data) {
-  console.log('draw_railroads');
 
   path.context(ctx);
   clip_region(ctx);

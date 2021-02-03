@@ -238,7 +238,6 @@ const get_xy = function get_xy(queued_data) {
  * @param {Array} queued_data - readfile: '/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'
  */
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
-  console.log('draw_gas_pipes');
   
   path.context(ctx);
   clip_region(ctx)
@@ -259,7 +258,6 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
 
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
   // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
-  console.log('draw_oil_prod_pipes');
   path.context(ctx);
   clip_region(ctx);
   let oil_prod_pipe_data = queued_data[0];
@@ -278,7 +276,6 @@ const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
 // TODO: Is there a railroad or other line drawing function that we can
 //  abstract multiple line drawing functions out to?
 const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
-  console.log('draw_pipes');
   path.context(ctx);
   clip_region(ctx);
 
@@ -291,7 +288,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   finish_loading_layer();
   
   // Prod pipes
-  console.log('draw_oil_prod_pipes');
+  ('draw_oil_prod_pipes');
   ctx = oil_product_pipeline.context;
   path.context(ctx);
   region = new Path2D();
@@ -352,7 +349,6 @@ const draw_off_well = function draw_off_well(ctx, xy, color) {
  * & '/static/csv/wells_gas2.csv'
  */
 const draw_gas_wells = function draw_gas_wells(queued_data) {
-  console.log('draw_gas_wells');
 
   get_xy(queued_data);
   draw_well(xy, gas_well.color)
@@ -365,7 +361,6 @@ const draw_gas_wells = function draw_gas_wells(queued_data) {
  * & '/static/csv/wells_oil2.csv'
  */
 const draw_oil_wells = function draw_oil_wells(queued_data) {
-  console.log('draw_oil_wells');
 
   get_xy(queued_data)
 
@@ -413,7 +408,6 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
 // TODO: Split up the JSON files based on whatever property marks
 //  processing vs. storage
 const draw_processing = function draw_processing(ctx, queued_data) {
-  console.log('draw_processing');
 
   path.context(ctx);
   clip_region(ctx)
@@ -453,7 +447,6 @@ const draw_storage = function draw_storage(ctx, queued_data) {
 }
 
 const draw_refining = function draw_refining(ctx, queued_data) {
-  console.log('draw_refining');
 
   path.context(ctx);
   clip_region(ctx)
@@ -566,7 +559,6 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   ctx.lineWidth = this.width;
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
     (oil_product.dash + 2 * oil_product.width) / transform.k ];
-  console.log(OIL_PRODUCT_LINE_DASH)
   ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
   let text = this.text;
   //FIXME: The `dash` argument to `draw_line()` is overloaded and shouldn't be.
