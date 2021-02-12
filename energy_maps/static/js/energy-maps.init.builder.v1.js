@@ -537,9 +537,11 @@ let init = (function() {
   const target_canvas = d3.select('.map.layer.zoom-target');
 
   const zoom_start = function zoom_start() {
-    for (let i = 0; i < lay; i++) {
-      layers[i].context.clearRect(-transform.x, -transform.y, width, height);
-    }
+    layers = layers.map(x => {
+        x.context.clearRect(-transform.x, -transform.y, width, height);
+        return x;
+      }
+    );
     transform = d3.event.transform;
   };
 
