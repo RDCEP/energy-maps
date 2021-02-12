@@ -617,12 +617,13 @@ let init = (function() {
     base_canvas
       .attr('width', width)
       .attr('height', height);
-    for (let i = 0; i < lay; i++) {
-      layers[i].canvas
+    layers = layers.map(x => {
+      x.canvas
         .attr('width', width)
         .attr('height', height);
-      layers[i].context.clearRect(0, 0, width, height);
-    }
+      x.context.clearRect(0, 0, width, height);
+      return x;
+    });
     draw_base_map(transform);
     draw_active_layers(transform);
   }, 500, false);
