@@ -598,15 +598,17 @@ let init = (function() {
   }
 
   let draw_active_layers = function draw_active_layers(transform) {
-    for (let i = 0; i < lay; ++i) {
-      if (layers[i].active === true) {
-        load_layer_data(layers[i], transform);
+    
+    layers = layers.map(x => {
+      if (x.active == true) {
+        load_layer_data(x, transform);
       } else {
-        layers[i].context.restore();
-        layers[i].context.save();
-        transform_layer(layers[i].context, transform);
+        x.context.restore();
+        x.context.save();
+        transform_layer(x.context, transform);
       }
-    }
+      return x;
+    });
   };
 
   const window_resize = _.debounce(function(e) {
