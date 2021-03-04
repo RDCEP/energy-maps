@@ -92,15 +92,20 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
     '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
   let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
   ctx.lineWidth = 0;
-  for (let i=0; i<bands.length; ++i) {
+
+  bands = bands.map(band => {
     output_geojson = topojson.feature(
       topojson.simplify(presimplified_data, .01 / transform.k**2),
-      queued_data[0].objects[bands[i]]);
-    ctx.fillStyle = wind_map_colors[i];
+      queued_data[0].objects[band]
+    );
+    ctx.fillStyle = wind_map_colors[bands.indexOf(band)];
+    console.log(`current band: ${band}`)
+    console.log(wind_map_colors)
     ctx.beginPath();
-    path(output_geojson);
-    ctx.fill();
-  }
+      path(output_geojson);
+      ctx.fill();
+    return band;
+  });
   finish_loading_layer();
 };
 
