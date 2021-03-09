@@ -76,6 +76,11 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
   finish_loading_layer();
 };
 
+let presimplified_data = null;
+let output_geojson = null;
+let wind_map_colors = [
+  '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
+let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
 /**
  * Draw wind map contours on the infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
@@ -86,18 +91,25 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   path.context(ctx);
   clip_region(ctx)
 
-  let output_geojson;
-  let presimplified_data = topojson.presimplify(queued_data[0]);
-  let wind_map_colors = [
-    '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
-  let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
+  if (presimplified_data == null) {
+    presimplified_data = topojson.presimplify(queued_data[0]);
+  }
   ctx.lineWidth = 0;
 
   bands = bands.map(band => {
-    output_geojson = topojson.feature(
-      topojson.simplify(presimplified_data, .01 / transform.k**2),
-      queued_data[0].objects[band]
-    );
+    // Filter level of detail based on value of k
+    // We can track k, and compare current val vs. previous val
+    //  consider global called 'kChanged'
+    // If current k diff from prev k, say kChanged
+    // declare output_geojson as a null global, then only run the following block if
+    // value of k has changed or if output_geojson is null
+    if (output_geojson == null || k_changed) {
+      output_geojson = topojson.feature(
+        topojson.simplify(presimplified_data, .01 / transform.k**2),
+        queued_data[0].objects[band]
+      );
+    }
+   
     ctx.fillStyle = wind_map_colors[bands.indexOf(band)];
     console.log(`current band: ${band}`)
     console.log(wind_map_colors)
