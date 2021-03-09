@@ -158,7 +158,7 @@ let init = (function() {
     const load_layer_data = function load_layer_data(lyr) {
     if (lyr === oil_pipeline) {
       let lyrs = [oil_pipeline, oil_product_pipeline];
-      for (let i = 0; i < lyrs.length; ++i) {
+      for (let i = 0, lyrs_length = lyrs.length; i < lyrs_length; ++i) {
         start_loading_layer();
         Promise.all(lyrs[i].draw_props[0].src.map(x => lyrs[i].draw_props[0].d3_fetch(x)))
           .then(function(files) {
@@ -167,11 +167,13 @@ let init = (function() {
             return files;
           }).then(files => {
             transform_layer(lyrs[i].context, transform);
+            console.time('draw_layer')
             lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
+            console.timeEnd('draw_layer')
           });
       }
     } else {
-        for (let i = 0; i < lyr.draw_props.length; ++i) {
+        for (let i = 0, num_draw_props = lyr.draw_props.length; i < num_draw_props; ++i) {
           start_loading_layer();
           Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
             .then(function(files) {
@@ -182,7 +184,9 @@ let init = (function() {
               transform_layer(lyr.context, transform);
               return files
             }).then(files => {
+              console.time('draw_layer')
               lyr.draw_props[i].draw_layer(lyr.context, files);
+              console.timeEnd('draw_layer')
             });
         }
     }
@@ -347,7 +351,9 @@ let init = (function() {
    * @memberof Init
    */
   const addLayer = function addLayer(lyr, transform) {
+    console.time('load_layer_data')
     load_layer_data(lyr, transform);
+    console.timeEnd('load_layer_data')
     lyr.active = true;
     if (lyr === oil_pipeline) {
       oil_product_pipeline.active = true;
@@ -536,7 +542,11 @@ let init = (function() {
 
   const target_canvas = d3.select('.map.layer.zoom-target');
 
+  let prev_k = transform.k;
+  // let k_changed = false;
+
   const zoom_start = function zoom_start() {
+    prev_k = transform.k;
     layers = layers.map(x => {
         x.context.clearRect(-transform.x, -transform.y, width, height);
         return x;
@@ -551,6 +561,7 @@ let init = (function() {
   };
 
   const zoom_end = _.debounce(function(e) {
+    k_changed = transform.k != prev_k;
     draw_base_map(transform);
     draw_active_layers(transform);
   }, 500, false);
@@ -601,7 +612,9 @@ let init = (function() {
     
     layers = layers.map(x => {
       if (x.active == true) {
+        console.time('load_layer_data')
         load_layer_data(x, transform);
+        console.timeEnd('load_layer_data')
       } else {
         x.context.restore();
         x.context.save();
