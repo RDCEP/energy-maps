@@ -153,6 +153,8 @@ let projection_scale =  content_width * 1.2;
 // Possible option -- Looks good on small laptop but terrible on monitors: let projection_scale =  content_width * 0.7;
 let projection_width = width / 2;
 let projection_height = projection_width / 2 + header_height
+// For tracking value of transform.k to improve simplification performance
+let k_changed = false;
 
 /**
  * @description D3 geoAlbersUsa projection object set to custom scale
