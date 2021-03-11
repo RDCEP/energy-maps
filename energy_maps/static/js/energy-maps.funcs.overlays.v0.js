@@ -77,10 +77,10 @@ const draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
 };
 
 let presimplified_data = null;
-let output_geojson = null;
 let wind_map_colors = [
   '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
 let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
+let output_geojson = Array(bands.length);
 /**
  * Draw wind map contours on the infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
@@ -96,28 +96,26 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   }
   ctx.lineWidth = 0;
 
-  bands = bands.map(band => {
+  for (let i = 0; i < bands.length; ++i) {
     // Filter level of detail based on value of k
     // We can track k, and compare current val vs. previous val
     //  consider global called 'kChanged'
     // If current k diff from prev k, say kChanged
     // declare output_geojson as a null global, then only run the following block if
     // value of k has changed or if output_geojson is null
-    if (output_geojson == null || k_changed) {
-      output_geojson = topojson.feature(
+    if (output_geojson[i] === undefined || k_changed) {
+      output_geojson[i] = topojson.feature(
         topojson.simplify(presimplified_data, .01 / transform.k**2),
-        queued_data[0].objects[band]
+        queued_data[0].objects[bands[i]]
       );
     }
-   
-    ctx.fillStyle = wind_map_colors[bands.indexOf(band)];
-    console.log(`current band: ${band}`)
+    ctx.fillStyle = wind_map_colors[i];
+    console.log(`current band: ${bands[i]}`)
     console.log(wind_map_colors)
     ctx.beginPath();
-      path(output_geojson);
-      ctx.fill();
-    return band;
-  });
+    path(output_geojson[i]);
+    ctx.fill();
+  }
   finish_loading_layer();
 };
 
