@@ -609,17 +609,17 @@ let init = (function() {
 
   let draw_active_layers = function draw_active_layers(transform) {
     
-    layers = layers.map(x => {
-      if (x.active == true) {
+    layers = layers.map(layer => {
+      if (layer.active == true) {
         console.time('load_layer_data')
-        load_layer_data(x, transform);
+        load_layer_data(layer, transform);
         console.timeEnd('load_layer_data')
       } else {
-        x.context.restore();
-        x.context.save();
-        transform_layer(x.context, transform);
+        layer.context.restore();
+        layer.context.save();
+        transform_layer(layer.context, transform);
       }
-      return x;
+      return layer;
     });
   };
 
