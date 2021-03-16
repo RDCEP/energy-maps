@@ -543,7 +543,6 @@ let init = (function() {
   const target_canvas = d3.select('.map.layer.zoom-target');
 
   let prev_k = transform.k;
-  // let k_changed = false;
 
   const zoom_start = function zoom_start() {
     prev_k = transform.k;
