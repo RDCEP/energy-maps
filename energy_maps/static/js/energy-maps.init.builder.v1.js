@@ -546,9 +546,9 @@ let init = (function() {
 
   const zoom_start = function zoom_start() {
     prev_k = transform.k;
-    layers = layers.map(x => {
-        x.context.clearRect(-transform.x, -transform.y, width, height);
-        return x;
+    layers = layers.map(layer => {
+        layer.context.clearRect(-transform.x, -transform.y, width, height);
+        return layer;
       }
     );
     transform = d3.event.transform;
