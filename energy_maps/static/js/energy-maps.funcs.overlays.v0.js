@@ -80,7 +80,8 @@ let presimplified_data = null;
 let wind_map_colors = [
   '#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c']
 let bands = ['<7m/s', '7-8m/s', '8-9m/s', '9-10m/s', '>10m/s']
-let output_geojson = Array(bands.length);
+let bands_length = bands.length; // instantiated here for loop performance in several code blocks
+let output_geojson = Array(bands_length);
 /**
  * Draw wind map contours on the infrastructure map.
  * @param {Object} ctx - HTML5 canvas context
@@ -96,7 +97,7 @@ const draw_wind_map = function draw_wind_map(ctx, queued_data) {
   }
   ctx.lineWidth = 0;
 
-  for (let i = 0; i < bands.length; ++i) {
+  for (let i = 0; i < bands_length; ++i) {
     // Filter level of detail based on value of k
     // We can track k, and compare current val vs. previous val
     //  consider global called 'kChanged'
@@ -131,7 +132,7 @@ const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
   //TODO: More ugliness. If everything in the legend is going to overhang by
   // by 7 pixels, the marhigins should just be adjusted.
   x -= 7
-  for (let i=0; i<bands.length; ++i) {
+  for (let i = 0; i < bands_length; ++i) {
     ctx.strokeStyle = wind_map_colors[i];
     ctx.beginPath();
     ctx.moveTo(x * SCALE, y);
@@ -146,7 +147,7 @@ const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
   ctx.fillStyle = viz.black;
   ctx.font = LEGEND_FONT;
   ctx.textAlign = 'right'
-  ctx.fillText(`${bands[bands.length-1]}`, x, y);
+  ctx.fillText(`${bands[bands_length-1]}`, x, y);
   x = (x + text_offset) / 2
   ctx.textAlign = 'center'
   ctx.fillText('Avg. wind speed', x, y);
