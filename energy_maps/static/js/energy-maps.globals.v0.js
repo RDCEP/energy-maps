@@ -142,18 +142,34 @@ function MapBuilderUI(map, columns, toggle) {
 // create projection and path objects with which to draw geo objects
 // Kludge for pan/zoom. Can't make JSON call during pan/zoom.
 let simple_map_bkgd = null;
-// Kludge for pan/zoom. Need to track transform globally.
+
+/**
+ * @description A JavaScript object with `number` values that represent transform properties. Pan/zoom kludge. TODO: Track transform globally. 
+ */
 let transform = {x:0, y:0, k:1};
-// width of content area in center of screen
+
+/**
+ * @description Width of content area in center of screen stored as a `number`.
+ */
 let content_width = d3.select('main .content-wrap').node().offsetWidth;
-// height of header area
+
+/**
+ * @description Height of site header area stored as a `number`.
+ */
 let header_height = d3.select('header').node().offsetHeight;
-// scale to fill content area
+
+/**
+ * @description Map projection scale to fill content area.
+ */
 let projection_scale =  content_width * 1.2;
+
 // Possible option -- Looks good on small laptop but terrible on monitors: let projection_scale =  content_width * 0.7;
 let projection_width = width / 2;
 let projection_height = projection_width / 2 + header_height
-// For tracking value of transform.k to improve simplification performance
+
+/**
+ * @description For tracking the value of transform.k to improve performance of simplification algorithms.
+ */
 let k_changed = false;
 
 /**
