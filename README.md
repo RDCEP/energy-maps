@@ -1,6 +1,7 @@
 # US Energy Infrastructure Visualization
 
-This data visualization project is the result of a grant-funded partnership between the [National Science Foundation](https://www.nsf.gov/) and the [Center for Robust Decision-making on Climate and Energy Policy](https://www.rdcep.org/). The application utilizes the [D3.js](https://d3js.org/) library, leveraging nationwide data to vizualize US energy infrastructure by location and total asset value in USD. The end user can toggle layers on and off for the resource they wish to see, and the current available options include:
+The US Energy Infrastructure Visualization is a data visualization web app that classifies and displays nationwide infrastructure data by infrastructure type, total asset value, and location on a map of the United States. The project uses D3.js to process the data and render the maps, allowing users to select layers grouped into the following categories:
+
 * gas wells
 * offshore wells
 * oil and gas pipelines
@@ -10,6 +11,11 @@ This data visualization project is the result of a grant-funded partnership betw
 * railroads
 * electricity transmission grid
 * power plants   
+
+
+This project is the result of a grant-funded partnership between the [National Science Foundation](https://www.nsf.gov/) and the [Center for Robust Decision-making on Climate and Energy Policy](https://www.rdcep.org/) designed to generate data visualizations that can be used by policy-makers and educators. 
+
+
 
 ## Getting Started
 
