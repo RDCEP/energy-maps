@@ -22,7 +22,7 @@ const transform_layer = function transform_layer(ctx, transform) {
  */
 const clip_region = function clip_region(ctx) {
   let region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
 }
 

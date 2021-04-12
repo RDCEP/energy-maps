@@ -370,10 +370,10 @@ let init = (function() {
    */
   const removeLayer = function removeLayer(lyr) {
     hide_spinner();
-    lyr.context.clearRect(-transform.x, -transform.y, width, height);
+    lyr.context.clearRect(0, 0, width, height);
     lyr.active = false;
     if (lyr === oil_pipeline) {
-      oil_product_pipeline.context.clearRect(-transform.x, -transform.y, width, height);
+      oil_product_pipeline.context.clearRect(0, 0, width, height);
       oil_product_pipeline.active = false;
     }
     display_asset_total();
@@ -547,7 +547,7 @@ let init = (function() {
   const zoom_start = function zoom_start() {
     prev_k = transform.k;
     layers = layers.map(layer => {
-        layer.context.clearRect(-transform.x, -transform.y, width, height);
+        layer.context.clearRect(0, 0, width, height);
         return layer;
       }
     );

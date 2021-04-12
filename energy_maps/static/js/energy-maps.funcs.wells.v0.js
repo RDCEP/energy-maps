@@ -292,7 +292,7 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx = oil_product_pipeline.context;
   path.context(ctx);
   region = new Path2D();
-  region.rect(-transform.x, -transform.y, width, height);
+  region.rect(0, 0, width, height);
   ctx.clip(region);
   let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw_props.src)[0];
   let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
