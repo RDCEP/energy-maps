@@ -107,6 +107,7 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
   
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round'
+  ctx.strokeStyle = obj.color;
 
   // we may not need this anymore, because you can just treat topojson
   // like regular json! as can be seen with lines like
@@ -121,7 +122,6 @@ const draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
 
     // TODO: Add descriptive comment here to explain the args
     ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-    ctx.strokeStyle = obj.color;
 
     ctx.beginPath();
     path(tmp_grid);
