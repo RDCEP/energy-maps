@@ -214,12 +214,12 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 
 let coal_mine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', [{
   draw_layer: draw_coal_mines,
-  src: [ '/static/csv/coal.csv' ],
-  d3_fetch: d3.csv
+  src: [ 'http://127.0.0.1:5000/api/v0.1.0/infrastructure/mines/coal' ],
+  d3_fetch: d3.json
 }]);
 
 let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', [{
   draw_layer: draw_railroads,
-  src: [ '/static/json/railrdl020.json' ],
+  src: [ 'http://127.0.0.1:5000/api/v0.1.0/infrastructure/railroads' ],
   d3_fetch: d3.json
 }]);

@@ -544,13 +544,13 @@ let foreign_gas_wells = {
 
 let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_gas_pipes,
-  src: ['/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/pipelines/gas'],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
   draw_layer: draw_oil_prod_pipes,
-  src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/pipelines/petroleum_product'],
   d3_fetch: d3.json
 }], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
@@ -570,14 +570,14 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
 
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
-  src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/pipelines/oil'],
   d3_fetch: d3.json,
   next_layer: oil_product_pipeline
 }], '#3CB371', 1.5 * SCALE);
 
 let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_refining,
-  src: [`/static/json/Petroleum_Refineries_US_2015.geojson`],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/refineries/oil'],
   d3_fetch: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
