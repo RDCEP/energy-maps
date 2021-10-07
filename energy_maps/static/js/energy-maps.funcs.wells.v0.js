@@ -238,7 +238,7 @@ const get_xy = function get_xy(queued_data) {
  * @param {Array} queued_data - readfile: '/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'
  */
 const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
-  
+
   path.context(ctx);
   clip_region(ctx)
 
@@ -253,7 +253,6 @@ const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
   ctx.stroke();
   ctx.setLineDash([]);
   finish_loading_layer();
-  //;
 };
 
 const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
@@ -287,24 +286,25 @@ const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
   ctx.stroke();
   finish_loading_layer();
   
+  // Commented out because it wasn't actually firing
   // Prod pipes
-  ('draw_oil_prod_pipes');
-  ctx = oil_product_pipeline.context;
-  path.context(ctx);
-  region = new Path2D();
-  region.rect(0, 0, width, height);
-  ctx.clip(region);
-  let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw_props.src)[0];
-  let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
-    (oil_product.dash + 2 * oil_product.width) / transform.k ];
-  ctx.lineWidth = oil_product.width / transform.k;
-  ctx.strokeStyle = oil_product.stroke;
-  ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
-  ctx.beginPath();
-  path(oil_prod_pipe_data);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  finish_loading_layer();
+  // ('draw_oil_prod_pipes');
+  // ctx = oil_product_pipeline.context;
+  // path.context(ctx);
+  // region = new Path2D();
+  // region.rect(0, 0, width, height);
+  // ctx.clip(region);
+  // let oil_prod_pipe_data = d3.json(oil_product_pipeline.draw_props.src)[0];
+  // let OIL_PRODUCT_LINE_DASH = [ oil_product.dash / transform.k,
+  //   (oil_product.dash + 2 * oil_product.width) / transform.k ];
+  // ctx.lineWidth = oil_product.width / transform.k;
+  // ctx.strokeStyle = oil_product.stroke;
+  // ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
+  // ctx.beginPath();
+  // path(oil_prod_pipe_data);
+  // ctx.stroke();
+  // ctx.setLineDash([]);
+  // finish_loading_layer();
 };
 
 // TODO: Simplify well drawing functions by adding relevant properties to nested objects
@@ -459,8 +459,8 @@ const draw_refining = function draw_refining(ctx, queued_data) {
       'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
     let r = 0;
     for (let i = 0; i < procs.length; ++i) {
-      if (d.properties.hasOwnProperty(procs[i])) {
-        r += +d.properties[procs[i]];
+      if (d.properties.original.hasOwnProperty(procs[i])) {
+        r += +d.properties.original[procs[i]];
       }
     }
     d.r = r;
@@ -551,6 +551,7 @@ let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_0
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
   draw_layer: draw_oil_prod_pipes,
   src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/pipelines/petroleum_product'],
+  // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json
 }], '#3CB371', 2 * SCALE);
 oil_product_pipeline.dash = 2.5 * SCALE;
@@ -571,13 +572,14 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
   src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/pipelines/oil'],
+  // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json,
   next_layer: oil_product_pipeline
 }], '#3CB371', 1.5 * SCALE);
 
 let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_refining,
-  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/refineries/oil'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/refineries/petroleum'],
   d3_fetch: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 

@@ -66,7 +66,7 @@ GridAcCollection.prototype = new Grid;
  */
 const filter_features = function filter_features(infrastructure, c) {
   let features = infrastructure.features.filter(function(d) {
-    return d.properties.class === c.heading;
+    return d.properties.original.class === c.heading;
   });
   return features;
 }
@@ -97,40 +97,35 @@ const set_line_width = function set_line_width(value, divisor) {
  */
 const draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
   
-  // transform_layer(ctx);
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
-  output_geojson = simplify(key, queued_data)
-  
+  let grid_data = queued_data[0];
+
   let tmp_grid = {type: 'FeatureCollection', features: []};
   
   ctx.lineCap = 'round';
-  ctx.lineJoin = 'round'
   ctx.strokeStyle = obj.color;
 
-  // we may not need this anymore, because you can just treat topojson
-  // like regular json! as can be seen with lines like
-  // queued_data[0].objects.railrdl020 and queued_data[0].objects[key]
-  features = filter_features(output_geojson, obj);
+  features = filter_features(grid_data, obj);
 
   let feat_len = features.length;
 
   for (let i = 0; i < feat_len; ++i) {
 
-    tmp_grid.features = [features[i]];
-
-    // TODO: Add descriptive comment here to explain the args
-    ctx.lineWidth = set_line_width(features[i]['properties']['voltage'], 500);
-
-    ctx.beginPath();
-    path(tmp_grid);
-    ctx.stroke();
-
-    if (i === feat_len - 1) {
-      finish_loading_layer();
+      tmp_grid.features = [features[i]];
+  
+      // TODO: Add descriptive comment here to explain the args
+      ctx.lineWidth = set_line_width(features[i]['properties']['original']['voltage'], 500);
+  
+      ctx.beginPath();
+      path(tmp_grid);
+      ctx.stroke();
+  
+      if (i === feat_len - 1) {
+        finish_loading_layer();
+      }
     }
-  }
 };
 
 /**
@@ -228,13 +223,13 @@ const draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
 
 let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/under_100'],
   d3_fetch: d3.json,
 }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 
 let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/under_100'],
   d3_fetch: d3.json,
 }], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 
@@ -253,7 +248,7 @@ let draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(c
 
 let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', 102_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_unk_and_under_100,
-  src: ['/static/topojson/elec_grid_split/grid-unk_under_100.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/under_100'],
   d3_fetch: d3.json,
 }], draw_legend_ac_na_and_under_100) //, [ac_na, ac_under_100]);
 
@@ -261,13 +256,13 @@ let ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 10
 
 let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
-  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/100_300_kV_AC'],
   d3_fetch: d3.json,
 }], '100-161', 'rgba(86, 180, 233)', 2, 100);
 
 let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
-  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/100_300_kV_AC'],
   d3_fetch: d3.json,
 }], '220-287', 'rgba(55, 126, 184)', 3, 250);
 
@@ -286,7 +281,7 @@ let draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
 
 let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', 167_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_100_300,
-  src: ['/static/topojson/elec_grid_split/grid-100_300.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/100_300_kV_AC'],
   d3_fetch: d3.json,
 }], draw_legend_ac_100_300);
 
@@ -294,19 +289,19 @@ let ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV
 
 let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
-  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/345_735_kV_AC'],
   d3_fetch: d3.json,
 }], '345', 'rgba(255, 149, 0)', 4, 350);
 
 let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
-  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/345_735_kV_AC'],
   d3_fetch: d3.json,
 }], '500', 'rgba(213, 113, 45)', 5, 350);
 
 let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
-  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/345_735_kV_AC'],
   d3_fetch: d3.json,
 }], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 
@@ -326,13 +321,13 @@ let draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
 
 let ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', 137_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_ac_345_735,
-  src: ['/static/topojson/elec_grid_split/grid-345_735.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/345_735_kV_AC'],
   d3_fetch: d3.json,
 }], draw_legend_ac_345_735);
 
 let dc = new Grid('DC-lines', '500–1000 kV DC', 4_000_000_000, 'electricity-transmission-and-distribution', [{
   draw_layer: draw_grid_class_dc,
-  src: ['/static/topojson/elec_grid_split/grid-dc.json'],
+  src: ['http://127.0.0.1:5000/api/v0.1.0/infrastructure/electric_grid/dc'],
   d3_fetch: d3.json,
 }], 'DC', 'black', 7, 1000);
 dc.dashed = false;

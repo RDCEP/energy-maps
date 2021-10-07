@@ -164,26 +164,28 @@ const draw_mine = function draw_mine(ctx, xy, color, r, is_legend) {
  * ".map.layer.canvas.coal-mine"
  * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
  */
-const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
+ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 
   path.context(ctx);
   clip_region(ctx);
 
-  let mines = queued_data[0];
+  let mines = queued_data[0].features;
+  console.log(mines)
 
   // Sort in descending order so large mines don't
   // obscure small mines. Unary '+' operator used to return the numeric rather
   // than string values to tot_prod
   mines.sort(function(a, b) {
-    return d3.descending(+a.tot_prod, +b.tot_prod);
+    return d3.descending(+a.properties.original.tot_prod, +b.properties.original.tot_prod);
   });
 
   mines.forEach(function(d, i) {
-    let xy = projection([+d.lon, +d.lat]);
+    // TODO: We have lon/lat props in the csv file, but none in the database from the JSON we used!
+    let xy = projection([+d.geometry.coordinates[0], +d.geometry.coordinates[1]]);
     if (xy === null) {
       //
     } else {
-      draw_mine(ctx, xy, viz.black, +d.tot_prod, false);
+      draw_mine(ctx, xy, viz.black, +d.properties.original.tot_prod, false);
     }
     if (i === mines.length - 1) { 
       finish_loading_layer();
@@ -200,15 +202,18 @@ const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
 const draw_railroads = function draw_railroads(ctx, queued_data) {
 
   path.context(ctx);
-  clip_region(ctx);
+  clip_region(ctx)
 
-  let output_geojson = simplify("railrdl020", queued_data);
+  let rr_data = queued_data[0];
+  // const path = get_path(ctx);
 
+  ctx.lineCap = 'round';
   ctx.strokeStyle = railroad.stroke;
   ctx.lineWidth = railroad.width / transform.k;
   ctx.beginPath();
-  path(output_geojson);
+  path(rr_data);
   ctx.stroke();
+  ctx.setLineDash([]);
   finish_loading_layer();
 };
 

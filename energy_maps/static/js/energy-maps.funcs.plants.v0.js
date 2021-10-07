@@ -102,7 +102,7 @@ let electricity_generation = {
 function draw_white_layer(plants, fuel, ctx, features) {
   features.forEach(function (d) {
     let xy = projection(d.geometry.coordinates);
-    draw_power_plant(ctx, xy, viz.white, +d.properties.total_cap);
+    draw_power_plant(ctx, xy, viz.white, +d.properties.original.total_cap);
   });
 }
 
@@ -117,7 +117,7 @@ function draw_white_layer(plants, fuel, ctx, features) {
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  draw_power_plant(ctx, xy, color, +d.properties.total_cap);
+  draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
 }
 
 /**
@@ -133,7 +133,7 @@ const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
 const get_fuel_type = function get_fuel_type(data, fuel) {
   return data.features
     .filter(function (d) {
-      return d.properties.primary_fu === fuel.fuel_type;
+      return d.properties.original.primary_fu === fuel.fuel_type;
     });
 }
 
