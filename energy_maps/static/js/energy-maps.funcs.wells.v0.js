@@ -26,7 +26,7 @@
  * @property {Number} diameter - scaled value for circular symbols on the map
  * @property {Number} stroke - stroke width
  */
-function Well(name, text, value, column, draw_props, color, legend_color) {
+ function Well(name, text, value, column, draw_props, color, legend_color) {
   InfrastructureSet.call(this, name, text, value, column, draw_props);
   this.color = color;
   this.legend_color = legend_color;
@@ -376,23 +376,23 @@ const draw_all_wells = function draw_all_wells(ctx, queued_data) {
   path.context(ctx);
   clip_region(ctx)
 
-  let wells = queued_data[0];
+  let wells = queued_data[0].features;
 
   wells = wells
-    .filter(function(d) { return +d.zoom <= +transform.k; })
+    .filter(function(d) { return +d.properties.original.zoom <= +transform.k; })
   wells.forEach(function(d, i) {
-    let xy = projection([+d.lon, +d.lat]);
+    let xy = projection([+d.properties.original.lon, +d.properties.original.lat]);
     if (xy === null) {
       return;
     } else {
-      if (d.oilgas === 'GAS') {
-        if (d.class === 'Off') {
+      if (d.properties.original.oilgas === 'GAS') {
+        if (d.properties.original.class === 'Off') {
           draw_off_well(ctx, xy, gas_well.color);
         } else {
           draw_well(ctx, xy, gas_well.color);
         }
       } else {
-        if (d.class === 'Off') {
+        if (d.properties.original.class === 'Off') {
           draw_off_well(ctx, xy, oil_well.color);
         } else {
           draw_well(ctx, xy, oil_well.color);
@@ -412,11 +412,11 @@ const draw_processing = function draw_processing(ctx, queued_data) {
   path.context(ctx);
   clip_region(ctx)
 
-  let gproc = queued_data[0]; // gas processing
+  let gproc = queued_data[0].features; // gas processing
   // let gstor = queued_data[1]; // gas storage
 
   gproc.forEach(function(d, i) {
-    let xy = projection([+d.lon, +d.lat]);
+    let xy = projection([+d.properties.original.lon, +d.properties.original.lat]);
     draw_gas_processor(ctx, xy, gas_processing.size);
     if (i === gproc.length - 1) { 
       finish_loading_layer();
@@ -518,14 +518,16 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
 
 let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
-  src: [ `/static/csv/wells_gas.csv` ],
-  d3_fetch: d3.csv
+  // src: [ `/static/csv/wells_gas.csv` ],
+  // d3_fetch: d3.csv
+  src: [ `http://127.0.0.1:5000/api/v0.1.0/infrastructure/wells/gas` ],
+  d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
-  src: [ `/static/csv/wells_oil.csv` ],
-  d3_fetch: d3.csv
+  src: [ `http://127.0.0.1:5000/api/v0.1.0/infrastructure/wells/oil` ],
+  d3_fetch: d3.json
 }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
 let foreign_oil_wells = {
@@ -585,8 +587,8 @@ let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_
 
 let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_processing,
-  src: [ `/static/csv/nproc.csv`],
-  d3_fetch: d3.csv
+  src: [ `http://127.0.0.1:5000/api/v0.1.0/infrastructure/processing/gas`],
+  d3_fetch: d3.json
 }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',
