@@ -6,6 +6,8 @@
 
 const fill_screen = false;
 
+const API_URL_PREFIX = 'http://127.0.0.1:5000/api/v0.1.0/infrastructure'
+
 /**
  * @type {number}
  * @description Originally used for scaling static print-based maps.
