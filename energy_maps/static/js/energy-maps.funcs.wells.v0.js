@@ -573,7 +573,7 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
 
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
-  src: [`${API_URL_PREFIX}/infrastructure/pipelines/oil`],
+  src: [`${API_URL_PREFIX}/pipelines/oil`],
   // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json,
   next_layer: oil_product_pipeline
