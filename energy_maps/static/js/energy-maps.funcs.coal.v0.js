@@ -219,12 +219,15 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 
 let coal_mine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', [{
   draw_layer: draw_coal_mines,
-  src: [ `${API_URL_PREFIX}/mines/coal` ],
+  src: [ `${API_URL_PREFIX}/${data_year}/mines/coal` ],
   d3_fetch: d3.json
 }]);
 
 let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', [{
   draw_layer: draw_railroads,
-  src: [ `${API_URL_PREFIX}/railroads` ],
+  // The API/db will have "nominal_year" and "actual_year" as object properties for a "year" object
+  // So this should look something like:
+  // src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
+  src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
   d3_fetch: d3.json
 }]);

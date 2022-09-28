@@ -139,6 +139,22 @@ let init = (function() {
       .replace(/T/, ' T')}`;
   };
 
+  let create_year_button = function create_year_button(btn_val, year_val) {
+    let btn = document.createElement("button");
+    btn.innerHTML = `${btn_val} Data`;
+    document.getElementsByClassName('map-options-header')[0].appendChild(btn);
+    btn.classList.add('btn-year');
+    btn.addEventListener('click', function() {
+      btn_val = btn_val;
+      data_year = btn_val
+      document.getElementById("value-year")
+        .innerHTML = `out of ${year_val} for ${btn_val}`;
+    }) 
+  }
+
+  create_year_button(2022, "$9.8T");
+  create_year_button(2012, "$9.8T");
+
   /**
    * @param  {String} s - the supplied character string to be formatted
    * @returns {String} the supplied string with the first letter capitalized

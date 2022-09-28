@@ -520,13 +520,13 @@ let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-ga
   draw_layer: draw_all_wells,
   // src: [ `/static/csv/wells_gas.csv` ],
   // d3_fetch: d3.csv
-  src: [ `${API_URL_PREFIX}/wells/gas` ],
+  src: [ `${API_URL_PREFIX}/${data_year}/wells/gas` ],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
-  src: [ `${API_URL_PREFIX}/wells/oil` ],
+  src: [ `${API_URL_PREFIX}/${data_year}/wells/oil` ],
   d3_fetch: d3.json
 }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
@@ -546,13 +546,13 @@ let foreign_gas_wells = {
 
 let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_gas_pipes,
-  src: [`${API_URL_PREFIX}/pipelines/gas`],
+  src: [`${API_URL_PREFIX}/${data_year}/pipelines/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
   draw_layer: draw_oil_prod_pipes,
-  src: [`${API_URL_PREFIX}/pipelines/petroleum_product`],
+  src: [`${API_URL_PREFIX}/${data_year}/pipelines/petroleum_product`],
   // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json
 }], '#3CB371', 2 * SCALE);
@@ -573,7 +573,7 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
 
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
-  src: [`${API_URL_PREFIX}/pipelines/oil`], // semantically this should be 'pipelines', but it got messed up in the db somehow
+  src: [`${API_URL_PREFIX}/${data_year}/pipelines/oil`], // semantically this should be 'pipelines', but it got messed up in the db somehow
   // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json,
   next_layer: oil_product_pipeline
@@ -581,13 +581,13 @@ let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_0
 
 let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_refining,
-  src: [`${API_URL_PREFIX}/refineries/petroleum`],
+  src: [`${API_URL_PREFIX}/${data_year}/refineries/petroleum`],
   d3_fetch: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
 let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_processing,
-  src: [ `${API_URL_PREFIX}/processing_plants/gas`],
+  src: [ `${API_URL_PREFIX}/${data_year}/processing_plants/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 

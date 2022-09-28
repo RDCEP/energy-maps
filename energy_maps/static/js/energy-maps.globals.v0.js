@@ -16,6 +16,12 @@ const API_URL_PREFIX = 'http://127.0.0.1:5000/api/v0.1.0/infrastructure'
 SCALE = 1;
 
 /**
+ * @type {number}
+ * @description The year value to determine data loaded by the application.
+ */
+let data_year = 2012;
+
+/**
  * @type {number} 
  * @description Device pixel ratio, used to scale our canvas with
  * clarity relative to the user's device.
