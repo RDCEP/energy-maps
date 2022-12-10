@@ -102,7 +102,16 @@ let electricity_generation = {
 function draw_white_layer(plants, fuel, ctx, features) {
   features.forEach(function (d) {
     let xy = projection(d.geometry.coordinates);
-    draw_power_plant(ctx, xy, viz.white, +d.properties.original.total_cap);
+    for (coord in xy) {
+      if (coord != null) {
+        draw_power_plant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
+      }
+      else {
+        console.log(coord)
+      }
+    }
+    // draw_power_plant(ctx, xy, viz.white, +d.properties.original.total_cap);
+    // draw_power_plant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
   });
 }
 
@@ -117,7 +126,14 @@ function draw_white_layer(plants, fuel, ctx, features) {
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
+  // draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
+  // draw_power_plant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
+  if (coord != null) {
+    draw_power_plant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
+  }
+  else {
+    console.log(coord)
+  }
 }
 
 /**
@@ -133,7 +149,8 @@ const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
 const get_fuel_type = function get_fuel_type(data, fuel) {
   return data.features
     .filter(function (d) {
-      return d.properties.original.primary_fu === fuel.fuel_type;
+      // return d.properties.original.primary_fu === fuel.fuel_type;
+      return d.properties.type.secondary == fuel.fuel_type
     });
 }
 
@@ -225,17 +242,27 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 
 // Instantiate PowerPlants
 
+// let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [{
+//   draw_layer: draw_coal_plants,
+//   src: [`${API_URL_PREFIX}/${data_year}/power_plants/coal`],
+//   d3_fetch: d3.json,
+// }], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [{
   draw_layer: draw_coal_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/coal`],
+  src: [`${API_URL_PREFIX}/${2022}/power_plants/coal`],
   d3_fetch: d3.json,
-}], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
+}], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
 
+// let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [{
+//   draw_layer: draw_ng_plants,
+//     src: [`${API_URL_PREFIX}/${data_year}/power_plants/natural_gas`],
+//     d3_fetch: d3.json,
+// }], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [{
   draw_layer: draw_ng_plants,
-    src: [`${API_URL_PREFIX}/${data_year}/power_plants/natural_gas`],
+    src: [`${API_URL_PREFIX}/${2022}/power_plants/natural_gas`],
     d3_fetch: d3.json,
-}], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
+}], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
 let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', 64_000_000_000, 'electricity-generation', [{
   draw_layer: draw_petro_plants,

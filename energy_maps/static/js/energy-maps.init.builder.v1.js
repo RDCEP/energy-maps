@@ -147,6 +147,7 @@ let init = (function() {
     btn.addEventListener('click', function() {
       btn_val = btn_val;
       data_year = btn_val
+      console.log(data_year)
       document.getElementById("value-year")
         .innerHTML = `out of ${year_val} for ${btn_val}`;
     }) 
@@ -186,6 +187,7 @@ let init = (function() {
             console.time('draw_layer')
             lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
             console.timeEnd('draw_layer')
+            console.log(lyr.draw_props[i].src)
           });
       }
     } else {
@@ -203,6 +205,7 @@ let init = (function() {
               console.time('draw_layer')
               lyr.draw_props[i].draw_layer(lyr.context, files);
               console.timeEnd('draw_layer')
+              console.log(lyr.draw_props[i].src)
             });
         }
     }
