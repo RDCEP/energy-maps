@@ -284,7 +284,7 @@ let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', 597_000_000_000
 
 let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', [{
   draw_layer: draw_wind_farms,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/wind`],
+  src: [`${API_URL_PREFIX}/${2022}/power_plants/wind`],
   d3_fetch: d3.json,
 }], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
 
