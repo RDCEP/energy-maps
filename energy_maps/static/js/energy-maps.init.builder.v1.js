@@ -149,7 +149,7 @@ let init = (function() {
       data_year = btn_val
       console.log(data_year)
       document.getElementById("value-year")
-        .innerHTML = `out of ${year_val} for ${btn_val}`;
+        .innerHTML = `out of ${year_val} in ${btn_val}`;
     }) 
   }
 
