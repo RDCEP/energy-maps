@@ -240,6 +240,12 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
+// const apiUrl = () => {
+//   `${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`
+// }
+
+// const url = apiUrl()
+
 // Instantiate PowerPlants
 
 // let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [{
@@ -247,56 +253,67 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 //   src: [`${API_URL_PREFIX}/${data_year}/power_plants/coal`],
 //   d3_fetch: d3.json,
 // }], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
-let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [{
+
+// let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 681_740_400_000, 'electricity-generation', [{
+//   draw_layer: draw_coal_plants,
+//   // src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
+//   src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
+//   d3_fetch: d3.json,
+// }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
+
+let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 681_740_400_000, 'electricity-generation', [{
   draw_layer: draw_coal_plants,
-  src: [`${API_URL_PREFIX}/${2022}/power_plants/coal`],
+  // src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
+  // src: [`${API_URL_PREFIX}/power_plants/coal`],
+  src: [`/power_plants/coal`],
   d3_fetch: d3.json,
 }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
+
 
 // let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [{
 //   draw_layer: draw_ng_plants,
 //     src: [`${API_URL_PREFIX}/${data_year}/power_plants/natural_gas`],
 //     d3_fetch: d3.json,
 // }], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
-let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [{
+let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 564_559_069_258, 'electricity-generation', [{
   draw_layer: draw_ng_plants,
-    src: [`${API_URL_PREFIX}/${2022}/power_plants/natural_gas`],
+    src: [`/power_plants/natural_gas`],
     d3_fetch: d3.json,
 }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
 let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', 64_000_000_000, 'electricity-generation', [{
   draw_layer: draw_petro_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/petroleum`],
+  src: [`/power_plants/petroleum`],
   d3_fetch: d3.json,
 }], 'PET', 'rgba(34, 139, 34, .5)', plant_stroke);
 
 let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', 597_000_000_000, 'electricity-generation', [{
   draw_layer: draw_nuclear_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/nuclear`],
+  src: [`/power_plants/nuclear`],
   d3_fetch: d3.json,
 }], 'NUC', 'rgba(255, 0, 0, .5)', plant_stroke);
 
 let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', 597_000_000_000, 'electricity-generation', [{
   draw_layer: draw_hydro_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/hydroelectric`],
+  src: [`/power_plants/hydroelectric`],
   d3_fetch: d3.json,
 }], 'HYC', 'rgba(11, 36, 251, .5)', plant_stroke);
 
 let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', [{
   draw_layer: draw_wind_farms,
-  src: [`${API_URL_PREFIX}/${2022}/power_plants/wind`],
+  src: [`/power_plants/wind`],
   d3_fetch: d3.json,
 }], 'WND', 'rgba(144, 29, 143, .5)', plant_stroke);
 
 let solar_plants = new PowerPlant('solar-PV', 'Solar PV', 14_000_000_000, 'electricity-generation', [{
   draw_layer: draw_solar_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/solar`],
+  src: [`/power_plants/solar`],
   d3_fetch: d3.json,
 }], 'SUN', 'rgba(255, 215, 0, .5)', 'darkorange');
 
 let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_000, 'electricity-generation', [{
   draw_layer: draw_geo_plants,
-  src: [`${API_URL_PREFIX}/${data_year}/power_plants/geothermal`],
+  src: [`/power_plants/geothermal`],
   d3_fetch: d3.json,
 }], 'GEO', 'rgba(210, 105, 30, .5)', plant_stroke);
 

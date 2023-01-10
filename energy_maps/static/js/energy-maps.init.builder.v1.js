@@ -146,7 +146,8 @@ let init = (function() {
     btn.classList.add('btn-year');
     btn.addEventListener('click', function() {
       btn_val = btn_val;
-      data_year = btn_val
+      data_year = get_data_year(btn_val)
+      API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
       console.log(data_year)
       document.getElementById("value-year")
         .innerHTML = `out of ${year_val} in ${btn_val}`;
@@ -193,7 +194,13 @@ let init = (function() {
     } else {
         for (let i = 0, num_draw_props = lyr.draw_props.length; i < num_draw_props; ++i) {
           start_loading_layer();
-          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
+          if (lyr.name != 'state-boundaries') {
+            // unused commented section for future reference
+            // currently adding the entirety of the previous src string each time pressed
+            // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
+            // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
+
+            Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(`${API_URL_PREFIX}${x}`)))
             .then(function(files) {
               lyr.context.restore();
               lyr.context.save();
@@ -205,8 +212,25 @@ let init = (function() {
               console.time('draw_layer')
               lyr.draw_props[i].draw_layer(lyr.context, files);
               console.timeEnd('draw_layer')
-              console.log(lyr.draw_props[i].src)
+              console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`)
             });
+          }
+          else {
+            Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
+            .then(function(files) {
+              lyr.context.restore();
+              lyr.context.save();
+              return files;
+            }).then(files => {
+              transform_layer(lyr.context, transform);
+              return files
+            }).then(files => {
+              console.time('draw_layer')
+              lyr.draw_props[i].draw_layer(lyr.context, files);
+              console.timeEnd('draw_layer')
+              console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`)
+            });
+          }
         }
     }
   };
@@ -373,6 +397,7 @@ let init = (function() {
     console.time('load_layer_data')
     load_layer_data(lyr, transform);
     console.timeEnd('load_layer_data')
+    // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
     if (lyr === oil_pipeline) {
       oil_product_pipeline.active = true;

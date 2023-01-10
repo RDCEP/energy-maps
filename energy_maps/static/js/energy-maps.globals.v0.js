@@ -6,7 +6,16 @@
 
 const fill_screen = false;
 
-const API_URL_PREFIX = 'http://127.0.0.1:5000/api/v0.1.0/infrastructure'
+/**
+ * @type {number}
+ * @description The year value to determine data loaded by the application.
+ */
+ var data_year = 2012;
+ const get_data_year = function get_data_year(data_year) {
+   return data_year;
+ }
+
+var API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
 /**
  * @type {number}
@@ -14,12 +23,6 @@ const API_URL_PREFIX = 'http://127.0.0.1:5000/api/v0.1.0/infrastructure'
  * Currently unused.
  */
 SCALE = 1;
-
-/**
- * @type {number}
- * @description The year value to determine data loaded by the application.
- */
-let data_year = 2012;
 
 /**
  * @type {number} 
