@@ -234,8 +234,6 @@ let init = (function() {
         }
     }
   };
-  
-
   // Cleanest refactored version
   // const load_layer_data = function load_layer_data(lyr) {
   //   for (let i = 0; i < lyr.draw_props.length; ++i) {
