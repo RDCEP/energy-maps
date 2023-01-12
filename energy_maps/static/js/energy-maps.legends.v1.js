@@ -75,9 +75,16 @@ const update_legend = function update_legend(tmpctx, ctx, layers) {
 
   //NOTE: Reversing layers so that the bottom layer of the map is on the
   // bottom of the legend.
-  for (let i = layers.length-1; i >= 0; --i) {
-    if (layers[i].active && !(layers[i] instanceof StateBoundary)) {
-      y = layers[i].draw_legend(tmpctx, x, y);
+  // for (let i = layers.length-1; i >= 0; --i) {
+  //   if (layers[i].active && !(layers[i] instanceof StateBoundary)) {
+  //     y = layers[i].draw_legend(tmpctx, x, y);
+  //   }
+  // }
+
+  // previous was less optimized
+  for (let i = active_layers.length-1; i >= 0; --i) {
+    if (!(active_layers[i] instanceof StateBoundary)) {
+      y = active_layers[i].draw_legend(tmpctx, x, y);
     }
   }
 
