@@ -259,17 +259,8 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 //   d3_fetch: d3.json,
 // }], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-// let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 681_740_400_000, 'electricity-generation', [{
-//   draw_layer: draw_coal_plants,
-//   // src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
-//   src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
-//   d3_fetch: d3.json,
-// }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
-
-let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 681_740_400_000, 'electricity-generation', [{
+let coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000,2022: 681_740_400_000}, 'electricity-generation', [{
   draw_layer: draw_coal_plants,
-  // src: [`${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`],
-  // src: [`${API_URL_PREFIX}/power_plants/coal`],
   src: [`/power_plants/coal`],
   d3_fetch: d3.json,
 }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
@@ -280,7 +271,7 @@ let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 681_740_400_000, 
 //     src: [`${API_URL_PREFIX}/${data_year}/power_plants/natural_gas`],
 //     d3_fetch: d3.json,
 // }], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
-let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 564_559_069_258, 'electricity-generation', [{
+let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
   draw_layer: draw_ng_plants,
     src: [`/power_plants/natural_gas`],
     d3_fetch: d3.json,

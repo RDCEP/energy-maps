@@ -115,10 +115,10 @@ let init = (function() {
   };
 
   const sum_asset_totals = function sum_asset_totals() {
-    let asset_total_sum = 0;
-    for (let i = 0; i < lay; i++) {
-      if (layers[i].active) {
-        asset_total_sum += layers[i].value;
+    var asset_total_sum = 0;
+    for (let i = 0; i < active_layers.length; i++) {
+      if (active_layers[i] != 'state-boundaries') {
+        asset_total_sum += active_layers[i].value[get_data_year(data_year)];
       }
     }
     return asset_total_sum;
@@ -418,8 +418,8 @@ let init = (function() {
       oil_product_pipeline.context.clearRect(0, 0, width, height);
       oil_product_pipeline.active = false;
     }
-    display_asset_total();
     active_layers.pop(lyr);
+    display_asset_total();
   };
 
   initMenuColumns();
@@ -466,13 +466,13 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuAssetValue = function initMenuAssetValue(lyr) {
-    if (lyr.value !== 0) {
+    if (lyr.value[get_data_year(data_year)] != 0) {
       checkbox_span.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
         .text(` ($${capitalize_first_letter(
-          d3.format('.2~s')(lyr.value)
+          d3.format('.2~s')(lyr.value[get_data_year(data_year)])
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
       return checkbox_span;
@@ -504,7 +504,7 @@ let init = (function() {
     lyr.checkbox = checkbox_span.append('input')
     .attr('type', 'checkbox')
     .attr('class', `checkbox ${lyr.name}`)
-    .attr('data-assetvalue', lyr.value);
+    .attr('data-assetvalue', lyr.value[get_data_year(data_year)]);
     return lyr.checkbox;
   };
 

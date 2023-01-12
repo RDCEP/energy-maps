@@ -161,7 +161,7 @@ const draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
 let state_boundaries = new StateBoundary(
   'state-boundaries',
   'State boundaries',
-  null,
+  {2012: 0, 2020: 0},
   'layers',
   [{
     draw_layer: draw_state_boundaries,
