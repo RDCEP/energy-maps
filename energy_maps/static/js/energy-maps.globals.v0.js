@@ -247,6 +247,25 @@ const finish_loading_layer = function finish_loading_layer() {
 };
 
 let active_layers = [];
+
+/** // TODO: Update this documentation. It's handy for now but not accurate.
+   * @description An array of objects representing resources to be rendered
+   * on top of the map canvas.
+   * @property {string}   name        - A canvas id.
+   * @property {Number}   value       - Asset value in USD.
+   * @property {Array}    draw_props        - An array of objects containing
+   *                                    properties accessed by
+   *                                    load_layer_data().
+   * @property {function} draw_props.draw_layer - A draw function bound to each object.
+   * @property {string}   draw_props.src    - A reference to the data source
+   *                                    (json or csv).
+   * @property {function} draw_props.d3_fetch      - A call to a d3 data parse function.
+   * @property {string}   column      - The class of the column that the
+   *                                    layer's checkbox is written to.
+   * @memberof Init
+   */
+  let layers = [];
+
 let legend = document.getElementsByClassName('legend window main menu')[0];
 
 /**

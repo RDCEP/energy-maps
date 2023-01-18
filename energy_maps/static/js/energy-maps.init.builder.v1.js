@@ -83,24 +83,6 @@ let init = (function() {
    */
   // let asset_total_sum = 0;
 
-  /** // TODO: Update this documentation. It's handy for now but not accurate.
-   * @description An array of objects representing resources to be rendered
-   * on top of the map canvas.
-   * @property {string}   name        - A canvas id.
-   * @property {Number}   value       - Asset value in USD.
-   * @property {Array}    draw_props        - An array of objects containing
-   *                                    properties accessed by
-   *                                    load_layer_data().
-   * @property {function} draw_props.draw_layer - A draw function bound to each object.
-   * @property {string}   draw_props.src    - A reference to the data source
-   *                                    (json or csv).
-   * @property {function} draw_props.d3_fetch      - A call to a d3 data parse function.
-   * @property {string}   column      - The class of the column that the
-   *                                    layer's checkbox is written to.
-   * @memberof Init
-   */
-  let layers = [];
-
   /**
    * @description Draw the base map for the application based off
    * of the data from fmap and fmapfill
@@ -148,6 +130,48 @@ let init = (function() {
       btn_val = btn_val;
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
+
+      var labels = document.getElementsByTagName("label");
+        for (let i = 0; i < labels.length; i++) {
+          labels[i].classList.add('asset-label')
+        }
+      
+      let values = document.getElementsByClassName("asset-value");
+
+      let asset_labels = document.getElementsByClassName('asset-label')
+
+      let cboxes = document.getElementsByTagName("checkbox")
+
+      for (let i = 0; i < layers.length; i++) {
+        // layers[i].checkbox_span.innerHTML = layers[i].value[get_data_year(data_year)]
+        
+        for (let i = 0; i < values.length; i++) {
+          values[i].remove();
+        }
+        
+        for (let i = 0; i < asset_labels.length; i++) {
+          asset_labels[i].remove();
+        }
+        
+        for (let i = 0; i < cboxes.length; i++) {
+          cboxes[i].remove();
+        }
+
+      }
+
+      for (let i = 0; i < layers.length; i++) {
+        initMenuItem(layers[i])
+        initMenuCheckbox(layers[i])
+      }
+
+      var cbs = []
+      for (let i = 0; i < labels.length; i++) {
+        cbs.push(labels[i].children[1])
+        if (labels[i].classList.contains('inactive')) {
+          cbs[i].remove()
+        }
+      }
+
       console.log(data_year)
       document.getElementById("value-year")
         .innerHTML = `out of ${year_val} in ${btn_val}`;
