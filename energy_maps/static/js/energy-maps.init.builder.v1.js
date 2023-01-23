@@ -121,6 +121,9 @@ let init = (function() {
       .replace(/T/, ' T')}`;
   };
 
+  var layers_to_redraw = []
+  var cboxes_to_check = []
+
   let create_year_button = function create_year_button(btn_val, year_val) {
     let btn = document.createElement("button");
     btn.innerHTML = `${btn_val} Data`;
@@ -130,25 +133,43 @@ let init = (function() {
       btn_val = btn_val;
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
+      
+      let values = document.getElementsByClassName("asset-value");
+      let asset_labels = document.getElementsByClassName('asset-label')
+      let cboxes = document.getElementsByClassName("checkbox")
+
+      for (let i = 0; i < cboxes.length; i++) {
+        if (cboxes[i].checked) {
+          cboxes_to_check.push(cboxes[i])
+        }
+      }
+
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].active) {
+          layers_to_redraw.push(layers[i])
+          removeLayer(layers[i], transform)
+        }
+      }
+
+      console.log(`layers_to_redraw outside loop: ${layers_to_redraw}`)
+
+      for (let i = 0; i < layers_to_redraw.length; i++) {
+        active_layers.push(layers_to_redraw[i])
+        addLayer(layers_to_redraw[i], transform)
+      }
 
       var labels = document.getElementsByTagName("label");
         for (let i = 0; i < labels.length; i++) {
           labels[i].classList.add('asset-label')
         }
-      
-      let values = document.getElementsByClassName("asset-value");
 
-      let asset_labels = document.getElementsByClassName('asset-label')
-
-      let cboxes = document.getElementsByTagName("checkbox")
-
+      // remove asset values, asset labels, and checkboxes
       for (let i = 0; i < layers.length; i++) {
-        // layers[i].checkbox_span.innerHTML = layers[i].value[get_data_year(data_year)]
         
         for (let i = 0; i < values.length; i++) {
           values[i].remove();
         }
-        
+
         for (let i = 0; i < asset_labels.length; i++) {
           asset_labels[i].remove();
         }
@@ -159,18 +180,39 @@ let init = (function() {
 
       }
 
-      for (let i = 0; i < layers.length; i++) {
-        initMenuItem(layers[i])
-        initMenuCheckbox(layers[i])
-      }
+      // redraw the menu and reactivate draw functions
+      initMenu()
 
-      var cbs = []
-      for (let i = 0; i < labels.length; i++) {
-        cbs.push(labels[i].children[1])
-        if (labels[i].classList.contains('inactive')) {
-          cbs[i].remove()
-        }
+      console.log(cboxes_to_check)
+      for (let i = 0; i < cboxes_to_check.length; i++) {
+        console.log(cboxes_to_check[i], cboxes_to_check[i].checked)
+        // cboxes_to_check[i].click()
+        // cboxes_to_check[i].checked = true
+        var cb = document.getElementsByClassName(`${cboxes_to_check[i].classList}`)[0]
+        cb.click()
+        cb.checked = true
+        // still needs to clear the layer on button click
       }
+      
+      // for (let i = 0; i < cboxes.length; i++) {
+      //   if (cboxes[i].className.contains(active_layers[i].name)) {
+      //     console.log(cboxes[i])
+      //   }
+      // }
+
+      // for (let i = 0; i < cboxes.length; i++) {
+      //     console.log(cboxes[i].className)
+      // }
+
+      // checkboxes are redrawn and accidentally include inactive label elements
+      // remove checkboxes from inactive label elements
+      // var cbs = []
+      // for (let i = 0; i < labels.length; i++) {
+      //   cbs.push(labels[i].children[1])
+      //   if (labels[i].classList.contains('inactive')) {
+      //     cbs[i].remove()
+      //   }
+      // }
 
       console.log(data_year)
       document.getElementById("value-year")
@@ -559,7 +601,7 @@ let init = (function() {
     lyr.active = false;
   };
 
-  let initMenu = (function initMenu() {
+  let initMenu = function initMenu() {
     for (let i = 0; i < lay; i++) {
 
       let lyr = layers[i];
@@ -597,7 +639,9 @@ let init = (function() {
       addCanvasContext(lyr)
 
     }
-  })();
+  };
+
+  initMenu()
   
   // Load base map and any layers you want on by default
 
