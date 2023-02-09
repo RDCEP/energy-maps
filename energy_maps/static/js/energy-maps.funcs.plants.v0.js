@@ -104,6 +104,7 @@ function draw_white_layer(plants, fuel, ctx, features) {
     let xy = projection(d.geometry.coordinates);
     for (coord in xy) {
       if (coord != null) {
+        // TODO: Does this need a year conditional? Probably
         draw_power_plant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
       }
       else {
@@ -126,8 +127,6 @@ function draw_white_layer(plants, fuel, ctx, features) {
  */
 const draw_standard_layer = function draw_standard_layer(ctx, xy, fuel, d) {
   let color = fuel.color;
-  // draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
-  // draw_power_plant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
   if (coord != null) {
     if (data_year === 2012) {
       draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
@@ -259,7 +258,7 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
 //   d3_fetch: d3.json,
 // }], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-let coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000,2022: 681_740_400_000}, 'electricity-generation', [{
+let coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
   draw_layer: draw_coal_plants,
   src: [`/power_plants/coal`],
   d3_fetch: d3.json,

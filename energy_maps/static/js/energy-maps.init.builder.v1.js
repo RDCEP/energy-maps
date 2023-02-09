@@ -133,7 +133,38 @@ let init = (function() {
       btn_val = btn_val;
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
-      
+
+      // empty the array of layers to redraw 
+      // TODO: find out why this isn't working properly
+
+      // for (let i = 0; i < layers_to_redraw.length; i++) {
+      //   // layers_to_redraw.pop()
+      //   if (layers_to_redraw.indexOf(layers_to_redraw[i]) > -1) {
+      //     layers_to_redraw.splice(layers_to_redraw[i], 1)
+      //   }
+      // }   
+
+      layers_to_redraw = []
+
+      cboxes_to_check = []
+
+      // for (let i = 0; i < cboxes_to_check.length; i++) {
+      //   if (cboxes_to_check.indexOf(cboxes_to_check[i]) > -1) {
+      //     cboxes_to_check.splice(cboxes_to_check[i], 1)
+      //   }
+      // }
+
+      // for (let i = 0; i < active_layers.length; i++) {
+      //   removeLayer(active_layers[i])
+      // }
+
+      // remove any layers from the previous cycle
+      // TODO: find out why this isn't working properly
+
+      for (let i = 0; i < layers_to_redraw.length; i++) {
+        removeLayer(layers_to_redraw[i])
+      }
+
       let values = document.getElementsByClassName("asset-value");
       let asset_labels = document.getElementsByClassName('asset-label')
       let cboxes = document.getElementsByClassName("checkbox")
@@ -144,6 +175,8 @@ let init = (function() {
         }
       }
 
+      // populate array with layers to redraw and
+      // remove current layers from the screen
       for (let i = 0; i < layers.length; i++) {
         if (layers[i].active) {
           layers_to_redraw.push(layers[i])
@@ -151,10 +184,9 @@ let init = (function() {
         }
       }
 
-      console.log(`layers_to_redraw outside loop: ${layers_to_redraw}`)
-
+      // redraw layers
       for (let i = 0; i < layers_to_redraw.length; i++) {
-        active_layers.push(layers_to_redraw[i])
+        // active_layers.push(layers_to_redraw[i])
         addLayer(layers_to_redraw[i], transform)
       }
 
@@ -183,36 +215,18 @@ let init = (function() {
       // redraw the menu and reactivate draw functions
       initMenu()
 
-      console.log(cboxes_to_check)
+      // re-check the box on redraw
       for (let i = 0; i < cboxes_to_check.length; i++) {
-        console.log(cboxes_to_check[i], cboxes_to_check[i].checked)
-        // cboxes_to_check[i].click()
-        // cboxes_to_check[i].checked = true
         var cb = document.getElementsByClassName(`${cboxes_to_check[i].classList}`)[0]
         cb.click()
         cb.checked = true
-        // still needs to clear the layer on button click
       }
-      
-      // for (let i = 0; i < cboxes.length; i++) {
-      //   if (cboxes[i].className.contains(active_layers[i].name)) {
-      //     console.log(cboxes[i])
-      //   }
-      // }
 
-      // for (let i = 0; i < cboxes.length; i++) {
-      //     console.log(cboxes[i].className)
-      // }
-
-      // checkboxes are redrawn and accidentally include inactive label elements
-      // remove checkboxes from inactive label elements
-      // var cbs = []
-      // for (let i = 0; i < labels.length; i++) {
-      //   cbs.push(labels[i].children[1])
-      //   if (labels[i].classList.contains('inactive')) {
-      //     cbs[i].remove()
-      //   }
-      // }
+      // still needs to clear the layer on button click
+      // I think I need to just remove elements from the array on redraw
+      console.table(layers_to_redraw)
+      console.table(cboxes_to_check)
+      console.log(cboxes_to_check)
 
       console.log(data_year)
       document.getElementById("value-year")
