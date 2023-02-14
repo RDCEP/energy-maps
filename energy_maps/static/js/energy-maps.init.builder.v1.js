@@ -206,6 +206,8 @@ let init = (function() {
       console.log(layers_to_redraw)
       console.table(cboxes_to_check)
       console.log(cboxes_to_check)
+      console.table(active_layers)
+      console.log(active_layers)
 
       // let state_boundaries_asset_value = document.getElementsByClassName('state-boundaries')[4].children[0]
       // state_boundaries_asset_value.remove()
