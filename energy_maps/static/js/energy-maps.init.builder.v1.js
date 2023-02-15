@@ -135,7 +135,7 @@ let init = (function() {
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
       // deactivate any layers that don't have data for specific years
-      let deactivated_layers_2022 = [gas_well, oil_well, railroad]
+      let deactivated_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
 
       if (data_year === 2022) {
         for (let i = 0; i < deactivated_layers_2022.length; i++) {
