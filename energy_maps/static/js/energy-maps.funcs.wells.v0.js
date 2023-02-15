@@ -451,40 +451,39 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   path.context(ctx);
   clip_region(ctx)
 
-  let oref = queued_data[0].features; // TODO: does oref mean oil refineries?
+  let oref = queued_data[0].features;
 
-  oref.forEach(function(d, i) {
-    let r = 0;
-    
-    // for (let i = 0; i < oref.length; i++) {
+  if (data_year === 2022) {
+    oref.forEach(function(d, i) {
+      let r = 0;
+  
       if (d.properties.original.hasOwnProperty('QUANTITY')) {
         // TODO: get scaling value
-        r += +d.properties.original.QUANTITY/100; // change the number here to get the scale
-      }  
-    // }
-    
-    d.r = r;
-    
-    if (i === oref.length - 1) { 
-      finish_loading_layer();
-    }
-  });
-
-  // TODO: Okay, what the fuck are we doing here?
-  // oref.forEach(function(d, i) {
-  //   let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
-  //     'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
-  //   let r = 0;
-  //   for (let i = 0; i < procs.length; ++i) {
-  //     if (d.properties.original.hasOwnProperty(procs[i])) {
-  //       r += +d.properties.original[procs[i]];
-  //     }
-  //   }
-  //   d.r = r;
-  //   if (i === oref.length - 1) { 
-  //     finish_loading_layer();
-  //   }
-  // });
+        r += +d.properties.original.QUANTITY/100; // TODO: change the divisor here to get the scale
+      }
+      
+      d.r = r;
+      
+      if (i === oref.length - 1) { 
+        finish_loading_layer();
+      }
+    });   
+  } else if (data_year === 2012) {
+    oref.forEach(function(d, i) {
+      let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
+        'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
+      let r = 0;
+      for (let i = 0; i < procs.length; ++i) {
+        if (d.properties.original.hasOwnProperty(procs[i])) {
+          r += +d.properties.original[procs[i]];
+        }
+      }
+      d.r = r;
+      if (i === oref.length - 1) { 
+        finish_loading_layer();
+      }
+    });
+  }
 
   oref.sort(function(a, b) {
     return d3.descending(a.r, b.r);
@@ -551,13 +550,13 @@ let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-ga
   draw_layer: draw_all_wells,
   // src: [ `/static/csv/wells_gas.csv` ],
   // d3_fetch: d3.csv
-  src: [ `${API_URL_PREFIX}/${data_year}/wells/gas` ],
+  src: [ `/wells/gas` ],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
 let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
-  src: [ `${API_URL_PREFIX}/${data_year}/wells/oil` ],
+  src: [ `/wells/oil` ],
   d3_fetch: d3.json
 }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)')
 
@@ -577,13 +576,13 @@ let foreign_gas_wells = {
 
 let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_gas_pipes,
-  src: [`${API_URL_PREFIX}/${data_year}/pipelines/gas`],
+  src: [`/pipelines/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
 let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
   draw_layer: draw_oil_prod_pipes,
-  src: [`${API_URL_PREFIX}/${data_year}/pipelines/petroleum_product`],
+  src: [`/pipelines/petroleum_product`],
   // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json
 }], '#3CB371', 2 * SCALE);
@@ -604,7 +603,7 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
 
 let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
-  src: [`${API_URL_PREFIX}/${2022}/pipelines/oil`], // semantically this should be 'pipelines', but it got messed up in the db somehow
+  src: [`/pipelines/oil`],
   // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
   d3_fetch: d3.json,
   next_layer: oil_product_pipeline
@@ -612,7 +611,7 @@ let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_0
 
 let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_refining,
-  src: [`${API_URL_PREFIX}/${2022}/refineries/petroleum`],
+  src: [`/refineries/petroleum`],
   d3_fetch: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 

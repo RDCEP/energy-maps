@@ -243,7 +243,8 @@ let init = (function() {
       let lyrs = [oil_pipeline, oil_product_pipeline];
       for (let i = 0, lyrs_length = lyrs.length; i < lyrs_length; ++i) {
         start_loading_layer();
-        Promise.all(lyrs[i].draw_props[0].src.map(x => lyrs[i].draw_props[0].d3_fetch(x)))
+        // TODO: Figure out why prod pipes legend is no longer showing
+        Promise.all(lyrs[i].draw_props[0].src.map(x => lyrs[i].draw_props[0].d3_fetch(`${API_URL_PREFIX}${x}`)))
           .then(function(files) {
             lyrs[i].context.restore();
             lyrs[i].context.save();
@@ -253,7 +254,8 @@ let init = (function() {
             console.time('draw_layer')
             lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
             console.timeEnd('draw_layer')
-            console.log(lyr.draw_props[i].src)
+            // console.log(lyr.draw_props[i].src)
+            console.log(`${API_URL_PREFIX}${lyr.draw_props[0].src}`)
           });
       }
     } else {
