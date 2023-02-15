@@ -134,6 +134,19 @@ let init = (function() {
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
+      // deactivate any layers that don't have data for specific years
+      let deactivated_layers_2022 = [gas_well, oil_well, railroad]
+
+      if (data_year === 2022) {
+        for (let i = 0; i < deactivated_layers_2022.length; i++) {
+          deactivated_layers_2022[i].draw_props = false;
+        }
+      } else if (data_year === 2012) {
+        for (let i = 0; i < deactivated_layers_2022.length; i++) {
+          deactivated_layers_2022[i].draw_props = true;
+        }
+      }
+
       // empty the array of layers to redraw and cboxes_to_check
 
       layers_to_redraw = []

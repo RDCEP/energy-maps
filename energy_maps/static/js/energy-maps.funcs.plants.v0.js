@@ -244,19 +244,7 @@ const draw_geo_plants = function draw_geo_plants(ctx, queued_data) {
   draw_single_plant(ctx, queued_data, geo_plants)
 };
 
-// const apiUrl = () => {
-//   `${API_URL_PREFIX}/${get_data_year(data_year)}/power_plants/coal`
-// }
-
-// const url = apiUrl()
-
 // Instantiate PowerPlants
-
-// let coal_plants = new PowerPlant('coal-plants', 'Coal plants', 1_092_000_000_000, 'electricity-generation', [{
-//   draw_layer: draw_coal_plants,
-//   src: [`${API_URL_PREFIX}/${data_year}/power_plants/coal`],
-//   d3_fetch: d3.json,
-// }], 'COAL', 'rgba(0, 0, 0, .5)', plant_stroke);
 
 let coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
   draw_layer: draw_coal_plants,
@@ -264,49 +252,43 @@ let coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_
   d3_fetch: d3.json,
 }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-
-// let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', 488_000_000_000, 'electricity-generation', [{
-//   draw_layer: draw_ng_plants,
-//     src: [`${API_URL_PREFIX}/${data_year}/power_plants/natural_gas`],
-//     d3_fetch: d3.json,
-// }], 'NG', 'rgba(0, 191, 255, .5)', 'darkblue');
 let ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
   draw_layer: draw_ng_plants,
     src: [`/power_plants/natural_gas`],
     d3_fetch: d3.json,
 }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
-let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', 64_000_000_000, 'electricity-generation', [{
+let pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_petro_plants,
   src: [`/power_plants/petroleum`],
   d3_fetch: d3.json,
 }], 'petroleum', 'rgba(34, 139, 34, .5)', plant_stroke);
 
-let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', 597_000_000_000, 'electricity-generation', [{
+let nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_nuclear_plants,
   src: [`/power_plants/nuclear`],
   d3_fetch: d3.json,
 }], 'nuclear', 'rgba(255, 0, 0, .5)', plant_stroke);
 
-let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', 597_000_000_000, 'electricity-generation', [{
+let hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_hydro_plants,
   src: [`/power_plants/hydroelectric`],
   d3_fetch: d3.json,
 }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plant_stroke);
 
-let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', 132_000_000_000, 'electricity-generation', [{
+let wnd_farms = new PowerPlant('wind-farms', 'Wind farms', {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_wind_farms,
   src: [`/power_plants/wind`],
   d3_fetch: d3.json,
 }], 'wind', 'rgba(144, 29, 143, .5)', plant_stroke);
 
-let solar_plants = new PowerPlant('solar-PV', 'Solar PV', 14_000_000_000, 'electricity-generation', [{
+let solar_plants = new PowerPlant('solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_solar_plants,
   src: [`/power_plants/solar`],
   d3_fetch: d3.json,
 }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
 
-let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_000, 'electricity-generation', [{
+let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
   draw_layer: draw_geo_plants,
   src: [`/power_plants/geothermal`],
   d3_fetch: d3.json,
@@ -320,7 +302,7 @@ let geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', 22_000_000_0
 
 let biofuel = { 
   name: 'biofuel',
-  value: 51_000_000_000,
+  value: {2012: 51_000_000_000, 2022: null},
   draw_props: false,
   column: 'electricity-generation',
 }
