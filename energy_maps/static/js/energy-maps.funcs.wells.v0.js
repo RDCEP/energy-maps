@@ -543,7 +543,7 @@ const draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
   ctx.fill();
 };
 
-let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-gas', [{
+let gas_well = new Well('gas-wells', 'Gas wells', {2012: 1_059_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
   // src: [ `/static/csv/wells_gas.csv` ],
   // d3_fetch: d3.csv
@@ -551,7 +551,7 @@ let gas_well = new Well('gas-wells', 'Gas wells', 1_059_000_000_000, 'oil-and-ga
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)')
 
-let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas', [{
+let oil_well = new Well('oil-wells', 'Oil wells', {2012: 654_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_all_wells,
   src: [ `/wells/oil` ],
   d3_fetch: d3.json
@@ -559,25 +559,25 @@ let oil_well = new Well('oil-wells', 'Oil wells', 654_000_000_000, 'oil-and-gas'
 
 let foreign_oil_wells = {
   name: 'foreign-oil-wells',
-  value: 931_000_000_000,
+  value: {2012: 931_000_000_000, 2022: null},
   draw_props: false,
   column: 'oil-and-gas',
 }
 
 let foreign_gas_wells = {
   name: 'foreign-gas-wells',
-  value: 63_000_000_000,
+  value: {2012: 63_000_000_000, 2022: null},
   draw_props: false,
   column: 'oil-and-gas',
 }
 
-let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', 940_000_000_000, 'oil-and-gas', [{
+let gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', {2012: 940_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_gas_pipes,
   src: [`/pipelines/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
-let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', null, 'oil-and-gas', [{
+let oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', {2012: null, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_oil_prod_pipes,
   src: [`/pipelines/petroleum_product`],
   // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
@@ -598,7 +598,7 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   return y;
 };
 
-let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_000, 'oil-and-gas', [{
+let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', {2012: 170_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
   src: [`/pipelines/oil`],
   // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
@@ -606,20 +606,20 @@ let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', 170_000_000_0
   next_layer: oil_product_pipeline
 }], '#3CB371', 1.5 * SCALE);
 
-let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_000, 'oil-and-gas', [{
+let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', {2012: 373_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_refining,
   src: [`/refineries/petroleum`],
   d3_fetch: d3.json
 }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
-let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [{
+let gas_processing = new Processing('gas-processing', 'Gas processing', {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_processing,
   src: [ `/processing_plants/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
 let oil_and_gas_storage = { name: 'oil-and-gas-storage',
-  value: 181_000_000_000,
+  value: {2012: 181_000_000_000, 2022: null},
   draw_props: false,
 // TODO: Split up the JSON files based on whatever property marks processing vs. storage
 // drad3_fetch: {
