@@ -417,13 +417,19 @@ const draw_processing = function draw_processing(ctx, queued_data) {
 
   gproc.forEach(function(d, i) {
     let xy = projection([+d.geometry.coordinates[0], +d.geometry.coordinates[1]]);
-    draw_gas_processor(ctx, xy, gas_processing.size);
+
+    // Figure out why new data draws above US northern border
+    for (coord in xy) {
+      if (coord != null) {
+        draw_gas_processor(ctx, xy, gas_processing.size);
+      } else {
+        console.log(coord)
+      }
+    }
     if (i === gproc.length - 1) { 
       finish_loading_layer();
     }
   });
-
-  //;
 
   // gstor.forEach(function(d) {
   //   let xy = projection([+d.lon, +d.lat]);
@@ -504,16 +510,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
       else {
         console.log(xy)
       }
-    // }
-    // draw_oil_refinery(ctx, xy, d.r / transform.k ** .5);
-    // ctx.strokeStyle = oil_and_gas.processing.stroke.light;
-    // ctx.lineWidth = oil_and_gas.processing.stroke.width / transform.k;
-    // ctx.beginPath();
-    // // draw the outline
-    // draw_polygon(6, ctx, oil_refinery.size * d.r / transform.k ** .5, xy)
-    // ctx.stroke();
   });
-  //;
 };
 
 const draw_gas_processor = function draw_gas_processor(ctx, xy, side) {
@@ -617,7 +614,7 @@ let oil_refinery = new Refinery('oil-refineries', 'Oil refineries', 373_000_000_
 
 let gas_processing = new Processing('gas-processing', 'Gas processing', 45_000_000_000, 'oil-and-gas', [{
   draw_layer: draw_processing,
-  src: [ `${API_URL_PREFIX}/${data_year}/processing_plants/gas`],
+  src: [ `/processing_plants/gas`],
   d3_fetch: d3.json
 }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
