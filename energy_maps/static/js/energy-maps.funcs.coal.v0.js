@@ -222,14 +222,14 @@ const draw_railroads = function draw_railroads(ctx, queued_data) {
 //   src: [ `${API_URL_PREFIX}/${data_year}/mines/coal` ],
 //   d3_fetch: d3.json
 // }]);
-let coal_mine = new CoalMine('coal-mines', 'Coal mines', 41_474_000_000, 'coal', [{
+let coal_mine = new CoalMine('coal-mines', 'Coal mines', {2012: 41_474_000_000, 2022: null}, 'coal', [{
   draw_layer: draw_coal_mines,
   src: [ `/mines/coal` ],
   d3_fetch: d3.json
 }]);
 
 // TODO: Why aren't 2022 railroads working?
-let railroad = new Railroad('railroads', 'Railroads', 137_000_000_000, 'coal', [{
+let railroad = new Railroad('railroads', 'Railroads', {2012: 137_000_000_000, 2022: null}, 'coal', [{
   draw_layer: draw_railroads,
   // The API/db will have "nominal_year" and "actual_year" as object properties for a "year" object
   // So this should look something like:
