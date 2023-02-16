@@ -147,9 +147,7 @@ let init = (function() {
           unchanged_layers_2022[i].unchanged_2022 = false;
         }
       }
-        
       
-
       // deactivate any layers that don't have data for specific years
       // try to store draw props in a variable to restore them
       // This may not be necessary at all rn, as we don't want to deactivate any layers now
@@ -579,7 +577,7 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuAssetValue = function initMenuAssetValue(lyr) {
-    if (lyr.value[get_data_year(data_year)] != 0 && lyr.name != 'state-boundaries' && lyr.name != 'wind-capacity' && lyr.name != 'oil-product-pipelines' && lyr.draw_props != false) {
+    if (lyr.value[get_data_year(data_year)] != 0 && lyr.name != 'state-boundaries' && lyr.name != 'wind-capacity' && lyr.name != 'oil-product-pipelines') {
       checkbox_span.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
