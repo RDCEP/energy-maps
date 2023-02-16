@@ -123,10 +123,11 @@ let init = (function() {
 
   var layers_to_redraw = []
   var cboxes_to_check = []
+  let unchanged_layers_2022 = []
 
   let create_year_button = function create_year_button(btn_val, year_val) {
     let btn = document.createElement("button");
-    btn.innerHTML = `${btn_val} Data`;
+    btn.innerHTML = `${btn_val}`;
     document.getElementsByClassName('map-options-header')[0].appendChild(btn);
     btn.classList.add('btn-year');
     btn.addEventListener('click', function() {
@@ -134,18 +135,49 @@ let init = (function() {
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
-      // deactivate any layers that don't have data for specific years
-      let deactivated_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
+      // Add an asterisk if year is 2022
 
+      unchanged_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
       if (data_year === 2022) {
-        for (let i = 0; i < deactivated_layers_2022.length; i++) {
-          deactivated_layers_2022[i].draw_props = false;
+        for (let i = 0; i < unchanged_layers_2022.length; i++) {
+          unchanged_layers_2022[i].unchanged_2022 = true;
         }
       } else if (data_year === 2012) {
-        for (let i = 0; i < deactivated_layers_2022.length; i++) {
-          deactivated_layers_2022[i].draw_props = true;
+        for (let i = 0; i < unchanged_layers_2022.length; i++) {
+          unchanged_layers_2022[i].unchanged_2022 = false;
         }
       }
+        
+      
+
+      // deactivate any layers that don't have data for specific years
+      // try to store draw props in a variable to restore them
+      // This may not be necessary at all rn, as we don't want to deactivate any layers now
+      let deactivated_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
+      let deactivated_draw_props = []
+
+      // TODO: fix this
+      for (let i = 0; i < deactivated_layers_2022; i++) {
+        deactivated_draw_props.push(deactivated_layers_2022[i].draw_props[0])
+      }
+      console.log(`deactivated draw props: ${JSON.stringify(deactivated_draw_props)}`)
+
+      // Need a function to toggle draw props
+      // Need some way of storing original draw_props in a buffer to use again later
+
+      let toggle_draw_props = function toggle_draw_props(deactivated_layers) {
+        if (data_year === 2022) {
+          for (let i = 0; i < deactivated_layers.length; i++) {
+            deactivated_layers[i].draw_props = false;
+          }
+        } else if (data_year === 2012) {
+          for (let i = 0; i < deactivated_layers.length; i++) {
+            deactivated_layers[i].draw_props = true;
+          }
+        }
+      }
+
+      // toggle_draw_props(deactivated_layers_2022)
 
       // empty the array of layers to redraw and cboxes_to_check
 
@@ -232,8 +264,9 @@ let init = (function() {
     }) 
   }
 
-  create_year_button(2022, "$9.8T");
+
   create_year_button(2012, "$9.8T");
+  create_year_button(2022, "$9.8T");
 
   /**
    * @param  {String} s - the supplied character string to be formatted
@@ -555,8 +588,12 @@ let init = (function() {
           d3.format('.2~s')(lyr.value[get_data_year(data_year)])
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
+      if (lyr.unchanged_2022 == true) {
+        checkbox_span.append('span')
+          .text(' *')
+      }
       return checkbox_span;
-    }
+    } 
   };
 
   /**
