@@ -473,6 +473,9 @@ let init = (function() {
     [{ name: 'electricity-transmission-and-distribution',
         text: 'Electricity trans. & dist.'
     }],
+    [{ name: 'asterisk-note',
+        text: 'NOTE: 2012 asset values used *'
+    }],
   ];
 
   let cols = button_columns.length;
@@ -496,6 +499,16 @@ let init = (function() {
       }
     }
   };
+
+  const initMenuAsteriskNote = function initMenuAsteriskNote() {
+    let note_div = d3.select('.options.canvas')
+      .append('div')
+      .style('color', 'blue')
+      .style('margin-top', '3em')
+      .attr('class', () => {return 'asterisk-note'})
+      .append('h4')
+      .text('* NOTE: ')
+  }
 
   /**
    * @description Add a layer to the screen.
@@ -534,6 +547,7 @@ let init = (function() {
   };
 
   initMenuColumns();
+  // initMenuAsteriskNote();
 
   // Generate UI element for checkbox columns
 
