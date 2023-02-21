@@ -15,6 +15,8 @@ const fill_screen = false;
    return data_year;
  }
 
+let asterisk_note = document.getElementsByClassName('asterisk-note')
+
 var API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
 /**

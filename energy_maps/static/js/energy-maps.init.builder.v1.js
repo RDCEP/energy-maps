@@ -135,7 +135,12 @@ let init = (function() {
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
-      // Add an asterisk if year is 2022
+      // Add an asterisk if year is 2022\
+      if (data_year === 2022) {
+        initMenuAsteriskNote(); 
+      } else if (data_year === 2012) {
+        asterisk_note[0].remove()
+      }
 
       unchanged_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
       if (data_year === 2022) {
@@ -473,9 +478,9 @@ let init = (function() {
     [{ name: 'electricity-transmission-and-distribution',
         text: 'Electricity trans. & dist.'
     }],
-    [{ name: 'asterisk-note',
-        text: 'NOTE: 2012 asset values used *'
-    }],
+    // [{ name: 'asterisk-note',
+    //     text: 'NOTE: 2012 asset values used *'
+    // }],
   ];
 
   let cols = button_columns.length;
@@ -504,10 +509,10 @@ let init = (function() {
     let note_div = d3.select('.options.canvas')
       .append('div')
       .style('color', 'blue')
-      .style('margin-top', '3em')
-      .attr('class', () => {return 'asterisk-note'})
+      .style('margin-top', '5.5em')
+      .attr('class', () => {return 'column asterisk-note'})
       .append('h4')
-      .text('* NOTE: ')
+      .text('* 2012 asset values used')
   }
 
   /**
@@ -548,6 +553,7 @@ let init = (function() {
 
   initMenuColumns();
   // initMenuAsteriskNote();
+  
 
   // Generate UI element for checkbox columns
 
