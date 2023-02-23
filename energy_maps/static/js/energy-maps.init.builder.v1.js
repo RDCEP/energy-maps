@@ -478,9 +478,6 @@ let init = (function() {
     [{ name: 'electricity-transmission-and-distribution',
         text: 'Electricity trans. & dist.'
     }],
-    // [{ name: 'asterisk-note',
-    //     text: 'NOTE: 2012 asset values used *'
-    // }],
   ];
 
   let cols = button_columns.length;
