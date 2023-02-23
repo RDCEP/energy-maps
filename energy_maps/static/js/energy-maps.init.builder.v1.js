@@ -142,7 +142,7 @@ let init = (function() {
         asterisk_note[0].remove()
       }
 
-      unchanged_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc]
+      unchanged_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc, gas_pipeline, oil_pipeline, oil_product_pipeline]
       if (data_year === 2022) {
         for (let i = 0; i < unchanged_layers_2022.length; i++) {
           unchanged_layers_2022[i].unchanged_2022 = true;
