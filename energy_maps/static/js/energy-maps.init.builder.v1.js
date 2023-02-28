@@ -505,8 +505,6 @@ let init = (function() {
   const initMenuAsteriskNote = function initMenuAsteriskNote() {
     let note_div = d3.select('.options.canvas')
       .append('div')
-      .style('color', 'blue')
-      .style('margin-top', '5.5em')
       .attr('class', () => {return 'column asterisk-note'})
       .append('h4')
       .text('* 2012 asset values used')

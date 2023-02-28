@@ -290,6 +290,15 @@ footer p.nsf {
 .options.main .options .column div + div h4 {
   border-top: 1px solid black;
 }
+.options.main .options .asterisk-note {
+  color: grey;
+}
+.options.main .options .asterisk-note h4 {
+  border-top: 1px solid grey;
+  border-bottom: none;
+  margin-top: 9em;
+  font-size: smaller;
+}
 .options.main label {
   display: block;
   border-bottom: 1px solid black;
