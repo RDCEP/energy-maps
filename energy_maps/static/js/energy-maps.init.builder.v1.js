@@ -135,7 +135,7 @@ let init = (function() {
       data_year = get_data_year(btn_val)
       API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
 
-      // Add an asterisk if year is 2022\
+      // Add an asterisk if year is 2022
       if (data_year === 2022) {
         initMenuAsteriskNote(); 
       } else if (data_year === 2012) {
@@ -310,7 +310,7 @@ let init = (function() {
     } else {
         for (let i = 0, num_draw_props = lyr.draw_props.length; i < num_draw_props; ++i) {
           start_loading_layer();
-          if (lyr.name != 'state-boundaries') {
+          if (lyr.name != 'state-boundaries' && lyr.name != 'wind-capacity') {
             // unused commented section for future reference
             // currently adding the entirety of the previous src string each time pressed
             // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
