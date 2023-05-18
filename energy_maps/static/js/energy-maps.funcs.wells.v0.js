@@ -465,7 +465,7 @@ const draw_refining = function draw_refining(ctx, queued_data) {
   
       if (d.properties.original.hasOwnProperty('QUANTITY')) {
         // TODO: get scaling value
-        r += +d.properties.original.QUANTITY/100; // TODO: change the divisor here to get the scale
+        r += +d.properties.original.QUANTITY/250; // TODO: change the divisor here to get the scale
       }
       
       d.r = r;
