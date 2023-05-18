@@ -99,7 +99,7 @@ let init = (function() {
   const sum_asset_totals = function sum_asset_totals() {
     var asset_total_sum = 0;
     for (let i = 0; i < active_layers.length; i++) {
-      if (active_layers[i] != 'state-boundaries') {
+      if (active_layers[i] != 'state-boundaries' && active_layers[i].name != 'wind-capacity') {
         asset_total_sum += active_layers[i].value[get_data_year(data_year)];
       }
     }
