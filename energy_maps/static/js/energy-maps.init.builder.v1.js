@@ -98,8 +98,11 @@ let init = (function() {
 
   const sum_asset_totals = function sum_asset_totals() {
     var asset_total_sum = 0;
+    console.log(active_layers)
     for (let i = 0; i < active_layers.length; i++) {
-      if (active_layers[i] != 'state-boundaries' && active_layers[i].name != 'wind-capacity') {
+      if (active_layers[i].name != 'state-boundaries' && active_layers[i].name != 'wind-capacity') {
+        // active layers value starts as undefined
+        console.log(`active layers value ${active_layers[i].value[get_data_year(data_year)]}`)
         asset_total_sum += active_layers[i].value[get_data_year(data_year)];
       }
     }
@@ -206,17 +209,26 @@ let init = (function() {
 
       // populate array with layers to redraw and
       // remove current layers from the screen
-      for (let i = 0; i < layers.length; i++) {
-        if (layers[i].active) {
-          layers_to_redraw.push(layers[i])
-          removeLayer(layers[i], transform)
-        }
-      }
+      // for (let i = 0; i < layers.length; i++) {
+      //   if (layers[i].active) {
+      //     layers_to_redraw.push(layers[i])
+      //     removeLayer(layers[i], transform)
+      //   }
+      // }
 
-      // redraw layers
-      for (let i = 0; i < layers_to_redraw.length; i++) {
-        addLayer(layers_to_redraw[i], transform)
-      }
+      // // redraw layers
+      // for (let i = 0; i < layers_to_redraw.length; i++) {
+      //   addLayer(layers_to_redraw[i], transform)
+      // }
+
+      layers = layers.map(x => {
+        if (x.active) {
+          console.log(x)
+          removeLayer(x, transform);
+          // addLayer(x, transform)
+        }
+        return x
+      })
 
       var labels = document.getElementsByTagName("label");
         for (let i = 0; i < labels.length; i++) {
@@ -239,6 +251,10 @@ let init = (function() {
         }
 
       }
+
+      // for (let i = 0; i < active_layers.length; i++) {
+      //   active_layers[i].remove();
+      // }
 
       // redraw the menu and reactivate draw functions
       initMenu()
@@ -542,7 +558,9 @@ let init = (function() {
       oil_product_pipeline.context.clearRect(0, 0, width, height);
       oil_product_pipeline.active = false;
     }
-    active_layers.pop(lyr);
+    // active_layers.pop(lyr);
+    active_layers.indexOf(lyr)
+    active_layers.splice(active_layers.indexOf(lyr), 1)
     display_asset_total();
   };
 
