@@ -24,16 +24,18 @@
 </head>
 <body>
 {% block body %}
-  <header class=main-header>
-  {% block header %}
-  {% endblock %}
-  </header>
   <main>
-  {% block main %}
-  {% endblock %}
+    <header class=main-header>
+    {% block header %}
+    {% endblock %}
+    </header>
+    <main>
+    {% block main %}
+    {% endblock %}
+    </main>
+    <footer>
+    </footer>
   </main>
-  <footer>
-  </footer>
   {% block bodyjs %}
   {% endblock %}
 {% endblock %}
