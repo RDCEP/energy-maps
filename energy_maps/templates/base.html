@@ -8,7 +8,8 @@
   {% assets 'css_main' %}
     <link rel=stylesheet href={{ ASSET_URL }}>
   {% endassets %}
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-31803228-5"></script>
@@ -23,27 +24,8 @@
 </head>
 <body>
 {% block body %}
-  <header>
+  <header class=main-header>
   {% block header %}
-  <div class="title container">
-    <section class="builder-link">
-      <a href="/builder">Custom Map <br> Builder</a>
-    </section>
-    <a href="/"><img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;"></a>
-    <section class="headline">
-      <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
-        <i>A Physical Inventory <br>of the U.S. Energy System</i>
-      </a>
-    </section>
-    <section class="headline headline2">
-      Chen, Weisbach, Matteson, <br>
-      Brizius, Moyer, 2019
-    </section>
-    <section class="headline headline3">
-      University of Chicago. Center for Robust <br>
-      Decision-making on Climate and Energy Policy.
-    </section>
-  </div>
   {% endblock %}
   </header>
   <main>
