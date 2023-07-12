@@ -16,6 +16,7 @@ assets = Environment(app)
 
 assets.register('css_main',
                 Bundle('css/main.v0.css',
+                       'css/main.css',
                        filters='cssmin',
                        output='gen/main.css'))
 assets.register('js_underscore',
