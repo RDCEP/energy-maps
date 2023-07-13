@@ -564,7 +564,7 @@ let init = (function() {
     display_asset_total();
   };
 
-  initMenuColumns();
+  // initMenuColumns();
   // initMenuAsteriskNote();
   
 
@@ -579,11 +579,11 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
-    checkbox_span = d3.select(`.${lyr.column}`)
-    .append('label')
-    .attr('class', () => {
-      // return (!lyr.draw || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
-      return (!lyr.draw_props || lyr === oil_product_pipeline) ? `${lyr.name} inactive` : `${lyr.name}`
+    checkbox_span = d3.select('.options.canvas')
+      .append('label')
+      .attr('class', () => {
+        return (!lyr.draw_props || lyr === oil_product_pipeline)
+          ? `${lyr.name} inactive` : `${lyr.name}`
     })
     if (lyr.text) {
       checkbox_span.text(lyr.text)
