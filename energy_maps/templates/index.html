@@ -16,6 +16,7 @@
 
 {% block main %}
   <div class="map wrapper">
+
     <div class="main map builder">
       <!-- Layer divs render here -->
       <div class="map layer base-map"></div>
@@ -23,30 +24,15 @@
         <img src="../static/images/Rolling-1s-200px.gif" alt="loading" loading="lazy"/>
       </div>
     </div>
+
     <div class="map layer zoom-target"></div>
-    <div class="legend window main menu" hidden="true">
-      <h6>Legend</h6>
-      <span class="legend toggle close"></span>
-      <div class="legend bkgd"></div>
 
-      <div class="legend canvas">
-        <div class="legend bkgd"></div>
-      </div>
-      <div class="legend tmpcanvas"></div>
-    </div>
-    </div>
-
-    <!-- <div class="map composite"></div> -->
-  </div>
-
-  <div class=content-wrap>
-
-    <div class="options window main menu cf">
-      <div class="options bkgd"></div>
+    <div class="options main menu">
+{#      <div class="options bkgd"></div>#}
       <h6 class="map-options-header">Map options</h6>
       <span class="legend toggle close"></span>
       <div class="options canvas cf">
-        <div class="bkgd"></div>
+{#        <div class="bkgd"></div>#}
         <!-- Checkboxes render here -->
       </div>
       <div class=zoom-buttons>
@@ -55,6 +41,23 @@
         <span class=zoom-out>–</span>
       </div>
     </div>
+
+    <div class="legend window main menu" hidden="true">
+      <h6>Legend</h6>
+      <span class="legend toggle close"></span>
+      <div class="legend bkgd"></div>
+      <div class="legend canvas">
+        <div class="legend bkgd"></div>
+      </div>
+      <div class="legend tmpcanvas"></div>
+    </div>
+  </div>
+
+    <!-- <div class="map composite"></div> -->
+
+  <div class=content-wrap>
+
+
 
     <div class=modal-screen></div>
     <div class="about-window modal-window">
