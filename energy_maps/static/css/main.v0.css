@@ -248,29 +248,10 @@ footer p.nsf {
   border-bottom: 1px solid black;
 }
 
-.options.main {
-  width: 850px;
-  z-index: 900;
-  font-size: 0.9em !important;
-}
-.options.main.menu {
-  position: fixed;
-  top: 60%;
-  padding-bottom: 0;
-}
-.options.main .canvas {
-  padding: 0 1em 0.5em;
-}
-.options.main .bkgd {
-  opacity: 0.6;
-}
 .options.main h6 {
   border-bottom: none;
 }
 .options.main .options .column {
-  width: 24.25%;
-  float: left;
-  position: relative;
   z-index: 2;
 }
 .options.main .options .column + .column {
