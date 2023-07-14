@@ -659,9 +659,12 @@ let init = (function() {
    */
   const initMenuCheckbox = function initMenuCheckbox(lyr) {
     lyr.checkbox = checkbox_span.append('input')
-    .attr('type', 'checkbox')
-    .attr('class', `checkbox ${lyr.name}`)
-    .attr('data-assetvalue', lyr.value[get_data_year(data_year)]);
+      .attr('type', 'checkbox')
+      .attr('class', `checkbox ${lyr.name}`)
+      .attr('data-assetvalue', lyr.value[get_data_year(data_year)]);
+    if (!(lyr.draw_props && (lyr != oil_product_pipeline))) {
+      lyr.checkbox.attr('disabled', true);
+    }
     return lyr.checkbox;
   };
 
@@ -698,32 +701,33 @@ let init = (function() {
       let lyr = layers[i];
       
       initMenuItem(lyr);
+      initMenuCheckbox(lyr);
+      lyr.checkbox.on('change', function() {
+
+        // checkbox is buried in a ut {} object for some reason
+        let checkbox = lyr.checkbox._groups[0][0];
+
+        if (checkbox.checked) {
+          addLayer(lyr, transform);
+        } else {
+          removeLayer(lyr, transform);
+        }
+        if (!(lyr instanceof StateBoundary)) {
+          legend_ctx.clearRect(0, 0, width, height);
+          tmplegend_ctx.clearRect(0, 0, width, height);
+          update_legend(tmplegend_ctx, legend_ctx, layers);
+          if (active_layers.length === 0) {
+            legend.hidden = true;
+          }
+        }
+      });
 
       if (lyr.draw_props && (lyr != oil_product_pipeline)) { // TODO: What a horrible way of checking for one corner case of which we have several
                                                        // There are now multiple objects that need to be rendered in the menu but need to be grey
                                                        // and also have no checkbox. We can't rely on lyr.draw === true anymore. Each obj should
                                                        // probably have a property that determines whether it gets a checkbox or not...
                                                        // like `obj.requires_checkbox = false` or something like that.
-        initMenuCheckbox(lyr);
-        lyr.checkbox.on('change', function() {
 
-          // checkbox is buried in a ut {} object for some reason
-          let checkbox = lyr.checkbox._groups[0][0];
-
-          if (checkbox.checked) {
-            addLayer(lyr, transform);
-          } else {
-            removeLayer(lyr, transform);
-          }
-          if (!(lyr instanceof StateBoundary)) {
-            legend_ctx.clearRect(0, 0, width, height);
-            tmplegend_ctx.clearRect(0, 0, width, height);
-            update_legend(tmplegend_ctx, legend_ctx, layers);
-            if (active_layers.length === 0) {
-              legend.hidden = true;
-            }
-          }
-        });
       }
 
       addLayerCanvas(lyr)
