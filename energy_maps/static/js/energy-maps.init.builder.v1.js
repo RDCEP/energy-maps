@@ -585,6 +585,9 @@ let init = (function() {
         return (!lyr.draw_props || lyr === oil_product_pipeline)
           ? `${lyr.name} inactive` : `${lyr.name}`
     })
+    checkbox_span.append('span')
+      .attr('class', 'material-symbols-outlined')
+      .text('drag_indicator');
     if (lyr.text) {
       checkbox_span.append('span').attr('class', 'option-title')
         .text(lyr.text)
