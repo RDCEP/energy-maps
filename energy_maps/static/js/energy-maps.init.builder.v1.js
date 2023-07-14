@@ -586,9 +586,11 @@ let init = (function() {
           ? `${lyr.name} inactive` : `${lyr.name}`
     })
     if (lyr.text) {
-      checkbox_span.text(lyr.text)
+      checkbox_span.append('span').attr('class', 'option-title')
+        .text(lyr.text)
     } else {
-      checkbox_span.text(`${capitalize_first_letter(
+      checkbox_span.append('span').attr('class', 'option-title')
+        .text(`${capitalize_first_letter(
           lyr.name
             .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
             .replace(/-/g, '\u00A0'))}\u00A0`)
@@ -610,7 +612,11 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuAssetValue = function initMenuAssetValue(lyr) {
-    if (lyr.value[get_data_year(data_year)] != 0 && lyr.name != 'state-boundaries' && lyr.name != 'wind-capacity' && lyr.name != 'oil-product-pipelines') {
+    if (lyr.value[get_data_year(data_year)] != 0
+      && lyr.name != 'state-boundaries'
+      && lyr.name != 'wind-capacity'
+      && lyr.name != 'oil-product-pipelines')
+    {
       checkbox_span.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
@@ -623,8 +629,11 @@ let init = (function() {
         checkbox_span.append('span')
           .text(' *')
       }
-      return checkbox_span;
-    } 
+
+    }
+    checkbox_span.append('span')
+      .attr('class', 'leader');
+    return checkbox_span;
   };
 
   /**

@@ -276,19 +276,30 @@ footer p.nsf {
   font-size: smaller;
 }
 .options.main label {
-  display: block;
-  border-bottom: 1px solid black;
+  display: flex;
   padding: 0.33em 0;
+  font-size: 0.75rem;
+  line-height: 1em;
 }
 .options.main label.inactive {
   color: #767676;
 }
+.options.main label .option-title {
+  flex-basis: content;
+}
 .options.main label .asset-value {
   font-size: 0.8em;
+  line-height: 1.25em;
+  flex-basis: content;
+}
+.options.main label .leader {
+  flex-basis: content;
+  flex-grow: 1;
+  border-bottom: 1px solid black;
+  margin: 0 0.5em;
 }
 .options.main label input {
-  position: absolute;
-  right: 2px;
+  flex-basis: content;
 }
 .options.main .zoom-buttons {
   position: absolute;

@@ -83,16 +83,30 @@
           font-size: smaller
 
   label
-    display: block
-    border-bottom: 1px solid black
+    //display: block
+    display: flex
+    //border-bottom: 1px solid black
     padding: .33em 0
+    font-size: .75rem
+    line-height: 1em
     &.inactive
       color: #767676
+    .option-title
+      flex-basis: content
     .asset-value
       font-size: .8em
+      line-height: 1.25em
+      flex-basis: content
+    .leader
+      flex-basis: content
+      flex-grow: 1
+      border-bottom: 1px solid black
+      margin: 0 .5em
+
     input
-      position: absolute
-      right: 2px
+      flex-basis: content
+      //position: absolute
+      //right: 2px
   .zoom-buttons
     position: absolute
     margin-right: .5em
