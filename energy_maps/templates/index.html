@@ -187,7 +187,41 @@
 {% block bodyjs %}
 
 <script>
-  let SCALE = {{ scale }};
+
+  {#let SCALE = {{ scale }};#}
+  let SCALE = 1;
+
+  const VIZ = {
+    white: 'rgba(255, 255, 255, 1)',
+    black: 'rgba(0, 0, 0, 1)',
+    coal: 'rgba(0, 0, 0)',
+    map: {
+      fill: '#dddddd',
+      stroke: '#767676',
+      ocean: '#ffffff',
+      width: SCALE
+    }
+  };
+
+  let WIDTH = window.innerWidth;
+  console.log(WIDTH);
+  let HEIGHT = window.innerHeight;
+  let TRANSFORM = {x:0, y:0, k:1};
+
+  let DATA_YEAR = 2012;
+  let API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
+
+  let LAYERS = [];
+  let ACTIVE_LAYERS = [];
+
+  const TEXT_OFFSET = 30 * SCALE;
+  const LEGEND_FONT_SIZE = 14 * SCALE;
+  const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Inter`;
+  const VERTICAL_INCREMENT = 15 * SCALE;
+  const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
+
+  let EnergyMaps = {};
+
 </script>
 
 {% assets 'js_underscore' %}
