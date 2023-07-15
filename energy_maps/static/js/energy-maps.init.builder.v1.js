@@ -602,14 +602,14 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .text('drag_indicator');
     let label = li.append('label')
       .attr('class', () => {
-        return (!lyr.draw_props || lyr === oil_product_pipeline)
+        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
           ? `${lyr.name} inactive` : `${lyr.name}`
     });
     label.append('span').attr('class', 'option-title')
       .text(function() {
         return (lyr.text)
           ? lyr.text
-          : `${capitalize_first_letter(lyr.name
+          : `${_capitalize_first_letter(lyr.name
             .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
             .replace(/-/g, '\u00A0'))}\u00A0`
       })
@@ -626,7 +626,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @memberof Init
    */
   const _initMenuAssetValue = function _initMenuAssetValue(lyr, label) {
-    if (lyr.value[get_data_year(data_year)] != 0
+    if (lyr.value[DATA_YEAR] != 0
       && lyr.name != 'state-boundaries'
       && lyr.name != 'wind-capacity'
       && lyr.name != 'oil-product-pipelines')
