@@ -594,31 +594,27 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @memberof Init
    */
   const _initMenuCheckboxLabel = function _initMenuCheckboxLabel(lyr) {
-    checkbox_span = d3.select('.options.canvas')
-      .append('label')
-      .attr('class', () => {
-        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
-          ? `${lyr.name} inactive` : `${lyr.name}`;
-    });
-    checkbox_span.append('span')
-      .attr('class', 'material-symbols-outlined')
+    let li = d3.select('.options.canvas')
+      .append('li')
+      .attr('class', 'option-li');
+    li.append('span')
+      .attr('class', 'drag material-symbols-outlined')
       .text('drag_indicator');
-    if (lyr.text) {
-      checkbox_span.append('span').attr('class', 'option-title')
-        .text(lyr.text);
-    } else {
-      checkbox_span.append('span').attr('class', 'option-title')
-        .text(`${_capitalize_first_letter(
-          lyr.name
+    let label = li.append('label')
+      .attr('class', () => {
+        return (!lyr.draw_props || lyr === oil_product_pipeline)
+          ? `${lyr.name} inactive` : `${lyr.name}`
+    });
+    label.append('span').attr('class', 'option-title')
+      .text(function() {
+        return (lyr.text)
+          ? lyr.text
+          : `${capitalize_first_letter(lyr.name
             .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-            .replace(/-/g, '\u00A0'))}\u00A0`);
-    }
-    // checkbox_span.text(lyr.text)
-    // .text(`${capitalize_first_letter(
-    //   lyr.name
-    //     .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-    //     .replace(/-/g, '\u00A0'))}\u00A0`)
-    return checkbox_span;
+            .replace(/-/g, '\u00A0'))}\u00A0`
+      })
+
+    return label;
   };
 
   /**
@@ -629,13 +625,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * abbreviated in either billions or trillions. Child of a parent label tag.
    * @memberof Init
    */
-  const _initMenuAssetValue = function _initMenuAssetValue(lyr) {
-    if (lyr.value[DATA_YEAR] != 0
+  const _initMenuAssetValue = function _initMenuAssetValue(lyr, label) {
+    if (lyr.value[get_data_year(data_year)] != 0
       && lyr.name != 'state-boundaries'
       && lyr.name != 'wind-capacity'
       && lyr.name != 'oil-product-pipelines')
     {
-      checkbox_span.append('span')
+      label.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
@@ -644,17 +640,14 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
       if (lyr.unchanged_2022 == true) {
-        checkbox_span.append('span')
-          .text(' *');
+        label.append('span')
+          .text(' *')
       }
 
     }
-
-    checkbox_span.append('span')
+    label.append('span')
       .attr('class', 'leader');
-
-    return checkbox_span;
-
+    return label;
   };
 
   /**
@@ -666,9 +659,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @memberof Init
    */
   const _initMenuItem = function _initMenuItem(lyr) {
-    _initMenuCheckboxLabel(lyr);
-    _initMenuAssetValue(lyr);
-    return checkbox_span;
+    let label = _initMenuCheckboxLabel(lyr);
+    label = _initMenuAssetValue(lyr, label);
+    return label;
   };
 
   /**
@@ -678,8 +671,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * containing a checkbox input tag.
    * @memberof Init
    */
-  const _initMenuCheckbox = function _initMenuCheckbox(lyr) {
-    lyr.checkbox = checkbox_span.append('input')
+  const _initMenuCheckbox = function _initMenuCheckbox(lyr, label) {
+    lyr.checkbox = label.append('input')
       .attr('type', 'checkbox')
       .attr('class', `checkbox ${lyr.name}`)
       .attr('data-assetvalue', lyr.value[DATA_YEAR]);
@@ -720,9 +713,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     for (let i = 0; i < lay; i++) {
 
       let lyr = LAYERS[i];
-
-      _initMenuItem(lyr);
-      _initMenuCheckbox(lyr);
+      
+      let li = _initMenuItem(lyr);
+      _initMenuCheckbox(lyr, li);
       lyr.checkbox.on('change', function() {
 
         // checkbox is buried in a ut {} object for some reason
