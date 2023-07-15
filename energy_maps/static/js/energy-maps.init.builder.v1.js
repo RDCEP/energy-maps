@@ -118,7 +118,7 @@ let init = (function() {
   const display_asset_total = function display_asset_total() {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
-    document.getElementById('asset-totals')
+    document.getElementsByClassName('asset-total')[0]
       .innerHTML = `${d3.format('$.2~s')(sum_asset_totals())
       .replace(/G/, ' B')
       .replace(/T/, ' T')}`;
@@ -578,32 +578,28 @@ let init = (function() {
    * and a descriptive formatted text string.
    * @memberof Init
    */
-  const initMenuCheckboxLabel = function initMenuCheckboxLabel(lyr) {
-    checkbox_span = d3.select('.options.canvas')
-      .append('label')
+  const _initMenuCheckboxLabel = function _initMenuCheckboxLabel(lyr) {
+    let li = d3.select('.options.canvas')
+      .append('li')
+      .attr('class', 'option-li');
+    li.append('span')
+      .attr('class', 'drag material-symbols-outlined')
+      .text('drag_indicator');
+    let label = li.append('label')
       .attr('class', () => {
         return (!lyr.draw_props || lyr === oil_product_pipeline)
           ? `${lyr.name} inactive` : `${lyr.name}`
-    })
-    checkbox_span.append('span')
-      .attr('class', 'material-symbols-outlined')
-      .text('drag_indicator');
-    if (lyr.text) {
-      checkbox_span.append('span').attr('class', 'option-title')
-        .text(lyr.text)
-    } else {
-      checkbox_span.append('span').attr('class', 'option-title')
-        .text(`${capitalize_first_letter(
-          lyr.name
+    });
+    label.append('span').attr('class', 'option-title')
+      .text(function() {
+        return (lyr.text)
+          ? lyr.text
+          : `${capitalize_first_letter(lyr.name
             .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-            .replace(/-/g, '\u00A0'))}\u00A0`)
-    }
-    // checkbox_span.text(lyr.text)
-    // .text(`${capitalize_first_letter(
-    //   lyr.name
-    //     .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-    //     .replace(/-/g, '\u00A0'))}\u00A0`)
-    return checkbox_span;
+            .replace(/-/g, '\u00A0'))}\u00A0`
+      })
+
+    return label;
   };
 
   /**
@@ -614,13 +610,13 @@ let init = (function() {
    * abbreviated in either billions or trillions. Child of a parent label tag.
    * @memberof Init
    */
-  const initMenuAssetValue = function initMenuAssetValue(lyr) {
+  const initMenuAssetValue = function initMenuAssetValue(lyr, label) {
     if (lyr.value[get_data_year(data_year)] != 0
       && lyr.name != 'state-boundaries'
       && lyr.name != 'wind-capacity'
       && lyr.name != 'oil-product-pipelines')
     {
-      checkbox_span.append('span')
+      label.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
@@ -629,14 +625,14 @@ let init = (function() {
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
       if (lyr.unchanged_2022 == true) {
-        checkbox_span.append('span')
+        label.append('span')
           .text(' *')
       }
 
     }
-    checkbox_span.append('span')
+    label.append('span')
       .attr('class', 'leader');
-    return checkbox_span;
+    return label;
   };
 
   /**
@@ -648,9 +644,9 @@ let init = (function() {
    * @memberof Init
    */
   const initMenuItem = function initMenuItem(lyr) {
-    initMenuCheckboxLabel(lyr);
-    initMenuAssetValue(lyr);
-    return checkbox_span;
+    let label = _initMenuCheckboxLabel(lyr);
+    label = initMenuAssetValue(lyr, label);
+    return label;
   };
 
   /**
@@ -660,8 +656,8 @@ let init = (function() {
    * containing a checkbox input tag.
    * @memberof Init
    */
-  const initMenuCheckbox = function initMenuCheckbox(lyr) {
-    lyr.checkbox = checkbox_span.append('input')
+  const initMenuCheckbox = function initMenuCheckbox(lyr, label) {
+    lyr.checkbox = label.append('input')
       .attr('type', 'checkbox')
       .attr('class', `checkbox ${lyr.name}`)
       .attr('data-assetvalue', lyr.value[get_data_year(data_year)]);
@@ -703,8 +699,8 @@ let init = (function() {
 
       let lyr = layers[i];
       
-      initMenuItem(lyr);
-      initMenuCheckbox(lyr);
+      let li = initMenuItem(lyr);
+      initMenuCheckbox(lyr, li);
       lyr.checkbox.on('change', function() {
 
         // checkbox is buried in a ut {} object for some reason

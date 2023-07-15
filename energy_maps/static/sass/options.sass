@@ -11,9 +11,6 @@
     background-color: $white
     border-right: 2px solid $darkblue
 
-  label
-    margin: 0 0 .5em
-
   .options-header
     text-transform: uppercase
     letter-spacing: .08em
@@ -24,6 +21,36 @@
     &+p
       font-size: .75rem
       text-align: center
-
+  .option-li
+    position: relative
+    //display: flex
+    align-items: baseline
+    list-style-type: none
+    margin: 0 0 1em
+    label
+      display: flex
+      //flex-basis: content
+      align-items: baseline
+    .drag
+      //flex-basis: content
+      position: absolute
+      right: 100%
+      display: inline-block
+  .option-title
+    margin-right: .5em
+    flex-basis: content
   .material-symbols-outlined
     font-size: 1em
+  .asset-value
+    font-size: .8em
+    line-height: 1.25em
+    flex-basis: content
+  .leader
+    //flex-basis: content
+    flex-grow: 1
+    border-bottom: 1px solid black
+    margin: 0 .5em
+  input
+    flex-basis: content
+    //position: absolute
+    //right: 2px
