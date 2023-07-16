@@ -520,7 +520,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
         let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
           'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
         let r = 0;
-        for (let i = 0; i < procs.length; ++i) {
+        for (let i = 0, l = procs.length; i < l; ++i) {
           if (d.properties.original.hasOwnProperty(procs[i])) {
             r += +d.properties.original[procs[i]];
           }

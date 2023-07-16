@@ -14,6 +14,39 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   'use strict';
 
   /**
+   * @type {Object}
+   * @description HTML5 canvas for the application legend
+   * @memberof Init
+   */
+  const legend_canvas = d3
+    .select('.legend.canvas')
+    .append('canvas')
+    .attr('width', 400)
+    .attr('height', 0);
+
+  /**
+   * @type {Object}
+   * @description HTML5 canvas context for the application legend
+   * @memberof Init
+   */
+  let legend_ctx = legend_canvas.node().getContext('2d');
+  legend_ctx.lineCap = 'round';
+
+  const legend_tmpcanvas = d3
+    .select('.legend.tmpcanvas')
+    .append('canvas')
+    .attr('width', 400)
+    .attr('height', 1000);
+
+  /**
+   * @type {Object}
+   * @description HTML5 canvas context for the application legend
+   * @memberof Init
+   */
+  let tmplegend_ctx = legend_tmpcanvas.node().getContext('2d');
+  tmplegend_ctx.lineCap = 'round';
+
+  /**
    * Advance vertical increment for legend type (text display)
    * @param {Number} y - y axis
    * @param {Object} ctx - HTML5 canvas context
@@ -100,6 +133,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .drawImage(d3.select('.legend.tmpcanvas canvas').node(), 0, 0);
 
   };
+
+  energy_maps.legend_ctx = legend_ctx;
+  energy_maps.tmplegend_ctx = tmplegend_ctx;
 
   return energy_maps;
 

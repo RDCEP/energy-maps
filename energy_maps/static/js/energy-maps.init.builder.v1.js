@@ -39,46 +39,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   base_ctx.LineCap = 'round';
 
   /**
-   * @type {Object}
-   * @description HTML5 canvas for the application legend
-   * @memberof Init
-   */
-  const legend_canvas = d3
-    .select('.legend.canvas')
-    .append('canvas')
-    .attr('width', 400)
-    .attr('height', 0);
-
-  /**
-   * @type {Object}
-   * @description HTML5 canvas context for the application legend
-   * @memberof Init
-   */
-  let legend_ctx = legend_canvas.node().getContext('2d');
-  legend_ctx.lineCap = 'round';
-
-  const legend_tmpcanvas = d3
-    .select('.legend.tmpcanvas')
-    .append('canvas')
-    .attr('width', 400)
-    .attr('height', 1000);
-
-  /**
-   * @type {Object}
-   * @description HTML5 canvas context for the application legend
-   * @memberof Init
-   */
-  let tmplegend_ctx = legend_tmpcanvas.node().getContext('2d');
-  tmplegend_ctx.lineCap = 'round';
-
-  /**
-   * @type {number}
-   * @description the total sum of asset values for all active layers
-   * @memberof Init
-   */
-  // let asset_total_sum = 0;
-
-  /**
    * @description Draw the base map for the application based off
    * of the data from fmap and fmapfill
    * @memberof Init
@@ -89,48 +49,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     ).then(function(files) {
       energy_maps.draw_land(base_ctx, files, transform, false, false);
     });
-  };
-
-  const _sort_on_taget = function _sort_on_taget
-    (sort_array, target_array, key)
-  {
-    sort_array.sort( function (a, b) {
-      let _a = a[key], _b = b[key];
-      return (target_array.indexOf(_a) > target_array.indexOf(_b)) ? 1 : -1
-    });
-    return sort_array;
-  };
-
-
-  const _sum_asset_totals = function _sum_asset_totals() {
-    var asset_total_sum = 0;
-    console.log(ACTIVE_LAYERS)
-    for (let i = 0; i < ACTIVE_LAYERS.length; i++) {
-      if (ACTIVE_LAYERS[i].name != 'state-boundaries' &&
-        ACTIVE_LAYERS[i].name != 'wind-capacity')
-      {
-        // active layers value starts as undefined
-        console.log(`active layers value ${ACTIVE_LAYERS[i].value[DATA_YEAR]}`)
-        asset_total_sum += ACTIVE_LAYERS[i].value[DATA_YEAR];
-      }
-    }
-    return asset_total_sum;
-  }
-
-  /**
-   * Display total asset value of all active layers.
-   * Currently using d3-format (https://github.com/d3/d3-format) for
-   * currency formatting. Numeral.js (http://numeraljs.com/#format)
-   * was previously used for currency formatting.
-   * @memberof Init
-   */
-  const _display_asset_total = function _display_asset_total() {
-    // FIXME: This is a horrible kludge in order to get space before units.
-    //  Need to write a proper formatter.
-    document.getElementsByClassName('asset-total')[0]
-      .innerHTML = `${d3.format('$.2~s')(_sum_asset_totals())
-      .replace(/G/, ' B')
-      .replace(/T/, ' T')}`;
   };
 
   var layers_to_redraw = []
@@ -215,7 +133,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       // remove any layers from the previous cycle
 
       for (let i = 0; i < layers_to_redraw.length; i++) {
-        _removeLayer(layers_to_redraw[i]);
+        energy_maps.removeLayer(layers_to_redraw[i]);
       }
 
       let values = document.getElementsByClassName('asset-value');
@@ -245,29 +163,29 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       layers = layers.map(x => {
         if (x.active) {
           console.log(x);
-          _removeLayer(x, TRANSFORM);
+          energy_maps.removeLayer(x, TRANSFORM);
           // addLayer(x, transform);
         }
         return x
       })
 
       var labels = document.getElementsByTagName('label');
-      for (let i = 0; i < labels.length; i++) {
+      for (let i = 0, l = labels.length; i < l; i++) {
         labels[i].classList.add('asset-label')
       }
 
       // remove asset values, asset labels, and checkboxes
-      for (let i = 0; i < layers.length; i++) {
+      for (let i = 0, l = layers.length; i < l; i++) {
 
-        for (let i = 0; i < values.length; i++) {
+        for (let i = 0, m = values.length; i < m; i++) {
           values[i].remove();
         }
 
-        for (let i = 0; i < asset_labels.length; i++) {
+        for (let i = 0, m = asset_labels.length; i < m; i++) {
           asset_labels[i].remove();
         }
 
-        for (let i = 0; i < cboxes.length; i++) {
+        for (let i = 0, m = cboxes.length; i < m; i++) {
           cboxes[i].remove();
         }
 
@@ -308,197 +226,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   create_year_button(2012, "$9.8T");
   create_year_button(2022, "$9.8T");
 
-  /**
-   * @param  {String} s - the supplied character string to be formatted
-   * @returns {String} the supplied string with the first letter capitalized
-   * @memberof Init
-   */
-  const _capitalize_first_letter = function _capitalize_first_letter
-    (s)
-  {
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
-
-  /**
-   * @description Call all draw methods for a given layer and render it
-   * to its canvas element. Uses a recursive call in special cases.
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-
-  const _load_layer_data = function _load_layer_data
-    (lyr)
-  {
-  if (lyr === energy_maps.oil_pipeline) {
-    let lyrs = [energy_maps.oil_pipeline, energy_maps.oil_product_pipeline];
-    for (let i = 0, lyrs_length = lyrs.length; i < lyrs_length; ++i) {
-      energy_maps.start_loading_layer();
-      // TODO: Figure out why prod pipes legend is no longer showing
-      Promise.all(
-        lyrs[i].draw_props[0].src.map(
-          x => lyrs[i].draw_props[0].d3_fetch(
-            `${API_URL_PREFIX}${x}`
-          )))
-        .then(function(files) {
-          lyrs[i].context.restore();
-          lyrs[i].context.save();
-          return files;
-        }).then(files => {
-          energy_maps.transform_layer(lyrs[i].context, TRANSFORM);
-          console.time('draw_layer')
-          lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
-          console.timeEnd('draw_layer')
-          // console.log(lyr.draw_props[i].src)
-          console.log(`${API_URL_PREFIX}${lyr.draw_props[0].src}`)
-        });
-    }
-  } else {
-      for (let i = 0, num_draw_props = lyr.draw_props.length; i < num_draw_props; ++i) {
-        energy_maps.start_loading_layer();
-        if (lyr.name != 'state-boundaries' && lyr.name != 'wind-capacity') {
-          // unused commented section for future reference
-          // currently adding the entirety of the previous src string each time pressed
-          // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
-          // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
-
-          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(
-            `${API_URL_PREFIX}${x}`)))
-          .then(function(files) {
-            lyr.context.restore();
-            lyr.context.save();
-            return files;
-          }).then(files => {
-            energy_maps.transform_layer(lyr.context, TRANSFORM);
-            return files;
-          }).then(files => {
-            console.time('draw_layer');
-            lyr.draw_props[i].draw_layer(lyr.context, files);
-            console.timeEnd('draw_layer');
-            console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`);
-          });
-        }
-        else {
-          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
-          .then(function(files) {
-            lyr.context.restore();
-            lyr.context.save();
-            return files;
-          }).then(files => {
-            energy_maps.transform_layer(lyr.context, TRANSFORM);
-            return files;
-          }).then(files => {
-            console.time('draw_layer');
-            lyr.draw_props[i].draw_layer(lyr.context, files);
-            console.timeEnd('draw_layer');
-            console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`);
-          });
-        }
-      }
-    }
-  };
-  // Cleanest refactored version
-  // const load_layer_data = function load_layer_data(lyr) {
-  //   for (let i = 0; i < lyr.draw_props.length; ++i) {
-  //     Promise.all(lyr.draw_props[0].src.map(x => lyr.draw_props[0].d3_fetch(x)))
-  //     .then(files => {
-  //       lyr.context.restore();
-  //       lyr.context.save();
-  //       return files;
-  //     }).then(files => {
-  //       transform_layer(lyr.context, transform);
-  //       return files;
-  //     }).then(files => {
-  //       lyr.draw_props[0].draw_layer(lyr.context, files);
-  //     });
-
-  //     if (lyr.draw_props.length > 1) {
-  //       load_layer_data(lyr.draw_props[0].next_layer)
-  //     }
-  //   }
-  // }
-
-  // Original version from before refactor --
-  // keeping this in case the lyr.draw_props.next_layer thing above doesn't work
-
-  // const load_layer_data = function load_layer_data(lyr) {
-  //   if (lyr === oil_pipeline) {
-  //     let lyrs = [oil_pipeline, oil_product_pipeline];
-  //     for (let i = 0; i < lyrs.length; ++i) {
-  //       start_loading_layer();
-  //       Promise.all(lyrs[i].draw[0].src.map(x => lyrs[i].draw[0].w(x)))
-  //         .then(function(files) {
-  //           lyrs[i].context.restore();
-  //           lyrs[i].context.save();
-  //           return files;
-  //         }).then(files => {
-  //           transform_layer(lyrs[i].context, transform);
-  //           lyrs[i].draw[0].f(lyrs[i].context, files);
-  //         });
-  //     }
-  //   } else {
-  //       for (let i = 0; i < lyr.draw.length; ++i) {
-  //         start_loading_layer();
-  //         Promise.all(lyr.draw[i].src.map(x => lyr.draw[i].w(x)))
-  //           .then(function(files) {
-  //             lyr.context.restore();
-  //             lyr.context.save();
-  //             return files;
-  //           }).then(files => {
-  //             transform_layer(lyr.context, transform);
-  //             return files
-  //           }).then(files => {
-  //             lyr.draw[i].f(lyr.context, files);
-  //           });
-  //       }
-  //   }
-  // };
-
-  LAYERS.push(energy_maps.state_boundaries);
-
-  // Coal
-  LAYERS.push(energy_maps.coal_mine);
-  LAYERS.push(energy_maps.railroad);
-
-  // AC
-  LAYERS.push(energy_maps.ac_na_and_under_100);
-  LAYERS.push(energy_maps.ac_100_300);
-  LAYERS.push(energy_maps.ac_345_735);
-
-  // DC
-  LAYERS.push(energy_maps.dc);
-
-  // Distribution
-  LAYERS.push(energy_maps.distribution);
-
-  // Oil and Gas
-  LAYERS.push(energy_maps.gas_well);
-  LAYERS.push(energy_maps.oil_well);
-  LAYERS.push(energy_maps.foreign_oil_wells);
-  LAYERS.push(energy_maps.foreign_gas_wells);
-  LAYERS.push(energy_maps.gas_pipeline);
-  LAYERS.push(energy_maps.oil_pipeline);
-  LAYERS.push(energy_maps.oil_product_pipeline);
-  LAYERS.push(energy_maps.oil_refinery);
-  LAYERS.push(energy_maps.gas_processing);
-  LAYERS.push(energy_maps.oil_and_gas_storage);
-
-  // Plants
-  LAYERS.push(energy_maps.coal_plants);
-  LAYERS.push(energy_maps.ng_plants);
-  LAYERS.push(energy_maps.pet_plants);
-  LAYERS.push(energy_maps.nuc_plants);
-  LAYERS.push(energy_maps.hyc_plants);
-  LAYERS.push(energy_maps.wnd_farms);
-  LAYERS.push(energy_maps.solar_plants);
-  LAYERS.push(energy_maps.geo_plants);
-
-  // TODO: push biofuel in when you have data with a valid scaling value
-  LAYERS.push(energy_maps.biofuel);
-  // layers.push(bio_plants);
-
-  LAYERS.push(energy_maps.wind_map);
-
-  let lay = LAYERS.length;
   // TODO: Why is this here? Shouldn't it be passed to funcs as we
   // create checkboxes?
   let checkbox_span;
@@ -513,237 +240,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .text('* 2012 asset values used');
   }
 
-  /**
-   * @description Add a layer to the screen.
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  const _addLayer = function _addLayer
-    (lyr, transform)
-  {
-    console.time('load_layer_data');
-    _load_layer_data(lyr, transform);
-    console.timeEnd('load_layer_data');
-    // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
-    lyr.active = true;
-    if (lyr === energy_maps.oil_pipeline) {
-      energy_maps.oil_product_pipeline.active = true;
-    }
-    ACTIVE_LAYERS.push(lyr);
-    _display_asset_total();
-    return ACTIVE_LAYERS;
-  };
-
-  /**
-   * @description Remove a layer from the screen.
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  const _removeLayer = function _removeLayer
-    (lyr)
-  {
-    energy_maps.hide_spinner();
-    lyr.context.clearRect(0, 0, WIDTH, HEIGHT);
-    lyr.active = false;
-    if (lyr === energy_maps.oil_pipeline) {
-      energy_maps.oil_product_pipeline.context.clearRect(0, 0, WIDTH, HEIGHT);
-      energy_maps.oil_product_pipeline.active = false;
-    }
-    // active_layers.pop(lyr);
-    // ACTIVE_LAYERS.indexOf(lyr);
-    ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1);
-    _display_asset_total();
-  };
-
-  // initMenuColumns();
-  // initMenuAsteriskNote();
-
-  // Generate UI element for checkbox columns
-
-  /**
-   * @description Generate a label for a checkbox in the menu.
-   * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - an HTML5 label tag with a class
-   * that corresponds to the `lyr` object
-   * and a descriptive formatted text string.
-   * @memberof Init
-   */
-  const _initMenuCheckboxLabel = function _initMenuCheckboxLabel
-    (lyr)
-  {
-    let li = d3.select('.options-list ul')
-      .append('li')
-      // .attr('class', 'option-li')
-      .attr('class', () => {
-        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
-          ? 'option-li inactive' : 'option-li'
-    });
-    li.append('div')
-      .attr('uk-icon', 'icon: list')
-      .attr('class', 'drag uk-sortable-handle');
-    let label = li.append('label');
-    label.append('span').attr('class', 'option-title')
-      .text(function() {
-        return (lyr.text)
-          ? lyr.text
-          : `${_capitalize_first_letter(lyr.name
-            .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
-            .replace(/-/g, '\u00A0'))}\u00A0`
-      })
-
-    return label;
-  };
-
-  /**
-   * @description Generate an asset value for a checkbox in the menu.
-   * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - an HTML5 span tag with that displays
-   * total asset value for the menu item.
-   * abbreviated in either billions or trillions. Child of a parent label tag.
-   * @memberof Init
-   */
-  const _initMenuAssetValue = function _initMenuAssetValue
-    (lyr, label)
-  {
-    if (lyr.value[DATA_YEAR] != 0
-      && lyr.name != 'state-boundaries'
-      && lyr.name != 'wind-capacity'
-      && lyr.name != 'oil-product-pipelines')
-    {
-      label.append('span')
-        .attr('class', 'asset-value')
-        // FIXME: This is a horrible kludge in order to get space before units.
-        //  Need to write a proper formatter.
-        .text(` ($${_capitalize_first_letter(
-          d3.format('.2~s')(lyr.value[DATA_YEAR])
-            .replace(/G/, ' B')
-            .replace(/T/, ' T'))})`);
-      if (lyr.unchanged_2022 == true) {
-        label.append('span')
-          .text(' *')
-      }
-
-    }
-    label.append('span')
-      .attr('class', 'leader');
-    return label;
-  };
-
-  /**
-   * @description Generate a menu item.
-   * @param {Object} lyr - An object from layers[].
-   * @return {Object} checkbox_span - HTML5 label and span as children
-   * of a column
-   * div in the menu.
-   * @memberof Init
-   */
-  const _initMenuItem = function _initMenuItem
-    (lyr)
-  {
-    let label = _initMenuCheckboxLabel(lyr);
-    label = _initMenuAssetValue(lyr, label);
-    return label;
-  };
-
-  /**
-   * @description Generate each checkbox in the menu.
-   * @param {Object} lyr - An object from layers[].
-   * @return {Object} lyr.checkbox - a `checkbox` property added to the lyr item
-   * containing a checkbox input tag.
-   * @memberof Init
-   */
-  const _initMenuCheckbox = function _initMenuCheckbox
-    (lyr, label)
-  {
-    lyr.checkbox = label.append('input')
-      .attr('type', 'checkbox')
-      .attr('class', `checkbox ${lyr.name}`)
-      .attr('data-layername', lyr.name)
-      .attr('data-assetvalue', lyr.value[DATA_YEAR]);
-    if (!(lyr.draw_props && (lyr != energy_maps.oil_product_pipeline))) {
-      lyr.checkbox.attr('disabled', true);
-    }
-    return lyr.checkbox;
-  };
-
-  /**
-   * @description Generate a canvas in the DOM for a given layer.
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  const _addLayerCanvas = function _addLayerCanvas
-    (lyr)
-  {
-    lyr.canvas = d3
-      .select(map_container)
-      .append('div')
-      .attr('class', `map layer ${lyr.name}`)
-      // .attr('uk-cover', true)
-      .append('canvas')
-      .attr('class', `canvas ${lyr.name}`)
-      .attr('width', WIDTH)
-      .attr('height', HEIGHT);
-  };
-
-  /**
-   * @description Generate a canvas context in the DOM for a given layer.
-   * @param {Object} lyr - An object from layers[].
-   * @memberof Init
-   */
-  const _addCanvasContext = function _addCanvasContext
-    (lyr)
-  {
-    lyr.context = lyr.canvas.node().getContext('2d');
-    lyr.context.lineCap = 'round';
-    lyr.active = false;
-  };
-
-  let _initMenu = function _initMenu
-    ()
-  {
-    for (let i = 0; i < lay; i++) {
-
-      let lyr = LAYERS[i];
-      
-      let li = _initMenuItem(lyr);
-      _initMenuCheckbox(lyr, li);
-      lyr.checkbox.on('change', function() {
-
-        // checkbox is buried in a ut {} object for some reason
-        let checkbox = lyr.checkbox._groups[0][0];
-
-        if (checkbox.checked) {
-          _addLayer(lyr, TRANSFORM);
-        } else {
-          _removeLayer(lyr, TRANSFORM);
-        }
-        // if (!(lyr instanceof StateBoundary)) {
-        if (!(lyr.name === 'state-boundaries')) {
-          legend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
-          tmplegend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
-          energy_maps.update_legend(tmplegend_ctx, legend_ctx, LAYERS);
-          if (ACTIVE_LAYERS.length === 0) {
-            energy_maps.legend.hidden = true;
-          }
-        }
-      });
-
-      _addLayerCanvas(lyr);
-      _addCanvasContext(lyr);
-
-    }
-  };
-
-  _initMenu();
-
   // Load base map and any layers you want on by default
+
   energy_maps.draw_base_map(TRANSFORM);
-  const DEFAULT_LAYERS = [energy_maps.state_boundaries];
-  DEFAULT_LAYERS.map(x => {
-    document.querySelector(`.option-li input.${x.name}`).click();
-  })
-
-
 
   // FIXME: This probably doesn't belong here in the code.
   // From: https://stackoverflow.com/questions/41607804/promise-each-without-bluebird
@@ -761,23 +260,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     }, Promise.resolve());
   };
 
-  energy_maps.draw_active_layers = function draw_active_layers
-    (transform)
-  {
-    LAYERS = LAYERS.map(layer => {
-      if (layer.active == true) {
-        console.time('load_layer_data');
-        _load_layer_data(layer, TRANSFORM);
-        console.timeEnd('load_layer_data');
-      } else {
-        layer.context.restore();
-        layer.context.save();
-        energy_maps.transform_layer(layer.context, TRANSFORM);
-      }
-      return layer;
-    });
-  };
-
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
     let style_height = +getComputedStyle(canvas)
@@ -788,22 +270,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('height', style_height * dpi)
       .attr('width', style_width * dpi);
   }
-
-  d3.selectAll('.checkbox')
-    .on('mousedown', function () {
-      d3.event.stopPropagation();
-    });
-
-  d3.select('.options-list ul').on('stop', function() {
-    const that = d3.select(this);
-    let target = [];
-    let options = that.selectAll('.option-li input')
-      .each(function (d, i) {
-        target[i] = d3.select(this).node().getAttribute('data-layername')
-      });
-    LAYERS = _sort_on_taget(LAYERS, target, 'name');
-    energy_maps.draw_active_layers(TRANSFORM);
-  });
 
   energy_maps.base_canvas = base_canvas;
   energy_maps.base_ctx = base_ctx;
