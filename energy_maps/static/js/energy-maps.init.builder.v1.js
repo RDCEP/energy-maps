@@ -789,68 +789,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('width', style_width * dpi);
   }
 
-  const toggles = d3.selectAll('.window .toggle');
-
-  toggles.on('click', function() {
-    let closed = d3.select(this).classed('open');
-    // Toggle legend visibility
-    d3.select(this.parentNode).select('.canvas')
-      .classed('closed', closed)
-      .classed('closed', !closed);
-    // Toggle state of visibility icon
-    d3.select(this)
-      .classed('open', !closed)
-      .classed('close', closed);
-  });
-
-  toggles.on('mousedown', function() {
-    d3.event.stopPropagation();
-  });
-
-  const window_drag_started = function window_drag_started
-    ()
-  {
-    d3.event.on('drag', dragged).on('end', ended);
-
-    function dragged() {
-      let that = d3.select(this);
-      that
-        .style('bottom', null)
-        .style('right', `${
-          parseInt(that.style('right'), 10) - d3.event.dx}px`)
-        .style('top', function() {
-          let y = parseInt(that.style('top'), 10);
-          if (y > HEIGHT - 50) {
-            return `${HEIGHT - 50}px`;
-          }
-          return `${y + d3.event.dy}px`;
-        });
-    }
-
-    function ended() {
-      //
-    }
-  }
-
-  d3.selectAll('.window.menu')
-    // Set horizontal position of draggable windows on page load.
-    .style('right', function() { if (d3.select(this).classed('legend')) {
-      return `${(WIDTH-1200)/2+100}px`;
-    } else if (d3.select(this).classed('options')) {
-      return `${(WIDTH-950)/2}px`;
-    }})
-    // Set vertical position of legend on page load.
-    .style('top', function() { if (d3.select(this).classed('legend')) {
-      let header_height = d3.select('header').node().offsetHeight;
-      return `${header_height}px`;
-    }})
-    .call(d3.drag().on('start', window_drag_started));
-
-  d3.selectAll('.window .canvas')
-    .call(d3.drag().on('start', function () {
-      d3.event.stopPropagation();
-    }));
-
   d3.selectAll('.checkbox')
     .on('mousedown', function () {
       d3.event.stopPropagation();
