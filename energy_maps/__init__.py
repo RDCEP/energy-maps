@@ -44,6 +44,7 @@ assets.register('js_builderfucker',
                        'js/energy-maps.funcs.plants.v0.js',
                        'js/energy-maps.funcs.wells.v0.js',
                        'js/energy-maps.legends.v1.js',
+                       'js/energy-maps.zoom.v0.js',
                        'js/energy-maps.init.builder.v1.js',
                        filters='jsmin',
                        output='gen/js_builderfucker.js'))

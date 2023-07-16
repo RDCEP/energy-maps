@@ -35,8 +35,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     .attr('width', WIDTH)
     .attr('height', HEIGHT);
 
-  const ctx = base_canvas.node().getContext('2d');
-  ctx.LineCap = 'round';
+  const base_ctx = base_canvas.node().getContext('2d');
+  base_ctx.LineCap = 'round';
 
   /**
    * @type {Object}
@@ -83,11 +83,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * of the data from fmap and fmapfill
    * @memberof Init
    */
-  const _draw_base_map = function _draw_base_map(transform) {
+  energy_maps.draw_base_map = function draw_base_map(transform) {
     Promise.all(
       [d3.json(fmap)]
     ).then(function(files) {
-      energy_maps.draw_land(ctx, files, transform, false, false);
+      energy_maps.draw_land(base_ctx, files, transform, false, false);
     });
   };
 
@@ -624,18 +624,15 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   {
     let li = d3.select('.options-list ul')
       .append('li')
-      .attr('class', 'option-li');
+      // .attr('class', 'option-li')
+      .attr('class', () => {
+        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
+          ? 'option-li inactive' : 'option-li'
+    });
     li.append('div')
       .attr('uk-icon', 'icon: list')
       .attr('class', 'drag uk-sortable-handle');
-      // .attr('uk-icon', true)
-      // .attr('data-icon', 'list')
-      // .attr('class', 'drag uk-sortable-handle');
-    let label = li.append('label')
-      .attr('class', () => {
-        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
-          ? `${lyr.name} inactive` : `${lyr.name}`
-    });
+    let label = li.append('label');
     label.append('span').attr('class', 'option-title')
       .text(function() {
         return (lyr.text)
@@ -772,7 +769,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
           _removeLayer(lyr, TRANSFORM);
         }
         // if (!(lyr instanceof StateBoundary)) {
-        if (!(lyr.name == 'state-boundaries')) {
+        if (!(lyr.name === 'state-boundaries')) {
           legend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
           tmplegend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
           energy_maps.update_legend(tmplegend_ctx, legend_ctx, LAYERS);
@@ -781,14 +778,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
           }
         }
       });
-
-      if (lyr.draw_props && (lyr != energy_maps.oil_product_pipeline)) { // TODO: What a horrible way of checking for one corner case of which we have several
-                                                       // There are now multiple objects that need to be rendered in the menu but need to be grey
-                                                       // and also have no checkbox. We can't rely on lyr.draw === true anymore. Each obj should
-                                                       // probably have a property that determines whether it gets a checkbox or not...
-                                                       // like `obj.requires_checkbox = false` or something like that.
-
-      }
 
       _addLayerCanvas(lyr);
       _addCanvasContext(lyr);
@@ -799,77 +788,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   _initMenu();
 
   // Load base map and any layers you want on by default
+  energy_maps.draw_base_map(TRANSFORM);
+  const DEFAULT_LAYERS = [energy_maps.state_boundaries];
+  DEFAULT_LAYERS.map(x => {
+    document.querySelector(`.option-li input.${x.name}`).click();
+  })
 
-  _draw_base_map(TRANSFORM);
-  _addLayer(energy_maps.state_boundaries, TRANSFORM);
-  let state_boundaries_checkbox = document.getElementsByClassName('state-boundaries')[3];
-  state_boundaries_checkbox.checked = true;
 
-  const _target_canvas = d3.select('.map.layer.zoom-target');
-
-  let prev_k = TRANSFORM.k;
-
-  const _zoom_start = function _zoom_start
-    ()
-  {
-    console.log('zoom start');
-    prev_k = TRANSFORM.k;
-    LAYERS = LAYERS.map(layer => {
-        layer.context.clearRect(0, 0, WIDTH, HEIGHT);
-        return layer;
-      }
-    );
-    TRANSFORM = d3.event.transform;
-  };
-
-  const _zoomed = function _zoomed
-    ()
-  {
-    TRANSFORM = d3.event.transform;
-    energy_maps.draw_land(ctx, [energy_maps.simple_map_bkgd], TRANSFORM, false, true);
-  };
-
-  const _zoom_end = _.debounce(function(e) {
-    energy_maps.k_changed = TRANSFORM.k != prev_k;
-    _draw_base_map(TRANSFORM);
-    _draw_active_layers(TRANSFORM);
-  }, 500, false);
-
-  const _zoom = d3.zoom()
-    .scaleExtent([0, 50])
-    .on('start', _zoom_start)
-    .on('zoom', _zoomed)
-    .on('end', _zoom_end);
-
-  _target_canvas.call(_zoom);
-
-  d3.select('.zoom-in').on('click', function() {
-    let increment = .1;
-    let k = TRANSFORM.k + increment;
-    let x = (
-      TRANSFORM.x + energy_maps.projection_width * (TRANSFORM.k - k) / 2) / k;
-    let y = (
-      TRANSFORM.y + energy_maps.projection_height * (TRANSFORM.k - k) / 2) / k;
-    let initial_transform = d3.zoomIdentity
-      .scale(k)
-      .translate(x, y);
-    _target_canvas.call(_zoom.transform, initial_transform);
-  });
-
-  d3.select('.zoom-out').on('click', function() {
-    let increment = .1;
-    let k = TRANSFORM.k - increment;
-    let x = (
-      TRANSFORM.x + energy_maps.projection_width * (TRANSFORM.k - k) / 2)
-      / k + TRANSFORM.x;
-    let y = (
-      TRANSFORM.y + energy_maps.projection_height * (TRANSFORM.k - k) / 2)
-      / k + TRANSFORM.y;
-    let initial_transform = d3.zoomIdentity
-      .scale(k)
-      .translate(x - TRANSFORM.x, y - TRANSFORM.y);
-    _target_canvas.call(_zoom.transform, initial_transform);
-  });
 
   // FIXME: This probably doesn't belong here in the code.
   // From: https://stackoverflow.com/questions/41607804/promise-each-without-bluebird
@@ -887,7 +812,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     }, Promise.resolve());
   };
 
-  let _draw_active_layers = function _draw_active_layers
+  energy_maps.draw_active_layers = function draw_active_layers
     (transform)
   {
     LAYERS = LAYERS.map(layer => {
@@ -903,26 +828,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       return layer;
     });
   };
-
-  const _window_resize = _.debounce(function(e) {
-    WIDTH = window.innerWidth * SCALE;
-    HEIGHT = window.innerHeight * SCALE;
-    console.log('resize', WIDTH, HEIGHT)
-    base_canvas
-      .attr('width', WIDTH)
-      .attr('height', HEIGHT);
-    LAYERS = LAYERS.map(x => {
-      x.canvas
-        .attr('width', WIDTH)
-        .attr('height', HEIGHT);
-      x.context.clearRect(0, 0, WIDTH, HEIGHT);
-      return x;
-    });
-    _draw_base_map(TRANSFORM);
-    _draw_active_layers(TRANSFORM);
-  }, 500, false);
-
-  d3.select(window).on('resize', _window_resize);
 
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
@@ -1010,8 +915,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
         target[i] = d3.select(this).node().getAttribute('data-layername')
       });
     LAYERS = _sort_on_taget(LAYERS, target, 'name');
-    _draw_active_layers(TRANSFORM);
+    energy_maps.draw_active_layers(TRANSFORM);
   });
+
+  energy_maps.base_canvas = base_canvas;
+  energy_maps.base_ctx = base_ctx;
 
   return energy_maps;
 
