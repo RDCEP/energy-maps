@@ -201,7 +201,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @description Width of content area in center of screen stored
    * as a `number`.
    */
-  energy_maps.content_width = d3.select('main .content-wrap')
+  energy_maps.content_width = d3.select('.main-wrap')
     .node().offsetWidth;
 
   /**
