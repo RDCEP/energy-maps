@@ -125,12 +125,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     ()
   {
     const layers = energy_maps.set_layers();
-    console.log(layers, energy_maps.n_layers)
     // for (let i = 0; i < LAYERS.length; i++) {
     for (let i = 0, l = layers.length; i < l; i++) {
 
       let lyr = layers[i];
-      console.log(lyr)
 
       let li = _initMenuItem(lyr);
       _initMenuCheckbox(lyr, li);

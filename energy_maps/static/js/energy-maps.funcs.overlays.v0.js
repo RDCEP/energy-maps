@@ -171,7 +171,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return y;
   };
 
-  energy_maps.state_boundaries = new StateBoundary(
+  const state_boundaries = new StateBoundary(
     'state-boundaries',
     'State boundaries',
     {2012: 0, 2020: 0},
@@ -185,7 +185,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     1.5
   );
 
-  energy_maps.wind_map = new WindMap(
+  const wind_map = new WindMap(
     'wind-capacity',
     'Wind capacity',
     null,
@@ -196,7 +196,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       d3_fetch: d3.json
     }],
   );
-  energy_maps.wind_map.draw_legend = _draw_wind_map_legend;
+  wind_map.draw_legend = _draw_wind_map_legend;
+
+  energy_maps.state_boundaries = state_boundaries;
+  energy_maps.wind_map = wind_map;
 
   return energy_maps;
 

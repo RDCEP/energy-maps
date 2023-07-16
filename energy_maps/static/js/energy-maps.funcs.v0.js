@@ -14,7 +14,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param ctx
    * @param transform
    */
-  energy_maps.transform_layer = function transform_layer
+  const transform_layer = function transform_layer
     (ctx, transform)
   {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -26,7 +26,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * Clip the region of a single layer to prevent each draw event from parsing extraneous data.
    * @param {Object} ctx
    */
-  energy_maps.clip_region = function clip_region
+  const clip_region = function clip_region
     (ctx)
   {
     let region = new Path2D();
@@ -41,7 +41,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param data
    * @returns {*}
    */
-  energy_maps.simplify = function simplify
+  const simplify = function simplify
     (key, data)
   {
     let output_geojson;
@@ -59,7 +59,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} border_only
    * @param {Boolean} simple
    */
-  energy_maps.draw_land = function draw_land
+  const draw_land = function draw_land
     (ctx, queued_data, transform, border_only, simple)
   {
     ctx.save()
@@ -116,7 +116,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_x = function draw_x
+  const draw_x = function draw_x
     (ctx, xy, d)
   {
     ctx.moveTo(xy[0] - d / 2, xy[1] - d / 2);
@@ -131,7 +131,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  energy_maps.draw_circle = function draw_circle
+  const draw_circle = function draw_circle
     (ctx, xy, r)
   {
     ctx.arc(xy[0], xy[1], r, 0, Math.PI * 2, true);
@@ -143,7 +143,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_box = function draw_box
+  const draw_box = function draw_box
     (ctx, xy, d)
   {
     ctx.rect(xy[0] - d / 2, xy[1] - d / 2, d, d);
@@ -155,7 +155,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_triangle = function draw_triangle
+  const draw_triangle = function draw_triangle
     (ctx, xy, d)
   {
     let e = (d * Math.sqrt(3)) / 3;
@@ -171,7 +171,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_triangle_down = function draw_triangle_down
+  const draw_triangle_down = function draw_triangle_down
     (ctx, xy, d)
   {
     let e = (d * Math.sqrt(3)) / 3;
@@ -187,7 +187,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_cross = function draw_cross
+  const draw_cross = function draw_cross
     (ctx, xy, d)
   {
     ctx.moveTo(xy[0], xy[1] - d / 2);
@@ -203,7 +203,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  energy_maps.draw_polygon = function draw_polygon
+  const draw_polygon = function draw_polygon
     (sides, ctx, r, xy)
   {
     /** @type {Number}
@@ -227,6 +227,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     d3.select(this.parentNode).style('display', 'none');
     d3.select('.modal-screen').style('display', 'none');
   });
+
+  energy_maps.transform_layer = transform_layer;
+  energy_maps.clip_region = clip_region;
+  energy_maps.simplify = simplify;
+  energy_maps.draw_land = draw_land;
+  energy_maps.draw_x = draw_x;
+  energy_maps.draw_circle = draw_circle;
+  energy_maps.draw_box = draw_box;
+  energy_maps.draw_triangle = draw_triangle;
+  energy_maps.draw_triangle_down = draw_triangle_down;
+  energy_maps.draw_cross = draw_cross;
+  energy_maps.draw_polygon = draw_polygon;
 
   return energy_maps;
 

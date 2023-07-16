@@ -97,7 +97,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} stroke - rgba value to set the canvas stroke
    * @property {Number} width - width value set relative to SCALE
    */
-  let Railroad = function Railroad
+  const Railroad = function Railroad
     (name, text, value, column, draw_props)
   {
     Coal.call(this, name, text, value, column, draw_props);
@@ -244,7 +244,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   //   src: [ `${API_URL_PREFIX}/${data_year}/mines/coal` ],
   //   d3_fetch: d3.json
   // }]);
-  energy_maps.coal_mine = new CoalMine(
+  const coal_mine = new CoalMine(
     'coal-mines', 'Coal mines', {2012: 41_474_000_000, 2022: null},
     'coal', [{
       draw_layer: _draw_coal_mines,
@@ -253,7 +253,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   }]);
 
   // TODO: Why aren't 2022 railroads working?
-  energy_maps.railroad = new Railroad(
+  const railroad = new Railroad(
     'railroads', 'Railroads', {2012: 137_000_000_000, 2022: 137_000_000_000},
     'coal', [{
       draw_layer: _draw_railroads,
@@ -263,6 +263,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       src: [ `/railroads` ],
       d3_fetch: d3.json
   }]);
+
+  energy_maps.coal_mine = coal_mine;
+  energy_maps.railroad = railroad;
 
   return energy_maps;
 

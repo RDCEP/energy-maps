@@ -246,13 +246,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   //   w: d3.json,
   // } ]);
 
-  let ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_unk_and_under_100,
     src: [`${API_URL_PREFIX}/electric_grid/under_100`],
     d3_fetch: d3.json,
   }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 
-  let ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_unk_and_under_100,
     src: [`${API_URL_PREFIX}/electric_grid/under_100`],
     d3_fetch: d3.json,
@@ -265,7 +265,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_na_and_under_100 = function _draw_legend_ac_na_and_under_100
+  const _draw_legend_ac_na_and_under_100 = function _draw_legend_ac_na_and_under_100
     (ctx, x, y)
   {
     y = _draw_legend_ac(ctx, x, y, ac_na);
@@ -273,7 +273,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return y;
   }
 
-  energy_maps.ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', {2012: 102_000_000_000, 2022: 102_000_000_000}, 'electricity-transmission-and-distribution', [{
+  const ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', {2012: 102_000_000_000, 2022: 102_000_000_000}, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_unk_and_under_100,
     src: [`/electric_grid/under_100`],
     d3_fetch: d3.json,
@@ -281,13 +281,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // AC 100-300
 
-  let ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_100_300,
     src: [`/electric_grid/100_300_kV_AC`],
     d3_fetch: d3.json,
   }], '100-161', 'rgba(86, 180, 233)', 2, 100);
 
-  let ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_100_300,
     src: [`/electric_grid/100_300_kV_AC`],
     d3_fetch: d3.json,
@@ -300,7 +300,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_100_300 = function _draw_legend_ac_100_300
+  const _draw_legend_ac_100_300 = function _draw_legend_ac_100_300
     (ctx, x, y)
   {
     y = _draw_legend_ac(ctx, x, y, ac_100_200);
@@ -308,7 +308,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return y;
   }
 
-  energy_maps.ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000}, 'electricity-transmission-and-distribution', [{
+  const ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000}, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_100_300,
     src: [`/electric_grid/100_300_kV_AC`],
     d3_fetch: d3.json,
@@ -316,19 +316,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // AC 345-735
 
-  let ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_345_735,
     src: [`/electric_grid/345_735_kV_AC`],
     d3_fetch: d3.json,
   }], '345', 'rgba(255, 149, 0)', 4, 350);
 
-  let ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_345_735,
     src: [`/electric_grid/345_735_kV_AC`],
     d3_fetch: d3.json,
   }], '500', 'rgba(213, 113, 45)', 5, 350);
 
-  let ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
+  const ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_345_735,
     src: [`/electric_grid/345_735_kV_AC`],
     d3_fetch: d3.json,
@@ -341,7 +341,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_345_735 = function _draw_legend_ac_345_735
+  const _draw_legend_ac_345_735 = function _draw_legend_ac_345_735
     (ctx, x, y)
   {
     y = _draw_legend_ac(ctx, x, y, ac_345);
@@ -350,19 +350,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return y;
   }
 
-  energy_maps.ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000}, 'electricity-transmission-and-distribution', [{
+  const ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000}, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_ac_345_735,
     src: [`/electric_grid/345_735_kV_AC`],
     d3_fetch: d3.json,
   }], _draw_legend_ac_345_735);
 
-  energy_maps.dc = new Grid('DC-lines', '500–1000 kV DC', {2012: 4_000_000_000, 2022: 4_000_000_000}, 'electricity-transmission-and-distribution', [{
+  const dc = new Grid('DC-lines', '500–1000 kV DC', {2012: 4_000_000_000, 2022: 4_000_000_000}, 'electricity-transmission-and-distribution', [{
     draw_layer: _draw_grid_class_dc,
     src: [`/electric_grid/dc`],
     d3_fetch: d3.json,
   }], 'DC', 'black', 7, 1000);
 
-  energy_maps.dc.dashed = false;
+  dc.dashed = false;
 
   /**
    * Draw DC electric grid legend to its HTML5 canvas context.
@@ -373,7 +373,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {boolean} dashed - true if line should be dashed, false if solid
    * @returns {Number} y - updated y axis
    */
-  energy_maps.dc.draw_legend = function _draw_grid_dc_legend
+  dc.draw_legend = function _draw_grid_dc_legend
     (ctx, x, y, dashed)
   {
     ctx.lineWidth = LEGEND_FONT_SIZE;
@@ -384,12 +384,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return y;
   };
 
-  energy_maps.distribution = { name: 'electricity-distribution',
+  const distribution = { name: 'electricity-distribution',
     text: 'Electricity dist',
     value: {2012: 1_400_000_000_000, 2022: 1_400_000_000_000},
     draw_props: false,
     column: 'electricity-transmission-and-distribution',
   };
+
+  energy_maps.ac_na_and_under_100 = ac_na_and_under_100;
+  energy_maps.ac_100_300 = ac_100_300;
+  energy_maps.ac_345_735 = ac_345_735;
+  energy_maps.dc = dc;
+  energy_maps.distribution = distribution;
 
   return energy_maps;
 

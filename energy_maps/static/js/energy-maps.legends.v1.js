@@ -55,7 +55,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} x - x axis
    * @returns {Number} y - updated y axis
    */
-  energy_maps.advance_for_type = function advance_for_type
+  const advance_for_type = function advance_for_type
     (y, ctx, text, text_offset, x)
   { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
     y += VERTICAL_TYPE_INCREMENT;
@@ -73,7 +73,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
    * @returns {Number} y - updated y axis
    */
-  energy_maps.advance_vertical_increment = function advance_vertical_increment
+  const advance_vertical_increment = function advance_vertical_increment
     (y, ctx, color, lineWidth)
   { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
     y += VERTICAL_INCREMENT;
@@ -102,7 +102,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object[]} layers - An array of objects representing resources
    * to be rendered on top of the map canvas.
    */
-  energy_maps.update_legend = function update_legend
+  const update_legend = function update_legend
     (tmp_ctx, ctx, layers)
   {
     // FIXME: width in globals is now 850.
@@ -136,6 +136,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   energy_maps.legend_ctx = legend_ctx;
   energy_maps.tmplegend_ctx = tmplegend_ctx;
+  energy_maps.advance_for_type = advance_for_type;
+  energy_maps.advance_vertical_increment = advance_vertical_increment;
+  energy_maps.update_legend = update_legend;
 
   return energy_maps;
 

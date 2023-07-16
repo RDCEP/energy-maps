@@ -78,7 +78,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   WindSpeed.prototype = new InfrastructureSet;
 
   SCALE = 1;
-  let plant_stroke = 'rgba(255, 255, 255, 1)';
+  const plant_stroke = 'rgba(255, 255, 255, 1)';
 
   /**
   * A collection of power plant classifications used for filtering.
@@ -88,7 +88,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   * @property {Number} scale - sets the scale of all plants to a multiple
   * of global SCALE
   */
-  let _electricity_generation = {
+  const _electricity_generation = {
     stroke: {
       light: 'rgba(255, 255, 255, 1)',
       width: .66 * SCALE
@@ -280,49 +280,49 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // Instantiate PowerPlants
 
-  energy_maps.coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
+  const coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
     draw_layer: _draw_coal_plants,
     src: [`/power_plants/coal`],
     d3_fetch: d3.json,
   }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
 
-  energy_maps.ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
+  const ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
     draw_layer: _draw_ng_plants,
       src: [`/power_plants/natural_gas`],
       d3_fetch: d3.json,
   }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
-  energy_maps.pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
+  const pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_petro_plants,
     src: [`/power_plants/petroleum`],
     d3_fetch: d3.json,
   }], 'petroleum', 'rgba(34, 139, 34, .5)', plant_stroke);
 
-  energy_maps.nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
+  const nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_nuclear_plants,
     src: [`/power_plants/nuclear`],
     d3_fetch: d3.json,
   }], 'nuclear', 'rgba(255, 0, 0, .5)', plant_stroke);
 
-  energy_maps.hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
+  const hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_hydro_plants,
     src: [`/power_plants/hydroelectric`],
     d3_fetch: d3.json,
   }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plant_stroke);
 
-  energy_maps.wnd_farms = new PowerPlant('wind-farms', 'Wind farms', {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
+  const wnd_farms = new PowerPlant('wind-farms', 'Wind farms', {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_wind_farms,
     src: [`/power_plants/wind`],
     d3_fetch: d3.json,
   }], 'wind', 'rgba(144, 29, 143, .5)', plant_stroke);
 
-  energy_maps.solar_plants = new PowerPlant('solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null}, 'electricity-generation', [{
+  const solar_plants = new PowerPlant('solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_solar_plants,
     src: [`/power_plants/solar`],
     d3_fetch: d3.json,
   }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
 
-  energy_maps.geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
+  const geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
     draw_layer: _draw_geo_plants,
     src: [`/power_plants/geothermal`],
     d3_fetch: d3.json,
@@ -334,12 +334,22 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   //   d3_fetch: d3.json,
   // } ], 'BIO', 'rgba(17, 75, 30, .5)', plant_stroke);
 
-  energy_maps.biofuel = {
+  const biofuel = {
     name: 'biofuel',
     value: {2012: 51_000_000_000, 2022: null},
     draw_props: false,
     column: 'electricity-generation',
   };
+
+  energy_maps.coal_plants = coal_plants;
+  energy_maps.ng_plants = ng_plants;
+  energy_maps.pet_plants = pet_plants;
+  energy_maps.nuc_plants = nuc_plants;
+  energy_maps.hyc_plants = hyc_plants;
+  energy_maps.wnd_farms = wnd_farms;
+  energy_maps.solar_plants = solar_plants;
+  energy_maps.geo_plants = geo_plants;
+  energy_maps.biofuel = biofuel;
 
   return energy_maps;
 
