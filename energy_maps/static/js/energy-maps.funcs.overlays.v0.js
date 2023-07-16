@@ -25,7 +25,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} stroke - rgba value to set the canvas stroke
    * @property {Number} width - width value set relative to SCALE
    */
-  function StateBoundary(name, text, value, column, draw_props, stroke, width) {
+  let StateBoundary = function StateBoundary
+    (name, text, value, column, draw_props, stroke, width)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.stroke = stroke;
     this.width = width;
@@ -48,7 +50,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} stroke - rgba value to set the canvas stroke
    * @property {Number} width - width value set relative to SCALE
    */
-  function WindMap(name, text, value, column, draw_props, stroke, width) {
+  let WindMap = function WindMap
+    (name, text, value, column, draw_props, stroke, width)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.stroke = stroke;
     this.width = width;
@@ -61,8 +65,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
    */
-  const _draw_state_boundaries = function draw_state_boundaries(ctx, queued_data) {
-
+  const _draw_state_boundaries = function _draw_state_boundaries
+    (ctx, queued_data)
+  {
     energy_maps.path.context(ctx);
     let output_geojson = energy_maps.simplify("states-no-overlap", queued_data);
 
@@ -92,8 +97,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Object} queued_data - Dataset for the corresponding resource
    */
-  const _draw_wind_map = function draw_wind_map(ctx, queued_data) {
-
+  const _draw_wind_map = function _draw_wind_map
+    (ctx, queued_data)
+  {
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
 
@@ -126,7 +132,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   };
 
   /** Draw wind capacity map legend **/
-  const _draw_wind_map_legend = function draw_wind_map_legend(ctx, x, y, dashed) {
+  const _draw_wind_map_legend = function _draw_wind_map_legend
+    (ctx, x, y, dashed)
+  {
     y += VERTICAL_INCREMENT * 1.5;
     //TODO: This is ugly. It duplicates colors and labels from `draw_wind_map()`
     let wind_map_colors = [

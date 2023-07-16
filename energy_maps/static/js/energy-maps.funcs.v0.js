@@ -14,7 +14,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param ctx
    * @param transform
    */
-  energy_maps.transform_layer = function transform_layer(ctx, transform) {
+  energy_maps.transform_layer = function transform_layer
+    (ctx, transform)
+  {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.translate(transform.x, transform.y);
     ctx.scale(transform.k, transform.k);
@@ -24,7 +26,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * Clip the region of a single layer to prevent each draw event from parsing extraneous data.
    * @param {Object} ctx
    */
-  energy_maps.clip_region = function clip_region(ctx) {
+  energy_maps.clip_region = function clip_region
+    (ctx)
+  {
     let region = new Path2D();
     region.rect(0, 0, WIDTH, HEIGHT);
     ctx.clip(region);
@@ -37,7 +41,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param data
    * @returns {*}
    */
-  energy_maps.simplify = function simplify(key, data) {
+  energy_maps.simplify = function simplify
+    (key, data)
+  {
     let output_geojson;
     let presimplified_data = topojson.presimplify(data[0]);
     output_geojson = topojson.feature(
@@ -53,10 +59,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} border_only
    * @param {Boolean} simple
    */
-  energy_maps.draw_land = function draw_land(ctx, queued_data,
-                                       transform,
-                                       border_only,
-                                       simple) {
+  energy_maps.draw_land = function draw_land
+    (ctx, queued_data, transform, border_only, simple)
+  {
     ctx.save()
     energy_maps.transform_layer(ctx, transform);
     ctx.clearRect(0,0, WIDTH, HEIGHT);
@@ -111,7 +116,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_x = function draw_x(ctx, xy, d) {
+  energy_maps.draw_x = function draw_x
+    (ctx, xy, d)
+  {
     ctx.moveTo(xy[0] - d / 2, xy[1] - d / 2);
     ctx.lineTo(xy[0] + d / 2, xy[1] + d / 2);
     ctx.moveTo(xy[0] - d / 2, xy[1] + d / 2);
@@ -124,7 +131,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  energy_maps.draw_circle = function draw_circle(ctx, xy, r) {
+  energy_maps.draw_circle = function draw_circle
+    (ctx, xy, r)
+  {
     ctx.arc(xy[0], xy[1], r, 0, Math.PI * 2, true);
   };
 
@@ -134,7 +143,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_box = function draw_box(ctx, xy, d) {
+  energy_maps.draw_box = function draw_box
+    (ctx, xy, d)
+  {
     ctx.rect(xy[0] - d / 2, xy[1] - d / 2, d, d);
   };
 
@@ -144,7 +155,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_triangle = function draw_triangle(ctx, xy, d) {
+  energy_maps.draw_triangle = function draw_triangle
+    (ctx, xy, d)
+  {
     let e = (d * Math.sqrt(3)) / 3;
     ctx.moveTo(xy[0], xy[1] - e * 2);
     ctx.lineTo(xy[0] + d, xy[1] + e);
@@ -158,7 +171,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_triangle_down = function draw_triangle_down(ctx, xy, d) {
+  energy_maps.draw_triangle_down = function draw_triangle_down
+    (ctx, xy, d)
+  {
     let e = (d * Math.sqrt(3)) / 3;
     ctx.moveTo(xy[0], xy[1] + e * 2);
     ctx.lineTo(xy[0] + d, xy[1] - e);
@@ -172,7 +187,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  energy_maps.draw_cross = function draw_cross(ctx, xy, d) {
+  energy_maps.draw_cross = function draw_cross
+    (ctx, xy, d)
+  {
     ctx.moveTo(xy[0], xy[1] - d / 2);
     ctx.lineTo(xy[0], xy[1] + d / 2);
     ctx.moveTo(xy[0] - d / 2, xy[1]);
@@ -186,7 +203,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  energy_maps.draw_polygon = function draw_polygon(sides, ctx, r, xy) {
+  energy_maps.draw_polygon = function draw_polygon
+    (sides, ctx, r, xy)
+  {
     /** @type {Number}
      * @description 90 degrees in radians, to represent the top of a unit circle*/
     let starting_angle = Math.PI / 2;

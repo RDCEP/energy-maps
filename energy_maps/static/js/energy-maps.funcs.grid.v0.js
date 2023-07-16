@@ -28,7 +28,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} line_width - value used to scale the width of the grid
    * @param {Number} nominal_voltage - system voltage
    */
-  function Grid(name, text, value, column, draw_props, heading, color, line_width, nominal_voltage) {
+  let Grid = function Grid
+    (name, text, value, column, draw_props,
+     heading, color, line_width, nominal_voltage)
+  {
       InfrastructureSet.call(this, name, text, value, column, draw_props);
       this.heading = heading || '';
       this.color = color || 'rgba(0, 0, 0, 0.5)';
@@ -50,7 +53,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} draw_props - properties used to parse the data and render
    * the visualization
    */
-  function GridAcCollection(name, text, value, column, draw_props, legend_group) {
+  let GridAcCollection = function GridAcCollection
+    (name, text, value, column, draw_props, legend_group)
+  {
     this.name = name || '';
     this.text = text || '';
     this.value = value || 0;
@@ -68,7 +73,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @returns {Array} features - an array of features matching the
    * filtered class(es)
    */
-  const _filter_features = function filter_features(infrastructure, c) {
+  const _filter_features = function filter_features
+    (infrastructure, c)
+  {
     let features = infrastructure.features.filter(function(d) {
       return d.properties.original.class === c.heading;
     });
@@ -87,7 +94,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * of `value` to get a decent inflection point. Helps determine the mid point
    * of the curve.
    */
-  const _set_line_width = function set_line_width(value, divisor) {
+  const _set_line_width = function set_line_width
+    (value, divisor)
+  {
     // TODO: Set nominal voltage as a property of the grid object
     return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1)))) / TRANSFORM.k;
   }
@@ -99,7 +108,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} obj - grid object
    * @param {String} key - lookup value from data
    */
-  const _draw_grid_class = function draw_grid_class(ctx, queued_data, obj, key) {
+  const _draw_grid_class = function draw_grid_class
+    (ctx, queued_data, obj, key)
+  {
 
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -141,7 +152,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} obj - Grid object instance
    * @returns {Number} y - updated y axis
    */
-  function _draw_legend_ac(ctx, x, y, obj) {
+  const _draw_legend_ac = function _draw_legend_ac
+    (ctx, x, y, obj)
+  {
     y += VERTICAL_INCREMENT;
     ctx.strokeStyle = obj.color;
     // Draw the square icon as a fat line
@@ -173,7 +186,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-unk_under_100.json'
    */
-  const _draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100(ctx, queued_data) {
+  const _draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100
+    (ctx, queued_data)
+  {
     _draw_grid_class(ctx, queued_data, ac_na, 'grid-unk_under_100');
     _draw_grid_class(ctx, queued_data, ac_under_100, 'grid-unk_under_100');
   };
@@ -185,7 +200,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-100_300.json'
    */
-  const _draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300(ctx, queued_data) {
+  const _draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300
+    (ctx, queued_data)
+  {
     _draw_grid_class(ctx, queued_data, ac_100_200, 'grid-100_300');
     _draw_grid_class(ctx, queued_data, ac_200_300, 'grid-100_300');
   };
@@ -197,7 +214,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-345_735.json'
    */
-  const _draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735(ctx, queued_data) {
+  const _draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735
+    (ctx, queued_data)
+  {
     _draw_grid_class(ctx, queued_data, ac_345, 'grid-345_735');
     _draw_grid_class(ctx, queued_data, ac_500, 'grid-345_735');
     _draw_grid_class(ctx, queued_data, ac_735_plus, 'grid-345_735');
@@ -210,7 +229,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-dc'
    */
-  const _draw_grid_class_dc = function draw_grid_class_dc (ctx, queued_data) {
+  const _draw_grid_class_dc = function draw_grid_class_dc
+    (ctx, queued_data)
+  {
     _draw_grid_class(ctx, queued_data, dc, 'grid-dc');
   }
 
@@ -244,7 +265,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_na_and_under_100 = function draw_legend_ac_na_and_under_100(ctx, x, y) {
+  let _draw_legend_ac_na_and_under_100 = function _draw_legend_ac_na_and_under_100
+    (ctx, x, y)
+  {
     y = _draw_legend_ac(ctx, x, y, ac_na);
     y = _draw_legend_ac(ctx, x, y, ac_under_100);
     return y;
@@ -277,7 +300,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_100_300 = function draw_legend_ac_100_300(ctx, x, y) {
+  let _draw_legend_ac_100_300 = function _draw_legend_ac_100_300
+    (ctx, x, y)
+  {
     y = _draw_legend_ac(ctx, x, y, ac_100_200);
     y = _draw_legend_ac(ctx, x, y, ac_200_300);
     return y;
@@ -316,7 +341,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  let _draw_legend_ac_345_735 = function draw_legend_ac_345_735(ctx, x, y) {
+  let _draw_legend_ac_345_735 = function _draw_legend_ac_345_735
+    (ctx, x, y)
+  {
     y = _draw_legend_ac(ctx, x, y, ac_345);
     y = _draw_legend_ac(ctx, x, y, ac_500);
     y = _draw_legend_ac(ctx, x, y, ac_735_plus);
@@ -346,7 +373,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {boolean} dashed - true if line should be dashed, false if solid
    * @returns {Number} y - updated y axis
    */
-  energy_maps.dc.draw_legend = function draw_grid_dc_legend(ctx, x, y, dashed) {
+  energy_maps.dc.draw_legend = function _draw_grid_dc_legend
+    (ctx, x, y, dashed)
+  {
     ctx.lineWidth = LEGEND_FONT_SIZE;
     ctx.strokeStyle = this.color;
     ctx.Linecap = 'butt';

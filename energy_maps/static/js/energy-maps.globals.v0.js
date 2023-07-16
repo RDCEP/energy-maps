@@ -155,7 +155,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} toggle - checkboxes or something... TBD
    */
   //TODO: Actually make this a real thing
-  energy_maps.MapBuilderUI = function MapBuilderUI(map, columns, toggle) {
+  energy_maps.MapBuilderUI = function MapBuilderUI
+    (map, columns, toggle)
+  {
     this.map = map;
     this.columns = columns;
     this.toggle = toggle;
@@ -212,7 +214,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   /**
    * @description Map projection scale to fill content area.
    */
-  energy_maps.projection_scale =  energy_maps.content_width * 1.2;
+  energy_maps.projection_scale = energy_maps.content_width * 1.2;
 
   // Possible option -- Looks good on small laptop but terrible on monitors:
   // let projection_scale =  content_width * 0.7;
@@ -268,10 +270,16 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @description Spinner element that appears while layers are loading.
    */
   energy_maps.spinner = document.getElementById('spinner');
-  energy_maps.show_spinner = function show_spinner() {
+
+  energy_maps.show_spinner = function show_spinner
+    ()
+  {
     energy_maps.spinner.style.display = 'block';
   };
-  energy_maps.hide_spinner = function hide_spinner() {
+
+  energy_maps.hide_spinner = function hide_spinner
+    ()
+  {
     energy_maps.spinner.style.display = 'none';
   };
 
@@ -280,11 +288,16 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   /**
    * @description Show the spinner and queue the layer for processing
    */
-  energy_maps.start_loading_layer = function start_loading_layer() {
+  energy_maps.start_loading_layer = function start_loading_layer
+    ()
+  {
     energy_maps.show_spinner();
     _processing_layers++;
   };
-  energy_maps.finish_loading_layer = function finish_loading_layer() {
+
+  energy_maps.finish_loading_layer = function finish_loading_layer
+    ()
+  {
     _processing_layers--;
     if (_processing_layers <= 0) {
       _processing_layers = 0;
@@ -326,7 +339,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    *                       infrastructure (pipelines or railroads)
    * @returns {Number} y - updated y axis
    */
-  energy_maps.draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
+  energy_maps.draw_line = function draw_line
+    (ctx, x, y, obj, dashed = false,
+     text)
+  {
 
     y += VERTICAL_INCREMENT;
 
@@ -344,7 +360,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     y = energy_maps.advance_for_type(y, ctx, text, TEXT_OFFSET, x);
     return y;
 
-  }
+  };
 
   return energy_maps;
 

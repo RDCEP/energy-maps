@@ -30,7 +30,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {Number} diameter - scaled value for circular symbols on the map
    * @property {Number} stroke - stroke width
    */
-   function Well(name, text, value, column, draw_props, color, legend_color) {
+  let Well = function Well
+    (name, text, value, column, draw_props,
+     color, legend_color)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.color = color;
     this.legend_color = legend_color;
@@ -81,7 +84,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {String} stroke - rgba value
    * @param {Number} width - scaled value for symbols on the map
    */
-  function Transport(name, text, value, column, draw_props, stroke, width) {
+  let Transport = function Transport
+    (name, text, value, column, draw_props,
+     stroke, width)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.stroke = stroke;
     this.width = width;
@@ -123,7 +129,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} stroke - stroke color
    * @property {Number} strokeWidth - stroke width
    */
-  function Processing(name, text, value, column, draw_props, fill, size) {
+  let Processing = function Processing
+    (name, text, value, column, draw_props,
+     fill, size)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.fill = fill;
     this.size = size;
@@ -148,7 +157,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   }
   Processing.prototype = new InfrastructureSet;
 
-  function Refinery(name, text, value, column, draw_props, fill, size) {
+  let Refinery = function Refinery
+    (name, text, value, column, draw_props, fill, size)
+  {
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.fill = fill;
     this.size = size;
@@ -184,16 +195,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * (some still loosely implemented)
      * @returns {Number} y - updated y axis
      */
-    const draw_storage_legend = function draw_storage_legend(ctx, x, y, obj, color) { // TODO: Reimplement storage.
-      // Advance vertical increment
-      y += VERTICAL_INCREMENT;
-      _draw_gas_storage(ctx, [x, y]);
-      let text = obj.text;
-      y = energy_maps.advance_for_type(y, ctx, text, TEXT_OFFSET, x);
-      return y;
-    };
+  const draw_storage_legend = function draw_storage_legend
+    (ctx, x, y, obj, color)
+  { // TODO: Reimplement storage.
+    // Advance vertical increment
+    y += VERTICAL_INCREMENT;
+    _draw_gas_storage(ctx, [x, y]);
+    let text = obj.text;
+    y = energy_maps.advance_for_type(y, ctx, text, TEXT_OFFSET, x);
+    return y;
+  };
 
-   // TODO: Add jsdoc
+  // TODO: Add jsdoc
   const oil_and_gas = {
     wells: {
   //     width: SCALE / 6,
@@ -226,7 +239,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {array} queued_data - the supplied dataset
    * @returns {Number[]} xy - Set of xy coordinates
    */
-  const get_xy = function get_xy(queued_data) {
+  const _get_xy = function _get_xy
+    (queued_data)
+  {
     // generalize it so it doesn't just apply to wells, and also strike
     // the queued data assignment bc some require two data sets
     let data = queued_data[0];
@@ -241,7 +256,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} ctx - HTML5 canvas context: bound to canvas "map layer canvas gas-pipeline"
    * @param {Array} queued_data - readfile: '/static/json/NaturalGas_InterIntrastate_Pipelines_US.geojson'
    */
-  const draw_gas_pipes = function draw_gas_pipes(ctx, queued_data) {
+  const _draw_gas_pipes = function _draw_gas_pipes
+    (ctx, queued_data)
+  {
 
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -259,7 +276,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     energy_maps.finish_loading_layer();
   };
 
-  const draw_oil_prod_pipes = function draw_oil_prod_pipes(ctx, queued_data) {
+  const _draw_oil_prod_pipes = function _draw_oil_prod_pipes
+    (ctx, queued_data)
+  {
     // TODO: Make this reference the Transport objeect oil_product_pipeline instantiated towards the end of this file, much in the same way that draw_oil_pipes() references the Transport object oil_pipeline
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -278,7 +297,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // TODO: Is there a railroad or other line drawing function that we can
   //  abstract multiple line drawing functions out to?
-  const draw_oil_pipes = function draw_pipes(ctx, queued_data) {
+  const _draw_oil_pipes = function _draw_pipes
+    (ctx, queued_data)
+  {
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
 
@@ -330,7 +351,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // TODO: Consider passing an obj so you can call its stroke, diameter,
   //  and color props
-  const _draw_well = function draw_well(ctx, xy, color) {
+  const _draw_well = function _draw_well
+    (ctx, xy, color)
+  {
     ctx.strokeStyle = color;
     ctx.lineWidth = oil_and_gas.wells.stroke / TRANSFORM.k ** .5;
     ctx.fillStyle = color;
@@ -339,7 +362,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     ctx.stroke();
   };
 
-  const _draw_off_well = function draw_off_well(ctx, xy, color) {
+  const _draw_off_well = function _draw_off_well
+    (ctx, xy, color)
+  {
     ctx.strokeStyle = color;
     ctx.lineWidth = oil_and_gas.wells.stroke / TRANSFORM.k ** .5;
     ctx.beginPath();
@@ -352,9 +377,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - readfile: '/static/csv/wells_gas1.csv'
    * & '/static/csv/wells_gas2.csv'
    */
-  const _draw_gas_wells = function _draw_gas_wells(queued_data) {
+  const _draw_gas_wells = function _draw_gas_wells
+    (queued_data)
+  {
 
-    get_xy(queued_data);
+    _get_xy(queued_data);
     _draw_well(xy, energy_maps.gas_well.color);
 
   };
@@ -364,9 +391,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - readfile: '/static/csv/wells_oil1.csv'
    * & '/static/csv/wells_oil2.csv'
    */
-  const draw_oil_wells = function draw_oil_wells(queued_data) {
+  const _draw_oil_wells = function _draw_oil_wells
+    (queued_data)
+  {
 
-    get_xy(queued_data)
+    _get_xy(queued_data)
 
     if (d.class === 'Off') {
       _draw_off_well(xy);
@@ -376,7 +405,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   };
 
-  const _draw_all_wells = function draw_all_wells(ctx, queued_data) {
+  const _draw_all_wells = function _draw_all_wells
+    (ctx, queued_data)
+  {
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
 
@@ -411,7 +442,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // TODO: Split up the JSON files based on whatever property marks
   //  processing vs. storage
-  const draw_processing = function draw_processing(ctx, queued_data) {
+  const _draw_processing = function _draw_processing
+    (ctx, queued_data)
+  {
 
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -444,7 +477,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
   // TODO: Split up the JSON files based on whatever property marks
   //  processing vs. storage
-  const draw_storage = function draw_storage(ctx, queued_data) {
+  const _draw_storage = function _draw_storage
+    (ctx, queued_data)
+  {
     let gstor = queued_data[0]; // gas storage
     gstor.forEach(function(d, i) {
       let xy = projection([+d.lon, +d.lat]);
@@ -456,7 +491,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     });
   }
 
-  const _draw_refining = function draw_refining(ctx, queued_data) {
+  const _draw_refining = function _draw_refining
+    (ctx, queued_data)
+  {
 
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -517,14 +554,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     });
   };
 
-  const _draw_gas_processor = function draw_gas_processor(ctx, xy, side) {
+  const _draw_gas_processor = function _draw_gas_processor
+    (ctx, xy, side)
+  {
     ctx.beginPath();
     ctx.fillStyle = gas_processing.fill;
     energy_maps.draw_triangle(ctx, xy, side);
     ctx.fill();
   };
 
-  const _draw_gas_storage = function draw_gas_storage(ctx, xy) {
+  const _draw_gas_storage = function _draw_gas_storage
+    (ctx, xy)
+  {
     ctx.beginPath();
     ctx.fillStyle = oil_and_gas.processing.gas_storage.fill;
     energy_maps.draw_box(ctx, xy, oil_and_gas.processing.gas_storage.size);
@@ -538,7 +579,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r
    */
-  const _draw_oil_refinery = function draw_oil_refinery(ctx, xy, r) {
+  const _draw_oil_refinery = function _draw_oil_refinery
+    (ctx, xy, r)
+  {
     const NUM_SIDES_REFIN = 6;
     r *= oil_refinery.size;
     ctx.fillStyle = oil_refinery.fill;
@@ -576,13 +619,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   };
 
   energy_maps.gas_pipeline = new Transport('gas-pipelines', 'Gas pipelines', {2012: 940_000_000_000, 2022: 940_000_000_000}, 'oil-and-gas', [{
-    draw_layer: draw_gas_pipes,
+    draw_layer: _draw_gas_pipes,
     src: [`/pipelines/gas`],
     d3_fetch: d3.json
   }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
   energy_maps.oil_product_pipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', {2012: null, 2022: null}, 'oil-and-gas', [{
-    draw_layer: draw_oil_prod_pipes,
+    draw_layer: _draw_oil_prod_pipes,
     src: [`/pipelines/petroleum_product`],
     // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
     d3_fetch: d3.json
@@ -604,7 +647,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   };
 
   energy_maps.oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
-    draw_layer: draw_oil_pipes,
+    draw_layer: _draw_oil_pipes,
     src: [`/pipelines/oil`],
     // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
     d3_fetch: d3.json,
@@ -618,7 +661,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
   energy_maps.gas_processing = new Processing('gas-processing', 'Gas processing', {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
-    draw_layer: draw_processing,
+    draw_layer: _draw_processing,
     src: [ `/processing_plants/gas`],
     d3_fetch: d3.json
   }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);

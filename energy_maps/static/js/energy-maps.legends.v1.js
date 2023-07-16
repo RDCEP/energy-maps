@@ -22,7 +22,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} x - x axis
    * @returns {Number} y - updated y axis
    */
-  energy_maps.advance_for_type = function advance_for_type(y, ctx, text, text_offset, x) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
+  energy_maps.advance_for_type = function advance_for_type
+    (y, ctx, text, text_offset, x)
+  { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text & ctx at least
     y += VERTICAL_TYPE_INCREMENT;
     ctx.fillStyle = VIZ.black;
     ctx.font = LEGEND_FONT;
@@ -38,7 +40,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
    * @returns {Number} y - updated y axis
    */
-  energy_maps.advance_vertical_increment = function advance_vertical_increment(y, ctx, color, lineWidth) { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
+  energy_maps.advance_vertical_increment = function advance_vertical_increment
+    (y, ctx, color, lineWidth)
+  { // TODO: consider taking bite size pieces out of here to make more universal. Maybe object can be passed to handle text, color, and ctx at least
     y += VERTICAL_INCREMENT;
     ctx.strokeStyle = color;
     ctx.lineWidth = lineWidth;
@@ -65,7 +69,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object[]} layers - An array of objects representing resources
    * to be rendered on top of the map canvas.
    */
-  energy_maps.update_legend = function update_legend(tmp_ctx, ctx, layers) {
+  energy_maps.update_legend = function update_legend
+    (tmp_ctx, ctx, layers)
+  {
     // FIXME: width in globals is now 850.
     energy_maps.legend.hidden = false;
     let x = 32 * SCALE;

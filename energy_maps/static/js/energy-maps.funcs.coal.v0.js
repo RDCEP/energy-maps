@@ -24,7 +24,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {String} stroke - rgba value to set the canvas stroke
    * @param {Number} width - width value set relative to SCALE
    */
-  let Coal = function Coal(name, text, value, column, draw_props, stroke, width) { // TODO: Do we need this Coal base class? Probably not.
+  let Coal = function Coal
+    (name, text, value, column, draw_props,
+     stroke, width)
+  { // TODO: Do we need this Coal base class? Probably not.
     InfrastructureSet.call(this, name, text, value, column, draw_props);
     this.stroke = stroke;
     this.width = width || 0;
@@ -49,7 +52,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} fill - rgba value to set the polygon fill color
    * @property {Number} scale - scale value applied to each polygon
    */
-  let CoalMine = function CoalMine(name, text, value, column, draw_props) {
+  let CoalMine = function CoalMine
+    (name, text, value, column, draw_props)
+  {
     Coal.call(this, name, text, value, column, draw_props);
     this.text = text;
     this.stroke = 'rgba(255, 255, 255, 1)';
@@ -68,7 +73,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       y += VERTICAL_INCREMENT;
       // TODO: decouple this func invocation from oil
       // TODO: Document or extract these magic numbers
-      draw_mine(ctx, [x, y], false,
+      _draw_mine(ctx, [x, y], false,
         1000000000 * energy_maps.oil_refinery.size, true);
       let text = this.text;
       y = energy_maps.advance_for_type(y, ctx, text, TEXT_OFFSET, x);
@@ -92,7 +97,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @property {String} stroke - rgba value to set the canvas stroke
    * @property {Number} width - width value set relative to SCALE
    */
-  let Railroad = function Railroad(name, text, value, column, draw_props) {
+  let Railroad = function Railroad
+    (name, text, value, column, draw_props)
+  {
     Coal.call(this, name, text, value, column, draw_props);
     this.text = text;
     this.stroke = '#767676';
@@ -125,7 +132,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * value relative to category.
    * @returns {Number} y - updated y-axis
    */
-  function setRadius(radius, scale) {
+  const _setRadius = function _setRadius
+    (radius, scale)
+  {
     radius = Math.sqrt(radius / Math.PI) * scale;
     return radius;
   }
@@ -140,13 +149,15 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Boolean} is_legend - Flag to determine whether the mine
    * is being drawn to the legend.
    */
-  const draw_mine = function draw_mine(ctx, xy, color, r, is_legend) {
+  const _draw_mine = function _draw_mine
+    (ctx, xy, color, r, is_legend)
+  {
     const NUM_SIDES_MINE = 5;
     // Without this condition, the mine scales on the legend too.
     if (is_legend) {
-      r = setRadius(r, energy_maps.coal_mine.scale);
+      r = _setRadius(r, energy_maps.coal_mine.scale);
     } else {
-      r = setRadius(r, energy_maps.coal_mine.scale / TRANSFORM.k);
+      r = _setRadius(r, energy_maps.coal_mine.scale / TRANSFORM.k);
     }
     ctx.strokeStyle = energy_maps.coal_mine.stroke;
     ctx.strokeWidth = energy_maps.coal_mine.width / TRANSFORM.k;
@@ -169,8 +180,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * ".map.layer.canvas.coal-mine"
    * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
    */
-   const draw_coal_mines = function draw_coal_mines(ctx, queued_data) {
-
+   const _draw_coal_mines = function _draw_coal_mines
+    (ctx, queued_data)
+  {
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
 
@@ -193,7 +205,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       if (xy === null) {
         //
       } else {
-        draw_mine(ctx, xy, viz.black, +d.properties.original.tot_prod, false);
+        _draw_mine(ctx, xy, viz.black, +d.properties.original.tot_prod, false);
       }
       if (i === mines.length - 1) {
         energy_maps.finish_loading_layer();
@@ -207,7 +219,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * ".map.layer.canvas.railroad"
    * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
    */
-  const draw_railroads = function draw_railroads(ctx, queued_data) {
+  const _draw_railroads = function _draw_railroads
+    (ctx, queued_data)
+  {
 
     energy_maps.path.context(ctx);
     energy_maps.clip_region(ctx);
@@ -233,7 +247,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   energy_maps.coal_mine = new CoalMine(
     'coal-mines', 'Coal mines', {2012: 41_474_000_000, 2022: null},
     'coal', [{
-      draw_layer: draw_coal_mines,
+      draw_layer: _draw_coal_mines,
       src: [ `/mines/coal` ],
       d3_fetch: d3.json
   }]);
@@ -242,7 +256,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   energy_maps.railroad = new Railroad(
     'railroads', 'Railroads', {2012: 137_000_000_000, 2022: 137_000_000_000},
     'coal', [{
-      draw_layer: draw_railroads,
+      draw_layer: _draw_railroads,
       // The API/db will have "nominal_year" and "actual_year" as object properties for a "year" object
       // So this should look something like:
       // src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
