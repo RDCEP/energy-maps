@@ -267,8 +267,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     // const path = get_path(ctx);
 
     ctx.lineCap = 'round';
-    ctx.strokeStyle = gas_pipeline.stroke;
-    ctx.lineWidth = gas_pipeline.width / TRANSFORM.k;
+    ctx.strokeStyle = energy_maps.gas_pipeline.stroke;
+    ctx.lineWidth = energy_maps.gas_pipeline.width / TRANSFORM.k;
     ctx.beginPath();
     energy_maps.path(pipe_data);
     ctx.stroke();
@@ -304,8 +304,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     energy_maps.clip_region(ctx);
 
     let oil_pipe_data = queued_data[0];
-    ctx.strokeStyle = oil_pipeline.stroke;
-    ctx.lineWidth = oil_pipeline.width / TRANSFORM.k;
+    ctx.strokeStyle = energy_maps.oil_pipeline.stroke;
+    ctx.lineWidth = energy_maps.oil_pipeline.width / TRANSFORM.k;
     ctx.beginPath();
     energy_maps.path(oil_pipe_data);
     ctx.stroke();
@@ -422,15 +422,15 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       } else {
         if (d.properties.original.oilgas === 'GAS') {
           if (d.properties.original.class === 'Off') {
-            _draw_off_well(ctx, xy, gas_well.color);
+            _draw_off_well(ctx, xy, energy_maps.gas_well.color);
           } else {
-            _draw_well(ctx, xy, gas_well.color);
+            _draw_well(ctx, xy, energy_maps.gas_well.color);
           }
         } else {
           if (d.properties.original.class === 'Off') {
-            _draw_off_well(ctx, xy, oil_well.color);
+            _draw_off_well(ctx, xy, energy_maps.oil_well.color);
           } else {
-            _draw_well(ctx, xy, oil_well.color);
+            _draw_well(ctx, xy, energy_maps.oil_well.color);
           }
         }
       }
@@ -458,7 +458,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       // Figure out why new data draws above US northern border
       for (coord in xy) {
         if (coord != null) {
-          _draw_gas_processor(ctx, xy, gas_processing.size);
+          _draw_gas_processor(ctx, xy, energy_maps.gas_processing.size);
         } else {
           console.log(coord);
         }
@@ -482,10 +482,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   {
     let gstor = queued_data[0]; // gas storage
     gstor.forEach(function(d, i) {
-      let xy = projection([+d.lon, +d.lat]);
+      let xy = energy_maps.projection([+d.lon, +d.lat]);
       _draw_gas_storage(ctx, xy);
       if (i === gstor.length - 1) {
-        hide_spinner();
+        energy_maps.hide_spinner();
       }
       return xy;
     });
@@ -545,7 +545,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
           ctx.lineWidth = oil_and_gas.processing.stroke.width / TRANSFORM.k;
           ctx.beginPath();
           // draw the outline
-          energy_maps.draw_polygon(6, ctx, oil_refinery.size * d.r / TRANSFORM.k ** .5, xy)
+          energy_maps.draw_polygon(6, ctx, energy_maps.oil_refinery.size * d.r / TRANSFORM.k ** .5, xy)
           ctx.stroke();
         }
         else {
@@ -583,8 +583,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     (ctx, xy, r)
   {
     const NUM_SIDES_REFIN = 6;
-    r *= oil_refinery.size;
-    ctx.fillStyle = oil_refinery.fill;
+    r *= energy_maps.oil_refinery.size;
+    ctx.fillStyle = energy_maps.oil_refinery.fill;
     ctx.beginPath();
     energy_maps.draw_polygon(NUM_SIDES_REFIN, ctx, r, xy);
     ctx.fill();
