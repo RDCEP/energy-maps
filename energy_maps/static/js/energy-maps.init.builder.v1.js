@@ -453,7 +453,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   //   }
   // };
 
-  LAYERS.push(energy_maps.wind_map);
   LAYERS.push(energy_maps.state_boundaries);
 
   // Coal
@@ -496,6 +495,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   // TODO: push biofuel in when you have data with a valid scaling value
   LAYERS.push(energy_maps.biofuel);
   // layers.push(bio_plants);
+
+  LAYERS.push(energy_maps.wind_map);
 
   let lay = LAYERS.length;
   // TODO: Why is this here? Shouldn't it be passed to funcs as we
