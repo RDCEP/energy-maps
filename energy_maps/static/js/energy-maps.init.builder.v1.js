@@ -503,57 +503,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   // create checkboxes?
   let checkbox_span;
 
-  /**
-   * @description An array of named objects representing button column names to
-   * be shown at the top of the checkbox selection menu.
-   * @property {string} name - an HTML/CSS ID that will be assigned to the
-   * markup dynamically and ultimately formatted for case and plain-English
-   * spacing to label the columns.
-   * @memberof Init
-   */
-  const button_columns = [
-    [{ name: 'oil-and-gas',
-       text: 'Oil and gas'
-    }],
-    [{ name: 'coal',
-       text: 'Coal'
-    },
-    {  name: 'layers',
-       text: 'Layers'
-    }],
-    [{ name: 'electricity-generation',
-       text: 'Electricity generation'
-    }],
-    [{ name: 'electricity-transmission-and-distribution',
-       text: 'Electricity trans. & dist.'
-    }],
-  ];
-
-  let cols = button_columns.length;
-
-  /**
-   * @description Initialize and display all menu columns that divide
-   * checkboxes into categories.
-   * @memberof Init
-   * TODO: We're no longer using columns in the new design. Remove this.
-   */
-  const initMenuColumns = function initMenuColumns
-    ()
-  {
-    for (let i = 0; i < cols; ++i) {
-      let column_divs = d3.select('.options.canvas')
-        .append('div')
-        .attr('class', () => {return `column`});
-      for (let j = 0; j < button_columns[i].length; j++) {
-        let col = button_columns[i][j];
-        column_divs.append('div')
-          .attr('class', () => { return `${col.name}`})
-          .append('h4')
-          .text(col.text);
-      }
-    }
-  };
-
   const initMenuAsteriskNote = function initMenuAsteriskNote
     ()
   {
