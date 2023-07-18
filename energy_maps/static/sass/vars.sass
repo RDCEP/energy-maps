@@ -13,3 +13,29 @@ $dark_foreground: $black
 $options_width: 20rem
 $options_left: 2rem
 $options_right: 3.5rem
+
+$legend_width: 20rem
+
+$z_header: 990
+$z_options: 800
+$z_options_zoom: 870
+$z_options_toggle: 880
+$z_options_dragging: 890
+$z_legend: 700
+$z_options_toggle: 780
+$z_main_map: 510
+$z_zoom_target: 590
+
+@mixin ui_heads
+  text-transform: uppercase
+  letter-spacing: .08em
+  font-size: 1rem
+  font-weight: 900
+  text-align: center
+  color: $black
+
+@mixin toggle
+  position: absolute
+  display: flex
+  justify-content: center
+  align-items: center

@@ -57,11 +57,19 @@
     </div>
   </dialog>
 
-  <details class="">
-    <summary>Legend</summary>
-    <div class="legend canvas"></div>
-    <div class="legend tmpcanvas"></div>
-  </details>
+  <div class="legend" data-toggle-state=load>
+    <div class=shim>
+      <h6>Legend</h6>
+      <div class="legend-canvas"></div>
+      <div class="legend-tmpcanvas"></div>
+      <div class=legend-toggle>
+        <div class=shade>
+        </div>
+        <div class=legend-toggle-arrow
+             uk-icon="icon: chevron-up; ratio: 3"></div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 

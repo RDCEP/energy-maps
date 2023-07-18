@@ -19,7 +19,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @memberof Init
    */
   const legend_canvas = d3
-    .select('.legend.canvas')
+    .select('.legend-canvas')
     .append('canvas')
     .attr('width', 400)
     .attr('height', 0);
@@ -33,7 +33,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   legend_ctx.lineCap = 'round';
 
   const legend_tmpcanvas = d3
-    .select('.legend.tmpcanvas')
+    .select('.legend-tmpcanvas')
     .append('canvas')
     .attr('width', 400)
     .attr('height', 1000);
@@ -127,10 +127,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       }
     }
 
-    d3.select('.legend.canvas canvas')
+    d3.select('.legend-canvas canvas')
       .attr('height', y+20)
       .node().getContext('2d')
-      .drawImage(d3.select('.legend.tmpcanvas canvas').node(), 0, 0);
+      .drawImage(d3.select('.legend-tmpcanvas canvas').node(), 0, 0);
 
   };
 
