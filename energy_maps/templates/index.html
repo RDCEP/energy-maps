@@ -6,9 +6,9 @@
       <img src="../static/images/rdcep_logo.png" alt="RDCEP logo"/>
     </div>
   </div>
-  <h1>
+  <h1><a href="#options" uk-toggle>
     US Energy<br/>Infrastructure
-  </h1>
+  </a></h1>
   <h2>
     <span class=asset-total>$0</span>
     <span class="asset-total-tag">
@@ -29,7 +29,7 @@
 
   <div class="map layer zoom-target"></div>
 
-  <dialog class="options">
+  <dialog class="options" data-toggle-state=load>
     <div class="shim">
     <div class="container">
       <section>
@@ -40,7 +40,6 @@
       <section class=options-list>
         <h6>Map options</h6>
         <ul uk-sortable data-handle=".uk-sortable-handle">
-{#        <ul uk-sortable data-handle=".uk-sortable-handle" data-cls-drag="dragging">#}
           <!-- Checkboxes render here -->
         </ul>
       </section>
@@ -49,6 +48,12 @@
       <div class=zoom-in uk-icon="icon: plus; uk-ratio: 2"></div>
       <div class=zoom-out uk-icon="icon: minus"></div>
     </div>
+    </div>
+    <div class=options-toggle>
+      <div class=shade>
+      </div>
+      <div class=options-toggle-arrow
+           uk-icon="icon: chevron-left; ratio: 3"></div>
     </div>
   </dialog>
 

@@ -8,6 +8,7 @@
   margin: 0 0 1em
   padding-left: 1.5rem
   overflow: visible
+  color: $black
   &.inactive
     color: $dark_grey
   label
@@ -91,3 +92,54 @@
       background-color: $white
       height: 2rem
       width: 2rem
+.options-toggle
+  position: absolute
+  display: flex
+  justify-content: center
+  right: 0
+  align-items: center
+  height: 4rem
+  width: 2rem
+  top: 17rem
+  z-index: 999
+  .shade
+    position: absolute
+    top: 0
+    height: 0
+    width: 0
+    border-width: 2rem 2rem 2rem 0
+    border-color: transparent $darkblue transparent transparent
+    border-style: solid
+  .uk-icon
+    color: $white
+.options
+  &[data-toggle-state=open]
+    animation-name: options_open
+    animation-duration: .5s
+    left: 0
+    .options-toggle
+      right: 0
+      .shade
+        border-width: 2rem 2rem 2rem 0
+        border-color: transparent $darkblue transparent transparent
+  &[data-toggle-state=close]
+    animation-name: options_close
+    animation-duration: .5s
+    left: -($options_width - 1rem)
+    .options-toggle
+      left: 100%
+      .shade
+        border-width: 2rem 0 2rem 2rem
+        border-color: transparent transparent transparent $darkblue
+      .options-toggle-arrow
+        transform: scaleX(-1)
+@keyframes options_open
+  from
+    left: -($options_width - 1rem)
+  to
+    left: 0
+@keyframes options_close
+  from
+    left: 0
+  to
+    left: -($options_width - 1rem)

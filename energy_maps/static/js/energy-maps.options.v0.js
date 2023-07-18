@@ -185,6 +185,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     energy_maps.draw_active_layers(TRANSFORM);
   });
 
+  const _options_toggle = function options_toggle
+    ()
+  {
+    const options = d3.select('.options');
+    (options.attr('data-toggle-state') === 'load')
+    ? options.attr('data-toggle-state', 'close')
+    : (options.attr('data-toggle-state') === 'open')
+    ? options.attr('data-toggle-state', 'close')
+    : options.attr('data-toggle-state', 'open');
+  };
+
+  d3.select('.options-toggle').on('click', _options_toggle);
+
   initMenu();
 
   const DEFAULT_LAYERS = [energy_maps.state_boundaries];
