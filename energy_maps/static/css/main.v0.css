@@ -29,7 +29,6 @@ body, html {
 header {
   position: absolute;
   top: 0;
-  pointer-events: none;
 }
 
 main .content-wrap {
