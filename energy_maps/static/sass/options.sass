@@ -18,7 +18,8 @@
     //flex-basis: content
     width: 1em
     position: absolute
-    right: 13.5rem
+    right: $options_width - 6.5rem
+    //right: 13.5rem
     display: inline-block
     line-height: 1.45em
   .option-title
@@ -40,13 +41,12 @@
     width: 13rem!important
 .options
   display: block
-  position: absolute
+  position: relative
+  width: $options_width
   top: 0
   bottom: 0
   left: 0
   height: 100%
-  overflow-y: auto
-  overflow-x: hidden
   background-color: $white
   border: none
   border-right: 2px solid $darkblue
@@ -57,7 +57,7 @@
     z-index: 1000
   .container
     padding: 6.75rem 0 2rem 0
-    width: 20rem
+    width: $options_width
   h6
     text-transform: uppercase
     letter-spacing: .08em
@@ -73,3 +73,21 @@
     padding: 0 3.5rem 0 2rem
   p
     padding: 0 2rem
+  .shim
+    overflow-x: hidden
+    overflow-y: auto
+    height: 100%
+    width: $options_width
+  .zoom
+    position: absolute
+    left: 100%
+    bottom: 1rem
+    padding-left: 1rem
+    z-index: 999
+    .zoom-in, .zoom-out
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: $white
+      height: 2rem
+      width: 2rem
