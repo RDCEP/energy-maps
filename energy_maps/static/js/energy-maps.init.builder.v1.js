@@ -220,13 +220,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     });
   }
 
-
   create_year_button(2012, "$9.8T");
   create_year_button(2022, "$9.8T");
-
-  // TODO: Why is this here? Shouldn't it be passed to funcs as we
-  // create checkboxes?
-  let checkbox_span;
 
   const initMenuAsteriskNote = function initMenuAsteriskNote
     ()
