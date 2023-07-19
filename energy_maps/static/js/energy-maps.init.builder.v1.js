@@ -162,9 +162,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
       layers = layers.map(x => {
         if (x.active) {
-          console.log(x);
           energy_maps.removeLayer(x, TRANSFORM);
-          // addLayer(x, transform);
         }
         return x
       })
@@ -243,22 +241,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   // Load base map and any layers you want on by default
 
   energy_maps.draw_base_map(TRANSFORM);
-
-  // FIXME: This probably doesn't belong here in the code.
-  // From: https://stackoverflow.com/questions/41607804/promise-each-without-bluebird
-  Promise.each = function(arr, fn) { // take an array and a function
-    // invalid input
-    if (!Array.isArray(arr)) {
-      return Promise.reject(new Error("Non array passed to each"));
-    }
-    // empty case
-    if (arr.length === 0) {
-      return Promise.resolve();
-    }
-    return arr.reduce(function(prev, cur) {
-      return prev.then(() => fn(cur))
-    }, Promise.resolve());
-  };
 
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
