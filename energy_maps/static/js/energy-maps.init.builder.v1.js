@@ -43,7 +43,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * of the data from fmap and fmapfill
    * @memberof Init
    */
-  energy_maps.draw_base_map = function draw_base_map(transform) {
+  const draw_base_map = function draw_base_map
+    (transform)
+  {
     Promise.all(
       [d3.json(fmap)]
     ).then(function(files) {
@@ -51,11 +53,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     });
   };
 
-  var layers_to_redraw = []
-  var cboxes_to_check = []
+  let layers_to_redraw = []
+  let cboxes_to_check = []
   let unchanged_layers_2022 = []
 
-  let create_year_button = function create_year_button
+  const create_year_button = function create_year_button
     (btn_val, year_val)
   {
     let btn = document.createElement("button");
@@ -233,10 +235,6 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .text('* 2012 asset values used');
   }
 
-  // Load base map and any layers you want on by default
-
-  energy_maps.draw_base_map(TRANSFORM);
-
   function fix_dpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
     let style_height = +getComputedStyle(canvas)
@@ -248,6 +246,9 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('width', style_width * dpi);
   }
 
+  draw_base_map(TRANSFORM);
+
+  energy_maps.draw_base_map = draw_base_map;
   energy_maps.base_canvas = base_canvas;
   energy_maps.base_ctx = base_ctx;
 

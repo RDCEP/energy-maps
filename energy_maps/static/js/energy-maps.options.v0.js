@@ -121,6 +121,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return lyr.checkbox;
   };
 
+  /**
+   * @description Initializes the creation of the map options menu.
+   * @return
+   * @memberof
+   */
   const initMenu = function initMenu
     ()
   {
@@ -159,7 +164,16 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     }
   };
 
-  const _sort_on_taget = function _sort_on_taget
+  /**
+   * @description Sorts on array of objects based on the value of one key
+   * so that the array's order matches the order of another array of values
+   * @param {Array} sort_array The array to sort
+   * @param {Array} target_array The array to use as the order of sorting
+   * @param {String} key The name of the key to sort by
+   * @return {Array} The sorted array of objects
+   * @memberof
+   */
+  const _sort_on_target = function _sort_on_target
     (sort_array, target_array, key)
   {
     sort_array.sort( function (a, b) {
@@ -169,22 +183,31 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     return sort_array;
   };
 
-  d3.selectAll('.checkbox')
-    .on('mousedown', function () {
-      d3.event.stopPropagation();
-    });
-
-  d3.select('.options-list ul').on('stop', function() {
+  /**
+   * @description Sort and redraw the layers of the map based on the order
+   * of the map options
+   * @return
+   * @memberof
+   */
+  const _sort_map_layers = function _sort_map_layers
+    ()
+  {
     const that = d3.select(this);
     let target = [];
     let options = that.selectAll('.option-li input')
       .each(function (d, i) {
         target[i] = d3.select(this).node().getAttribute('data-layername')
       });
-    LAYERS = _sort_on_taget(LAYERS, target, 'name');
+    LAYERS = _sort_on_target(LAYERS, target, 'name');
     energy_maps.draw_active_layers(TRANSFORM);
-  });
+  };
 
+  /**
+   * @description Toggle the visibility of the options layer when the user
+   * clicks on the 'triangle'
+   * @return
+   * @memberof
+   */
   const _options_toggle = function options_toggle
     ()
   {
@@ -196,12 +219,22 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     : options.attr('data-toggle-state', 'open');
   };
 
-  d3.select('.options-toggle').on('click', _options_toggle);
+  d3.select('.options-toggle')
+    .on('click', _options_toggle);
 
+  d3.selectAll('.checkbox')
+    .on('mousedown', function () {
+      d3.event.stopPropagation();
+    });
+
+  d3.select('.options-list ul')
+    .on('stop', _sort_map_layers);
+
+  // Initialize the options menu
   initMenu();
 
+  // Draw the default layers of the map
   const DEFAULT_LAYERS = [energy_maps.state_boundaries];
-
   DEFAULT_LAYERS.map(x => {
     document.querySelector(`.option-li input.${x.name}`).click();
   });
