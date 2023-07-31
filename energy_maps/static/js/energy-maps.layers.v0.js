@@ -1,4 +1,4 @@
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -7,8 +7,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @description the total sum of asset values for all active layers
    * @memberof Init
    */
-  const _sum_asset_totals = function _sum_asset_totals() {
-    var asset_total_sum = 0;
+  const _sumAssetTotals = function _sumAssetTotals
+    ()
+  {
+    let assetTotalSum = 0;
     console.log(ACTIVE_LAYERS)
     for (let i = 0, l = ACTIVE_LAYERS.length; i < l; i++) {
       if (ACTIVE_LAYERS[i].name !== 'state-boundaries' &&
@@ -16,10 +18,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       {
         // active layers value starts as undefined
         console.log(`active layers value ${ACTIVE_LAYERS[i].value[DATA_YEAR]}`)
-        asset_total_sum += ACTIVE_LAYERS[i].value[DATA_YEAR];
+        assetTotalSum += ACTIVE_LAYERS[i].value[DATA_YEAR];
       }
     }
-    return asset_total_sum;
+    return assetTotalSum;
   }
 
   /**
@@ -29,16 +31,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * was previously used for currency formatting.
    * @memberof Init
    */
-  const _display_asset_total = function _display_asset_total() {
+  const _displayAssetTotal = function _displayAssetTotal
+    ()
+  {
     // FIXME: This is a horrible kludge in order to get space before units.
     //  Need to write a proper formatter.
     document.getElementsByClassName('asset-total')[0]
-      .innerHTML = `${d3.format('$.2~s')(_sum_asset_totals())
+      .innerHTML = `${d3.format('$.2~s')(_sumAssetTotals())
       .replace(/G/, ' B')
       .replace(/T/, ' T')}`;
   };
 
-  const set_layers = function set_layers
+  const setLayers = function setLayers
     ()
   {
 
@@ -46,50 +50,50 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
       let _L = [];
 
-      _L.push(energy_maps.state_boundaries);
+      _L.push(EnergyMaps.stateBoundaries);
 
       // Coal
-      _L.push(energy_maps.coal_mine);
-      _L.push(energy_maps.railroad);
+      _L.push(EnergyMaps.coalMine);
+      _L.push(EnergyMaps.railroad);
 
       // AC
-      _L.push(energy_maps.ac_na_and_under_100);
-      _L.push(energy_maps.ac_100_300);
-      _L.push(energy_maps.ac_345_735);
+      _L.push(EnergyMaps.AcNaAndUnder100);
+      _L.push(EnergyMaps.Ac100300);
+      _L.push(EnergyMaps.Ac345735);
 
       // DC
-      _L.push(energy_maps.dc);
+      _L.push(EnergyMaps.dc);
 
       // Distribution
-      _L.push(energy_maps.distribution);
+      _L.push(EnergyMaps.distribution);
 
       // Oil and Gas
-      _L.push(energy_maps.gas_well);
-      _L.push(energy_maps.oil_well);
-      _L.push(energy_maps.foreign_oil_wells);
-      _L.push(energy_maps.foreign_gas_wells);
-      _L.push(energy_maps.gas_pipeline);
-      _L.push(energy_maps.oil_pipeline);
-      _L.push(energy_maps.oil_product_pipeline);
-      _L.push(energy_maps.oil_refinery);
-      _L.push(energy_maps.gas_processing);
-      _L.push(energy_maps.oil_and_gas_storage);
+      _L.push(EnergyMaps.gasWell);
+      _L.push(EnergyMaps.oilWell);
+      _L.push(EnergyMaps.foreignOilWells);
+      _L.push(EnergyMaps.foreignGasWells);
+      _L.push(EnergyMaps.gasPipeline);
+      _L.push(EnergyMaps.oilPipeline);
+      _L.push(EnergyMaps.oilProductPipeline);
+      _L.push(EnergyMaps.oilRefinery);
+      _L.push(EnergyMaps.gasProcessing);
+      _L.push(EnergyMaps.oilAndGasStorage);
 
       // Plants
-      _L.push(energy_maps.coal_plants);
-      _L.push(energy_maps.ng_plants);
-      _L.push(energy_maps.pet_plants);
-      _L.push(energy_maps.nuc_plants);
-      _L.push(energy_maps.hyc_plants);
-      _L.push(energy_maps.wnd_farms);
-      _L.push(energy_maps.solar_plants);
-      _L.push(energy_maps.geo_plants);
+      _L.push(EnergyMaps.coalPlants);
+      _L.push(EnergyMaps.naturalGasPlants);
+      _L.push(EnergyMaps.petroleumPlants);
+      _L.push(EnergyMaps.nuclearPlants);
+      _L.push(EnergyMaps.hydroPlants);
+      _L.push(EnergyMaps.windFarms);
+      _L.push(EnergyMaps.solarPlants);
+      _L.push(EnergyMaps.geothermalPlants);
 
       // TODO: push biofuel in when you have data with a valid scaling value
-      _L.push(energy_maps.biofuel);
+      _L.push(EnergyMaps.biofuel);
       // layers.push(bio_plants);
 
-      _L.push(energy_maps.wind_map);
+      _L.push(EnergyMaps.windMap);
 
       return _L;
 
@@ -106,17 +110,17 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @memberof Init
    */
 
-  const _load_layer_data = function _load_layer_data
+  const _loadLayerData = function _loadLayerData
     (lyr)
   {
-  if (lyr === energy_maps.oil_pipeline) {
-    let lyrs = [energy_maps.oil_pipeline, energy_maps.oil_product_pipeline];
+  if (lyr === EnergyMaps.oilPipeline) {
+    let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
     for (let i = 0, lyrs_length = lyrs.length; i < lyrs_length; ++i) {
-      energy_maps.start_loading_layer();
+      EnergyMaps.startLoadingLayer();
       // TODO: Figure out why prod pipes legend is no longer showing
       Promise.all(
-        lyrs[i].draw_props[0].src.map(
-          x => lyrs[i].draw_props[0].d3_fetch(
+        lyrs[i].drawProps[0].src.map(
+          x => lyrs[i].drawProps[0].d3Fetch(
             `${API_URL_PREFIX}${x}`
           )))
         .then(function(files) {
@@ -124,53 +128,53 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
           lyrs[i].context.save();
           return files;
         }).then(files => {
-          energy_maps.transform_layer(lyrs[i].context, TRANSFORM);
-          console.time('draw_layer')
-          lyrs[i].draw_props[0].draw_layer(lyrs[i].context, files);
-          console.timeEnd('draw_layer')
+          EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
+          console.time('drawLayer')
+          lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
+          console.timeEnd('drawLayer')
           // console.log(lyr.draw_props[i].src)
-          console.log(`${API_URL_PREFIX}${lyr.draw_props[0].src}`)
+          console.log(`${API_URL_PREFIX}${lyr.drawProps[0].src}`)
         });
     }
   } else {
-      for (let i = 0, num_draw_props = lyr.draw_props.length; i < num_draw_props; ++i) {
-        energy_maps.start_loading_layer();
+      for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
+        EnergyMaps.startLoadingLayer();
         if (lyr.name !== 'state-boundaries' && lyr.name !== 'wind-capacity') {
           // unused commented section for future reference
           // currently adding the entirety of the previous src string each time pressed
           // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
           // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
 
-          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(
+          Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(
             `${API_URL_PREFIX}${x}`)))
           .then(function(files) {
             lyr.context.restore();
             lyr.context.save();
             return files;
           }).then(files => {
-            energy_maps.transform_layer(lyr.context, TRANSFORM);
+            EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
             return files;
           }).then(files => {
-            console.time('draw_layer');
-            lyr.draw_props[i].draw_layer(lyr.context, files);
-            console.timeEnd('draw_layer');
-            console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`);
+            console.time('drawLayer');
+            lyr.drawProps[i].drawLayer(lyr.context, files);
+            console.timeEnd('drawLayer');
+            console.log(`${API_URL_PREFIX}${lyr.drawProps[i].src}`);
           });
         }
         else {
-          Promise.all(lyr.draw_props[i].src.map(x => lyr.draw_props[i].d3_fetch(x)))
+          Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
           .then(function(files) {
             lyr.context.restore();
             lyr.context.save();
             return files;
           }).then(files => {
-            energy_maps.transform_layer(lyr.context, TRANSFORM);
+            EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
             return files;
           }).then(files => {
-            console.time('draw_layer');
-            lyr.draw_props[i].draw_layer(lyr.context, files);
-            console.timeEnd('draw_layer');
-            console.log(`${API_URL_PREFIX}${lyr.draw_props[i].src}`);
+            console.time('drawLayer');
+            lyr.drawProps[i].drawLayer(lyr.context, files);
+            console.timeEnd('drawLayer');
+            console.log(`${API_URL_PREFIX}${lyr.drawProps[i].src}`);
           });
         }
       }
@@ -186,15 +190,15 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     (lyr, transform)
   {
     console.time('load_layer_data');
-    _load_layer_data(lyr, transform);
+    _loadLayerData(lyr, transform);
     console.timeEnd('load_layer_data');
     // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
-    if (lyr === energy_maps.oil_pipeline) {
-      energy_maps.oil_product_pipeline.active = true;
+    if (lyr === EnergyMaps.oilPipeline) {
+      EnergyMaps.oilProductPipeline.active = true;
     }
     ACTIVE_LAYERS.push(lyr);
-    _display_asset_total();
+    _displayAssetTotal();
     return ACTIVE_LAYERS;
   };
 
@@ -206,17 +210,17 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   const removeLayer = function removeLayer
     (lyr)
   {
-    energy_maps.hide_spinner();
-    lyr.context.clearRect(0, 0, WIDTH, HEIGHT);
+    EnergyMaps.hideSpinner();
+    lyr.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
     lyr.active = false;
-    if (lyr === energy_maps.oil_pipeline) {
-      energy_maps.oil_product_pipeline.context.clearRect(0, 0, WIDTH, HEIGHT);
-      energy_maps.oil_product_pipeline.active = false;
+    if (lyr === EnergyMaps.oilPipeline) {
+      EnergyMaps.oilProductPipeline.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
+      EnergyMaps.oilProductPipeline.active = false;
     }
     // active_layers.pop(lyr);
     // ACTIVE_LAYERS.indexOf(lyr);
     ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1);
-    _display_asset_total();
+    _displayAssetTotal();
   };
 
   // initMenuAsteriskNote();
@@ -236,8 +240,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('class', `map layer ${lyr.name}`)
       .append('canvas')
       .attr('class', `canvas ${lyr.name}`)
-      .attr('width', WIDTH)
-      .attr('height', HEIGHT);
+      .attr('width', EnergyMaps.width)
+      .attr('height', EnergyMaps.height);
   };
 
   /**
@@ -253,33 +257,33 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     lyr.active = false;
   };
 
-  const draw_active_layers = function draw_active_layers
+  const drawActiveLayers = function drawActiveLayers
     (transform)
   {
-    const layers = energy_maps.set_layers();
+    const layers = EnergyMaps.setLayers();
     layers.map(layer => {
       if (layer.active === true) {
         console.time('load_layer_data');
-        _load_layer_data(layer);
+        _loadLayerData(layer);
         console.timeEnd('load_layer_data');
       } else {
         layer.context.restore();
         layer.context.save();
-        energy_maps.transform_layer(layer.context, TRANSFORM);
+        EnergyMaps.transformLayer(layer.context, EnergyMaps.transform);
       }
       return layer;
     });
   };
 
-  LAYERS = set_layers();
+  LAYERS = setLayers();
 
-  energy_maps.set_layers = set_layers;
-  energy_maps.draw_active_layers = draw_active_layers;
-  energy_maps.removeLayer = removeLayer;
-  energy_maps.addLayer = addLayer;
-  energy_maps.addLayerCanvas = addLayerCanvas;
-  energy_maps.addCanvasContext = addCanvasContext;
+  EnergyMaps.setLayers = setLayers;
+  EnergyMaps.drawActiveLayers = drawActiveLayers;
+  EnergyMaps.removeLayer = removeLayer;
+  EnergyMaps.addLayer = addLayer;
+  EnergyMaps.addLayerCanvas = addLayerCanvas;
+  EnergyMaps.addCanvasContext = addCanvasContext;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});

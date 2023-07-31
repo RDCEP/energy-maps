@@ -5,7 +5,7 @@
  * @module Plants
  */
 
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -20,31 +20,31 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {String} text - text displayed in the legend
    * @param {Number} value - asset value in USD
    * @param {String} column - class attribute for corresponding column
-   * @param {Array} draw_props - properties used to parse the data and render
+   * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
-   * @param {String} fuel_type - class heading from the data file
+   * @param {String} fuelType - class heading from the data file
    * @param {String} color - rgba value used to draw the grid line
    * @param {String} stroke - rgba value used for symbol outlines and opacity
    */
   let PowerPlant = function PowerPlant
-    (name, text, value, column, draw_props,
-     fuel_type, color, stroke)
+    (name, text, value, column, drawProps,
+     fuelType, color, stroke)
   {
-    InfrastructureSet.call(this, name, text, value, column, draw_props);
-    this.fuel_type = fuel_type || '';
+    EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
+    this.fuelType = fuelType || '';
     this.color = color || 'rgba(0, 0, 0, 0.5)';
-    this.stroke = stroke || plant_stroke;
-    this.z_index = 0;
+    this.stroke = stroke || plantStroke;
+    this.zIndex = 0;
     /**
      * Draw power plant legend to its HTML5 canvas context.
      * @param {Object} ctx - HTML5 canvas context
      * @param {Number} x - x axis
      * @param {Number} y - y axis
      */
-    this.draw_legend = function draw_power_plant_legend(ctx, x, y) {
+    this.drawLegend = function drawPowerPlantLegend(ctx, x, y) {
       ctx.fillStyle = this.color;
       ctx.strokeStyle = this.stroke;
-      ctx.lineWidth = _electricity_generation.stroke.width;
+      ctx.lineWidth = _electricityGeneration.stroke.width;
 
       // TODO: The vertical increment spacing is different for power plants
       //  because their icons are larger than others. Should we apply one
@@ -52,33 +52,32 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       //  the way it is?
       y += 18 * SCALE;
       ctx.beginPath();
-      energy_maps.draw_circle(ctx, [x, y], 7 * SCALE);
+      EnergyMaps.drawCircle(ctx, [x, y], 7 * SCALE);
       ctx.stroke();
       ctx.fill();
 
       let text = this.text;
-      y = energy_maps.advance_for_type(y, ctx, text, text_offset, x);
+      y = EnergyMaps.advanceForType(y, ctx, text, text_offset, x);
       return y;
     };
   }
-  PowerPlant.prototype = new InfrastructureSet;
+  PowerPlant.prototype = new EnergyMaps.InfrastructureSet;
 
   let WindSpeed = function WindSpeed
-    (name, text, value, column, draw_props, long, lat, speed)
+    (name, text, value, column, drawProps, long, lat, speed)
   {
-    InfrastructureSet.call(this, name, text, value, column, draw_props);
+    EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.long = long;
     this.lat = lat;
     this.speed = speed;
     // Add direction if available
-    this.draw_legend = function draw_wind_speed_legend(ctx, x, y) {
+    this.drawLegend = function drawWindSpeedLegend(ctx, x, y) {
       // do stuff
     };
   }
-  WindSpeed.prototype = new InfrastructureSet;
+  WindSpeed.prototype = new EnergyMaps.InfrastructureSet;
 
-  SCALE = 1;
-  const plant_stroke = 'rgba(255, 255, 255, 1)';
+  const plantStroke = 'rgba(255, 255, 255, 1)';
 
   /**
   * A collection of power plant classifications used for filtering.
@@ -88,7 +87,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   * @property {Number} scale - sets the scale of all plants to a multiple
   * of global SCALE
   */
-  const _electricity_generation = {
+  const _electricityGeneration = {
     stroke: {
       light: 'rgba(255, 255, 255, 1)',
       width: .66 * SCALE
@@ -108,15 +107,15 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} ctx - HTML5 canvas context
    * @param {Array} features
    */
-  const _draw_white_layer = function _draw_white_layer
+  const _drawWhiteLayer = function _drawWhiteLayer
     (plants, fuel, ctx, features)
   {
     features.forEach(function (d) {
-      let xy = energy_maps.projection(d.geometry.coordinates);
+      let xy = EnergyMaps.projection(d.geometry.coordinates);
       for (coord in xy) {
         if (coord != null) {
           // TODO: Does this need a year conditional? Probably
-          _draw_power_plant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
+          _drawPowerPlant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
         }
         else {
           console.log(coord)
@@ -136,16 +135,16 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * passes through from draw_single_plant()
    * @param {Object} d - data element filtered by fuel type from the readfile
    */
-  const _draw_standard_layer = function _draw_standard_layer
+  const _drawStandardLayer = function _drawStandardLayer
     (ctx, xy, fuel, d)
   {
     let color = fuel.color;
     if (coord != null) {
       if (DATA_YEAR === 2012) {
-        _draw_power_plant(ctx, xy, color, +d.properties.original.total_cap);
+        _drawPowerPlant(ctx, xy, color, +d.properties.original.total_cap);
       }
       else if (DATA_YEAR === 2022) {
-        _draw_power_plant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
+        _drawPowerPlant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
       }
     }
     else {
@@ -163,170 +162,172 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} ctx - HTML5 canvas context
    * @returns {Object} features - the desired data set, narrowed by fuel type
    */
-  const _get_fuel_type = function _get_fuel_type
+  const _getFuelType = function _getFuelType
     (data, fuel)
   {
     return data.features
       .filter(function (d) {
         // return d.properties.original.primary_fu === fuel.fuel_type;
-        return d.properties.type.secondary == fuel.fuel_type
+        return d.properties.type.secondary == fuel.fuelType
       });
   }
 
   /**
    * Draw a single set of power plants relative to their class.
    * @param {Object} ctx - HTML5 canvas context
-   * @param {Object} queued_data - the readfile
+   * @param {Object} queuedData - the readfile
    * @param {Object} fuel - fuel object from `electricity_generation`
    */
   // TODO: Is this drawing one single plant, or one single set of plants?
   //  Change jsdoc if necessary
-  const _draw_single_plant = function _draw_single_plant
-    (ctx, queued_data, fuel)
+  const _drawSinglePlant = function _drawSinglePlant
+    (ctx, queuedData, fuel)
   {
-    energy_maps.path.context(ctx);
-    energy_maps.clip_region(ctx);
+    EnergyMaps.path.context(ctx);
+    EnergyMaps.clipRegion(ctx);
 
-    let plants = queued_data[0];
-    let features = _get_fuel_type(plants, fuel);
-    _draw_white_layer(plants, fuel, ctx, features);
+    let plants = queuedData[0];
+    let features = _getFuelType(plants, fuel);
+    _drawWhiteLayer(plants, fuel, ctx, features);
     // Draw the standard layer
     features.forEach(function(d, i) {
-      let xy = energy_maps.projection(d.geometry.coordinates);
+      let xy = EnergyMaps.projection(d.geometry.coordinates);
       if (xy === null) {
         //
       } else {
-        _draw_standard_layer(ctx, xy, fuel, d);
+        _drawStandardLayer(ctx, xy, fuel, d);
       }
       if (i === features.length - 1) {
-        energy_maps.finish_loading_layer();
+        EnergyMaps.finishLoadingLayer();
       }
     });
   };
 
   // TODO: Determine purpose and add jsdoc
-  const _draw_power_plant = function _draw_power_plant
+  const _drawPowerPlant = function _drawPowerPlant
     (ctx, xy, color, r)
   {
-    ctx.strokeStyle = _electricity_generation.stroke.light;
-    ctx.lineWidth = _electricity_generation.stroke.width / TRANSFORM.k ** .71;
+    ctx.strokeStyle = _electricityGeneration.stroke.light;
+    ctx.lineWidth = _electricityGeneration.stroke.width / EnergyMaps.transform.k ** .71;
     ctx.fillStyle = color;
     // TODO: extract math to variable or function
-    r = Math.sqrt(r / Math.PI) * _electricity_generation.scale;
-    r = r / TRANSFORM.k ** .5;
+    r = Math.sqrt(r / Math.PI) * _electricityGeneration.scale;
+    r = r / EnergyMaps.transform.k ** .5;
     ctx.beginPath();
     // Draw larger circle for stroke, so that stroke aligns to outside of
     //  of circumference
-    energy_maps.draw_circle(ctx, xy, r + ctx.lineWidth);
+    EnergyMaps.drawCircle(ctx, xy, r + ctx.lineWidth);
     // FIXME: Need a better method of changing stroke color for lighter circles.
     if (color !== VIZ.white) {
-      if (color === energy_maps.ng_plants.color) {
+      if (color === EnergyMaps.naturalGasPlants.color) {
         ctx.strokeStyle = 'darkblue';
-      } else if (color === solar_plants.color) {
+      } else if (color === solarPlants.color) {
         ctx.strokeStyle = 'darkorange';
       }
       ctx.stroke();
     }
-    energy_maps.draw_circle(ctx, xy, r);
+    EnergyMaps.drawCircle(ctx, xy, r);
     ctx.fill();
   };
 
-  const _draw_coal_plants = function _draw_coal_plants
-    (ctx, queued_data)
+  const _drawCoalPlants = function _drawCoalPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.coal_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.coalPlants);
   };
 
-  const _draw_ng_plants = function _draw_ng_plants
-    (ctx, queued_data)
+  const _drawNgPlants = function _drawNgPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.ng_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.naturalGasPlants);
   };
 
-  const _draw_petro_plants = function _draw_petro_plants
-    (ctx, queued_data)
+  const _drawPetroPlants = function _drawPetroPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.pet_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.petroleumPlants);
   };
 
-  const _draw_hydro_plants = function _draw_hydro_plants
-    (ctx, queued_data) {
-    _draw_single_plant(ctx, queued_data, energy_maps.hyc_plants);
+  const _drawHydroPlants = function _drawHydroPlants
+    (ctx, queuedData) {
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.hydroPlants);
   };
 
-  const _draw_nuclear_plants = function _draw_nuclear_plants
-    (ctx, queued_data)
+  const _drawNuclearPlants = function _drawNuclearPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.nuc_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.nuclearPlants);
   };
 
-  const _draw_wind_farms = function _draw_wind_farms
-    (ctx, queued_data)
+  const _drawWindFarms = function _drawWindFarms
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.wnd_farms);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.windFarms);
   };
 
-  const _draw_solar_plants = function _draw_solar_plants
-    (ctx, queued_data)
+  const _drawSolarPlants = function _drawSolarPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.solar_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.solarPlants);
   };
 
-  const _draw_geo_plants = function _draw_geo_plants
-    (ctx, queued_data)
+  const _drawGeoPlants = function _drawGeoPlants
+    (ctx, queuedData)
   {
-    _draw_single_plant(ctx, queued_data, energy_maps.geo_plants);
+    _drawSinglePlant(ctx, queuedData, EnergyMaps.geothermalPlants);
   };
 
   // Instantiate PowerPlants
 
-  const coal_plants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
-    draw_layer: _draw_coal_plants,
+  const coalPlants = new PowerPlant('coal-plants', 'Coal plants', {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation', [{
+    drawLayer: _drawCoalPlants,
     src: [`/power_plants/coal`],
-    d3_fetch: d3.json,
-  }], 'coal', 'rgba(0, 0, 0, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'coal', 'rgba(0, 0, 0, .5)', plantStroke);
 
-  const ng_plants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
-    draw_layer: _draw_ng_plants,
-      src: [`/power_plants/natural_gas`],
-      d3_fetch: d3.json,
+  const naturalGasPlants = new PowerPlant('natural-gas-plants', 'Nat. gas plants', {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation', [{
+    drawLayer: _drawNgPlants,
+    src: [`/power_plants/natural_gas`],
+    d3Fetch: d3.json,
   }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
-  const pet_plants = new PowerPlant('petroleum-plants', 'Petro. plants', {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_petro_plants,
+  const petroleumPlants = new PowerPlant('petroleum-plants', 'Petro. plants', {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
+    drawLayer: _drawPetroPlants,
     src: [`/power_plants/petroleum`],
-    d3_fetch: d3.json,
-  }], 'petroleum', 'rgba(34, 139, 34, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'petroleum', 'rgba(34, 139, 34, .5)', plantStroke);
 
-  const nuc_plants = new PowerPlant('nuclear-plants', 'Nuclear plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_nuclear_plants,
+  const nuclearPlants = new PowerPlant('nuclear-plants', 'Nuclear plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
+    drawLayer: _drawNuclearPlants,
     src: [`/power_plants/nuclear`],
-    d3_fetch: d3.json,
-  }], 'nuclear', 'rgba(255, 0, 0, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'nuclear', 'rgba(255, 0, 0, .5)', plantStroke);
 
-  const hyc_plants = new PowerPlant('hydro-plants', 'Hydro. plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_hydro_plants,
+  const hydroPlants = new PowerPlant('hydro-plants', 'Hydro. plants', {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
+    drawLayer: _drawHydroPlants,
     src: [`/power_plants/hydroelectric`],
-    d3_fetch: d3.json,
-  }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plantStroke);
 
-  const wnd_farms = new PowerPlant('wind-farms', 'Wind farms', {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_wind_farms,
+  const windFarms = new PowerPlant('wind-farms', 'Wind farms', {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
+    drawLayer: _drawWindFarms,
     src: [`/power_plants/wind`],
-    d3_fetch: d3.json,
-  }], 'wind', 'rgba(144, 29, 143, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'wind', 'rgba(144, 29, 143, .5)', plantStroke);
 
-  const solar_plants = new PowerPlant('solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_solar_plants,
-    src: [`/power_plants/solar`],
-    d3_fetch: d3.json,
-  }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
+  const solarPlants = new PowerPlant(
+    'solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null},
+    'electricity-generation', [{
+      drawLayer: _drawSolarPlants,
+      src: [`/power_plants/solar`],
+      d3Fetch: d3.json,
+    }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
 
-  const geo_plants = new PowerPlant('geothermal-plants', 'Geo. plants', {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
-    draw_layer: _draw_geo_plants,
+  const geothermalPlants = new PowerPlant('geothermal-plants', 'Geo. plants', {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
+    drawLayer: _drawGeoPlants,
     src: [`/power_plants/geothermal`],
-    d3_fetch: d3.json,
-  }], 'geothermal', 'rgba(210, 105, 30, .5)', plant_stroke);
+    d3Fetch: d3.json,
+  }], 'geothermal', 'rgba(210, 105, 30, .5)', plantStroke);
 
   // let bio_plants = new PowerPlant('biofuel', 'Biofuel power plants', 51_000_000_000, 'electricity-generation', [ {
   //   draw_layer: draw_bio_plants,
@@ -337,20 +338,20 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   const biofuel = {
     name: 'biofuel',
     value: {2012: 51_000_000_000, 2022: null},
-    draw_props: false,
+    drawProps: false,
     column: 'electricity-generation',
   };
 
-  energy_maps.coal_plants = coal_plants;
-  energy_maps.ng_plants = ng_plants;
-  energy_maps.pet_plants = pet_plants;
-  energy_maps.nuc_plants = nuc_plants;
-  energy_maps.hyc_plants = hyc_plants;
-  energy_maps.wnd_farms = wnd_farms;
-  energy_maps.solar_plants = solar_plants;
-  energy_maps.geo_plants = geo_plants;
-  energy_maps.biofuel = biofuel;
+  EnergyMaps.coalPlants = coalPlants;
+  EnergyMaps.naturalGasPlants = naturalGasPlants;
+  EnergyMaps.petroleumPlants = petroleumPlants;
+  EnergyMaps.nuclearPlants = nuclearPlants;
+  EnergyMaps.hydroPlants = hydroPlants;
+  EnergyMaps.windFarms = windFarms;
+  EnergyMaps.solarPlants = solarPlants;
+  EnergyMaps.geothermalPlants = geothermalPlants;
+  EnergyMaps.biofuel = biofuel;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});

@@ -1,4 +1,4 @@
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -7,7 +7,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @returns {String} the supplied string with the first letter capitalized
    * @memberof Init
    */
-  const _capitalize_first_letter = function _capitalize_first_letter
+  const _capitalizeFirstLetter = function _capitalizeFirstLetter
     (s)
   {
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -28,7 +28,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .append('li')
       // .attr('class', 'option-li')
       .attr('class', () => {
-        return (!lyr.draw_props || lyr === energy_maps.oil_product_pipeline)
+        return (!lyr.drawProps || lyr === EnergyMaps.oilProductPipeline)
           ? 'option-li inactive' : 'option-li'
     });
     li.append('div')
@@ -39,7 +39,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .text(function() {
         return (lyr.text)
           ? lyr.text
-          : `${_capitalize_first_letter(lyr.name
+          : `${_capitalizeFirstLetter(lyr.name
             .replace(/ /g, '\u00A0') // Replacing a normal space with nbsp;
             .replace(/-/g, '\u00A0'))}\u00A0`
       })
@@ -68,7 +68,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
-        .text(` ($${_capitalize_first_letter(
+        .text(` ($${_capitalizeFirstLetter(
           d3.format('.2~s')(lyr.value[DATA_YEAR])
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
@@ -115,7 +115,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('class', `checkbox ${lyr.name}`)
       .attr('data-layername', lyr.name)
       .attr('data-assetvalue', lyr.value[DATA_YEAR]);
-    if (!(lyr.draw_props && (lyr !== energy_maps.oil_product_pipeline))) {
+    if (!(lyr.drawProps && (lyr !== EnergyMaps.oilProductPipeline))) {
       lyr.checkbox.attr('disabled', true);
     }
     return lyr.checkbox;
@@ -129,7 +129,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   const initMenu = function initMenu
     ()
   {
-    const layers = energy_maps.set_layers();
+    const layers = EnergyMaps.setLayers();
     // for (let i = 0; i < LAYERS.length; i++) {
     for (let i = 0, l = layers.length; i < l; i++) {
 
@@ -143,23 +143,23 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
         let checkbox = lyr.checkbox._groups[0][0];
 
         if (checkbox.checked) {
-          energy_maps.addLayer(lyr, TRANSFORM);
+          EnergyMaps.addLayer(lyr, EnergyMaps.transform);
         } else {
-          energy_maps.removeLayer(lyr);
+          EnergyMaps.removeLayer(lyr);
         }
         // if (!(lyr instanceof StateBoundary)) {
         if (!(lyr.name === 'state-boundaries')) {
-          energy_maps.legend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
-          energy_maps.tmplegend_ctx.clearRect(0, 0, WIDTH, HEIGHT);
-          energy_maps.update_legend(energy_maps.tmplegend_ctx, energy_maps.legend_ctx, LAYERS);
+          EnergyMaps.legendCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
+          EnergyMaps.legendTmpCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
+          EnergyMaps.update_legend(EnergyMaps.legendTmpCtx, EnergyMaps.legendCtx, LAYERS);
           if (ACTIVE_LAYERS.length === 0) {
-            energy_maps.legend.hidden = true;
+            EnergyMaps.legend.property('hidden', true);
           }
         }
       });
 
-      energy_maps.addLayerCanvas(lyr);
-      energy_maps.addCanvasContext(lyr);
+      EnergyMaps.addLayerCanvas(lyr);
+      EnergyMaps.addCanvasContext(lyr);
 
     }
   };
@@ -167,20 +167,20 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   /**
    * @description Sorts on array of objects based on the value of one key
    * so that the array's order matches the order of another array of values
-   * @param {Array} sort_array The array to sort
-   * @param {Array} target_array The array to use as the order of sorting
+   * @param {Array} sortArray The array to sort
+   * @param {Array} targetArray The array to use as the order of sorting
    * @param {String} key The name of the key to sort by
    * @return {Array} The sorted array of objects
    * @memberof
    */
-  const _sort_on_target = function _sort_on_target
-    (sort_array, target_array, key)
+  const _sortOnTarget = function _sortOnTarget
+    (sortArray, targetArray, key)
   {
-    sort_array.sort( function (a, b) {
+    sortArray.sort( function (a, b) {
       let _a = a[key], _b = b[key];
-      return (target_array.indexOf(_a) > target_array.indexOf(_b)) ? 1 : -1
+      return (targetArray.indexOf(_a) > targetArray.indexOf(_b)) ? 1 : -1
     });
-    return sort_array;
+    return sortArray;
   };
 
   /**
@@ -189,7 +189,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @return
    * @memberof
    */
-  const _sort_map_layers = function _sort_map_layers
+  const _sortMapLayers = function _sortMapLayers
     ()
   {
     const that = d3.select(this);
@@ -198,8 +198,8 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .each(function (d, i) {
         target[i] = d3.select(this).node().getAttribute('data-layername')
       });
-    LAYERS = _sort_on_target(LAYERS, target, 'name');
-    energy_maps.draw_active_layers(TRANSFORM);
+    LAYERS = _sortOnTarget(LAYERS, target, 'name');
+    EnergyMaps.drawActiveLayers(EnergyMaps.transform);
   };
 
   /**
@@ -208,7 +208,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @return
    * @memberof
    */
-  const _options_toggle = function options_toggle
+  const _optionsToggle = function _optionsToggle
     ()
   {
     const options = d3.select('.options');
@@ -220,7 +220,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   };
 
   d3.select('.options-toggle')
-    .on('click', _options_toggle);
+    .on('click', _optionsToggle);
 
   d3.selectAll('.checkbox')
     .on('mousedown', function () {
@@ -228,19 +228,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     });
 
   d3.select('.options-list ul')
-    .on('stop', _sort_map_layers);
+    .on('stop', _sortMapLayers);
 
   // Initialize the options menu
   initMenu();
 
   // Draw the default layers of the map
-  const DEFAULT_LAYERS = [energy_maps.state_boundaries];
+  const DEFAULT_LAYERS = [EnergyMaps.stateBoundaries];
   DEFAULT_LAYERS.map(x => {
     document.querySelector(`.option-li input.${x.name}`).click();
   });
 
-  energy_maps.initMenu = initMenu;
+  EnergyMaps.initMenu = initMenu;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});

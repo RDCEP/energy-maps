@@ -4,7 +4,7 @@
 * @author Nathan Matteson
 */
 
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -20,75 +20,75 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @description HTML class on which the main map is drawn
    * @memberof Init
    */
-  const map_container = '.main-map';
-  const base_map_class = '.base-map';
+  const mapContainer = '.main-map';
+  const baseMapClass = '.base-map';
 
   /**
    *  @description A canvas element for the base map, attached to
    *  <div class="main map builder" id="mapcanvas">
    * @memberof Init
    */
-  const base_canvas = d3
-    .select(base_map_class)
+  const baseCanvas = d3
+    .select(baseMapClass)
     .append('canvas')
     .attr('id', 'mapcanvas')
-    .attr('width', WIDTH)
-    .attr('height', HEIGHT);
+    .attr('width', EnergyMaps.width)
+    .attr('height', EnergyMaps.height);
 
-  const base_ctx = base_canvas.node().getContext('2d');
-  base_ctx.LineCap = 'round';
+  const baseCtx = baseCanvas.node().getContext('2d');
+  baseCtx.LineCap = 'round';
 
   /**
    * @description Draw the base map for the application based off
    * of the data from fmap and fmapfill
    * @memberof Init
    */
-  const draw_base_map = function draw_base_map
+  const drawBaseMap = function drawBaseMap
     (transform)
   {
     Promise.all(
       [d3.json(fmap)]
     ).then(function(files) {
-      energy_maps.draw_land(base_ctx, files, transform, false, false);
+      EnergyMaps.drawLand(baseCtx, files, transform, false, false);
     });
   };
 
-  let layers_to_redraw = []
-  let cboxes_to_check = []
-  let unchanged_layers_2022 = []
+  let layersToRedraw = []
+  let cBoxesToCheck = []
+  let unchangedLayers2022 = []
 
-  const create_year_button = function create_year_button
-    (btn_val, year_val)
+  const createYearButton = function createYearButton
+    (btnVal, yearVal)
   {
     let btn = document.createElement("button");
-    btn.innerHTML = `${btn_val}`;
+    btn.innerHTML = `${btnVal}`;
     document.querySelector('.options-list h6')
       .appendChild(btn);
     btn.classList.add('btn-year');
     btn.addEventListener('click', function() {
-      btn_val = btn_val;
-      data_year = energy_maps.get_data_year(btn_val)
+      btnVal = btnVal;
+      data_year = EnergyMaps.get_data_year(btnVal)
       // API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
       // Add an asterisk if year is 2022
       if (DATA_YEAR === 2022) {
         initMenuAsteriskNote();
       } else if (DATA_YEAR === 2012) {
-        energy_maps.asterisk_note[0].remove()
+        EnergyMaps.asteriskNote[0].remove()
       }
 
-      unchanged_layers_2022 = [
-        energy_maps.gas_well, energy_maps.oil_well, energy_maps.railroad,
-        energy_maps.ac_na_and_under_100, energy_maps.ac_100_300,
-        energy_maps.ac_345_735, energy_maps.dc, energy_maps.gas_pipeline,
-        energy_maps.oil_pipeline, energy_maps.oil_product_pipeline ];
+      unchangedLayers2022 = [
+        EnergyMaps.gasWell, EnergyMaps.oilWell, EnergyMaps.railroad,
+        EnergyMaps.AcNaAndUnder100, EnergyMaps.Ac100300,
+        EnergyMaps.Ac345735, EnergyMaps.dc, EnergyMaps.gasPipeline,
+        EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline ];
       if (DATA_YEAR === 2022) {
-        for (let i = 0; i < unchanged_layers_2022.length; i++) {
-          unchanged_layers_2022[i].unchanged_2022 = true;
+        for (let i = 0; i < unchangedLayers2022.length; i++) {
+          unchangedLayers2022[i].unchanged_2022 = true;
         }
       } else if (DATA_YEAR === 2012) {
-        for (let i = 0; i < unchanged_layers_2022.length; i++) {
-          unchanged_layers_2022[i].unchanged_2022 = false;
+        for (let i = 0; i < unchangedLayers2022.length; i++) {
+          unchangedLayers2022[i].unchanged_2022 = false;
         }
       }
 
@@ -96,55 +96,55 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       // try to store draw props in a variable to restore them
       // This may not be necessary at all rn, as we don't want to
       // deactivate any layers now
-      let deactivated_layers_2022 = [
-        energy_maps.gas_well, energy_maps.oil_well, energy_maps.railroad,
-        energy_maps.ac_na_and_under_100, energy_maps.ac_100_300,
-        energy_maps.ac_345_735, energy_maps.dc]
-      let deactivated_draw_props = []
+      let deactivatedLayers2022 = [
+        EnergyMaps.gasWell, EnergyMaps.oilWell, EnergyMaps.railroad,
+        EnergyMaps.AcNaAndUnder100, EnergyMaps.Ac100300,
+        EnergyMaps.Ac345735, EnergyMaps.dc]
+      let deactivatedDrawProps = []
 
       // TODO: fix this
-      for (let i = 0; i < deactivated_layers_2022; i++) {
-        deactivated_draw_props.push(deactivated_layers_2022[i].draw_props[0])
+      for (let i = 0; i < deactivatedLayers2022; i++) {
+        deactivatedDrawProps.push(deactivatedLayers2022[i].drawProps[0])
       }
-      console.log(`deactivated draw props: ${JSON.stringify(deactivated_draw_props)}`)
+      console.log(`deactivated draw props: ${JSON.stringify(deactivatedDrawProps)}`)
 
       // Need a function to toggle draw props
       // Need some way of storing original draw_props in a buffer
       // to use again later
 
-      let toggle_draw_props = function toggle_draw_props(deactivated_layers) {
+      let toggleDrawProps = function toggleDrawProps(deactivatedLayers) {
         if (DATA_YEAR === 2022) {
-          for (let i = 0; i < deactivated_layers.length; i++) {
-            deactivated_layers[i].draw_props = false;
+          for (let i = 0; i < deactivatedLayers.length; i++) {
+            deactivatedLayers[i].drawProps = false;
           }
         } else if (DATA_YEAR === 2012) {
-          for (let i = 0; i < deactivated_layers.length; i++) {
-            deactivated_layers[i].draw_props = true;
+          for (let i = 0; i < deactivatedLayers.length; i++) {
+            deactivatedLayers[i].drawProps = true;
           }
         }
       }
 
-      // toggle_draw_props(deactivated_layers_2022)
+      // toggleDrawProps(deactivatedLayers2022)
 
-      // empty the array of layers to redraw and cboxes_to_check
+      // empty the array of layers to redraw and cBoxesToCheck
 
-      layers_to_redraw = [];
+      layersToRedraw = [];
 
-      cboxes_to_check = [];
+      cBoxesToCheck = [];
 
       // remove any layers from the previous cycle
 
-      for (let i = 0; i < layers_to_redraw.length; i++) {
-        energy_maps.removeLayer(layers_to_redraw[i]);
+      for (let i = 0; i < layersToRedraw.length; i++) {
+        EnergyMaps.removeLayer(layersToRedraw[i]);
       }
 
       let values = document.getElementsByClassName('asset-value');
-      let asset_labels = document.getElementsByClassName('asset-label');
-      let cboxes = document.getElementsByClassName('checkbox');
+      let assetLabels = document.getElementsByClassName('asset-label');
+      let cBoxes = document.getElementsByClassName('checkbox');
 
-      for (let i = 0; i < cboxes.length; i++) {
-        if (cboxes[i].checked) {
-          cboxes_to_check.push(cboxes[i]);
+      for (let i = 0; i < cBoxes.length; i++) {
+        if (cBoxes[i].checked) {
+          cBoxesToCheck.push(cBoxes[i]);
         }
       }
 
@@ -152,19 +152,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       // remove current layers from the screen
       // for (let i = 0; i < layers.length; i++) {
       //   if (layers[i].active) {
-      //     layers_to_redraw.push(layers[i])
+      //     layersToRedraw.push(layers[i])
       //     removeLayer(layers[i], transform)
       //   }
       // }
 
       // // redraw layers
-      // for (let i = 0; i < layers_to_redraw.length; i++) {
-      //   addLayer(layers_to_redraw[i], transform)
+      // for (let i = 0; i < layersToRedraw.length; i++) {
+      //   addLayer(layersToRedraw[i], transform)
       // }
 
       layers = layers.map(x => {
         if (x.active) {
-          energy_maps.removeLayer(x, TRANSFORM);
+          EnergyMaps.removeLayer(x, EnergyMaps.transform);
         }
         return x
       })
@@ -181,12 +181,12 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
           values[i].remove();
         }
 
-        for (let i = 0, m = asset_labels.length; i < m; i++) {
-          asset_labels[i].remove();
+        for (let i = 0, m = assetLabels.length; i < m; i++) {
+          assetLabels[i].remove();
         }
 
-        for (let i = 0, m = cboxes.length; i < m; i++) {
-          cboxes[i].remove();
+        for (let i = 0, m = cBoxes.length; i < m; i++) {
+          cBoxes[i].remove();
         }
 
       }
@@ -199,18 +199,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       _initMenu();
 
       // re-check the box on redraw
-      for (let i = 0; i < cboxes_to_check.length; i++) {
-        var cb = document.getElementsByClassName(`${cboxes_to_check[i].classList}`)[0];
+      for (let i = 0; i < cBoxesToCheck.length; i++) {
+        var cb = document.getElementsByClassName(`${cBoxesToCheck[i].classList}`)[0];
         cb.click();
         cb.checked = true;
       }
 
-      console.table(layers_to_redraw);
-      console.log(layers_to_redraw);
-      console.table(cboxes_to_check);
-      console.log(cboxes_to_check);
-      console.table(active_layers);
-      console.log(active_layers);
+      console.table(layersToRedraw);
+      console.log(layersToRedraw);
+      console.table(cBoxesToCheck);
+      console.log(cBoxesToCheck);
+      console.table(ACTIVE_LAYERS);
+      console.log(ACTIVE_LAYERS);
 
       // let state_boundaries_asset_value = document.getElementsByClassName('state-boundaries')[4].children[0]
       // state_boundaries_asset_value.remove()
@@ -218,24 +218,24 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
 
       console.log(DATA_YEAR);
       document.getElementById("value-year")
-        .innerHTML = `out of ${year_val} in ${btn_val}`;
+        .innerHTML = `out of ${yearVal} in ${btnVal}`;
     });
   }
 
-  create_year_button(2012, "$9.8T");
-  create_year_button(2022, "$9.8T");
+  createYearButton(2012, "$9.8T");
+  createYearButton(2022, "$9.8T");
 
   const initMenuAsteriskNote = function initMenuAsteriskNote
     ()
   {
-    let note_div = d3.select('.options.canvas')
+    let noteDiv = d3.select('.options.canvas')
       .append('div')
       .attr('class', () => {return 'column asterisk-note'})
       .append('h4')
       .text('* 2012 asset values used');
   }
 
-  function fix_dpi(canvas) {
+  function fixDpi(canvas) {
     // get height and width of a canvas as an integer (slice to remove 'px')
     let style_height = +getComputedStyle(canvas)
       .getPropertyValue('height').slice(0, -2);
@@ -246,12 +246,12 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       .attr('width', style_width * dpi);
   }
 
-  draw_base_map(TRANSFORM);
+  drawBaseMap(EnergyMaps.transform);
 
-  energy_maps.draw_base_map = draw_base_map;
-  energy_maps.base_canvas = base_canvas;
-  energy_maps.base_ctx = base_ctx;
+  EnergyMaps.drawBaseMap = drawBaseMap;
+  EnergyMaps.baseCanvas = baseCanvas;
+  EnergyMaps.baseCtx = baseCtx;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});

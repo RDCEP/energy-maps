@@ -5,7 +5,7 @@
  * @author Nathan Matteson
  */
 
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -14,10 +14,10 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param ctx
    * @param transform
    */
-  const transform_layer = function transform_layer
+  const transformLayer = function transformLayer
     (ctx, transform)
   {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
     ctx.translate(transform.x, transform.y);
     ctx.scale(transform.k, transform.k);
   }
@@ -26,11 +26,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * Clip the region of a single layer to prevent each draw event from parsing extraneous data.
    * @param {Object} ctx
    */
-  const clip_region = function clip_region
+  const clipRegion = function clipRegion
     (ctx)
   {
     let region = new Path2D();
-    region.rect(0, 0, WIDTH, HEIGHT);
+    region.rect(0, 0, EnergyMaps.width, EnergyMaps.height);
     ctx.clip(region);
   }
 
@@ -41,13 +41,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param data
    * @returns {*}
    */
-  const simplify = function simplify
+  const simplifyTopojson = function simplifyTopojson
     (key, data)
   {
     let output_geojson;
     let presimplified_data = topojson.presimplify(data[0]);
     output_geojson = topojson.feature(
-      topojson.simplify(presimplified_data, .01 / TRANSFORM.k**2),
+      topojson.simplify(presimplified_data, .01 / EnergyMaps.transform.k**2),
       data[0].objects[key]);
     return output_geojson;
   }
@@ -55,52 +55,52 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   /**
    * Draw the base map.
    * @param {Object} ctx - HTML5 canvas context.
-   * @param {Object[]} queued_data - Dataset for the corresponding resource
-   * @param {Object} border_only
+   * @param {Object[]} queuedData - Dataset for the corresponding resource
+   * @param {Object} borderOnly
    * @param {Boolean} simple
    */
-  const draw_land = function draw_land
-    (ctx, queued_data, transform, border_only, simple)
+  const drawLand = function drawLand
+    (ctx, queuedData, transform, borderOnly, simple)
   {
     ctx.save()
-    energy_maps.transform_layer(ctx, transform);
-    ctx.clearRect(0,0, WIDTH, HEIGHT);
-    energy_maps.path.context(ctx);
-    let output_geojson;
+    EnergyMaps.transformLayer(ctx, transform);
+    ctx.clearRect(0,0, EnergyMaps.width, EnergyMaps.height);
+    EnergyMaps.path.context(ctx);
+    let outputGeojson;
 
     if (simple) {
       // If simple is True, we're looking only for a low res map so return
       // simple_map_bkgd. This is used for pan/zoom.
-      output_geojson = energy_maps.simple_map_bkgd;
+      outputGeojson = EnergyMaps.simpleMapBkgd;
     } else {
-      let presimplified_data = topojson.presimplify(queued_data[0]);
+      let presimplifiedData = topojson.presimplify(queuedData[0]);
 
       // Scale map detail based on zoom level
-      output_geojson = topojson.feature(
-        topojson.simplify(presimplified_data, .01 / transform.k**2),
-        queued_data[0].objects.nation);
+      outputGeojson = topojson.feature(
+        topojson.simplify(presimplifiedData, .01 / transform.k**2),
+        queuedData[0].objects.nation);
 
       // If no simple_map_bkgd object exists, make a low resolution
       // map to us as simple_map_bkgd
-      if (!energy_maps.simple_map_bkgd) {
-        energy_maps.simple_map_bkgd = topojson.feature(
-          topojson.simplify(presimplified_data,.2),
-          queued_data[0].objects.nation);
+      if (!EnergyMaps.simpleMapBkgd) {
+        EnergyMaps.simple_map_bkgd = topojson.feature(
+          topojson.simplify(presimplifiedData,.2),
+          queuedData[0].objects.nation);
       }
     }
 
-    if (!border_only) {
+    if (!borderOnly) {
 
       // Land boundaries fill
       ctx.fillStyle = VIZ.map.fill;
       ctx.beginPath();
-      energy_maps.path(output_geojson);
+      EnergyMaps.path(outputGeojson);
       ctx.fill();
     } else {
       ctx.strokeStyle = VIZ.map.stroke;
       ctx.lineWidth = VIZ.map.width;
       ctx.beginPath();
-      energy_maps.path(output_geojson);
+      EnergyMaps.path(outputGeojson);
       ctx.stroke();
     }
 
@@ -116,7 +116,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  const draw_x = function draw_x
+  const drawX = function drawX
     (ctx, xy, d)
   {
     ctx.moveTo(xy[0] - d / 2, xy[1] - d / 2);
@@ -131,7 +131,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  const draw_circle = function draw_circle
+  const drawCircle = function drawCircle
     (ctx, xy, r)
   {
     ctx.arc(xy[0], xy[1], r, 0, Math.PI * 2, true);
@@ -143,7 +143,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  const draw_box = function draw_box
+  const drawBox = function drawBox
     (ctx, xy, d)
   {
     ctx.rect(xy[0] - d / 2, xy[1] - d / 2, d, d);
@@ -155,7 +155,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  const draw_triangle = function draw_triangle
+  const drawTriangle = function drawTriangle
     (ctx, xy, d)
   {
     let e = (d * Math.sqrt(3)) / 3;
@@ -171,7 +171,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  const draw_triangle_down = function draw_triangle_down
+  const drawTriangleDown = function drawTriangleDown
     (ctx, xy, d)
   {
     let e = (d * Math.sqrt(3)) / 3;
@@ -187,7 +187,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} d - ???
    */
-  const draw_cross = function draw_cross
+  const drawCross = function drawCross
     (ctx, xy, d)
   {
     ctx.moveTo(xy[0], xy[1] - d / 2);
@@ -203,7 +203,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} xy - Array of xy coordinates
    * @param {Number} r - radius
    */
-  const draw_polygon = function draw_polygon
+  const drawPolygon = function drawPolygon
     (sides, ctx, r, xy)
   {
     /** @type {Number}
@@ -228,18 +228,18 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     d3.select('.modal-screen').style('display', 'none');
   });
 
-  energy_maps.transform_layer = transform_layer;
-  energy_maps.clip_region = clip_region;
-  energy_maps.simplify = simplify;
-  energy_maps.draw_land = draw_land;
-  energy_maps.draw_x = draw_x;
-  energy_maps.draw_circle = draw_circle;
-  energy_maps.draw_box = draw_box;
-  energy_maps.draw_triangle = draw_triangle;
-  energy_maps.draw_triangle_down = draw_triangle_down;
-  energy_maps.draw_cross = draw_cross;
-  energy_maps.draw_polygon = draw_polygon;
+  EnergyMaps.transformLayer = transformLayer;
+  EnergyMaps.clipRegion = clipRegion;
+  EnergyMaps.simplify = simplifyTopojson;
+  EnergyMaps.drawLand = drawLand;
+  EnergyMaps.drawX = drawX;
+  EnergyMaps.drawCircle = drawCircle;
+  EnergyMaps.drawBox = drawBox;
+  EnergyMaps.drawTriangle = drawTriangle;
+  EnergyMaps.drawTriangleDown = drawTriangleDown;
+  EnergyMaps.drawCross = drawCross;
+  EnergyMaps.drawPolygon = drawPolygon;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});

@@ -6,7 +6,7 @@
  * @module Grid
  */
 
-EnergyMaps = (function (energy_maps, InfrastructureSet) {
+EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
 
@@ -21,25 +21,25 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {String} text - text displayed in the legend
    * @param {Number} value - asset value in USD
    * @param {String} column - class attribute for corresponding column
-   * @param {Array} draw_props - properties used to parse the data and render
+   * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
    * @param {String} heading - class heading in the data file
    * @param {String} color - rgba value
-   * @param {Number} line_width - value used to scale the width of the grid
-   * @param {Number} nominal_voltage - system voltage
+   * @param {Number} lineWidth - value used to scale the width of the grid
+   * @param {Number} nominalVoltage - system voltage
    */
   let Grid = function Grid
-    (name, text, value, column, draw_props,
-     heading, color, line_width, nominal_voltage)
+    (name, text, value, column, drawProps,
+     heading, color, lineWidth, nominalVoltage)
   {
-      InfrastructureSet.call(this, name, text, value, column, draw_props);
+      EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
       this.heading = heading || '';
       this.color = color || 'rgba(0, 0, 0, 0.5)';
-      this.line_width = line_width || 0;
-      this.nominal_voltage = nominal_voltage || 50;
+      this.line_width = lineWidth || 0;
+      this.nominal_voltage = nominalVoltage || 50;
       this.z_index = 0;
   }
-  Grid.prototype = new InfrastructureSet;
+  Grid.prototype = new EnergyMaps.InfrastructureSet;
 
   /**
    * Instantiates a new GridAcCollection object that contains properties used
@@ -50,19 +50,19 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {String} name - canvas ID
    * @param {Number} value - asset value in USD
    * @param {String} column - class attribute for corresponding column
-   * @param {Array} draw_props - properties used to parse the data and render
+   * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
    */
   let GridAcCollection = function GridAcCollection
-    (name, text, value, column, draw_props, legend_group)
+    (name, text, value, column, drawProps, legendGroup)
   {
     this.name = name || '';
     this.text = text || '';
     this.value = value || 0;
     this.column = column || '';
     this.z_index = 0;
-    this.draw_props = draw_props || [];
-    this.draw_legend =  legend_group;
+    this.drawProps = drawProps || [];
+    this.drawLegend =  legendGroup;
   }
   GridAcCollection.prototype = new Grid;
 
@@ -73,7 +73,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @returns {Array} features - an array of features matching the
    * filtered class(es)
    */
-  const _filter_features = function filter_features
+  const _filterFeatures = function filterFeatures
     (infrastructure, c)
   {
     let features = infrastructure.features.filter(function(d) {
@@ -94,52 +94,52 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * of `value` to get a decent inflection point. Helps determine the mid point
    * of the curve.
    */
-  const _set_line_width = function set_line_width
+  const _setLineWidth = function setLineWidth
     (value, divisor)
   {
     // TODO: Set nominal voltage as a property of the grid object
-    return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1)))) / TRANSFORM.k;
+    return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1)))) / EnergyMaps.transform.k;
   }
 
   /**
    * Draw a grid class on the electric grid infrastructure map.
    * @param {Object} ctx - HTML5 canvas context
-   * @param {Array} queued_data - the readfile from '/json/elec_grid_split/'
+   * @param {Array} queuedData - the readfile from '/json/elec_grid_split/'
    * @param {Object} obj - grid object
    * @param {String} key - lookup value from data
    */
-  const _draw_grid_class = function draw_grid_class
-    (ctx, queued_data, obj, key)
+  const _drawGridClass = function drawGridClass
+    (ctx, queuedData, obj, key)
   {
 
-    energy_maps.path.context(ctx);
-    energy_maps.clip_region(ctx);
+    EnergyMaps.path.context(ctx);
+    EnergyMaps.clipRegion(ctx);
 
-    let grid_data = queued_data[0];
+    let gridData = queuedData[0];
 
-    let tmp_grid = {type: 'FeatureCollection', features: []};
+    let tmpGrid = {type: 'FeatureCollection', features: []};
 
     ctx.lineCap = 'round';
     ctx.strokeStyle = obj.color;
 
-    features = _filter_features(grid_data, obj);
+    features = _filterFeatures(gridData, obj);
 
-    let feat_len = features.length;
+    let featLen = features.length;
 
-    for (let i = 0; i < feat_len; ++i) {
+    for (let i = 0; i < featLen; ++i) {
 
-        tmp_grid.features = [features[i]];
+        tmpGrid.features = [features[i]];
 
         // TODO: Add descriptive comment here to explain the args
-        ctx.lineWidth = _set_line_width(
+        ctx.lineWidth = _setLineWidth(
           features[i]['properties']['original']['voltage'], 500);
 
         ctx.beginPath();
-        energy_maps.path(tmp_grid);
+        EnergyMaps.path(tmpGrid);
         ctx.stroke();
 
-        if (i === feat_len - 1) {
-          energy_maps.finish_loading_layer();
+        if (i === featLen - 1) {
+          EnergyMaps.finishLoadingLayer();
         }
       }
   };
@@ -152,7 +152,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Object} obj - Grid object instance
    * @returns {Number} y - updated y axis
    */
-  const _draw_legend_ac = function _draw_legend_ac
+  const _drawLegendAc = function _drawLegendAc
     (ctx, x, y, obj)
   {
     y += VERTICAL_INCREMENT;
@@ -165,7 +165,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
     ctx.lineTo(x + 7 * SCALE, y);
     ctx.stroke();
 
-    if (obj === ac_na) {
+    if (obj === AcNa) {
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
       ctx.strokeStyle = 'rgba(76, 76, 76)';
@@ -173,7 +173,7 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
     }
 
-    y = energy_maps.advance_for_type(y, ctx, obj.text, TEXT_OFFSET, x);
+    y = EnergyMaps.advanceForType(y, ctx, obj.text, TEXT_OFFSET, x);
     ctx.lineCap ='butt';
     return y;
   }
@@ -186,11 +186,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-unk_under_100.json'
    */
-  const _draw_grid_class_ac_unk_and_under_100 = function draw_grid_class_ac_unk_and_under_100
+  const _drawGridClassAcUnkAndUnder100 = function _drawGridClassAcUnkAndUnder100
     (ctx, queued_data)
   {
-    _draw_grid_class(ctx, queued_data, ac_na, 'grid-unk_under_100');
-    _draw_grid_class(ctx, queued_data, ac_under_100, 'grid-unk_under_100');
+    _drawGridClass(ctx, queued_data, AcNa, 'grid-unk_under_100');
+    _drawGridClass(ctx, queued_data, AcUnder100, 'grid-unk_under_100');
   };
 
   /**
@@ -200,11 +200,11 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-100_300.json'
    */
-  const _draw_grid_class_ac_100_300 = function draw_grid_class_ac_100_300
+  const _drawGridClassAc100300 = function _drawGridClassAc100300
     (ctx, queued_data)
   {
-    _draw_grid_class(ctx, queued_data, ac_100_200, 'grid-100_300');
-    _draw_grid_class(ctx, queued_data, ac_200_300, 'grid-100_300');
+    _drawGridClass(ctx, queued_data, Ac100200, 'grid-100_300');
+    _drawGridClass(ctx, queued_data, Ac200300, 'grid-100_300');
   };
 
   /**
@@ -214,12 +214,12 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-345_735.json'
    */
-  const _draw_grid_class_ac_345_735 = function draw_grid_class_ac_345_735
+  const _drawGridClassAc345735 = function _drawGridClassAc345735
     (ctx, queued_data)
   {
-    _draw_grid_class(ctx, queued_data, ac_345, 'grid-345_735');
-    _draw_grid_class(ctx, queued_data, ac_500, 'grid-345_735');
-    _draw_grid_class(ctx, queued_data, ac_735_plus, 'grid-345_735');
+    _drawGridClass(ctx, queued_data, Ac345, 'grid-345_735');
+    _drawGridClass(ctx, queued_data, Ac500, 'grid-345_735');
+    _drawGridClass(ctx, queued_data, Ac735Plus, 'grid-345_735');
   };
 
   /**
@@ -229,33 +229,33 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Array} queued_data - the readfile from
    * '/json/elec_grid_split/grid-dc'
    */
-  const _draw_grid_class_dc = function draw_grid_class_dc
+  const _drawGridClassDc = function _drawGridClassDc
     (ctx, queued_data)
   {
-    _draw_grid_class(ctx, queued_data, dc, 'grid-dc');
+    _drawGridClass(ctx, queued_data, dc, 'grid-dc');
   }
 
 
-  // TODO: The `name` property for ac_na isn't meaningful since it doesn't
+  // TODO: The `name` property for AcNa isn't meaningful since it doesn't
   //  have its own canvas to connect to independently. This isn't a huge
   //  issue but it's not descriptive when you look at the object's prototype
   //  in the console. Consider a rewrite of the Grid constructor.
-  // let ac_na_and_under_100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
+  // let AcNaAndUnder100 = new InfrastructureSet('AC-lines-under-100-kV', '', 102_000_000_000, 'electricity-transmission-and-distribution', [ {
   //   f: draw_grid_class_ac_unk_and_under_100,
   //   src: ['/static/json/elec_grid_split/grid-unk_under_100.json'],
   //   w: d3.json,
   // } ]);
 
-  const ac_na = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_unk_and_under_100,
+  const AcNa = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAcUnkAndUnder100,
     src: [`${API_URL_PREFIX}/electric_grid/under_100`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 
-  const ac_under_100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_unk_and_under_100,
+  const AcUnder100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAcUnkAndUnder100,
     src: [`${API_URL_PREFIX}/electric_grid/under_100`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 
   /**
@@ -265,32 +265,32 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  const _draw_legend_ac_na_and_under_100 = function _draw_legend_ac_na_and_under_100
+  const _drawLegendAcNaAndUnder100 = function _drawLegendAcNaAndUnder100
     (ctx, x, y)
   {
-    y = _draw_legend_ac(ctx, x, y, ac_na);
-    y = _draw_legend_ac(ctx, x, y, ac_under_100);
+    y = _drawLegendAc(ctx, x, y, AcNa);
+    y = _drawLegendAc(ctx, x, y, AcUnder100);
     return y;
   }
 
-  const ac_na_and_under_100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', {2012: 102_000_000_000, 2022: 102_000_000_000}, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_unk_and_under_100,
+  const AcNaAndUnder100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', {2012: 102_000_000_000, 2022: 102_000_000_000}, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAcUnkAndUnder100,
     src: [`/electric_grid/under_100`],
-    d3_fetch: d3.json,
-  }], _draw_legend_ac_na_and_under_100); //, [ac_na, ac_under_100]);
+    d3Fetch: d3.json,
+  }], _drawLegendAcNaAndUnder100); //, [AcNa, AcUnder100]);
 
   // AC 100-300
 
-  const ac_100_200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_100_300,
+  const Ac100200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc100300,
     src: [`/electric_grid/100_300_kV_AC`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], '100-161', 'rgba(86, 180, 233)', 2, 100);
 
-  const ac_200_300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_100_300,
+  const Ac200300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc100300,
     src: [`/electric_grid/100_300_kV_AC`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], '220-287', 'rgba(55, 126, 184)', 3, 250);
 
   /**
@@ -300,38 +300,38 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  const _draw_legend_ac_100_300 = function _draw_legend_ac_100_300
+  const _drawLegendAc100300 = function _drawLegendAc100300
     (ctx, x, y)
   {
-    y = _draw_legend_ac(ctx, x, y, ac_100_200);
-    y = _draw_legend_ac(ctx, x, y, ac_200_300);
+    y = _drawLegendAc(ctx, x, y, Ac100200);
+    y = _drawLegendAc(ctx, x, y, Ac200300);
     return y;
   }
 
-  const ac_100_300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000}, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_100_300,
+  const Ac100300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000}, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc100300,
     src: [`/electric_grid/100_300_kV_AC`],
-    d3_fetch: d3.json,
-  }], _draw_legend_ac_100_300);
+    d3Fetch: d3.json,
+  }], _drawLegendAc100300);
 
   // AC 345-735
 
-  const ac_345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_345_735,
+  const Ac345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc345735,
     src: [`/electric_grid/345_735_kV_AC`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], '345', 'rgba(255, 149, 0)', 4, 350);
 
-  const ac_500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_345_735,
+  const Ac500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc345735,
     src: [`/electric_grid/345_735_kV_AC`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], '500', 'rgba(213, 113, 45)', 5, 350);
 
-  const ac_735_plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_345_735,
+  const Ac735Plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc345735,
     src: [`/electric_grid/345_735_kV_AC`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 
   /**
@@ -341,25 +341,25 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {Number} y - y axis
    * @returns {Number} y - updated y axis
    */
-  const _draw_legend_ac_345_735 = function _draw_legend_ac_345_735
+  const _drawLegendAc345735 = function _drawLegendAc345735
     (ctx, x, y)
   {
-    y = _draw_legend_ac(ctx, x, y, ac_345);
-    y = _draw_legend_ac(ctx, x, y, ac_500);
-    y = _draw_legend_ac(ctx, x, y, ac_735_plus);
+    y = _drawLegendAc(ctx, x, y, Ac345);
+    y = _drawLegendAc(ctx, x, y, Ac500);
+    y = _drawLegendAc(ctx, x, y, Ac735Plus);
     return y;
   }
 
-  const ac_345_735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000}, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_ac_345_735,
+  const Ac345735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000}, 'electricity-transmission-and-distribution', [{
+    drawLayer: _drawGridClassAc345735,
     src: [`/electric_grid/345_735_kV_AC`],
-    d3_fetch: d3.json,
-  }], _draw_legend_ac_345_735);
+    d3Fetch: d3.json,
+  }], _drawLegendAc345735);
 
   const dc = new Grid('DC-lines', '500–1000 kV DC', {2012: 4_000_000_000, 2022: 4_000_000_000}, 'electricity-transmission-and-distribution', [{
-    draw_layer: _draw_grid_class_dc,
+    drawLayer: _drawGridClassDc,
     src: [`/electric_grid/dc`],
-    d3_fetch: d3.json,
+    d3Fetch: d3.json,
   }], 'DC', 'black', 7, 1000);
 
   dc.dashed = false;
@@ -373,13 +373,13 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
    * @param {boolean} dashed - true if line should be dashed, false if solid
    * @returns {Number} y - updated y axis
    */
-  dc.draw_legend = function _draw_grid_dc_legend
+  dc.drawLegend = function _drawGridDcLegend
     (ctx, x, y, dashed)
   {
     ctx.lineWidth = LEGEND_FONT_SIZE;
     ctx.strokeStyle = this.color;
     ctx.Linecap = 'butt';
-    y = energy_maps.draw_line(ctx, x, y, this, dashed, this.text);
+    y = EnergyMaps.drawLine(ctx, x, y, this, dashed, this.text);
     ctx.strokeLinecap = 'round';
     return y;
   };
@@ -387,16 +387,16 @@ EnergyMaps = (function (energy_maps, InfrastructureSet) {
   const distribution = { name: 'electricity-distribution',
     text: 'Electricity dist',
     value: {2012: 1_400_000_000_000, 2022: 1_400_000_000_000},
-    draw_props: false,
+    drawProps: false,
     column: 'electricity-transmission-and-distribution',
   };
 
-  energy_maps.ac_na_and_under_100 = ac_na_and_under_100;
-  energy_maps.ac_100_300 = ac_100_300;
-  energy_maps.ac_345_735 = ac_345_735;
-  energy_maps.dc = dc;
-  energy_maps.distribution = distribution;
+  EnergyMaps.AcNaAndUnder100 = AcNaAndUnder100;
+  EnergyMaps.Ac100300 = Ac100300;
+  EnergyMaps.Ac345735 = Ac345735;
+  EnergyMaps.dc = dc;
+  EnergyMaps.distribution = distribution;
 
-  return energy_maps;
+  return EnergyMaps;
 
-})(EnergyMaps || {}, InfrastructureSet);
+})(EnergyMaps || {});
