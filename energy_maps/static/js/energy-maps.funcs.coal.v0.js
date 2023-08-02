@@ -10,10 +10,10 @@ EnergyMaps = (function (EnergyMaps) {
   'use strict';
 
   /**
-   * Instantiates a new Coal object that contains properties used to draw
-   * coal infrastructure to the map and legend.
+   * Instantiates a new CoalMine object that contains properties used
+   * to draw coal mines to the map and legend.
    * @class
-   * @classdesc Used to create objects that represent coal-based infrastructure.
+   * @classdesc Used to create objects that represent coal mines.
    * @extends InfrastructureSet
    * @param {String} name - canvas ID
    * @param {String} text - text displayed in the legend
@@ -21,43 +21,19 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
-   * @param {String} stroke - rgba value to set the canvas stroke
-   * @param {Number} width - width value set relative to SCALE
-   */
-  let Coal = function Coal
-    (name, text, value, column, drawProps,
-     stroke, width)
-  { // TODO: Do we need this Coal base class? Probably not.
-    EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
-    this.stroke = stroke;
-    this.width = width || 0;
-    this.zIndex = 0;
-  }
-  Coal.prototype = new EnergyMaps.InfrastructureSet;
-
-  /**
-   * Instantiates a new CoalMine object that contains properties used
-   * to draw coal mines to the map and legend.
-   * @class
-   * @classdesc Used to create objects that represent coal mines.
-   * @extends Coal
-   * @param {String} name - canvas ID
-   * @param {String} text - text displayed in the legend
-   * @param {Number} value - asset value in USD
-   * @param {String} column - class attribute for corresponding column
-   * @param {Array} drawProps - properties used to parse the data and render
-   * the visualization
+   * @param {Number} size - size for scaling on the map
    * @property {String} stroke - rgba value to set the canvas stroke
    * @property {Number} width - width value set relative to SCALE
    * @property {String} fill - rgba value to set the polygon fill color
    * @property {Number} scale - scale value applied to each polygon
+   * @property {Number} size - size for scaling on the map
    */
   let CoalMine = function CoalMine
-    (name, text, value, column, drawProps)
+    (name, text, value, column, drawProps, size)
   {
-    Coal.call(this, name, text, value, column, drawProps);
-    this.text = text;
+    EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = 'rgba(255, 255, 255, 1)';
+    this.size = size;
     this.width = SCALE;
     this.fill = 'rgba(0, 0, 0, 0.5)';
     this.scale = SCALE / 190;
@@ -65,31 +41,30 @@ EnergyMaps = (function (EnergyMaps) {
     /**
      * Draw coal mine legend to its HTML5 canvas context.
      * @param {Object} ctx - HTML5 canvas context
-     * @param {Number} x - x axis
-     * @param {Number} y - y axis
-     * @returns {Number} y - updated y axis
+     * @param {Number} x - current coordinate along the x-axis of the legend canvas
+     * @param {Number} y - current coordinate along the y-axis of the legend canvas
+     * @returns {Number} y - updated coordinate on the y-axis
      */
     this.drawLegend = function drawCoalmineLegend
       (ctx, x, y)
     {
       y += VERTICAL_INCREMENT;
-      // TODO: decouple this func invocation from oil
-      // TODO: Document or extract these magic numbers
+      let legendIconScalingFactor = 1000000000;
       _drawMine(ctx, [x, y], false,
-        1000000000 * EnergyMaps.oilRefinery.size, true);
+         legendIconScalingFactor * this.size, true);
       let text = this.text;
       y = EnergyMaps.advanceForType(y, ctx, text, TEXT_OFFSET, x);
       return y;
     };
   }
-  CoalMine.prototype = new Coal;
+  CoalMine.prototype = new EnergyMaps.InfrastructureSet;
 
   /**
    * Instantiates a new Railroad object that contains properties used
    * to draw railroad lines to the map and legend.
    * @class
    * @classdesc Used to create objects that represent railroads.
-   * @extends Coal
+   * @extends InfrastructureSet
    * @param {String} name - canvas ID
    * @param {String} text - text displayed in the legend
    * @param {Number} value - asset value in USD
@@ -102,8 +77,7 @@ EnergyMaps = (function (EnergyMaps) {
   const Railroad = function Railroad
     (name, text, value, column, drawProps)
   {
-    Coal.call(this, name, text, value, column, drawProps);
-    this.text = text;
+    EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = '#767676';
     this.width = SCALE;
     this.zIndex = 0;
@@ -126,7 +100,7 @@ EnergyMaps = (function (EnergyMaps) {
       return y;
     };
   }
-  Railroad.prototype = new Coal;
+  Railroad.prototype = new EnergyMaps.InfrastructureSet;
 
   /**
    * Helper function for draw_mine() to Scale out the radius relative
@@ -170,16 +144,10 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.drawPolygon(NUM_SIDES_MINE, ctx, r, xy);
     ctx.fill();
 
-    // const draw_white_outline = function draw_white_outline() {
-    //   let OUTLINE_THRESHOLD = 8 / energy_maps.transform.k;
-    //   if (r > OUTLINE_THRESHOLD) {
-    //     ctx.stroke();
-    //   }
-    // }
   };
 
   /**
-   * Draw coal mines on the coal infrastructure map.
+   * @description Draw coal mines on the coal infrastructure map.
    * @param {Object} ctx - HTML5 canvas context: bound to canvas
    * ".map.layer.canvas.coal-mine"
    * @param {coalMine[]} queuedData - Dataset for the corresponding resource
@@ -244,18 +212,13 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.finishLoadingLayer();
   };
 
-  // let coalMine = new CoalMine('coal-mines', 'Coal mines', 57_000_000_000, 'coal', [{
-  //   draw_layer: draw_coal_mines,
-  //   src: [ `${API_URL_PREFIX}/${data_year}/mines/coal` ],
-  //   d3_fetch: d3.json
-  // }]);
   const coalMine = new CoalMine(
     'coal-mines', 'Coal mines', {2012: 41_474_000_000, 2022: null},
     'coal', [{
       drawLayer: _drawCoalMines,
       src: [ `/mines/coal` ],
       d3Fetch: d3.json
-  }]);
+    }], .006 * SCALE);
 
   // NOTE: Why aren't 2022 railroads working?
   const railroad = new Railroad(
@@ -267,7 +230,7 @@ EnergyMaps = (function (EnergyMaps) {
       // src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
       src: [ `/railroads` ],
       d3Fetch: d3.json
-  }]);
+    }]);
 
   EnergyMaps.coalMine = coalMine;
   EnergyMaps.railroad = railroad;
