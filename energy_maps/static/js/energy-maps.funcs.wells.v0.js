@@ -547,7 +547,8 @@ EnergyMaps = (function (EnergyMaps) {
           ctx.lineWidth = oilAndGas.processing.stroke.width / EnergyMaps.transform.k;
           ctx.beginPath();
           // draw the outline
-          EnergyMaps.drawPolygon(6, ctx, EnergyMaps.oilRefinery.size * d.r / EnergyMaps.transform.k ** .5, xy)
+          let radius = EnergyMaps.oilRefinery.size * d.r / EnergyMaps.transform.k ** .5;
+          EnergyMaps.drawPolygon(6, ctx, radius, xy)
           ctx.stroke();
         }
         else {
@@ -592,19 +593,21 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.fill();
   };
 
-  const gasWell = new Well('gas-wells', 'Gas wells', {2012: 1_059_000_000_000, 2022: 1_059_000_000_000}, 'oil-and-gas', [{
-    drawLayer: _drawAllWells,
-    // src: [ `/static/csv/wells_gas.csv` ],
-    // d3_fetch: d3.csv
-    src: [ `/wells/gas` ],
-    d3Fetch: d3.json
-  }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)');
+  const gasWell = new Well('gas-wells', 'Gas wells',
+    {2012: 1_059_000_000_000, 2022: 1_059_000_000_000}, 'oil-and-gas', [{
+      drawLayer: _drawAllWells,
+      // src: [ `/static/csv/wells_gas.csv` ],
+      // d3_fetch: d3.csv
+      src: [ `/wells/gas` ],
+      d3Fetch: d3.json
+    }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)');
 
-  const oilWell = new Well('oil-wells', 'Oil wells', {2012: 654_000_000_000, 2022: 654_000_000_000}, 'oil-and-gas', [{
-    drawLayer: _drawAllWells,
-    src: [ `/wells/oil` ],
-    d3Fetch: d3.json
-  }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)');
+  const oilWell = new Well('oil-wells', 'Oil wells',
+    {2012: 654_000_000_000, 2022: 654_000_000_000}, 'oil-and-gas', [{
+      drawLayer: _drawAllWells,
+      src: [ `/wells/oil` ],
+      d3Fetch: d3.json
+    }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)');
 
   const foreignOilWells = {
     name: 'foreign-oil-wells',
@@ -620,18 +623,20 @@ EnergyMaps = (function (EnergyMaps) {
     column: 'oil-and-gas',
   };
 
-  const gasPipeline = new Transport('gas-pipelines', 'Gas pipelines', {2012: 940_000_000_000, 2022: 940_000_000_000}, 'oil-and-gas', [{
-    drawLayer: _drawGasPipes,
-    src: [`/pipelines/gas`],
-    d3Fetch: d3.json
-  }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
+  const gasPipeline = new Transport('gas-pipelines', 'Gas pipelines',
+    {2012: 940_000_000_000, 2022: 940_000_000_000}, 'oil-and-gas', [{
+      drawLayer: _drawGasPipes,
+      src: [`/pipelines/gas`],
+      d3Fetch: d3.json
+    }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
-  let oilProductPipeline = new Transport('oil-product-pipelines', 'Oil product pipelines', {2012: null, 2022: null}, 'oil-and-gas', [{
-    drawLayer: _drawOilProdPipes,
-    src: [`/pipelines/petroleum_product`],
-    // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
-    d3Fetch: d3.json
-  }], '#3CB371', 2 * SCALE);
+  let oilProductPipeline = new Transport('oil-product-pipelines', 'Oil product pipelines',
+    {2012: null, 2022: null}, 'oil-and-gas', [{
+      drawLayer: _drawOilProdPipes,
+      src: [`/pipelines/petroleum_product`],
+      // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
+      d3Fetch: d3.json
+    }], '#3CB371', 2 * SCALE);
 
   oilProductPipeline.dash = 2.5 * SCALE;
   oilProductPipeline.drawLegend = function drawPipelineLegend(ctx, x, y, dashed) {
@@ -648,27 +653,31 @@ EnergyMaps = (function (EnergyMaps) {
     return y;
   };
 
-  const oilPipeline = new Transport('oil-pipelines', 'Oil pipelines', {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
-    drawLayer: _drawOilPipes,
-    src: [`/pipelines/oil`],
-    // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
-    d3Fetch: d3.json,
-    next_layer: EnergyMaps.oilProductPipeline
-  }], '#3CB371', 1.5 * SCALE);
+  const oilPipeline = new Transport('oil-pipelines', 'Oil pipelines',
+    {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
+      drawLayer: _drawOilPipes,
+      src: [`/pipelines/oil`],
+      // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
+      d3Fetch: d3.json,
+      next_layer: EnergyMaps.oilProductPipeline
+    }], '#3CB371', 1.5 * SCALE);
 
-  const oilRefinery = new Refinery('oil-refineries', 'Oil refineries', {2012: 373_000_000_000, 2022: null}, 'oil-and-gas', [{
-    drawLayer: _drawRefining,
-    src: [`/refineries/petroleum`],
-    d3Fetch: d3.json
-  }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
+  const oilRefinery = new Refinery('oil-refineries', 'Oil refineries',
+    {2012: 373_000_000_000, 2022: null}, 'oil-and-gas', [{
+      drawLayer: _drawRefining,
+      src: [`/refineries/petroleum`],
+      d3Fetch: d3.json
+    }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
-  const gasProcessing = new Processing('gas-processing', 'Gas processing', {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
-    drawLayer: _drawProcessing,
-    src: [ `/processing_plants/gas`],
-    d3Fetch: d3.json
-  }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
+  const gasProcessing = new Processing('gas-processing', 'Gas processing',
+    {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
+      drawLayer: _drawProcessing,
+      src: [ `/processing_plants/gas`],
+      d3Fetch: d3.json
+    }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 
-  const oilAndGasStorage = { name: 'oil-and-gas-storage',
+  const oilAndGasStorage = {
+    name: 'oil-and-gas-storage',
     value: {2012: 181_000_000_000, 2022: null},
     drawProps: false,
   // TODO: Split up the JSON files based on whatever property marks processing vs. storage
