@@ -41,7 +41,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.cross = 5 * SCALE;
     this.diameter = SCALE / 2;
     this.stroke = SCALE;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * @param {Object} ctx - HTML5 canvas context
      * @param {Number} x - x axis
@@ -91,7 +91,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = stroke;
     this.width = width;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * Draw pipeline legend to its HTML5 canvas context. All params passed
      * to draw_line() as a helper.
@@ -138,7 +138,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.size = size;
     this.stroke = 'rgba(255, 255, 255, 1)';
     this.strokeWidth = SCALE * .75;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * Draw gas processing legend to its HTML5 canvas context.
      * @param {Object} ctx - HTML5 canvas context
@@ -165,7 +165,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.size = size;
     this.stroke = 'rgba(255, 255, 255, 1)';
     this.strokeWidth = SCALE * .75;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * Draw oil refinery legend to its HTML5 canvas context.
      * @param {Object} ctx - HTML5 canvas context

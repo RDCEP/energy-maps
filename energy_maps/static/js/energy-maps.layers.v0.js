@@ -3,9 +3,8 @@ EnergyMaps = (function (EnergyMaps) {
   'use strict';
 
   /**
-   * @type {number}
-   * @description the total sum of asset values for all active layers
-   * @memberof Init
+   * @description Get the total sum of asset values for all active layers
+   * @return {Number} - The sum of the values of all selected assets
    */
   const _sumAssetTotals = function _sumAssetTotals
     ()
@@ -42,6 +41,10 @@ EnergyMaps = (function (EnergyMaps) {
       .replace(/T/, ' T')}`;
   };
 
+  /**
+   @description Create an array of layer objects available for display
+   @return {Array} - An array of layer objects
+   */
   const setLayers = function setLayers
     ()
   {
@@ -115,7 +118,7 @@ EnergyMaps = (function (EnergyMaps) {
   {
   if (lyr === EnergyMaps.oilPipeline) {
     let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
-    for (let i = 0, lyrs_length = lyrs.length; i < lyrs_length; ++i) {
+    for (let i = 0, lyrsLength = lyrs.length; i < lyrsLength; ++i) {
       EnergyMaps.startLoadingLayer();
       // TODO: Figure out why prod pipes legend is no longer showing
       Promise.all(
@@ -187,10 +190,10 @@ EnergyMaps = (function (EnergyMaps) {
    * @memberof Init
    */
   const addLayer = function addLayer
-    (lyr, transform)
+    (lyr)
   {
     console.time('load_layer_data');
-    _loadLayerData(lyr, transform);
+    _loadLayerData(lyr);
     console.timeEnd('load_layer_data');
     // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
@@ -257,6 +260,10 @@ EnergyMaps = (function (EnergyMaps) {
     lyr.active = false;
   };
 
+  /**
+   * @description Iterates through layers and draws active layers
+   * @param {Object} transform - # TODO: This should be removed
+   */
   const drawActiveLayers = function drawActiveLayers
     (transform)
   {

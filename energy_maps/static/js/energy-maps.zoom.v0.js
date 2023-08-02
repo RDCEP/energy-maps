@@ -27,7 +27,7 @@ EnergyMaps = (function (EnergyMaps) {
   };
 
   const _zoomEnd = _.debounce(function(e) {
-    EnergyMaps.k_changed = EnergyMaps.transform.k !== previousK;
+    EnergyMaps.kChanged = EnergyMaps.transform.k !== previousK;
     EnergyMaps.drawBaseMap(EnergyMaps.transform);
     EnergyMaps.drawActiveLayers(EnergyMaps.transform);
   }, 500, false);

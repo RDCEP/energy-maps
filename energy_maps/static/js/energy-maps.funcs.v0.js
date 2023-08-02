@@ -44,18 +44,19 @@ EnergyMaps = (function (EnergyMaps) {
   const simplifyTopojson = function simplifyTopojson
     (key, data)
   {
-    let output_geojson;
-    let presimplified_data = topojson.presimplify(data[0]);
-    output_geojson = topojson.feature(
-      topojson.simplify(presimplified_data, .01 / EnergyMaps.transform.k**2),
+    let outputGeojson;
+    let presimplifiedData = topojson.presimplify(data[0]);
+    outputGeojson = topojson.feature(
+      topojson.simplify(presimplifiedData, .01 / EnergyMaps.transform.k**2),
       data[0].objects[key]);
-    return output_geojson;
+    return outputGeojson;
   }
 
   /**
    * Draw the base map.
    * @param {Object} ctx - HTML5 canvas context.
    * @param {Object[]} queuedData - Dataset for the corresponding resource
+   * @param {Object} transform - x, y, and k transform coefficients
    * @param {Object} borderOnly
    * @param {Boolean} simple
    */
@@ -70,7 +71,7 @@ EnergyMaps = (function (EnergyMaps) {
 
     if (simple) {
       // If simple is True, we're looking only for a low res map so return
-      // simple_map_bkgd. This is used for pan/zoom.
+      // simpleMapBkgd. This is used for pan/zoom.
       outputGeojson = EnergyMaps.simpleMapBkgd;
     } else {
       let presimplifiedData = topojson.presimplify(queuedData[0]);
@@ -80,10 +81,10 @@ EnergyMaps = (function (EnergyMaps) {
         topojson.simplify(presimplifiedData, .01 / transform.k**2),
         queuedData[0].objects.nation);
 
-      // If no simple_map_bkgd object exists, make a low resolution
-      // map to us as simple_map_bkgd
+      // If no simpleMapBkgd object exists, make a low resolution
+      // map to us as simpleMapBkgd
       if (!EnergyMaps.simpleMapBkgd) {
-        EnergyMaps.simple_map_bkgd = topojson.feature(
+        EnergyMaps.simpleMapBkgd = topojson.feature(
           topojson.simplify(presimplifiedData,.2),
           queuedData[0].objects.nation);
       }
@@ -208,11 +209,11 @@ EnergyMaps = (function (EnergyMaps) {
   {
     /** @type {Number}
      * @description 90 degrees in radians, to represent the top of a unit circle*/
-    let starting_angle = Math.PI / 2;
-    ctx.moveTo (xy[0] + r * Math.cos(starting_angle), xy[1] + r * Math.sin(starting_angle));
+    let startingAngle = Math.PI / 2;
+    ctx.moveTo (xy[0] + r * Math.cos(startingAngle), xy[1] + r * Math.sin(startingAngle));
     for (let i = 1; i <= sides; ++i) {
-      ctx.lineTo (xy[0] + r * Math.cos(starting_angle + i * 2 * Math.PI / sides),
-        xy[1] + r * Math.sin(starting_angle + i * 2 * Math.PI / sides));
+      ctx.lineTo (xy[0] + r * Math.cos(startingAngle + i * 2 * Math.PI / sides),
+        xy[1] + r * Math.sin(startingAngle + i * 2 * Math.PI / sides));
     }
   }
 

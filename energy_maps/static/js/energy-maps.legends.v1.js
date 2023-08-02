@@ -109,27 +109,27 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * Update the entire legend. Call each relevant draw function and
    * render them in the appropriate order. Legend is drawn to the hidden
-   * tmp_ctx context so that the height can be calculated before the legend
+   * tmpCtx context so that the height can be calculated before the legend
    * is then copied to the visible context.
-   * @param {Object} tmp_ctx - HTML5 canvas context
+   * @param {Object} tmpCtx - HTML5 canvas context
    * @param {Object} ctx - HTML5 canvas context
    * @param {Object[]} layers - An array of objects representing resources
    * to be rendered on top of the map canvas.
    */
   const updateLegend = function updateLegend
-    (tmp_ctx, ctx, layers)
+    (tmpCtx, ctx, layers)
   {
     // FIXME: width in globals is now 850.
     legend.property('hidden', false);
     let x = 32 * SCALE;
-    let x_offset = 10 * SCALE;
+    let xOffset = 10 * SCALE;
     let y = 10 * SCALE;
 
     // NOTE: Reversing layers so that the bottom layer of the map is on the
     for (let i = ACTIVE_LAYERS.length-1; i >= 0; --i) {
       // if (!(ACTIVE_LAYERS[i] instanceof StateBoundary)) {
       if (!(ACTIVE_LAYERS[i].name === 'state-boundaries')) {
-        y = ACTIVE_LAYERS[i].drawLegend(tmp_ctx, x, y);
+        y = ACTIVE_LAYERS[i].drawLegend(tmpCtx, x, y);
       }
     }
 
@@ -145,7 +145,7 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.legendTmpCtx = legendTmpCtx;
   EnergyMaps.advanceForType = advanceForType;
   EnergyMaps.advanceVerticalIncrement = advanceVerticalIncrement;
-  EnergyMaps.update_legend = updateLegend;
+  EnergyMaps.updateLegend = updateLegend;
 
   return EnergyMaps;
 

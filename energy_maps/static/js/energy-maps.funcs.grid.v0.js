@@ -35,9 +35,9 @@ EnergyMaps = (function (EnergyMaps) {
       EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
       this.heading = heading || '';
       this.color = color || 'rgba(0, 0, 0, 0.5)';
-      this.line_width = lineWidth || 0;
-      this.nominal_voltage = nominalVoltage || 50;
-      this.z_index = 0;
+      this.lineWidth = lineWidth || 0;
+      this.nominalVoltage = nominalVoltage || 50;
+      this.zIndex = 0;
   }
   Grid.prototype = new EnergyMaps.InfrastructureSet;
 
@@ -60,7 +60,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.text = text || '';
     this.value = value || 0;
     this.column = column || '';
-    this.z_index = 0;
+    this.zIndex = 0;
     this.drawProps = drawProps || [];
     this.drawLegend =  legendGroup;
   }
@@ -69,7 +69,7 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * Get the features you want from your GeoJSON FeatureCollection.
    * @param {Object} infrastructure - readfile
-   * @param {Number} c - `grid` object member to compare readfile against
+   * @param {Object} c - `grid` object member to compare readfile against
    * @returns {Array} features - an array of features matching the
    * filtered class(es)
    */
@@ -169,7 +169,7 @@ EnergyMaps = (function (EnergyMaps) {
       // FIXME: This is a kludge for drawing a white swatch for unknown kV
       // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
       ctx.strokeStyle = 'rgba(76, 76, 76)';
-      ctx.lineWidth = 1 * SCALE;
+      ctx.lineWidth = SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
     }
 
@@ -281,17 +281,19 @@ EnergyMaps = (function (EnergyMaps) {
 
   // AC 100-300
 
-  const Ac100200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc100300,
-    src: [`/electric_grid/100_300_kV_AC`],
-    d3Fetch: d3.json,
-  }], '100-161', 'rgba(86, 180, 233)', 2, 100);
+  const Ac100200 = new Grid('AC-lines-100-to-300-kV', '100–200 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc100300,
+      src: [`/electric_grid/100_300_kV_AC`],
+      d3Fetch: d3.json,
+    }], '100-161', 'rgba(86, 180, 233)', 2, 100);
 
-  const Ac200300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc100300,
-    src: [`/electric_grid/100_300_kV_AC`],
-    d3Fetch: d3.json,
-  }], '220-287', 'rgba(55, 126, 184)', 3, 250);
+  const Ac200300 = new Grid('AC-lines-100-to-300-kV', '200–300 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc100300,
+      src: [`/electric_grid/100_300_kV_AC`],
+      d3Fetch: d3.json,
+    }], '220-287', 'rgba(55, 126, 184)', 3, 250);
 
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.
@@ -308,31 +310,36 @@ EnergyMaps = (function (EnergyMaps) {
     return y;
   }
 
-  const Ac100300 = new GridAcCollection('AC-lines-100-to-300-kV', 'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000}, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc100300,
-    src: [`/electric_grid/100_300_kV_AC`],
-    d3Fetch: d3.json,
-  }], _drawLegendAc100300);
+  const Ac100300 = new GridAcCollection('AC-lines-100-to-300-kV',
+    'AC 100–300 kV', {2012: 167_000_000_000, 2022: 167_000_000_000},
+    'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc100300,
+      src: [`/electric_grid/100_300_kV_AC`],
+      d3Fetch: d3.json,
+    }], _drawLegendAc100300);
 
   // AC 345-735
 
-  const Ac345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc345735,
-    src: [`/electric_grid/345_735_kV_AC`],
-    d3Fetch: d3.json,
-  }], '345', 'rgba(255, 149, 0)', 4, 350);
+  const Ac345 = new Grid('AC-lines-345-to-735-kV', '345 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc345735,
+      src: [`/electric_grid/345_735_kV_AC`],
+      d3Fetch: d3.json,
+    }], '345', 'rgba(255, 149, 0)', 4, 350);
 
-  const Ac500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc345735,
-    src: [`/electric_grid/345_735_kV_AC`],
-    d3Fetch: d3.json,
-  }], '500', 'rgba(213, 113, 45)', 5, 350);
+  const Ac500 = new Grid('AC-lines-345-to-735-kV', '500 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc345735,
+      src: [`/electric_grid/345_735_kV_AC`],
+      d3Fetch: d3.json,
+    }], '500', 'rgba(213, 113, 45)', 5, 350);
 
-  const Ac735Plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc345735,
-    src: [`/electric_grid/345_735_kV_AC`],
-    d3Fetch: d3.json,
-  }], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
+  const Ac735Plus = new Grid('AC-lines-345-to-735-kV', '735 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc345735,
+      src: [`/electric_grid/345_735_kV_AC`],
+      d3Fetch: d3.json,
+    }], '735 and Above', 'rgba(228, 53, 5)', 6, 750);
 
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.
@@ -350,17 +357,21 @@ EnergyMaps = (function (EnergyMaps) {
     return y;
   }
 
-  const Ac345735 = new GridAcCollection('AC-lines-345-to-735-kV', 'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000}, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAc345735,
-    src: [`/electric_grid/345_735_kV_AC`],
-    d3Fetch: d3.json,
-  }], _drawLegendAc345735);
+  const Ac345735 = new GridAcCollection('AC-lines-345-to-735-kV',
+    'AC 345–735 kV', {2012: 137_000_000_000, 2022: 137_000_000_000},
+    'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAc345735,
+      src: [`/electric_grid/345_735_kV_AC`],
+      d3Fetch: d3.json,
+    }], _drawLegendAc345735);
 
-  const dc = new Grid('DC-lines', '500–1000 kV DC', {2012: 4_000_000_000, 2022: 4_000_000_000}, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassDc,
-    src: [`/electric_grid/dc`],
-    d3Fetch: d3.json,
-  }], 'DC', 'black', 7, 1000);
+  const dc = new Grid('DC-lines', '500–1000 kV DC',
+    {2012: 4_000_000_000, 2022: 4_000_000_000},
+    'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassDc,
+      src: [`/electric_grid/dc`],
+      d3Fetch: d3.json,
+    }], 'DC', 'black', 7, 1000);
 
   dc.dashed = false;
 
@@ -384,7 +395,8 @@ EnergyMaps = (function (EnergyMaps) {
     return y;
   };
 
-  const distribution = { name: 'electricity-distribution',
+  const distribution = {
+    name: 'electricity-distribution',
     text: 'Electricity dist',
     value: {2012: 1_400_000_000_000, 2022: 1_400_000_000_000},
     drawProps: false,

@@ -143,7 +143,7 @@ EnergyMaps = (function (EnergyMaps) {
         let checkbox = lyr.checkbox._groups[0][0];
 
         if (checkbox.checked) {
-          EnergyMaps.addLayer(lyr, EnergyMaps.transform);
+          EnergyMaps.addLayer(lyr);
         } else {
           EnergyMaps.removeLayer(lyr);
         }
@@ -151,7 +151,7 @@ EnergyMaps = (function (EnergyMaps) {
         if (!(lyr.name === 'state-boundaries')) {
           EnergyMaps.legendCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
           EnergyMaps.legendTmpCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
-          EnergyMaps.update_legend(EnergyMaps.legendTmpCtx, EnergyMaps.legendCtx, LAYERS);
+          EnergyMaps.updateLegend(EnergyMaps.legendTmpCtx, EnergyMaps.legendCtx, LAYERS);
           if (ACTIVE_LAYERS.length === 0) {
             EnergyMaps.legend.property('hidden', true);
           }

@@ -105,7 +105,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.text = text || '';
     this.value = value || 0;
     this.column = column || '';
-    this.z_index = 0;
+    this.zIndex = 0;
     this.drawProps = drawProps || [{
       drawLayer: '',
       src: '',
@@ -288,7 +288,7 @@ EnergyMaps = (function (EnergyMaps) {
    * @description For tracking the value of transform.k to improve
    * performance of simplification algorithms.
    */
-  EnergyMaps.k_changed = false;
+  EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;
   EnergyMaps.SCALE = SCALE;
   EnergyMaps.width = width;

@@ -22,8 +22,8 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
-   * @property {String} stroke - rgba value to set the canvas stroke
-   * @property {Number} width - width value set relative to SCALE
+   * @param {String} stroke - rgba value to set the canvas stroke
+   * @param {Number} width - width value set relative to SCALE
    */
   let StateBoundary = function StateBoundary
     (name, text, value, column, drawProps, stroke, width)
@@ -31,7 +31,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = stroke;
     this.width = width;
-    this.z_index = 0;
+    this.zIndex = 0;
   }
   StateBoundary.prototype = new EnergyMaps.InfrastructureSet;
 
@@ -47,8 +47,8 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
    * the visualization
-   * @property {String} stroke - rgba value to set the canvas stroke
-   * @property {Number} width - width value set relative to SCALE
+   * @param {String} stroke - rgba value to set the canvas stroke
+   * @param {Number} width - width value set relative to SCALE
    */
   let WindMap = function WindMap
     (name, text, value, column, drawProps, stroke, width)
@@ -56,20 +56,20 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = stroke;
     this.width = width;
-    this.z_index = 0;
+    this.zIndex = 0;
   }
   WindMap.prototype = new EnergyMaps.InfrastructureSet;
 
   /**
    * Draw state boundaries on the infrastructure map.
    * @param {Object} ctx - HTML5 canvas context
-   * @param {coal_mine[]} queued_data - Dataset for the corresponding resource
+   * @param {coal_mine[]} queuedData - Dataset for the corresponding resource
    */
   const _drawStateBoundaries = function _drawStateBoundaries
-    (ctx, queued_data)
+    (ctx, queuedData)
   {
     EnergyMaps.path.context(ctx);
-    let output_geojson = EnergyMaps.simplify("states-no-overlap", queued_data);
+    let outputGeojson = EnergyMaps.simplify('states-no-overlap', queuedData);
 
     // ctx.strokeStyle = state_boundaries.stroke;
     ctx.strokeStyle = '#c4c4c4';
@@ -79,7 +79,7 @@ EnergyMaps = (function (EnergyMaps) {
     //   state_boundaries.width / transform.k * 2
     // ]);
     ctx.beginPath();
-    EnergyMaps.path(output_geojson);
+    EnergyMaps.path(outputGeojson);
     ctx.stroke();
     // ctx.setLineDash([]);
     EnergyMaps.finishLoadingLayer();
@@ -95,16 +95,16 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * Draw wind map contours on the infrastructure map.
    * @param {Object} ctx - HTML5 canvas context
-   * @param {Object} queued_data - Dataset for the corresponding resource
+   * @param {Object} queuedData - Dataset for the corresponding resource
    */
   const _drawWindMap = function _drawWindMap
-    (ctx, queued_data)
+    (ctx, queuedData)
   {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
     if (presimplifiedData == null) {
-      presimplifiedData = topojson.presimplify(queued_data[0]);
+      presimplifiedData = topojson.presimplify(queuedData[0]);
     }
     ctx.lineWidth = 0;
 
@@ -115,10 +115,10 @@ EnergyMaps = (function (EnergyMaps) {
       // If current k diff from prev k, say kChanged
       // declare output_geojson as a null global, then only run the following block if
       // value of k has changed or if output_geojson is null
-      if (outputGeojson[i] === undefined || EnergyMaps.k_changed) {
+      if (outputGeojson[i] === undefined || EnergyMaps.kChanged) {
         outputGeojson[i] = topojson.feature(
           topojson.simplify(presimplifiedData, .01 / EnergyMaps.transform.k**2),
-          queued_data[0].objects[bands[i]]
+          queuedData[0].objects[bands[i]]
         );
       }
       ctx.fillStyle = windMapColors[i];

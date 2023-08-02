@@ -31,7 +31,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.InfrastructureSet.call(this, name, text, value, column, drawProps);
     this.stroke = stroke;
     this.width = width || 0;
-    this.z_index = 0;
+    this.zIndex = 0;
   }
   Coal.prototype = new EnergyMaps.InfrastructureSet;
 
@@ -61,7 +61,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.width = SCALE;
     this.fill = 'rgba(0, 0, 0, 0.5)';
     this.scale = SCALE / 190;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * Draw coal mine legend to its HTML5 canvas context.
      * @param {Object} ctx - HTML5 canvas context
@@ -106,7 +106,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.text = text;
     this.stroke = '#767676';
     this.width = SCALE;
-    this.z_index = 0;
+    this.zIndex = 0;
     /**
      * Draw railroad legend to its HTML5 canvas context. All params passed
      * to draw_line() as a helper.
@@ -195,22 +195,22 @@ EnergyMaps = (function (EnergyMaps) {
 
     // Sort in descending order so large mines don't
     // obscure small mines. Unary '+' operator used to return the numeric rather
-    // than string values to tot_prod
+    // than string values to totProd
     mines.sort(function(a, b) {
       return d3.descending(
-        +a.properties.original.tot_prod,
-        +b.properties.original.tot_prod
+        +a.properties.original.totProd,
+        +b.properties.original.totProd
       )});
 
     mines.forEach(function(d, i) {
-      // TODO: We have lon/lat props in the csv file, but none in the
+      // NOTE: We have lon/lat props in the csv file, but none in the
       //  database from the JSON we used!
       let xy = EnergyMaps.projection(
         [+d.geometry.coordinates[0], +d.geometry.coordinates[1]]);
       if (xy === null) {
         //
       } else {
-        _drawMine(ctx, xy, viz.black, +d.properties.original.tot_prod, false);
+        _drawMine(ctx, xy, viz.black, +d.properties.original.totProd, false);
       }
       if (i === mines.length - 1) {
         EnergyMaps.finishLoadingLayer();
@@ -257,7 +257,7 @@ EnergyMaps = (function (EnergyMaps) {
       d3Fetch: d3.json
   }]);
 
-  // TODO: Why aren't 2022 railroads working?
+  // NOTE: Why aren't 2022 railroads working?
   const railroad = new Railroad(
     'railroads', 'Railroads', {2012: 137_000_000_000, 2022: 137_000_000_000},
     'coal', [{
