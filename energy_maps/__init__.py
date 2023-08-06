@@ -8,6 +8,7 @@ from flask_compress import Compress
 compress = Compress()
 
 app = Flask(__name__)
+
 compress.init_app(app)
 app.config.from_object('energy_maps.config.FlaskConfig')
 app.register_blueprint(main_views)

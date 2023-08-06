@@ -48,9 +48,12 @@ EnergyMaps = (function (EnergyMaps) {
    * @classdesc Used to create objects that represent several units of electric
    * grid infrastructure.
    * @param {String} name - canvas ID
+   * @param {String} text - human readable text for UI
    * @param {Number} value - asset value in USD
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
+   * @param {String} legendGroup - the name of the icon group in the legend
+   * that this item belongs to
    * the visualization
    */
   let GridAcCollection = function GridAcCollection
@@ -69,24 +72,24 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * Get the features you want from your GeoJSON FeatureCollection.
    * @param {Object} infrastructure - readfile
-   * @param {Object} c - `grid` object member to compare readfile against
+   * @param {Object} grid_object - `grid` object member to compare readfile against
    * @returns {Array} features - an array of features matching the
    * filtered class(es)
    */
   const _filterFeatures = function filterFeatures
-    (infrastructure, c)
+    (infrastructure, grid_object)
   {
-    let features = infrastructure.features.filter(function(d) {
-      return d.properties.original.class === c.heading;
+    return infrastructure.features.filter(function(d) {
+      return d.properties.original.class === grid_object.heading;
     });
-    return features;
   }
 
   /**
    * Format electric grid line width for the calling grid class object.
    * Create an exponential response curve between voltages and line widths
    * to ensure that the lines that represent large voltages aren't too
-   * large visually.
+   * large visually. Input values of 500 scale to 2.5px, values of 0 scale
+   * to 1px.
    * @param {Number} value - the value to be scaled, bound to the line_width
    * property of the corresponding `grid` object
    * @param {Number} divisor - sets line inflection point to adjust the scale
@@ -98,7 +101,10 @@ EnergyMaps = (function (EnergyMaps) {
     (value, divisor)
   {
     // TODO: Set nominal voltage as a property of the grid object
-    return SCALE * (1 + 3 / (1 + Math.exp(-3 * (value / divisor - 1)))) / EnergyMaps.transform.k;
+    return SCALE *
+      (1 + 3 /
+        (1 + Math.exp(-3 * (value / divisor - 1))))
+      / EnergyMaps.transform.k;
   }
 
   /**
@@ -111,7 +117,6 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawGridClass = function drawGridClass
     (ctx, queuedData, obj, key)
   {
-
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
@@ -122,7 +127,7 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.lineCap = 'round';
     ctx.strokeStyle = obj.color;
 
-    features = _filterFeatures(gridData, obj);
+    let features = _filterFeatures(gridData, obj);
 
     let featLen = features.length;
 
@@ -130,7 +135,6 @@ EnergyMaps = (function (EnergyMaps) {
 
         tmpGrid.features = [features[i]];
 
-        // TODO: Add descriptive comment here to explain the args
         ctx.lineWidth = _setLineWidth(
           features[i]['properties']['original']['voltage'], 500);
 
@@ -166,8 +170,9 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.stroke();
 
     if (obj === AcNa) {
-      // FIXME: This is a kludge for drawing a white swatch for unknown kV
-      // draws a hollow grey rectangle to give the appearance of a border around the white rectangle
+      // HACK: This is a kludge for drawing a white swatch for unknown kV
+      //  draws a hollow grey rectangle to give the appearance of a border
+      //  around the white rectangle
       ctx.strokeStyle = 'rgba(76, 76, 76)';
       ctx.lineWidth = SCALE;
       ctx.strokeRect(x - 7 * SCALE, y - 7, 14 * SCALE, 14 * SCALE);
@@ -246,17 +251,19 @@ EnergyMaps = (function (EnergyMaps) {
   //   w: d3.json,
   // } ]);
 
-  const AcNa = new Grid('AC-lines-under-100-kV', 'Unknown kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAcUnkAndUnder100,
-    src: [`${API_URL_PREFIX}/electric_grid/under_100`],
-    d3Fetch: d3.json,
-  }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
+  const AcNa = new Grid('AC-lines-under-100-kV', 'Unknown kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAcUnkAndUnder100,
+      src: [`${API_URL_PREFIX}/electric_grid/under_100`],
+      d3Fetch: d3.json,
+    }], 'NOT AVAILABLE', 'rgba(255, 255, 255)', 0, 50);
 
-  const AcUnder100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC', null, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAcUnkAndUnder100,
-    src: [`${API_URL_PREFIX}/electric_grid/under_100`],
-    d3Fetch: d3.json,
-  }], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
+  const AcUnder100 = new Grid('AC-lines-under-100-kV', 'Under 100 kV AC',
+    null, 'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAcUnkAndUnder100,
+      src: [`${API_URL_PREFIX}/electric_grid/under_100`],
+      d3Fetch: d3.json,
+    }], 'Under 100', 'rgba(255, 255, 170)', 1, 50);
 
   /**
    * Draw AC electric grid legend to its HTML5 canvas context.
@@ -273,11 +280,14 @@ EnergyMaps = (function (EnergyMaps) {
     return y;
   }
 
-  const AcNaAndUnder100 = new GridAcCollection('AC-lines-under-100-kV', 'AC < 100 kV', {2012: 102_000_000_000, 2022: 102_000_000_000}, 'electricity-transmission-and-distribution', [{
-    drawLayer: _drawGridClassAcUnkAndUnder100,
-    src: [`/electric_grid/under_100`],
-    d3Fetch: d3.json,
-  }], _drawLegendAcNaAndUnder100); //, [AcNa, AcUnder100]);
+  const AcNaAndUnder100 = new GridAcCollection(
+    'AC-lines-under-100-kV', 'AC < 100 kV',
+    {2012: 102_000_000_000, 2022: 102_000_000_000},
+    'electricity-transmission-and-distribution', [{
+      drawLayer: _drawGridClassAcUnkAndUnder100,
+      src: [`/electric_grid/under_100`],
+      d3Fetch: d3.json,
+    }], _drawLegendAcNaAndUnder100); //, [AcNa, AcUnder100]);
 
   // AC 100-300
 

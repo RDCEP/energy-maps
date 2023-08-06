@@ -106,7 +106,7 @@ EnergyMaps = (function (EnergyMaps) {
    * Helper function for draw_mine() to Scale out the radius relative
    * to the desired size
    * @param {Number} radius - starting radius
-   * @param {Number} scale - the desired scale value, bound to `viz` object
+   * @param {Number} scale - the desired scale value, bound to `VIZ` object
    * value relative to category.
    * @returns {Number} y - updated y-axis
    */
@@ -178,7 +178,7 @@ EnergyMaps = (function (EnergyMaps) {
       if (xy === null) {
         //
       } else {
-        _drawMine(ctx, xy, viz.black, +d.properties.original.totProd, false);
+        _drawMine(ctx, xy, VIZ.black, +d.properties.original.totProd, false);
       }
       if (i === mines.length - 1) {
         EnergyMaps.finishLoadingLayer();

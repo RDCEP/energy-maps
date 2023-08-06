@@ -14,14 +14,14 @@ EnergyMaps = (function (EnergyMaps) {
    * to power plants to the map and legend.
    * @class
    * @classdesc Used to create objects that represent electricity-generating
-   * infrastructure.
+   *  infrastructure.
    * @extends InfrastructureSet
    * @param {String} name - canvas ID
    * @param {String} text - text displayed in the legend
    * @param {Number} value - asset value in USD
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
-   * the visualization
+   *  the visualization
    * @param {String} fuelType - class heading from the data file
    * @param {String} color - rgba value used to draw the grid line
    * @param {String} stroke - rgba value used for symbol outlines and opacity
@@ -44,7 +44,7 @@ EnergyMaps = (function (EnergyMaps) {
     this.drawLegend = function drawPowerPlantLegend(ctx, x, y) {
       ctx.fillStyle = this.color;
       ctx.strokeStyle = this.stroke;
-      ctx.lineWidth = _electricityGeneration.stroke.width;
+      ctx.lineWidth = .66 * SCALE;
 
       // TODO: The vertical increment spacing is different for power plants
       //  because their icons are larger than others. Should we apply one
@@ -57,7 +57,7 @@ EnergyMaps = (function (EnergyMaps) {
       ctx.fill();
 
       let text = this.text;
-      y = EnergyMaps.advanceForType(y, ctx, text, text_offset, x);
+      y = EnergyMaps.advanceForType(y, ctx, text, TEXT_OFFSET, x);
       return y;
     };
   }
@@ -80,24 +80,6 @@ EnergyMaps = (function (EnergyMaps) {
   const plantStroke = 'rgba(255, 255, 255, 1)';
 
   /**
-  * A collection of power plant classifications used for filtering.
-  * @type {Object}
-  * @property {Object} stroke - contains rgba and scale values to assign
-  * to ctx.strokeStyle
-  * @property {Number} scale - sets the scale of all plants to a multiple
-  * of global SCALE
-  */
-  const _electricityGeneration = {
-    stroke: {
-      light: 'rgba(255, 255, 255, 1)',
-      width: .66 * SCALE
-    },
-    // TODO: figure out if needed
-    //  This is used in the `draw_power_plant()` function
-    scale: .3 * SCALE
-  };
-
-  /**
    * Helper function for draw_single_plant(). Draw the white background
    * for each symbol.
    * @param {Object} plants - data from the readfile, passes through from
@@ -115,14 +97,12 @@ EnergyMaps = (function (EnergyMaps) {
       for (let coord of xy) {
         if (coord != null) {
           // TODO: Does this need a year conditional? Probably
-          _drawPowerPlant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
+          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
         }
         else {
           console.log(coord)
         }
       }
-      // draw_power_plant(ctx, xy, viz.white, +d.properties.original.totalCap);
-      // draw_power_plant(ctx, xy, viz.white, +d.properties.original.SUMMER_CAP);
     });
   }
 
@@ -139,7 +119,7 @@ EnergyMaps = (function (EnergyMaps) {
     (ctx, xy, fuel, d)
   {
     let color = fuel.color;
-    if (coord != null) {
+    if (d.coord != null) {
       if (DATA_YEAR === 2012) {
         _drawPowerPlant(ctx, xy, color, +d.properties.original.totalCap);
       }
@@ -158,7 +138,7 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {Object} data - data from the readfile, passes through
    * from draw_single_plant()
    * @param {Object} fuel - fuel object from `electricity_generation`,
-   * passes through from draw_single_plant() // TODO: update params
+   * passes through from draw_single_plant()
    * @returns {Object} features - the desired data set, narrowed by fuel type
    */
   const _getFuelType = function _getFuelType
@@ -206,11 +186,11 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawPowerPlant = function _drawPowerPlant
     (ctx, xy, color, r)
   {
-    ctx.strokeStyle = _electricityGeneration.stroke.light;
-    ctx.lineWidth = _electricityGeneration.stroke.width / EnergyMaps.transform.k ** .71;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+    ctx.lineWidth = .66 * SCALE / EnergyMaps.transform.k ** .71;
     ctx.fillStyle = color;
     // TODO: extract math to variable or function
-    r = Math.sqrt(r / Math.PI) * _electricityGeneration.scale;
+    r = Math.sqrt(r / Math.PI) * .3 * SCALE;
     r = r / EnergyMaps.transform.k ** .5;
     ctx.beginPath();
     // Draw larger circle for stroke, so that stroke aligns to outside of

@@ -83,8 +83,8 @@ EnergyMaps = (function (EnergyMaps) {
    * Advance vertical increment for legend symbol
    * @param {Number} y - y axis
    * @param {Object} ctx - HTML5 canvas context
-   * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
-   * @param {string} lineWidth - symbol lineWidth, bound to `viz` object (some still loosely implemented)
+   * @param {string} color - symbol color, bound to `VIZ` object (some still loosely implemented)
+   * @param {string} lineWidth - symbol lineWidth, bound to `VIZ` object (some still loosely implemented)
    * @returns {Number} y - updated y axis
    */
   const advanceVerticalIncrement = function advanceVerticalIncrement
@@ -102,7 +102,7 @@ EnergyMaps = (function (EnergyMaps) {
      * @param {Object} ctx - HTML5 canvas context
      * @param {Number} x - x axis
      * @param {Number} y - y axis
-     * @param {string} color - symbol color, bound to `viz` object (some still loosely implemented)
+     * @param {string} color - symbol color, bound to `VIZ` object (some still loosely implemented)
      * @param {string} text - the text for the layer written to the legend
      */
 

@@ -63,7 +63,7 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * Draw state boundaries on the infrastructure map.
    * @param {Object} ctx - HTML5 canvas context
-   * @param {coal_mine[]} queuedData - Dataset for the corresponding resource
+   * @param {CoalMine[]} queuedData - Dataset for the corresponding resource
    */
   const _drawStateBoundaries = function _drawStateBoundaries
     (ctx, queuedData)
@@ -143,7 +143,7 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.lineCap ='butt';
     ctx.lineWidth = 14 * SCALE;
     //TODO: More ugliness. If everything in the legend is going to overhang by
-    // by 7 pixels, the marhigins should just be adjusted.
+    // by 7 pixels, the margins should just be adjusted.
     x -= 7;
     for (let i = 0; i < bandsLength; ++i) {
       ctx.strokeStyle = windMapColors[i];
