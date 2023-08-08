@@ -185,8 +185,9 @@ EnergyMaps = (function (EnergyMaps) {
 
   /**
    * @description Sort and redraw the layers of the map based on the order
-   * of the map options
-   * @return
+   * of the map options. This function reorders both the LAYERS and
+   * ACTIVE_LAYERS Arrays, and reorders the .map.layer <div>s in the page.
+   * @return null
    * @memberof
    */
   const _sortMapLayers = function _sortMapLayers
@@ -194,12 +195,14 @@ EnergyMaps = (function (EnergyMaps) {
   {
     const that = d3.select(this);
     let target = [];
-    let options = that.selectAll('.option-li input')
+    that.selectAll('.option-li input')
       .each(function (d, i) {
-        target[i] = d3.select(this).node().getAttribute('data-layername')
+        target[i] = d3.select(this).node().getAttribute('data-layername');
+        d3.select(`.map.layer.${d3.select(this).attr('data-layername')}`).lower();
       });
+    d3.select('.base-map').lower();
     LAYERS = _sortOnTarget(LAYERS, target, 'name');
-    EnergyMaps.drawActiveLayers(EnergyMaps.transform);
+    ACTIVE_LAYERS = _sortOnTarget(ACTIVE_LAYERS, target, 'name');
   };
 
   /**
