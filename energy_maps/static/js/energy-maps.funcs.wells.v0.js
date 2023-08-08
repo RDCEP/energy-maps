@@ -451,21 +451,15 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let gproc = queuedData[0].features; // gas processing
-    // let gstor = queuedData[1]; // gas storage
+    let gasProcessing = queuedData[0].features;
 
-    gproc.forEach(function(d, i) {
+    gasProcessing.forEach(function(d, i) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
       _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
-      if (i === gproc.length - 1) {
+      if (i === gasProcessing.length - 1) {
         EnergyMaps.finishLoadingLayer();
       }
     });
-
-    // gstor.forEach(function(d) {
-    //   let xy = projection([+d.lon, +d.lat]);
-    //   draw_gas_storage(ctx, xy);
-    // });
 
   };
 
@@ -474,11 +468,13 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawStorage = function _drawStorage
     (ctx, queuedData)
   {
-    let gstor = queuedData[0]; // gas storage
-    gstor.forEach(function(d, i) {
+
+    let gasStorage = queuedData[0];
+
+    gasStorage.forEach(function(d, i) {
       let xy = EnergyMaps.projection([+d.lon, +d.lat]);
       _drawGasStorage(ctx, xy);
-      if (i === gstor.length - 1) {
+      if (i === gasStorage.length - 1) {
         EnergyMaps.hideSpinner();
       }
       return xy;
@@ -492,25 +488,28 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let oref = queued_data[0].features;
+    let oilRefineries = queued_data[0].features;
 
     if (DATA_YEAR === 2022) {
-      oref.forEach(function(d, i) {
+
+      oilRefineries.forEach(function(d, i) {
         let r = 0;
 
         if (d.properties.original.hasOwnProperty('QUANTITY')) {
           // TODO: get scaling value
-          r += +d.properties.original.QUANTITY/250; // TODO: change the divisor here to get the scale
+          r += +d.properties.original.QUANTITY / 250; //  TODO: change the divisor here to get the scale
         }
 
         d.r = r;
 
-        if (i === oref.length - 1) {
+        if (i === oilRefineries.length - 1) {
           EnergyMaps.finishLoadingLayer();
         }
       });
+
     } else if (DATA_YEAR === 2012) {
-      oref.forEach(function(d, i) {
+
+      oilRefineries.forEach(function(d, i) {
         let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
           'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
         let r = 0;
@@ -520,17 +519,17 @@ EnergyMaps = (function (EnergyMaps) {
           }
         }
         d.r = r;
-        if (i === oref.length - 1) {
+        if (i === oilRefineries.length - 1) {
           EnergyMaps.finishLoadingLayer();
         }
       });
     }
 
-    oref.sort(function(a, b) {
+    oilRefineries.sort(function(a, b) {
       return d3.descending(a.r, b.r);
     });
 
-    oref.forEach(function(d) {
+    oilRefineries.forEach(function(d) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
       // for (coord in xy) {
         if (xy != null) {
