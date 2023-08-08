@@ -113,39 +113,29 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {Array} queuedData - the readfile from '/json/elec_grid_split/'
    * @param {Object} obj - grid object
    * @param {String} key - lookup value from data
+   * @param {Number} nominalVoltage - nominal voltage for dataset (do not look
+   *   up each line's voltage because it's too damned slow)
    */
   const _drawGridClass = function drawGridClass
-    (ctx, queuedData, obj, key)
+    (ctx, queuedData, obj, key, nominalVoltage)
   {
+
+    let features = {
+      type: 'FeatureCollection',
+      features: _filterFeatures(queuedData[0], obj)
+    };
+
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let gridData = queuedData[0];
-
-    let tmpGrid = {type: 'FeatureCollection', features: []};
-
     ctx.lineCap = 'round';
     ctx.strokeStyle = obj.color;
+    ctx.lineWidth = _setLineWidth(nominalVoltage, 500);
+    ctx.beginPath();
+    EnergyMaps.path(features);
+    ctx.stroke();
+    EnergyMaps.finishLoadingLayer();
 
-    let features = _filterFeatures(gridData, obj);
-
-    let featLen = features.length;
-
-    for (let i = 0; i < featLen; ++i) {
-
-        tmpGrid.features = [features[i]];
-
-        ctx.lineWidth = _setLineWidth(
-          features[i]['properties']['original']['voltage'], 500);
-
-        ctx.beginPath();
-        EnergyMaps.path(tmpGrid);
-        ctx.stroke();
-
-        if (i === featLen - 1) {
-          EnergyMaps.finishLoadingLayer();
-        }
-      }
   };
 
   /**
@@ -194,8 +184,8 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawGridClassAcUnkAndUnder100 = function _drawGridClassAcUnkAndUnder100
     (ctx, queued_data)
   {
-    _drawGridClass(ctx, queued_data, AcNa, 'grid-unk_under_100');
-    _drawGridClass(ctx, queued_data, AcUnder100, 'grid-unk_under_100');
+    _drawGridClass(ctx, queued_data, AcNa, 'grid-unk_under_100', 50);
+    _drawGridClass(ctx, queued_data, AcUnder100, 'grid-unk_under_100', 90);
   };
 
   /**
@@ -208,8 +198,8 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawGridClassAc100300 = function _drawGridClassAc100300
     (ctx, queued_data)
   {
-    _drawGridClass(ctx, queued_data, Ac100200, 'grid-100_300');
-    _drawGridClass(ctx, queued_data, Ac200300, 'grid-100_300');
+    _drawGridClass(ctx, queued_data, Ac100200, 'grid-100_300', 150);
+    _drawGridClass(ctx, queued_data, Ac200300, 'grid-100_300', 250);
   };
 
   /**
@@ -222,9 +212,9 @@ EnergyMaps = (function (EnergyMaps) {
   const _drawGridClassAc345735 = function _drawGridClassAc345735
     (ctx, queued_data)
   {
-    _drawGridClass(ctx, queued_data, Ac345, 'grid-345_735');
-    _drawGridClass(ctx, queued_data, Ac500, 'grid-345_735');
-    _drawGridClass(ctx, queued_data, Ac735Plus, 'grid-345_735');
+    _drawGridClass(ctx, queued_data, Ac345, 'grid-345_735', 345);
+    _drawGridClass(ctx, queued_data, Ac500, 'grid-345_735', 500);
+    _drawGridClass(ctx, queued_data, Ac735Plus, 'grid-345_735', 735);
   };
 
   /**
