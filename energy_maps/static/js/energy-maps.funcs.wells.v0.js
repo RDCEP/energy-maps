@@ -455,16 +455,8 @@ EnergyMaps = (function (EnergyMaps) {
     // let gstor = queuedData[1]; // gas storage
 
     gproc.forEach(function(d, i) {
-      let xy = EnergyMaps.projection([+d.geometry.coordinates[0], +d.geometry.coordinates[1]]);
-
-      // Figure out why new data draws above US northern border
-      for (coord in xy) {
-        if (coord != null) {
-          _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
-        } else {
-          console.log(coord);
-        }
-      }
+      let xy = EnergyMaps.projection(d.geometry.coordinates);
+      _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
       if (i === gproc.length - 1) {
         EnergyMaps.finishLoadingLayer();
       }
