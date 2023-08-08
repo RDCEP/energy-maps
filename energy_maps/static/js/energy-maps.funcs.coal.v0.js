@@ -178,7 +178,8 @@ EnergyMaps = (function (EnergyMaps) {
       if (xy === null) {
         //
       } else {
-        _drawMine(ctx, xy, VIZ.black, +d.properties.original.totProd, false);
+        // _drawMine(ctx, xy, VIZ.black, +d.properties.original.totalProd, false);
+        _drawMine(ctx, xy, VIZ.black, +d.properties.original.tot_prod, false);
       }
       if (i === mines.length - 1) {
         EnergyMaps.finishLoadingLayer();

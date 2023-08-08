@@ -121,7 +121,8 @@ EnergyMaps = (function (EnergyMaps) {
     let color = fuel.color;
     // if (coord != null) {  # FIXME: `coord` is not defined
       if (DATA_YEAR === 2012) {
-        _drawPowerPlant(ctx, xy, color, +d.properties.original.totalCap);
+        // _drawPowerPlant(ctx, xy, color, +d.properties.original.totalCap);
+        _drawPowerPlant(ctx, xy, color, +d.properties.original.total_cap);
       }
       else if (DATA_YEAR === 2022) {
         _drawPowerPlant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
