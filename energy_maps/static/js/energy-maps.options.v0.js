@@ -129,11 +129,9 @@ EnergyMaps = (function (EnergyMaps) {
   const initMenu = function initMenu
     ()
   {
-    const layers = EnergyMaps.setLayers();
-    // for (let i = 0; i < LAYERS.length; i++) {
-    for (let i = 0, l = layers.length; i < l; i++) {
+    for (let i = 0, n = LAYERS.length; i < n; ++i) {
 
-      let lyr = layers[i];
+      let lyr = LAYERS[i];
 
       let li = _initMenuItem(lyr);
       _initMenuCheckbox(lyr, li);

@@ -53,8 +53,6 @@ EnergyMaps = (function (EnergyMaps) {
 
       let _L = [];
 
-      _L.push(EnergyMaps.stateBoundaries);
-
       // Coal
       _L.push(EnergyMaps.coalMine);
       _L.push(EnergyMaps.railroad);
@@ -96,6 +94,7 @@ EnergyMaps = (function (EnergyMaps) {
       _L.push(EnergyMaps.biofuel);
       // layers.push(bio_plants);
 
+      _L.push(EnergyMaps.stateBoundaries);
       _L.push(EnergyMaps.windMap);
 
       return _L;
@@ -237,10 +236,10 @@ EnergyMaps = (function (EnergyMaps) {
     (lyr)
   {
     lyr.canvas = d3
-      // .select(map_container)
-      .select('.main-map')
+      .select('.map-layers')
       .append('div')
       .attr('class', `map layer ${lyr.name}`)
+      .lower()
       .append('canvas')
       .attr('class', `canvas ${lyr.name}`)
       .attr('width', EnergyMaps.width)
@@ -267,8 +266,8 @@ EnergyMaps = (function (EnergyMaps) {
   const drawActiveLayers = function drawActiveLayers
     (transform)
   {
-    const layers = EnergyMaps.setLayers();
-    layers.map(layer => {
+    // const layers = EnergyMaps.setLayers();
+    ACTIVE_LAYERS.map(layer => {
       if (layer.active === true) {
         console.time('load_layer_data');
         _loadLayerData(layer);

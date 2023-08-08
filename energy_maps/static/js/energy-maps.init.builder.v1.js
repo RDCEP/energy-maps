@@ -20,7 +20,7 @@ EnergyMaps = (function (EnergyMaps) {
    * @description HTML class on which the main map is drawn
    * @memberof Init
    */
-  const mapContainer = '.main-map';
+  const mapContainer = '.map-layers';
   const baseMapClass = '.base-map';
 
   /**
