@@ -269,9 +269,9 @@ EnergyMaps = (function (EnergyMaps) {
         layer.context.save();
         EnergyMaps.transformLayer(layer.context, EnergyMaps.transform);
       }
-      EnergyMaps.setCookie();
       return layer;
     });
+    EnergyMaps.setCookieTransform();
   };
 
   LAYERS = setLayers();

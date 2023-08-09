@@ -312,37 +312,43 @@ EnergyMaps = (function (EnergyMaps) {
   };
 
   /**
-   * @description Sets values for current bounding box, current transform,
-   * and active layers in the localStorage object (not the document.cookie!).
+   * @description Sets values for current transform in the localStorage object
    * @return null
    */
-  const setCookie = function setCookie
+  const setCookieTransform = function setCookieTransform
     ()
   {
-    // localStorage.setItem('bbox', getBoundingBoxString());
-    // localStorage.setItem('x', `${EnergyMaps.transform.x}`);
-    // localStorage.setItem('y', `${EnergyMaps.transform.y}`);
-    // localStorage.setItem('k', `${EnergyMaps.transform.k}`);
-    // localStorage.setItem('layers', ACTIVE_LAYERS.map(x => {
-    //   return x.name;
-    // }).join());
+    localStorage.setItem('x', EnergyMaps.transform.x);
+    localStorage.setItem('y', EnergyMaps.transform.y);
+    localStorage.setItem('k', EnergyMaps.transform.k);
+  };
+
+  /**
+   * @description Sets values for active layers in the localStorage object
+   * @return null
+   */
+  const setCookieLayers = function setCookieLayers
+    ()
+  {
+    localStorage.setItem('layers', ACTIVE_LAYERS.map(x => {
+      return x.name;
+    }).join());
   };
 
   /**
    * @description For tracking the value of transform.k to improve
    * performance of simplification algorithms.
    */
+  EnergyMaps.transform = {x: 0, y: 0, k:1};
+  EnergyMaps.transform.x = (localStorage.getItem('x') === null) ? 0 : +localStorage.x;
+  EnergyMaps.transform.y = (localStorage.getItem('y') === null) ? 0 : +localStorage.y;
+  EnergyMaps.transform.z = (localStorage.getItem('k') === null) ? 0 : +localStorage.k;
+  setCookieTransform();
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;
   EnergyMaps.SCALE = SCALE;
   EnergyMaps.width = width;
   EnergyMaps.height = height;
-  // EnergyMaps.transform = {
-  //   x: () => {return (localStorage.x === undefined) ? 0 : +localStorage.x},
-  //   y: () => {return (localStorage.y === undefined) ? 0 : +localStorage.y},
-  //   k: () => {return (localStorage.k === undefined) ? 0 : +localStorage.k}
-  // };
-  EnergyMaps.transform = {x: 0, y: 0, k: 1}
   EnergyMaps.simpleMapBkgd = simpleMapBkgd;
   EnergyMaps.projectionScale = projectionScale;
   EnergyMaps.projectionWidth = projectionWidth;
@@ -357,7 +363,8 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.startLoadingLayer = startLoadingLayer;
   EnergyMaps.finishLoadingLayer = finishLoadingLayer;
   EnergyMaps.drawLine = drawLine;
-  EnergyMaps.setCookie = setCookie;
+  EnergyMaps.setCookieTransform = setCookieTransform;
+  EnergyMaps.setCookieLayers = setCookieLayers;
   EnergyMaps.InfrastructureSet = InfrastructureSet;
 
   return EnergyMaps;

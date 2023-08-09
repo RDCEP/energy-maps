@@ -155,7 +155,7 @@ EnergyMaps = (function (EnergyMaps) {
           }
         }
 
-        EnergyMaps.setCookie();
+        EnergyMaps.setCookieLayers();
 
       });
 
@@ -206,6 +206,25 @@ EnergyMaps = (function (EnergyMaps) {
     ACTIVE_LAYERS = _sortOnTarget(ACTIVE_LAYERS, target, 'name');
   };
 
+  const _drawDefaultLayers = function _drawDefaultLayers
+    ()
+  {
+    let layers = [];
+    if (localStorage.getItem('layers') === null) {
+      layers.push(EnergyMaps.stateBoundaries);
+    } else {
+      let names = localStorage.getItem('layers').split(',');
+      for (let i = LAYERS.length - 1; i >= 0; --i) {
+        if (names.indexOf(LAYERS[i].name) > -1) {
+          layers.push(LAYERS[i]);
+        }
+      }
+    }
+    layers.map(x => {
+      document.querySelector(`.option-li input.${x.name}`).click();
+    });
+  };
+
   /**
    * @description Toggle the visibility of the options layer when the user
    * clicks on the 'triangle'
@@ -238,10 +257,8 @@ EnergyMaps = (function (EnergyMaps) {
   initMenu();
 
   // Draw the default layers of the map
-  const DEFAULT_LAYERS = [EnergyMaps.stateBoundaries];
-  DEFAULT_LAYERS.map(x => {
-    document.querySelector(`.option-li input.${x.name}`).click();
-  });
+
+  _drawDefaultLayers();
 
   EnergyMaps.initMenu = initMenu;
 

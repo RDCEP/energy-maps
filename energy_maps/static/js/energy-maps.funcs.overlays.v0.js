@@ -79,7 +79,7 @@ EnergyMaps = (function (EnergyMaps) {
     //   state_boundaries.width / transform.k * 2
     // ]);
     ctx.beginPath();
-    EnergyMaps.path(outputGeojson.features);
+    EnergyMaps.path(outputGeojson);
     ctx.stroke();
     // ctx.setLineDash([]);
     EnergyMaps.finishLoadingLayer();

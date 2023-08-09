@@ -98,13 +98,13 @@ EnergyMaps = (function (EnergyMaps) {
       // Land boundaries fill
       ctx.fillStyle = VIZ.map.fill;
       ctx.beginPath();
-      EnergyMaps.path(outputGeojson.features);
+      EnergyMaps.path(outputGeojson);
       ctx.fill();
     } else {
       ctx.strokeStyle = VIZ.map.stroke;
       ctx.lineWidth = VIZ.map.width;
       ctx.beginPath();
-      EnergyMaps.path(outputGeojson.features);
+      EnergyMaps.path(outputGeojson);
       ctx.stroke();
     }
 
