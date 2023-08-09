@@ -9,7 +9,6 @@ EnergyMaps = (function (EnergyMaps) {
   const _zoomStart = function _zoomStart
     ()
   {
-    console.log('zoom start');
     previousK = EnergyMaps.transform.k;
     LAYERS = LAYERS.map(layer => {
         layer.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
@@ -51,6 +50,8 @@ EnergyMaps = (function (EnergyMaps) {
       .scale(k)
       .translate(x, y);
     _targetCanvas.call(_zoom.transform, initial_transform);
+    EnergyMaps.transform = {x: x, y: y, k: k};
+    EnergyMaps.setCookieTransform();
   });
 
   d3.select('.zoom-out').on('click', function() {
@@ -66,6 +67,8 @@ EnergyMaps = (function (EnergyMaps) {
       .scale(k)
       .translate(x - EnergyMaps.transform.x, y - EnergyMaps.transform.y);
     _targetCanvas.call(_zoom.transform, initial_transform);
+    EnergyMaps.transform = {x: x, y: y, k: k};
+    EnergyMaps.setCookieTransform();
   });
 
   const _windowResize = _.debounce(function(e) {

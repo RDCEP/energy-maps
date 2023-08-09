@@ -91,8 +91,6 @@ EnergyMaps = (function (EnergyMaps) {
       }
     }
 
-    console.log(outputGeojson)
-
     if (!borderOnly) {
 
       // Land boundaries fill

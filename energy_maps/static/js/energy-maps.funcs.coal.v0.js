@@ -159,7 +159,6 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.clipRegion(ctx);
 
     let mines = queuedData[0].features;
-    console.log(mines);
 
     // Sort in descending order so large mines don't
     // obscure small mines. Unary '+' operator used to return the numeric rather

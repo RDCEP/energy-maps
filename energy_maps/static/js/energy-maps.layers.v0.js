@@ -10,13 +10,11 @@ EnergyMaps = (function (EnergyMaps) {
     ()
   {
     let assetTotalSum = 0;
-    console.log(ACTIVE_LAYERS)
     for (let i = 0, l = ACTIVE_LAYERS.length; i < l; i++) {
       if (ACTIVE_LAYERS[i].name !== 'state-boundaries' &&
         ACTIVE_LAYERS[i].name !== 'wind-capacity')
       {
         // active layers value starts as undefined
-        console.log(`active layers value ${ACTIVE_LAYERS[i].value[DATA_YEAR]}`)
         assetTotalSum += ACTIVE_LAYERS[i].value[DATA_YEAR];
       }
     }
@@ -152,10 +150,7 @@ EnergyMaps = (function (EnergyMaps) {
             EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
             return files;
           }).then(files => {
-            console.time('drawLayer');
             lyr.drawProps[i].drawLayer(lyr.context, files);
-            console.timeEnd('drawLayer');
-            console.log(`${API_URL_PREFIX}${lyr.drawProps[i].src}`);
           });
         } else {
           Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
@@ -182,9 +177,7 @@ EnergyMaps = (function (EnergyMaps) {
   const addLayer = function addLayer
     (lyr)
   {
-    console.time('load_layer_data');
     _loadLayerData(lyr);
-    console.timeEnd('load_layer_data');
     // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
     if (lyr === EnergyMaps.oilPipeline) {
@@ -261,9 +254,7 @@ EnergyMaps = (function (EnergyMaps) {
     // const layers = EnergyMaps.setLayers();
     ACTIVE_LAYERS.map(layer => {
       if (layer.active === true) {
-        console.time('load_layer_data');
         _loadLayerData(layer);
-        console.timeEnd('load_layer_data');
       } else {
         layer.context.restore();
         layer.context.save();
