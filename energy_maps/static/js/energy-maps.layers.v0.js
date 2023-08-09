@@ -111,34 +111,29 @@ EnergyMaps = (function (EnergyMaps) {
    * @param {Object} lyr - An object from layers[].
    * @memberof Init
    */
-
   const _loadLayerData = function _loadLayerData
     (lyr)
   {
-  if (lyr === EnergyMaps.oilPipeline) {
-    let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
-    for (let i = 0, lyrsLength = lyrs.length; i < lyrsLength; ++i) {
-      EnergyMaps.startLoadingLayer();
-      // TODO: Figure out why prod pipes legend is no longer showing
-      Promise.all(
-        lyrs[i].drawProps[0].src.map(
-          x => lyrs[i].drawProps[0].d3Fetch(
-            `${API_URL_PREFIX}${x}`
-          )))
-        .then(function(files) {
-          lyrs[i].context.restore();
-          lyrs[i].context.save();
-          return files;
-        }).then(files => {
-          EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
-          console.time('drawLayer')
-          lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
-          console.timeEnd('drawLayer')
-          // console.log(lyr.draw_props[i].src)
-          console.log(`${API_URL_PREFIX}${lyr.drawProps[0].src}`)
-        });
-    }
-  } else {
+    if (lyr === EnergyMaps.oilPipeline) {
+      let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
+      for (let i = 0, lyrsLength = lyrs.length; i < lyrsLength; ++i) {
+        EnergyMaps.startLoadingLayer();
+        // TODO: Figure out why prod pipes legend is no longer showing
+        Promise.all(
+          lyrs[i].drawProps[0].src.map(
+            x => lyrs[i].drawProps[0].d3Fetch(
+              `${API_URL_PREFIX}${x}`,
+            )))
+          .then(function(files) {
+            lyrs[i].context.restore();
+            lyrs[i].context.save();
+            return files;
+          }).then(files => {
+            EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
+            lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
+          });
+      }
+    } else {
       for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
         EnergyMaps.startLoadingLayer();
         if (lyr.name !== 'state-boundaries' && lyr.name !== 'wind-capacity') {
@@ -162,8 +157,7 @@ EnergyMaps = (function (EnergyMaps) {
             console.timeEnd('drawLayer');
             console.log(`${API_URL_PREFIX}${lyr.drawProps[i].src}`);
           });
-        }
-        else {
+        } else {
           Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
           .then(function(files) {
             lyr.context.restore();
@@ -173,10 +167,7 @@ EnergyMaps = (function (EnergyMaps) {
             EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
             return files;
           }).then(files => {
-            console.time('drawLayer');
             lyr.drawProps[i].drawLayer(lyr.context, files);
-            console.timeEnd('drawLayer');
-            console.log(`${API_URL_PREFIX}${lyr.drawProps[i].src}`);
           });
         }
       }
@@ -260,7 +251,8 @@ EnergyMaps = (function (EnergyMaps) {
   };
 
   /**
-   * @description Iterates through layers and draws active layers
+   * @description Iterates through layers and draws active layers. This is
+   * called at the end of a zoom or window resize operation.
    * @param {Object} transform - # TODO: This should be removed
    */
   const drawActiveLayers = function drawActiveLayers
@@ -277,6 +269,7 @@ EnergyMaps = (function (EnergyMaps) {
         layer.context.save();
         EnergyMaps.transformLayer(layer.context, EnergyMaps.transform);
       }
+      EnergyMaps.setCookie();
       return layer;
     });
   };

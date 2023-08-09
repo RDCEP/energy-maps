@@ -63,6 +63,7 @@ EnergyMaps = (function (EnergyMaps) {
   const drawLand = function drawLand
     (ctx, queuedData, transform, borderOnly, simple)
   {
+    queuedData = queuedData[0]
     ctx.save()
     EnergyMaps.transformLayer(ctx, transform);
     ctx.clearRect(0,0, EnergyMaps.width, EnergyMaps.height);
@@ -74,34 +75,36 @@ EnergyMaps = (function (EnergyMaps) {
       // simpleMapBkgd. This is used for pan/zoom.
       outputGeojson = EnergyMaps.simpleMapBkgd;
     } else {
-      let presimplifiedData = topojson.presimplify(queuedData[0]);
+      let presimplifiedData = topojson.presimplify(queuedData);
 
       // Scale map detail based on zoom level
       outputGeojson = topojson.feature(
         topojson.simplify(presimplifiedData, .01 / transform.k**2),
-        queuedData[0].objects.nation);
+        queuedData.objects.nation);
 
       // If no simpleMapBkgd object exists, make a low resolution
       // map to us as simpleMapBkgd
       if (!EnergyMaps.simpleMapBkgd) {
         EnergyMaps.simpleMapBkgd = topojson.feature(
           topojson.simplify(presimplifiedData,.2),
-          queuedData[0].objects.nation);
+          queuedData.objects.nation);
       }
     }
+
+    console.log(outputGeojson)
 
     if (!borderOnly) {
 
       // Land boundaries fill
       ctx.fillStyle = VIZ.map.fill;
       ctx.beginPath();
-      EnergyMaps.path(outputGeojson);
+      EnergyMaps.path(outputGeojson.features);
       ctx.fill();
     } else {
       ctx.strokeStyle = VIZ.map.stroke;
       ctx.lineWidth = VIZ.map.width;
       ctx.beginPath();
-      EnergyMaps.path(outputGeojson);
+      EnergyMaps.path(outputGeojson.features);
       ctx.stroke();
     }
 

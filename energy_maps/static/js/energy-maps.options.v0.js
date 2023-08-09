@@ -154,6 +154,9 @@ EnergyMaps = (function (EnergyMaps) {
             EnergyMaps.legend.property('hidden', true);
           }
         }
+
+        EnergyMaps.setCookie();
+
       });
 
       EnergyMaps.addLayerCanvas(lyr);
