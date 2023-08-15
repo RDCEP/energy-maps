@@ -1,0 +1,72 @@
+@import "vars"
+
+.legend
+  display: block
+  position: absolute
+  right: 1rem
+  bottom: 1rem
+  width: $legend_width
+  background-color: $white
+  z-index: $z_legend
+  border-top: 2px solid $darkblue
+  height: 4rem
+  h6
+    list-style: none
+    margin: 1em 0 1em
+    @include ui_heads
+  .shim
+    overflow-x: hidden
+    overflow-y: hidden
+    height: 100%
+    width: $legend_width
+
+.legend-toggle
+  @include toggle
+  right: $legend_width / 2 - 2rem
+  height: 2rem
+  width: 4rem
+  bottom: 100%
+  z-index: 999
+  .shade
+    position: absolute
+    top: 0
+    height: 0
+    width: 0
+    border-width: 0 2rem 2rem 2rem
+    border-color: transparent transparent $darkblue transparent
+    border-style: solid
+  .uk-icon
+    color: $white
+.legend
+  &[data-toggle-state=open]
+    animation-name: options_open
+    animation-duration: .5s
+    top: 0
+    .shim
+      overflow-y: auto
+    .legend-toggle
+      right: 0
+      .shade
+        border-width: 2rem 2rem 0 2rem
+        border-color: $darkblue transparent transparent transparent
+  &[data-toggle-state=close]
+    animation-name: legend_close
+    animation-duration: .5s
+    left: -($options_width - 1rem)
+    .legend-toggle
+      bottom: 100%
+      .shade
+        border-width: 0 2rem 2rem 2rem
+        border-color: transparent transparent $darkblue transparent
+      .options-toggle-arrow
+        transform: scaleY(-1)
+@keyframes legend_open
+  from
+    left: -($options_width - 1rem)
+  to
+    left: 0
+@keyframes legend_close
+  from
+    left: 0
+  to
+    left: -($options_width - 1rem)

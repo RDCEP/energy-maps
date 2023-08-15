@@ -4,71 +4,14 @@
  * @author Nathan Matteson
  */
 
-const fill_screen = false;
-
-/**
- * @type {number}
- * @description The year value to determine data loaded by the application.
- */
- var data_year = 2012;
- const get_data_year = function get_data_year(data_year) {
-   return data_year;
- }
-
-let asterisk_note = document.getElementsByClassName('asterisk-note')
-
-var API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${get_data_year(data_year)}`
-
 /**
  * @type {number}
  * @description Originally used for scaling static print-based maps.
  * Currently unused.
  */
-SCALE = 1;
+const SCALE = 1;
 
-/**
- * @type {number} 
- * @description Device pixel ratio, used to scale our canvas with
- * clarity relative to the user's device.
- */
-let dpi = window.devicePixelRatio;
-
-/**
- * @type {number} 
- * @description Map width, set to some multiple of `SCALE`
- */
-let width = window.innerWidth * SCALE;
-
-/**
- * @type {number} 
- * @description Map height, set to some fraction of `width`
- */
-let height = window.innerHeight;
-
-/**
- * @type {Object} 
- * @description Global page padding
- */
-const padding = {top: 10, right: 10, bottom: 50, left: 50};
-
-/**
- * @type {number} 
- * @description Global canvas width, set to some multiple of the sum of `width` and `scale`
- */
-const canvas_width = width + SCALE * 400;
-
-/**
- * @type {number}
- * @description Distance to inset text from the left edge of the legend.
- * Carves out room for legend symbols, while keeping text aligned.
- */
-let text_offset = 30 * SCALE;
-
-/**
- * @type {Object} 
- * @description A collection of nested objects containing color and scaling properties per resource 
- */
-const viz = {
+const VIZ = {
   white: 'rgba(255, 255, 255, 1)',
   black: 'rgba(0, 0, 0, 1)',
   coal: 'rgba(0, 0, 0)',
@@ -80,223 +23,350 @@ const viz = {
   }
 };
 
-/** 
- * Instantiates a new generic object that contains properties used to draw
- * infrastructure data to the map and legend.
- * @class
- * @classdesc Base class that allows derived classes to create objects that
- * represent data sets for specific types of infrastructure.
- * @param {String} name - canvas ID
- * @param {String} text - text displayed in the legend
- * @param {Number} value - asset value in USD
- * @param {String} column - class attribute for corresponding column
- * @param {Array} draw_props - properties used to parse the data and render
- * the visualization
- */
-function InfrastructureSet(name, text, value, column, draw_props) {
-  this.name = name || '';
-  this.text = text || '';
-  this.value = value || 0;
-  this.column = column || '';
-  this.z_index = 0;
-  this.draw_props = draw_props || [{
-    draw_layer:'',
-    src: '',
-    d3_fetch:''
-  }] || {
-    draw_layer:'',
-    src: '',
-    d3_fetch:''
-  }
-}
+let DATA_YEAR = 2012;
+let API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
-/** 
- * Instantiates a user interface object that allows you to create a new map.
- * @class
- * @classdesc Base class that allows derived classes to create objects that
- * represent data sets for specific types of infrastructure.
- * @param {Object} map - a map projection on a canvas object? that's
- * probably what this should return... TBD
- * @param {Number} columns - Number of columns rendered to the menu... TBD
- * @param {Object} toggle - checkboxes or something... TBD
- */
-//TODO: Actually make this a real thing
-function MapBuilderUI(map, columns, toggle) {
-  this.map = map;
-  this.columns = columns;
-  this.toggle = toggle;
+let LAYERS = null;
+let ACTIVE_LAYERS = [];
 
-  function initMenu() {
+const TEXT_OFFSET = 30 * SCALE;
+const LEGEND_FONT_SIZE = 14 * SCALE;
+const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Inter`;
+const VERTICAL_INCREMENT = 15 * SCALE;
+const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
 
-  }
+EnergyMaps = (function (EnergyMaps) {
 
-  function initMenuColumns() {
-    
-  }
+  'use strict';
 
-  function initMenuChkbx() {
+  const fill_screen = false;
 
-  }
+  /**
+   * @type {number}
+   * @description The year value to determine data loaded by the application.
+   */
+  // DATA_YEAR = 2012;
+  // energy_maps.get_data_year = function get_data_year(data_year) {
+  //   return data_year;
+  // }
 
-  function initMenuChkbxLabels() {
+  const asteriskNote = document.getElementsByClassName('asterisk-note')
 
-  }
+  // energy_maps.API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
-  function initMenuAssetValue() {
+  /**
+   * @type {number}
+   * @description Device pixel ratio, used to scale our canvas with
+   * clarity relative to the user's device.
+   */
+  const _dpi = window.devicePixelRatio;
 
-  }
+  /**
+   * @type {number}
+   * @description Map width, set to some multiple of `SCALE`
+   */
+  // energy_maps.width = window.innerWidth * SCALE;
 
-  function initMenuItm() {
+  /**
+   * @type {number}
+   * @description Map height, set to some fraction of `width`
+   */
+  // energy_maps.height = window.innerHeight;
 
-  }
+  /**
+   * @type {Object}
+   * @description Global page padding
+   */
+  const _padding = {top: 10, right: 10, bottom: 50, left: 50};
 
-}
+  /**
+   * @type {number}
+   * @description Global canvas width, set to some multiple of the sum of `width` and `scale`
+   */
+  const _canvasWidth = EnergyMaps.width + SCALE * 400;
 
-// create projection and path objects with which to draw geo objects
-// Kludge for pan/zoom. Can't make JSON call during pan/zoom.
-let simple_map_bkgd = null;
+  /**
+   * Instantiates a new generic object that contains properties used to draw
+   * infrastructure data to the map and legend.
+   * @class
+   * @classdesc Base class that allows derived classes to create objects that
+   * represent data sets for specific types of infrastructure.
+   * @param {String} name - canvas ID
+   * @param {String} text - text displayed in the legend
+   * @param {Number} value - asset value in USD
+   * @param {String} column - class attribute for corresponding column
+   * @param {Array} drawProps - properties used to parse the data and render
+   * the visualization
+   */
+  const InfrastructureSet = function InfrastructureSet
+    (name, text, value, column, drawProps)
+  {
+    this.name = name || '';
+    this.text = text || '';
+    this.value = value || 0;
+    this.column = column || '';
+    this.zIndex = 0;
+    this.drawProps = drawProps || [{
+      drawLayer: '',
+      src: '',
+      d3Fetch: ''
+    }] || {
+      drawLayer: '',
+      src: '',
+      d3Fetch: ''
+    }
+  };
 
-/**
- * @description A JavaScript object with `number` values that represent transform properties. Pan/zoom kludge. TODO: Track transform globally. 
- */
-let transform = {x:0, y:0, k:1};
+  /**
+   * Get the current width of the browser window
+   * @function
+   * @return {Number} - width in pixels of the browser window
+   * the visualization
+   */
+  const getWidth = function setWidth
+    ()
+  {
+    return window.innerWidth * SCALE;
+  };
 
-/**
- * @description Width of content area in center of screen stored as a `number`.
- */
-let content_width = d3.select('main .content-wrap').node().offsetWidth;
+  /**
+   * Get the current height of the browser window
+   * @function
+   * @return {Number} - height in pixels of the browser window
+   * the visualization
+   */
+  const getHeight = function setHeight
+    ()
+  {
+    return window.innerHeight * SCALE;
+  };
 
-/**
- * @description Height of site header area stored as a `number`.
- */
-let header_height = d3.select('header').node().offsetHeight;
+  const width = getWidth();
+  const height = getHeight();
 
-/**
- * @description Map projection scale to fill content area.
- */
-let projection_scale =  content_width * 1.2;
+  // create projection and path objects with which to draw geo objects
+  // Kludge for pan/zoom. Can't make JSON call during pan/zoom.
+  let simpleMapBkgd = null;
 
-// Possible option -- Looks good on small laptop but terrible on monitors: let projection_scale =  content_width * 0.7;
-let projection_width = width / 2;
-let projection_height = projection_width / 2 + header_height
+  /**
+   * @description Width of content area in center of screen stored
+   * as a `number`.
+   */
+  const _contentWidth = d3.select('.main-wrap')
+    .node().offsetWidth;
 
-/**
- * @description For tracking the value of transform.k to improve performance of simplification algorithms.
- */
-let k_changed = false;
+  /**
+   * @description Height of site header area stored as a `number`.
+   */
+  const _headerHeight = d3.select('header').node().offsetHeight;
 
-/**
- * @description D3 geoAlbersUsa projection object set to custom scale
- * and translation offset
-**/
-let projection = d3.geoAlbersUsa()
-  .scale(projection_scale)
-  .translate([
-    projection_width,
-    // Half the width is the height, half of that gets us to the center, and
-    // add the height of the header so that maps sits below it.
-    // Then subtract a random and pointless amount because we've been
-    // told to and are bone-fucking-tired.
-    projection_scale / 4 + header_height - 30
-  ]);
+  /**
+   * @description Map projection scale to fill content area.
+   */
+  const projectionScale = _contentWidth * 1.2;
 
-path2D = new Path2D();
+  // Possible option -- Looks good on small laptop but terrible on monitors:
+  // let projection_scale =  content_width * 0.7;
+  const projectionWidth = width / 2;
+  const projectionHeight = projectionWidth / 2
+    + _headerHeight
 
-/**
- * D3 geoPath object -- a geographic path generator based off of the `projection` geoAlbersUsa() object
- */
-const path = d3.geoPath()
-  .projection(projection)
-  .pointRadius(2)
-  .context(path2D);
+  /**
+   * @description D3 geoAlbersUsa projection object set to custom scale
+   * and translation offset
+  **/
+  const projection = d3.geoAlbersUsa()
+    .scale(projectionScale)
+    .translate([
+      projectionWidth,
+      // Half the width is the height, half of that gets us to the center, and
+      // add the height of the header so that maps sits below it.
+      // Then subtract a random and pointless amount because we've been
+      // told to and are bone-fucking-tired.
+      projectionScale / 4 + _headerHeight - 30
+    ]);
 
-/**
- * @param {Object} ctx - HTML5 canvas context
- * @returns {d3.geoPath} geographic path generator for the supplied ctx 
- */
-const get_path = function get_path(ctx) {
-  return d3.geoPath()
+  const _path2D = new Path2D();
+
+  /**
+   * D3 geoPath object -- a geographic path generator based off
+   * of the `projection` geoAlbersUsa() object
+   */
+  const path = d3.geoPath()
     .projection(projection)
     .pointRadius(2)
-    .context(ctx);
-};
+    .context(_path2D);
 
-/**
- * @type {HTMLElement}
- * @description Spinner element that appears while layers are loading.
- */
-const spinner = document.getElementById('spinner');
-const show_spinner = function show_spinner() {
-  spinner.style.display = 'block';
-};
-const hide_spinner = function hide_spinner() {
-  spinner.style.display = 'none';
-};
-let processing_layers = 0;
-/**
- * @description Show the spinner and queue the layer for processing
- */
-const start_loading_layer = function start_loading_layer() {
-  show_spinner();
-  processing_layers++;
-};
-const finish_loading_layer = function finish_loading_layer() {
-  processing_layers--;
-  if (processing_layers <= 0) {
-    processing_layers = 0;
-    hide_spinner();
-  }
-};
-
-let active_layers = [];
-
-/** // TODO: Update this documentation. It's handy for now but not accurate.
-   * @description An array of objects representing resources to be rendered
-   * on top of the map canvas.
-   * @property {string}   name        - A canvas id.
-   * @property {Number}   value       - Asset value in USD.
-   * @property {Array}    draw_props        - An array of objects containing
-   *                                    properties accessed by
-   *                                    load_layer_data().
-   * @property {function} draw_props.draw_layer - A draw function bound to each object.
-   * @property {string}   draw_props.src    - A reference to the data source
-   *                                    (json or csv).
-   * @property {function} draw_props.d3_fetch      - A call to a d3 data parse function.
-   * @property {string}   column      - The class of the column that the
-   *                                    layer's checkbox is written to.
-   * @memberof Init
+  /**
+   * @type {HTMLElement}
+   * @description Spinner element that appears while layers are loading.
    */
-  let layers = [];
+  const _spinner = document.getElementById('spinner');
 
-let legend = document.getElementsByClassName('legend window main menu')[0];
+  /**
+   * @param {Object} ctx - HTML5 canvas context
+   * @returns {d3.geoPath} geographic path generator for the supplied ctx
+   */
+  const getPath = function getPath
+    (ctx)
+  {
+    return d3.geoPath()
+      .projection(projection)
+      .pointRadius(2)
+      .context(ctx);
+  };
 
-/**
- * Helper function for pipeline and railroad legend symbols
- * @param {Object} ctx - HTML5 canvas context
- * @param {Number} x - x axis
- * @param {Number} y - y axis
- * @param {Object} obj - Transport or Railroad object 
- * @param {boolean} dashed - true if line should be dashed, false if solid
- * @param {string} text - the text for the layer written to the legend
- * @param {string} inf - a flag to determine the corresponding infrastructure (pipelines or railroads) 
- * @returns {Number} y - updated y axis
- */
-const draw_line = function draw_line(ctx, x, y, obj, dashed = false, text) {
-  
-  y += VERTICAL_INCREMENT;
-  
-  // TODO: Implement product pipelines. They will need a dashed line. 
-  if (dashed) {
-    ctx.setLineDash(dashed);
-  }
+  const showSpinner = function showSpinner
+    ()
+  {
+    _spinner.style.display = 'block';
+  };
 
-  ctx.beginPath();
-  ctx.moveTo(x - 7 * SCALE, y);
-  ctx.lineTo(x + 7 * SCALE, y);
-  ctx.strokeStyle = obj.stroke;
-  ctx.stroke();
+  const hideSpinner = function hideSpinner
+    ()
+  {
+    _spinner.style.display = 'none';
+  };
 
-  y = advance_for_type(y, ctx, text, text_offset, x);
-  return y;
+  let _processingLayers = 0;
 
-}
+  /**
+   * @description Show the spinner and queue the layer for processing
+   */
+  const startLoadingLayer = function startLoadingLayer
+    ()
+  {
+    EnergyMaps.showSpinner();
+    _processingLayers++;
+  };
+
+  const finishLoadingLayer = function finishLoadingLayer
+    ()
+  {
+    _processingLayers--;
+    if (_processingLayers <= 0) {
+      _processingLayers = 0;
+      EnergyMaps.hideSpinner();
+    }
+  };
+
+  /**
+   * Helper function for pipeline and railroad legend symbols
+   * @param {Object} ctx - HTML5 canvas context
+   * @param {Number} x - x axis
+   * @param {Number} y - y axis
+   * @param {Object} obj - Transport or Railroad object
+   * @param {boolean} dashed - true if line should be dashed, false if solid
+   * @param {string} text - the text for the layer written to the legend
+   * @param {Number} vpx - vertical typography increment in pixels
+   * @returns {Number} y - updated y axis
+   */
+  const drawLine = function drawLine
+    (ctx, x, y, obj, dashed = false,
+     text, vpx)
+  {
+
+    y += VERTICAL_INCREMENT;
+
+    // TODO: Implement product pipelines. They will need a dashed line.
+    if (dashed) {
+      ctx.setLineDash(dashed);
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(x - 7 * SCALE, y);
+    ctx.lineTo(x + 7 * SCALE, y);
+    ctx.strokeStyle = obj.stroke;
+    ctx.stroke();
+
+    y = EnergyMaps.advanceForType(y, ctx, text, TEXT_OFFSET, x, 1);
+    return y;
+
+  };
+
+  const getBoundingBoxCoordinates = function getBoundingBoxCoordinates
+    ()
+  {
+    const [x0, y0, x1, y1] = [
+      -EnergyMaps.transform.x - EnergyMaps.width * .25,
+      -EnergyMaps.transform.y + EnergyMaps.height * .25,
+      -EnergyMaps.transform.x + EnergyMaps.width * 1.25,
+      -EnergyMaps.transform.y + EnergyMaps.height * .75
+    ];
+    let [lon0, lat0] = EnergyMaps.projection.invert([x0, y0])
+    let [lon1, lat1] = EnergyMaps.projection.invert([x1, y1])
+    if (lat0 < 0) {
+      lat1 = EnergyMaps.projection.invert([(x0 + x1) / 2, y0])[1]
+    }
+    if (lat1 > 0) {
+      lat1 = EnergyMaps.projection.invert([(x0 + x1) / 2, y1])[1]
+    }
+    return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]];
+  };
+
+  const getBoundingBoxString = function getBoundingBoxString
+    ()
+  {
+    // console.log('bbox:', getBoundingBoxCoordinates().flat().join())
+    return getBoundingBoxCoordinates().flat().join();
+  };
+
+  /**
+   * @description Sets values for current transform in the localStorage object
+   * @return null
+   */
+  const setCookieTransform = function setCookieTransform
+    ()
+  {
+    localStorage.setItem('x', EnergyMaps.transform.x);
+    localStorage.setItem('y', EnergyMaps.transform.y);
+    localStorage.setItem('k', EnergyMaps.transform.k);
+  };
+
+  /**
+   * @description Sets values for active layers in the localStorage object
+   * @return null
+   */
+  const setCookieLayers = function setCookieLayers
+    ()
+  {
+    localStorage.setItem('layers', ACTIVE_LAYERS.map(x => {
+      return x.name;
+    }).join());
+  };
+
+  /**
+   * @description For tracking the value of transform.k to improve
+   * performance of simplification algorithms.
+   */
+  EnergyMaps.transform = {x: 0, y: 0, k:1};
+  EnergyMaps.transform.x = (localStorage.getItem('x') === null) ? 0 : +localStorage.x;
+  EnergyMaps.transform.y = (localStorage.getItem('y') === null) ? 0 : +localStorage.y;
+  EnergyMaps.transform.z = (localStorage.getItem('k') === null) ? 0 : +localStorage.k;
+  setCookieTransform();
+  EnergyMaps.kChanged = false;
+  EnergyMaps.asteriskNote = asteriskNote;
+  EnergyMaps.SCALE = SCALE;
+  EnergyMaps.width = width;
+  EnergyMaps.height = height;
+  EnergyMaps.simpleMapBkgd = simpleMapBkgd;
+  EnergyMaps.projectionScale = projectionScale;
+  EnergyMaps.projectionWidth = projectionWidth;
+  EnergyMaps.projectionHeight = projectionHeight;
+  EnergyMaps.projection = projection;
+  EnergyMaps.path = path;
+  EnergyMaps.getWidth = getWidth;
+  EnergyMaps.getHeight = getHeight;
+  EnergyMaps.getPath = getPath;
+  EnergyMaps.showSpinner = showSpinner;
+  EnergyMaps.hideSpinner = hideSpinner;
+  EnergyMaps.startLoadingLayer = startLoadingLayer;
+  EnergyMaps.finishLoadingLayer = finishLoadingLayer;
+  EnergyMaps.drawLine = drawLine;
+  EnergyMaps.setCookieTransform = setCookieTransform;
+  EnergyMaps.setCookieLayers = setCookieLayers;
+  EnergyMaps.InfrastructureSet = InfrastructureSet;
+
+  return EnergyMaps;
+
+})(EnergyMaps || {});

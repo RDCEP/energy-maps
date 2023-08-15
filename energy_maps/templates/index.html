@@ -1,20 +1,119 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <div class=logo-wrap>
+    <div class=flex-shim>
+      <img src="../static/images/rdcep_logo.png" alt="RDCEP logo"/>
+    </div>
+  </div>
+  <h1>US Energy<br/>Infrastructure</h1>
+  <h2>
+    <span class=asset-total>$0</span>
+    <span class="asset-total-tag">
+      total asset value<br>
+      <span id="value-year">out of $9.8T in 2012</span>
+    </span>
+  </h2>
+{% endblock %}
+
 {% block main %}
-  <div class="main map coal"></div>
-  <div class="main map gas_oil"></div>
-  <div class="main map power ff"></div>
-  <div class="main map power nff"></div>
+  <div class="main-map">
+    <div class="base-map"></div>
+    <div class="map-layers">
+      <!-- Layer divs render here -->
+    </div>
+
+    <div id="spinner">
+      <img src="../static/images/Rolling-1s-200px.gif"
+           alt="loading" loading="lazy"/>
+    </div>
+  </div>
+
+  <div class="map layer zoom-target"></div>
+
+  <dialog class="options" data-toggle-state=load>
+    <div class="shim">
+    <div class="container">
+      <section>
+        <h6>Source</h6>
+        <p><a href>A Physical Inventory of the U.S. Energy System.</a>
+          Chen, Weisbach, Matteson, Brizius, Moyer, 2020.</p>
+      </section>
+      <section class=options-list>
+        <h6>Map options</h6>
+        <ul uk-sortable data-handle=".uk-sortable-handle">
+          <!-- Checkboxes render here -->
+        </ul>
+      </section>
+    </div>
+    <div class=zoom>
+      <div class=zoom-in uk-icon="icon: plus; uk-ratio: 2"></div>
+      <div class=zoom-out uk-icon="icon: minus"></div>
+    </div>
+    </div>
+    <div class=options-toggle>
+      <div class=shade>
+      </div>
+      <div class=options-toggle-arrow
+           uk-icon="icon: chevron-left; ratio: 3;"></div>
+    </div>
+  </dialog>
+
+  <div class="legend" data-toggle-state=load>
+    <div class=shim>
+      <h6>Legend</h6>
+      <div class="legend-canvas"></div>
+      <div class="legend-tmpcanvas"></div>
+      <div class=legend-toggle>
+        <div class=shade>
+        </div>
+        <div class=legend-toggle-arrow
+             uk-icon="icon: chevron-up; ratio: 3;"></div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 {% block bodyjs %}
 
-  <script>
-    let SCALE = {{ scale or 'false' }};
-  </script>
+<script>
 
-  {% assets 'js_d3' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-  <script src="https://unpkg.com/topojson-client@3"></script>
-  {% assets 'js_bigfucker' %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {#let SCALE = {{ scale }};#}
+
+  let EnergyMaps = {};
+
+</script>
+
+{% assets 'js_underscore' %}
+
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+{% assets 'js_d3' %}
+
+<script src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+<script src="https://unpkg.com/topojson-client@3"></script>
+
+{% assets 'js_builderfucker' %}
+
+<script defer src="{{ ASSET_URL }}"></script>
+
+{% endassets %}
+
+<script>
+  function download() {
+    let download = document.getElementById("download");
+    let image = document
+      .getElementById("mapcanvas")
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
+  }
+</script>
 
 {% endblock %}

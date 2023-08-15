@@ -8,6 +8,7 @@ from flask_compress import Compress
 compress = Compress()
 
 app = Flask(__name__)
+
 compress.init_app(app)
 app.config.from_object('energy_maps.config.FlaskConfig')
 app.register_blueprint(main_views)
@@ -16,6 +17,7 @@ assets = Environment(app)
 
 assets.register('css_main',
                 Bundle('css/main.v0.css',
+                       'css/main.css',
                        filters='cssmin',
                        output='gen/main.css'))
 assets.register('js_underscore',
@@ -43,6 +45,9 @@ assets.register('js_builderfucker',
                        'js/energy-maps.funcs.plants.v0.js',
                        'js/energy-maps.funcs.wells.v0.js',
                        'js/energy-maps.legends.v1.js',
+                       'js/energy-maps.layers.v0.js',
+                       'js/energy-maps.zoom.v0.js',
                        'js/energy-maps.init.builder.v1.js',
+                       'js/energy-maps.options.v0.js',
                        filters='jsmin',
                        output='gen/js_builderfucker.js'))

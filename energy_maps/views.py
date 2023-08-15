@@ -9,7 +9,7 @@ main_views = Blueprint('base_views', __name__, static_folder='static')
 @main_views.route('/')
 def index():
     return render_template(
-        'builder.html',
+        'index.html',
         scale='false',
         # index=True,
     )

@@ -29,14 +29,8 @@ body, html {
 header {
   position: absolute;
   top: 0;
-  width: 100%;
-  pointer-events: none;
 }
 
-main {
-  height: 85%;
-  min-height: 480px;
-}
 main .content-wrap {
   position: relative;
   height: 100%;
@@ -253,29 +247,10 @@ footer p.nsf {
   border-bottom: 1px solid black;
 }
 
-.options.main {
-  width: 850px;
-  z-index: 900;
-  font-size: 0.9em !important;
-}
-.options.main.menu {
-  position: fixed;
-  top: 60%;
-  padding-bottom: 0;
-}
-.options.main .canvas {
-  padding: 0 1em 0.5em;
-}
-.options.main .bkgd {
-  opacity: 0.6;
-}
 .options.main h6 {
   border-bottom: none;
 }
 .options.main .options .column {
-  width: 24.25%;
-  float: left;
-  position: relative;
   z-index: 2;
 }
 .options.main .options .column + .column {
@@ -300,19 +275,11 @@ footer p.nsf {
   font-size: smaller;
 }
 .options.main label {
-  display: block;
-  border-bottom: 1px solid black;
-  padding: 0.33em 0;
+  font-size: 0.75rem;
+  line-height: 1em;
 }
 .options.main label.inactive {
   color: #767676;
-}
-.options.main label .asset-value {
-  font-size: 0.8em;
-}
-.options.main label input {
-  position: absolute;
-  right: 2px;
 }
 .options.main .zoom-buttons {
   position: absolute;

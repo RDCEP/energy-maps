@@ -5,11 +5,16 @@
   <meta content=True name=HandheldFriendly />
   <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name=viewport />
   <title>RDCEP: US energy infrastructure</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
   {% assets 'css_main' %}
     <link rel=stylesheet href={{ ASSET_URL }}>
   {% endassets %}
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">  
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-31803228-5"></script>
   <script>
@@ -23,35 +28,18 @@
 </head>
 <body>
 {% block body %}
-  <header>
-  {% block header %}
-  <div class="title container">
-    <section class="builder-link">
-      <a href="/builder">Custom Map <br> Builder</a>
-    </section>
-    <a href="/"><img src="../static/images/logo.png" alt="Logo for RDCEP" style="width: 93px; height: 40px;"></a>
-    <section class="headline">
-      <a href=http://geosci.uchicago.edu/~moyer/Inventory/>
-        <i>A Physical Inventory <br>of the U.S. Energy System</i>
-      </a>
-    </section>
-    <section class="headline headline2">
-      Chen, Weisbach, Matteson, <br>
-      Brizius, Moyer, 2019
-    </section>
-    <section class="headline headline3">
-      University of Chicago. Center for Robust <br>
-      Decision-making on Climate and Energy Policy.
-    </section>
+  <div class=main-wrap>
+    <header class=main-header>
+    {% block header %}
+    {% endblock %}
+    </header>
+    <main>
+    {% block main %}
+    {% endblock %}
+    </main>
+    <footer>
+    </footer>
   </div>
-  {% endblock %}
-  </header>
-  <main>
-  {% block main %}
-  {% endblock %}
-  </main>
-  <footer>
-  </footer>
   {% block bodyjs %}
   {% endblock %}
 {% endblock %}
