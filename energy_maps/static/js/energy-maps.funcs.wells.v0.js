@@ -598,7 +598,7 @@ oil_product_pipeline.draw_legend = function draw_pipeline_legend(ctx, x, y, dash
   return y;
 };
 
-let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
+let oil_pipeline = new Transport('oil-pipelines', 'Oil pipelines', {2012: 170_000_000_000, 2022: null}, 'oil-and-gas', [{
   draw_layer: draw_oil_pipes,
   src: [`/pipelines/oil`],
   // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
