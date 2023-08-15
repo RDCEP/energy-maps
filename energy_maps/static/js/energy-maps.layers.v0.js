@@ -28,7 +28,7 @@ EnergyMaps = (function (EnergyMaps) {
    * was previously used for currency formatting.
    * @memberof Init
    */
-  const _displayAssetTotal = function _displayAssetTotal
+  const displayAssetTotal = function displayAssetTotal
     ()
   {
     // FIXME: This is a horrible kludge in order to get space before units.
@@ -184,7 +184,7 @@ EnergyMaps = (function (EnergyMaps) {
       EnergyMaps.oilProductPipeline.active = true;
     }
     ACTIVE_LAYERS.push(lyr);
-    _displayAssetTotal();
+    displayAssetTotal();
     return ACTIVE_LAYERS;
   };
 
@@ -206,7 +206,7 @@ EnergyMaps = (function (EnergyMaps) {
     // active_layers.pop(lyr);
     // ACTIVE_LAYERS.indexOf(lyr);
     ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1);
-    _displayAssetTotal();
+    displayAssetTotal();
   };
 
   // initMenuAsteriskNote();
@@ -267,6 +267,7 @@ EnergyMaps = (function (EnergyMaps) {
   LAYERS = setLayers();
 
   EnergyMaps.setLayers = setLayers;
+  EnergyMaps.displayAssetTotal = displayAssetTotal;
   EnergyMaps.drawActiveLayers = drawActiveLayers;
   EnergyMaps.removeLayer = removeLayer;
   EnergyMaps.addLayer = addLayer;

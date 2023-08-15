@@ -27,6 +27,7 @@ EnergyMaps = (function (EnergyMaps) {
     let li = d3.select('.options-list ul')
       .append('li')
       // .attr('class', 'option-li')
+      .attr('data-layer', lyr.name)
       .attr('class', () => {
         return (!lyr.drawProps || lyr === EnergyMaps.oilProductPipeline)
           ? 'option-li inactive' : 'option-li'
@@ -49,38 +50,48 @@ EnergyMaps = (function (EnergyMaps) {
 
   /**
    * @description Generate an asset value for a checkbox in the menu.
-   * @param {Object} lyr - An object from layers[].
+   * @param {Object} layer - An object from layers[].
    * @param {Object} label
    * @return {Object} checkbox_span - an HTML5 span tag with that displays
    * total asset value for the menu item.
    * abbreviated in either billions or trillions. Child of a parent label tag.
    * @memberof Init
    */
-  const _initMenuAssetValue = function _initMenuAssetValue
-    (lyr, label)
+  const _initMenuAssetSpan = function _initMenuAssetSpan
+    (layer, label)
   {
-    if (lyr.assetValue[DATA_YEAR] !== 0
-      && lyr.name !== 'state-boundaries'
-      && lyr.name !== 'wind-capacity'
-      && lyr.name !== 'oil-product-pipelines')
+    if (layer.assetValue[DATA_YEAR] !== 0
+      && layer.name !== 'state-boundaries'
+      && layer.name !== 'wind-capacity'
+      && layer.name !== 'oil-product-pipelines')
     {
       label.append('span')
         .attr('class', 'asset-value')
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
-        .text(` ($${_capitalizeFirstLetter(
-          d3.format('.2~s')(lyr.assetValue[DATA_YEAR])
-            .replace(/G/, ' B')
-            .replace(/T/, ' T'))})`);
-      if (lyr.unchanged_2022 === true) {
-        label.append('span')
-          .text(' *')
-      }
-
+      showLayerAssetTotal(layer);
     }
     label.append('span')
       .attr('class', 'leader');
     return label;
+  };
+
+  const showLayerAssetTotal = function showLayerAssetTotal
+    (layer, dataYear)
+  {
+    if (layer.assetValue[dataYear] !== 0
+      && layer.name !== 'state-boundaries'
+      && layer.name !== 'wind-capacity'
+      && layer.name !== 'oil-product-pipelines')
+    {
+      let label = d3.select(`[data-layer=${layer.name}] .asset-value`);
+      let text = ` ($${_capitalizeFirstLetter(
+        d3.format('.2~s')(layer.assetValue[DATA_YEAR])
+          .replace(/G/, ' B')
+          .replace(/T/, ' T'))})`;
+      text = (layer.unchanged_2022 === true && dataYear === 2022) ? text + ' *' : text;
+      label.text(text);
+    }
   };
 
   /**
@@ -95,7 +106,7 @@ EnergyMaps = (function (EnergyMaps) {
     (lyr)
   {
     let label = _initMenuCheckboxLabel(lyr);
-    label = _initMenuAssetValue(lyr, label);
+    label = _initMenuAssetSpan(lyr, label);
     return label;
   };
 
@@ -121,6 +132,35 @@ EnergyMaps = (function (EnergyMaps) {
     return lyr.checkbox;
   };
 
+  const activateDeactivateLayer = function activateDeactivateLayer
+    ()
+  {
+
+    let that = d3.select(this);
+    let layerName = that.attr('data-layername');
+    let layer = LAYERS.find(obj => {
+      return obj.name === layerName
+    });
+    // checkbox is buried in a ut {} object for some reason
+    let checkbox = layer.checkbox._groups[0][0];
+
+    if (checkbox.checked) {
+      EnergyMaps.addLayer(layer);
+    } else {
+      EnergyMaps.removeLayer(layer);
+    }
+    // if (!(lyr instanceof StateBoundary)) {
+    if (!(layer.name === 'state-boundaries')) {
+      EnergyMaps.legendCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
+      EnergyMaps.legendTmpCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
+      EnergyMaps.updateLegend(EnergyMaps.legendTmpCtx, EnergyMaps.legendCtx, LAYERS);
+      if (ACTIVE_LAYERS.length === 0) {
+        EnergyMaps.legend.property('hidden', true);
+      }
+    }
+    EnergyMaps.setCookieLayers();
+  };
+
   /**
    * @description Initializes the creation of the map options menu.
    * @return
@@ -135,29 +175,7 @@ EnergyMaps = (function (EnergyMaps) {
 
       let li = _initMenuItem(lyr);
       _initMenuCheckbox(lyr, li);
-      lyr.checkbox.on('change', function() {
-
-        // checkbox is buried in a ut {} object for some reason
-        let checkbox = lyr.checkbox._groups[0][0];
-
-        if (checkbox.checked) {
-          EnergyMaps.addLayer(lyr);
-        } else {
-          EnergyMaps.removeLayer(lyr);
-        }
-        // if (!(lyr instanceof StateBoundary)) {
-        if (!(lyr.name === 'state-boundaries')) {
-          EnergyMaps.legendCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
-          EnergyMaps.legendTmpCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
-          EnergyMaps.updateLegend(EnergyMaps.legendTmpCtx, EnergyMaps.legendCtx, LAYERS);
-          if (ACTIVE_LAYERS.length === 0) {
-            EnergyMaps.legend.property('hidden', true);
-          }
-        }
-
-        EnergyMaps.setCookieLayers();
-
-      });
+      lyr.checkbox.on('change', activateDeactivateLayer);
 
       EnergyMaps.addLayerCanvas(lyr);
       EnergyMaps.addCanvasContext(lyr);
@@ -261,6 +279,7 @@ EnergyMaps = (function (EnergyMaps) {
   _drawDefaultLayers();
 
   EnergyMaps.initMenu = initMenu;
+  EnergyMaps.showLayerAssetTotal = showLayerAssetTotal;
 
   return EnergyMaps;
 

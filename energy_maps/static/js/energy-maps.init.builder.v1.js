@@ -68,8 +68,8 @@ EnergyMaps = (function (EnergyMaps) {
     btn.addEventListener('click', function() {
       // btnVal = btnVal;
       // data_year = EnergyMaps.get_data_year(btnVal)
-      data_year = btnVal
-      // API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
+      DATA_YEAR = btnVal
+      API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
       // Add an asterisk if year is 2022
       if (DATA_YEAR === 2022) {
@@ -163,31 +163,33 @@ EnergyMaps = (function (EnergyMaps) {
       //   addLayer(layersToRedraw[i], transform)
       // }
 
-      layers = layers.map(x => {
+      LAYERS = LAYERS.map(x => {
         if (x.active) {
           EnergyMaps.removeLayer(x, EnergyMaps.transform);
         }
-        return x
+        return x;
       })
 
       var labels = document.getElementsByTagName('label');
+
       for (let i = 0, l = labels.length; i < l; i++) {
         labels[i].classList.add('asset-label')
       }
 
       // remove asset values, asset labels, and checkboxes
-      for (let i = 0, l = layers.length; i < l; i++) {
+      for (let i = 0, l = LAYERS.length; i < l; ++i) {
 
-        for (let i = 0, m = values.length; i < m; i++) {
-          values[i].remove();
+        for (let j = 0, m = values.length; j < m; ++j) {
+          console.log(j, values[j])
+          values[j].remove();
         }
 
-        for (let i = 0, m = assetLabels.length; i < m; i++) {
-          assetLabels[i].remove();
+        for (let k = 0, n = assetLabels.length; k < n; ++k) {
+          assetLabels[k].remove();
         }
 
-        for (let i = 0, m = cBoxes.length; i < m; i++) {
-          cBoxes[i].remove();
+        for (let p = 0, q = cBoxes.length; p < q; ++p) {
+          cBoxes[p].remove();
         }
 
       }
@@ -223,8 +225,8 @@ EnergyMaps = (function (EnergyMaps) {
     });
   }
 
-  createYearButton(2012, "$9.8T");
-  createYearButton(2022, "$9.8T");
+  // createYearButton(2012, "$9.8T");
+  // createYearButton(2022, "$9.8T");
 
   const initMenuAsteriskNote = function initMenuAsteriskNote
     ()

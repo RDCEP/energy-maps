@@ -455,7 +455,9 @@ EnergyMaps = (function (EnergyMaps) {
 
     gasProcessing.forEach(function(d, i) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
-      _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
+      if (xy !== null) {
+        _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
+      }
       if (i === gasProcessing.length - 1) {
         EnergyMaps.finishLoadingLayer();
       }
