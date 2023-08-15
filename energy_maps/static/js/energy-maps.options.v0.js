@@ -59,7 +59,7 @@ EnergyMaps = (function (EnergyMaps) {
   const _initMenuAssetValue = function _initMenuAssetValue
     (lyr, label)
   {
-    if (lyr.value[DATA_YEAR] !== 0
+    if (lyr.assetValue[DATA_YEAR] !== 0
       && lyr.name !== 'state-boundaries'
       && lyr.name !== 'wind-capacity'
       && lyr.name !== 'oil-product-pipelines')
@@ -69,7 +69,7 @@ EnergyMaps = (function (EnergyMaps) {
         // FIXME: This is a horrible kludge in order to get space before units.
         //  Need to write a proper formatter.
         .text(` ($${_capitalizeFirstLetter(
-          d3.format('.2~s')(lyr.value[DATA_YEAR])
+          d3.format('.2~s')(lyr.assetValue[DATA_YEAR])
             .replace(/G/, ' B')
             .replace(/T/, ' T'))})`);
       if (lyr.unchanged_2022 === true) {
@@ -114,7 +114,7 @@ EnergyMaps = (function (EnergyMaps) {
       .attr('type', 'checkbox')
       .attr('class', `checkbox ${lyr.name}`)
       .attr('data-layername', lyr.name)
-      .attr('data-assetvalue', lyr.value[DATA_YEAR]);
+      .attr('data-assetvalue', lyr.assetValue[DATA_YEAR]);
     if (!(lyr.drawProps && (lyr !== EnergyMaps.oilProductPipeline))) {
       lyr.checkbox.attr('disabled', true);
     }

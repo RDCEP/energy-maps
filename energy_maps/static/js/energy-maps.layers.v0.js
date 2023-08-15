@@ -15,7 +15,7 @@ EnergyMaps = (function (EnergyMaps) {
         ACTIVE_LAYERS[i].name !== 'wind-capacity')
       {
         // active layers value starts as undefined
-        assetTotalSum += ACTIVE_LAYERS[i].value[DATA_YEAR];
+        assetTotalSum += ACTIVE_LAYERS[i].assetValue[DATA_YEAR];
       }
     }
     return assetTotalSum;

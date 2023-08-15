@@ -325,7 +325,7 @@ EnergyMaps = (function (EnergyMaps) {
 
   const biofuel = {
     name: 'biofuel',
-    value: {2012: 51_000_000_000, 2022: null},
+    assetValue: {2012: 51_000_000_000, 2022: null},
     drawProps: false,
     column: 'electricity-generation',
   };

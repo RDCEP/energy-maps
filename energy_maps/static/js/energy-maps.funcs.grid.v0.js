@@ -49,7 +49,7 @@ EnergyMaps = (function (EnergyMaps) {
    * grid infrastructure.
    * @param {String} name - canvas ID
    * @param {String} text - human readable text for UI
-   * @param {Number} value - asset value in USD
+   * @param {Object} value - asset values in USD
    * @param {String} column - class attribute for corresponding column
    * @param {Array} drawProps - properties used to parse the data and render
    * @param {String} legendGroup - the name of the icon group in the legend
@@ -61,7 +61,7 @@ EnergyMaps = (function (EnergyMaps) {
   {
     this.name = name || '';
     this.text = text || '';
-    this.value = value || 0;
+    this.assetValue = value || 0;
     this.column = column || '';
     this.zIndex = 0;
     this.drawProps = drawProps || [];
@@ -398,7 +398,7 @@ EnergyMaps = (function (EnergyMaps) {
   const distribution = {
     name: 'electricity-distribution',
     text: 'Electricity dist',
-    value: {2012: 1_400_000_000_000, 2022: 1_400_000_000_000},
+    assetValue: {2012: 1_400_000_000_000, 2022: 1_400_000_000_000},
     drawProps: false,
     column: 'electricity-transmission-and-distribution',
   };

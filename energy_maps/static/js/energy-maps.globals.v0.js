@@ -103,7 +103,7 @@ EnergyMaps = (function (EnergyMaps) {
   {
     this.name = name || '';
     this.text = text || '';
-    this.value = value || 0;
+    this.assetValue = value || 0;
     this.column = column || '';
     this.zIndex = 0;
     this.drawProps = drawProps || [{

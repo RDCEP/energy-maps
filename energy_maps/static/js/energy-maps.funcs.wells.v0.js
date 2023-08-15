@@ -602,14 +602,14 @@ EnergyMaps = (function (EnergyMaps) {
 
   const foreignOilWells = {
     name: 'foreign-oil-wells',
-    value: {2012: 931_000_000_000, 2022: null},
+    assetValue: {2012: 931_000_000_000, 2022: null},
     drawProps: false,
     column: 'oil-and-gas',
   };
 
   const foreignGasWells = {
     name: 'foreign-gas-wells',
-    value: {2012: 63_000_000_000, 2022: null},
+    assetValue: {2012: 63_000_000_000, 2022: null},
     drawProps: false,
     column: 'oil-and-gas',
   };
@@ -669,7 +669,7 @@ EnergyMaps = (function (EnergyMaps) {
 
   const oilAndGasStorage = {
     name: 'oil-and-gas-storage',
-    value: {2012: 181_000_000_000, 2022: null},
+    assetValue: {2012: 181_000_000_000, 2022: null},
     drawProps: false,
   // TODO: Split up the JSON files based on whatever property marks processing vs. storage
   // drad3_fetch: {
