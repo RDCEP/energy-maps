@@ -1,0 +1,417 @@
+* {
+  font-size: 1em;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+main {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+i, em {
+  transform: skew(-8deg);
+}
+
+.main-header {
+  background-color: #024964;
+  color: #ffffff;
+  position: relative;
+  width: 45rem;
+  display: inline-block;
+  margin: 1rem 0 0 0;
+  padding: 1rem 3rem 1rem 2rem;
+  z-index: 999;
+}
+.main-header .logo-wrap {
+  display: inline-block;
+  height: 4rem;
+  width: 4rem;
+  margin-right: 1rem;
+  border-radius: 2rem;
+  background-color: #ffffff;
+}
+.main-header .logo-wrap .flex-shim {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.main-header .logo-wrap .flex-shim img {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+.main-header h1, .main-header h2 {
+  line-height: 1.25em;
+  display: inline-block;
+  color: #ffffff;
+  margin: 0;
+  font-weight: bold;
+}
+.main-header h1 {
+  font-size: 1.5rem;
+  padding: 0 3rem 0 0;
+}
+.main-header h2 {
+  font-size: 1rem;
+}
+.main-header h2 span {
+  display: inline-block;
+}
+.main-header h2 .asset-total {
+  font-size: 3.5rem;
+  padding: 0 2rem 0 0;
+}
+.main-header h2 .asset-total-tag {
+  font-weight: normal;
+  padding: 0 2rem 0 0;
+}
+
+.main-map, .zoom-target, .layer, .base-map {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.main-map {
+  z-index: 510;
+  background-color: #e7eff2;
+}
+
+.zoom-target {
+  z-index: 590;
+}
+
+.layer {
+  fill: none;
+}
+
+.boundary.ocean {
+  fill: white;
+}
+
+.boundary.land {
+  fill: #eeeeee;
+}
+
+.feature.pipe {
+  stroke-width: 0.5;
+  fill: none;
+}
+
+.feature.pipe.oil {
+  stroke: #222222;
+}
+
+.feature.pipe.gas {
+  stroke: cornflowerblue;
+}
+
+.feature.dot {
+  stroke: none;
+  fill: #000000;
+}
+
+.feature.dot.plant {
+  fill: #cccccc;
+}
+
+.option-li {
+  display: block;
+  position: relative;
+  list-style-type: none;
+  font-size: 0.75rem !important;
+  margin: 0 0 1em;
+  padding-left: 1.5rem;
+  overflow: visible;
+  color: #000000;
+}
+.option-li.inactive {
+  color: #BCBCBC;
+}
+.option-li label {
+  display: flex;
+  align-items: baseline;
+}
+.option-li .drag {
+  width: 1em;
+  position: absolute;
+  right: 13.5rem;
+  display: inline-block;
+  line-height: 1.45em;
+}
+.option-li .option-title {
+  flex-basis: content;
+}
+.option-li .asset-value {
+  font-size: 0.8em !important;
+  line-height: 1.25em;
+  flex-basis: content;
+}
+.option-li .leader {
+  flex-grow: 1;
+  border-bottom: 1px solid black;
+  margin: 0 0.5em;
+}
+.option-li input {
+  flex-basis: content;
+}
+.option-li.uk-sortable-item {
+  width: 13rem !important;
+}
+
+.options {
+  display: block;
+  position: relative;
+  width: 20rem;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  background-color: #ffffff;
+  border: none;
+  border-right: 2px solid #024964;
+  z-index: 910;
+}
+.options.dragging {
+  display: block;
+  position: absolute;
+  z-index: 1000;
+}
+.options .container {
+  padding: 6.75rem 0 2rem 0;
+  width: 20rem;
+}
+.options h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+  color: #000000;
+  margin: 2em 0 1em;
+}
+.options h6 + p {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: center;
+}
+.options ul {
+  padding: 0 3.5rem 0 2rem;
+}
+.options p {
+  padding: 0 2rem;
+}
+.options .shim {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  width: 20rem;
+}
+.options .zoom {
+  position: absolute;
+  left: 100%;
+  bottom: 1rem;
+  padding-left: 1rem;
+  z-index: 999;
+}
+.options .zoom .zoom-in, .options .zoom .zoom-out {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  height: 2rem;
+  width: 2rem;
+}
+
+.options-toggle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  right: 0;
+  align-items: center;
+  height: 4rem;
+  width: 2rem;
+  top: 14.5rem;
+  z-index: 999;
+}
+.options-toggle .shade {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 0;
+  border-width: 2rem 2rem 2rem 0;
+  border-color: transparent #024964 transparent transparent;
+  border-style: solid;
+}
+.options-toggle .uk-icon {
+  color: #ffffff;
+}
+
+.options[data-toggle-state=open] {
+  animation-name: options_open;
+  animation-duration: 0.5s;
+  left: 0;
+}
+.options[data-toggle-state=open] .options-toggle {
+  right: 0;
+}
+.options[data-toggle-state=open] .options-toggle .shade {
+  border-width: 2rem 2rem 2rem 0;
+  border-color: transparent #024964 transparent transparent;
+}
+.options[data-toggle-state=close] {
+  animation-name: options_close;
+  animation-duration: 0.5s;
+  left: -19rem;
+}
+.options[data-toggle-state=close] .options-toggle {
+  left: 100%;
+}
+.options[data-toggle-state=close] .options-toggle .shade {
+  border-width: 2rem 0 2rem 2rem;
+  border-color: transparent transparent transparent #024964;
+}
+.options[data-toggle-state=close] .options-toggle .options-toggle-arrow {
+  transform: scaleX(-1);
+}
+
+@keyframes options_open {
+  from {
+    left: -19rem;
+  }
+  to {
+    left: 0;
+  }
+}
+@keyframes options_close {
+  from {
+    left: 0;
+  }
+  to {
+    left: -19rem;
+  }
+}
+.legend {
+  display: block;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  width: 20rem;
+  background-color: #ffffff;
+  z-index: 700;
+  border-top: 2px solid #024964;
+  height: 4rem;
+}
+.legend h6 {
+  list-style: none;
+  margin: 1em 0 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+  color: #000000;
+}
+.legend .shim {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100%;
+  width: 20rem;
+}
+
+.legend-toggle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 8rem;
+  height: 2rem;
+  width: 4rem;
+  bottom: 100%;
+  z-index: 999;
+}
+.legend-toggle .shade {
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 0;
+  border-width: 0 2rem 2rem 2rem;
+  border-color: transparent transparent #024964 transparent;
+  border-style: solid;
+}
+.legend-toggle .uk-icon {
+  color: #ffffff;
+}
+
+.legend[data-toggle-state=open] {
+  animation-name: options_open;
+  animation-duration: 0.5s;
+  top: 0;
+}
+.legend[data-toggle-state=open] .shim {
+  overflow-y: auto;
+}
+.legend[data-toggle-state=open] .legend-toggle {
+  right: 0;
+}
+.legend[data-toggle-state=open] .legend-toggle .shade {
+  border-width: 2rem 2rem 0 2rem;
+  border-color: #024964 transparent transparent transparent;
+}
+.legend[data-toggle-state=close] {
+  animation-name: legend_close;
+  animation-duration: 0.5s;
+  left: -19rem;
+}
+.legend[data-toggle-state=close] .legend-toggle {
+  bottom: 100%;
+}
+.legend[data-toggle-state=close] .legend-toggle .shade {
+  border-width: 0 2rem 2rem 2rem;
+  border-color: transparent transparent #024964 transparent;
+}
+.legend[data-toggle-state=close] .legend-toggle .options-toggle-arrow {
+  transform: scaleY(-1);
+}
+
+@keyframes legend_open {
+  from {
+    left: -19rem;
+  }
+  to {
+    left: 0;
+  }
+}
+@keyframes legend_close {
+  from {
+    left: 0;
+  }
+  to {
+    left: -19rem;
+  }
+}
+main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/*# sourceMappingURL=main.css.map */
