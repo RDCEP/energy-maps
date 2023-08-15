@@ -94,14 +94,11 @@ EnergyMaps = (function (EnergyMaps) {
   {
     features.forEach(function (d) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
-      for (let coord of xy) {
-        if (coord != null) {
+      if (xy !== null) {
           // TODO: Does this need a year conditional? Probably
-          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
-        }
-        else {
-          console.log(coord)
-        }
+        _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
+      } else {
+        console.log(xy)
       }
     });
   }
@@ -229,7 +226,8 @@ EnergyMaps = (function (EnergyMaps) {
   };
 
   const _drawHydroPlants = function _drawHydroPlants
-    (ctx, queuedData) {
+    (ctx, queuedData)
+  {
     _drawSinglePlant(ctx, queuedData, EnergyMaps.hydroPlants);
   };
 
