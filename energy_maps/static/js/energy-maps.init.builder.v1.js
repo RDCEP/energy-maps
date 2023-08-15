@@ -78,12 +78,6 @@ EnergyMaps = (function (EnergyMaps) {
         EnergyMaps.asteriskNote[0].remove()
       }
 
-<<<<<<< HEAD
-      unchanged_layers_2022 = [gas_well, oil_well, railroad, ac_na_and_under_100, ac_100_300, ac_345_735, dc, gas_pipeline]
-      if (data_year === 2022) {
-        for (let i = 0; i < unchanged_layers_2022.length; i++) {
-          unchanged_layers_2022[i].unchanged_2022 = true;
-=======
       unchangedLayers2022 = [
         EnergyMaps.gasWell, EnergyMaps.oilWell, EnergyMaps.railroad,
         EnergyMaps.AcNaAndUnder100, EnergyMaps.Ac100300,
@@ -92,7 +86,6 @@ EnergyMaps = (function (EnergyMaps) {
       if (DATA_YEAR === 2022) {
         for (let i = 0; i < unchangedLayers2022.length; i++) {
           unchangedLayers2022[i].unchanged_2022 = true;
->>>>>>> 4d98e9686b9e47cf7df2d15bbe1798442245db27
         }
       } else if (DATA_YEAR === 2012) {
         for (let i = 0; i < unchangedLayers2022.length; i++) {
