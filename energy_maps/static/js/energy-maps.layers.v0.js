@@ -246,10 +246,9 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * @description Iterates through layers and draws active layers. This is
    * called at the end of a zoom or window resize operation.
-   * @param {Object} transform - # TODO: This should be removed
    */
   const drawActiveLayers = function drawActiveLayers
-    (transform)
+    ()
   {
     // const layers = EnergyMaps.setLayers();
     ACTIVE_LAYERS.map(layer => {
