@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template
 from flask_assets import Environment, Bundle
-from energy_maps.views import main_views
 from flask_compress import Compress
+from energy_maps.views import main_views
+
 
 compress = Compress()
 
