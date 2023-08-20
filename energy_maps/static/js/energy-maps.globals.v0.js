@@ -23,8 +23,8 @@ const VIZ = {
   }
 };
 
-let DATA_YEAR = 2012;
-let API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
+// let DATA_YEAR = 2012;
+// let API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
 let LAYERS = null;
 let ACTIVE_LAYERS = [];
