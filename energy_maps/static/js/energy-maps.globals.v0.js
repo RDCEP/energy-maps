@@ -71,7 +71,7 @@ EnergyMaps = (function (EnergyMaps) {
    * @type {number}
    * @description Map height, set to some fraction of `width`
    */
-  // energy_maps.height = window.innerHeight;
+  // energy_maps.height = window.outerHeight;
 
   /**
    * @type {Object}
@@ -138,7 +138,7 @@ EnergyMaps = (function (EnergyMaps) {
   const getHeight = function setHeight
     ()
   {
-    return window.innerHeight * SCALE;
+    return window.outerHeight * SCALE;
   };
 
   const width = getWidth();
@@ -282,33 +282,6 @@ EnergyMaps = (function (EnergyMaps) {
     y = EnergyMaps.advanceForType(y, ctx, text, TEXT_OFFSET, x, 1);
     return y;
 
-  };
-
-  const getBoundingBoxCoordinates = function getBoundingBoxCoordinates
-    ()
-  {
-    const [x0, y0, x1, y1] = [
-      -EnergyMaps.transform.x - EnergyMaps.width * .25,
-      -EnergyMaps.transform.y + EnergyMaps.height * .25,
-      -EnergyMaps.transform.x + EnergyMaps.width * 1.25,
-      -EnergyMaps.transform.y + EnergyMaps.height * .75
-    ];
-    let [lon0, lat0] = EnergyMaps.projection.invert([x0, y0])
-    let [lon1, lat1] = EnergyMaps.projection.invert([x1, y1])
-    if (lat0 < 0) {
-      lat1 = EnergyMaps.projection.invert([(x0 + x1) / 2, y0])[1]
-    }
-    if (lat1 > 0) {
-      lat1 = EnergyMaps.projection.invert([(x0 + x1) / 2, y1])[1]
-    }
-    return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]];
-  };
-
-  const getBoundingBoxString = function getBoundingBoxString
-    ()
-  {
-    // console.log('bbox:', getBoundingBoxCoordinates().flat().join())
-    return getBoundingBoxCoordinates().flat().join();
   };
 
   /**
