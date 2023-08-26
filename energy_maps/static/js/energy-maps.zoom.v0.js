@@ -72,7 +72,7 @@ EnergyMaps = (function (EnergyMaps) {
   });
 
   const _windowResize = _.debounce(function(e) {
-    EnergyMaps.width = window.innerWidth * SCALE;
+    EnergyMaps.width = window.outerWidth * SCALE;
     EnergyMaps.height = window.outerHeight * SCALE;
     EnergyMaps.baseCanvas
       .attr('width', EnergyMaps.width)

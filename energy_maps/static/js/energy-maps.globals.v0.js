@@ -65,7 +65,7 @@ EnergyMaps = (function (EnergyMaps) {
    * @type {number}
    * @description Map width, set to some multiple of `SCALE`
    */
-  // energy_maps.width = window.innerWidth * SCALE;
+  // energy_maps.width = window.outerWidth * SCALE;
 
   /**
    * @type {number}
@@ -126,7 +126,7 @@ EnergyMaps = (function (EnergyMaps) {
   const getWidth = function setWidth
     ()
   {
-    return window.innerWidth * SCALE;
+    return window.outerWidth * SCALE;
   };
 
   /**
