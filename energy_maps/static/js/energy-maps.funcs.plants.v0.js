@@ -261,7 +261,7 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 1_092_000_000_000, 2022: 681_740_400_000}, 'electricity-generation',
     [{
       drawLayer: _drawCoalPlants,
-      src: [`/power_plants/coal`],
+      src: [`power_plants_coal`],
       d3Fetch: d3.json,
     }], 'coal', 'rgba(0, 0, 0, .5)', plantStroke);
 
@@ -269,14 +269,14 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 488_000_000_000, 2022: 564_559_069_258}, 'electricity-generation',
     [{
       drawLayer: _drawNgPlants,
-      src: [`/power_plants/natural_gas`],
+      src: [`power_plants_natural_gas`],
       d3Fetch: d3.json,
     }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
   const petroleumPlants = new PowerPlant('petroleum-plants', 'Petro. plants',
     {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawPetroPlants,
-      src: [`/power_plants/petroleum`],
+      src: [`power_plants_petroleum`],
       d3Fetch: d3.json,
     }], 'petroleum', 'rgba(34, 139, 34, .5)', plantStroke);
 
@@ -284,21 +284,21 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 597_000_000_000, 2022: null}, 'electricity-generation',
     [{
       drawLayer: _drawNuclearPlants,
-      src: [`/power_plants/nuclear`],
+      src: [`power_plants_nuclear`],
       d3Fetch: d3.json,
     }], 'nuclear', 'rgba(255, 0, 0, .5)', plantStroke);
 
   const hydroPlants = new PowerPlant('hydro-plants', 'Hydro. plants',
     {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawHydroPlants,
-      src: [`/power_plants/hydroelectric`],
+      src: [`power_plants_hydroelectric`],
       d3Fetch: d3.json,
     }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plantStroke);
 
   const windFarms = new PowerPlant('wind-farms', 'Wind farms',
     {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawWindFarms,
-      src: [`/power_plants/wind`],
+      src: [`power_plants_wind`],
       d3Fetch: d3.json,
     }], 'wind', 'rgba(144, 29, 143, .5)', plantStroke);
 
@@ -306,14 +306,14 @@ EnergyMaps = (function (EnergyMaps) {
     'solar-PV', 'Solar PV', {2012: 14_000_000_000, 2022: null},
     'electricity-generation', [{
       drawLayer: _drawSolarPlants,
-      src: [`/power_plants/solar`],
+      src: [`power_plants_solar`],
       d3Fetch: d3.json,
     }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
 
   const geothermalPlants = new PowerPlant('geothermal-plants', 'Geo. plants',
     {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawGeoPlants,
-      src: [`/power_plants/geothermal`],
+      src: [`power_plants_geothermal`],
       d3Fetch: d3.json,
     }], 'geothermal', 'rgba(210, 105, 30, .5)', plantStroke);
 

@@ -591,14 +591,14 @@ EnergyMaps = (function (EnergyMaps) {
       drawLayer: _drawAllWells,
       // src: [ `/static/csv/wells_gas.csv` ],
       // d3_fetch: d3.csv
-      src: [ `/wells/gas` ],
+      src: [ `wells_gas` ],
       d3Fetch: d3.json
     }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)');
 
   const oilWell = new Well('oil-wells', 'Oil wells',
     {2012: 654_000_000_000, 2022: 654_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawAllWells,
-      src: [ `/wells/oil` ],
+      src: [ `wells_oil` ],
       d3Fetch: d3.json
     }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)');
 
@@ -619,14 +619,14 @@ EnergyMaps = (function (EnergyMaps) {
   const gasPipeline = new Transport('gas-pipelines', 'Gas pipelines',
     {2012: 940_000_000_000, 2022: 940_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawGasPipes,
-      src: [`/pipelines/gas`],
+      src: [`pipelines_gas`],
       d3Fetch: d3.json
     }], 'rgba(0, 191, 255, .5)', 1.8 * SCALE);
 
   let oilProductPipeline = new Transport('oil-product-pipelines', 'Oil product pipelines',
     {2012: null, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawOilProdPipes,
-      src: [`/pipelines/petroleum_product`],
+      src: [`pipelines_petroleum_product`],
       // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
       d3Fetch: d3.json
     }], '#3CB371', 2 * SCALE);
@@ -649,7 +649,7 @@ EnergyMaps = (function (EnergyMaps) {
   const oilPipeline = new Transport('oil-pipelines', 'Oil pipelines',
     {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawOilPipes,
-      src: [`/pipelines/oil`],
+      src: [`pipelines_oil`],
       // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
       d3Fetch: d3.json,
       next_layer: EnergyMaps.oilProductPipeline
@@ -658,14 +658,14 @@ EnergyMaps = (function (EnergyMaps) {
   const oilRefinery = new Refinery('oil-refineries', 'Oil refineries',
     {2012: 373_000_000_000, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawRefining,
-      src: [`/refineries/petroleum`],
+      src: [`refineries_petroleum`],
       d3Fetch: d3.json
     }], 'rgba(60, 179, 113, .7)', .006 * SCALE);
 
   const gasProcessing = new Processing('gas-processing', 'Gas processing',
     {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawProcessing,
-      src: [ `/processing_plants/gas`],
+      src: [ `processing_plants_gas`],
       d3Fetch: d3.json
     }], 'rgba(0, 0, 139, .5)', 1.5 * SCALE);
 

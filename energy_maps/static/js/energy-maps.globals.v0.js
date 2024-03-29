@@ -317,6 +317,7 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.transform.y = (localStorage.getItem('y') === null) ? 0 : +localStorage.y;
   EnergyMaps.transform.z = (localStorage.getItem('k') === null) ? 0 : +localStorage.k;
   setCookieTransform();
+  EnergyMaps.dataYear = DATA_YEAR;
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;
   EnergyMaps.SCALE = SCALE;

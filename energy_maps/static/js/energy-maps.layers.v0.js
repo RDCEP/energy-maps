@@ -120,7 +120,7 @@ EnergyMaps = (function (EnergyMaps) {
         Promise.all(
           lyrs[i].drawProps[0].src.map(
             x => lyrs[i].drawProps[0].d3Fetch(
-              `${API_URL_PREFIX}${x}`,
+              `${API_URL_PREFIX}/${x}/${EnergyMaps.dataYear}`,
             )))
           .then(function(files) {
             lyrs[i].context.restore();
@@ -141,7 +141,7 @@ EnergyMaps = (function (EnergyMaps) {
           // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
 
           Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(
-            `${API_URL_PREFIX}${x}`)))
+            `${API_URL_PREFIX}/${x}/${EnergyMaps.dataYear}/`)))
           .then(function(files) {
             lyr.context.restore();
             lyr.context.save();

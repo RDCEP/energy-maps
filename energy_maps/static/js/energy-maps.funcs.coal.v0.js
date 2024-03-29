@@ -216,7 +216,7 @@ EnergyMaps = (function (EnergyMaps) {
     'coal-mines', 'Coal mines', {2012: 41_474_000_000, 2022: null},
     'coal', [{
       drawLayer: _drawCoalMines,
-      src: [ `/mines/coal` ],
+      src: [ `mines_coal` ],
       d3Fetch: d3.json
     }], .006 * SCALE);
 
@@ -228,7 +228,7 @@ EnergyMaps = (function (EnergyMaps) {
       // The API/db will have "nominal_year" and "actual_year" as object properties for a "year" object
       // So this should look something like:
       // src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
-      src: [ `/railroads` ],
+      src: [ `railroads` ],
       d3Fetch: d3.json
     }]);
 
