@@ -24,7 +24,7 @@ EnergyMaps = (function (EnergyMaps) {
     let that = d3.select(this);
     let dataYear = +that.attr('data-year');
     DATA_YEAR = dataYear;
-    API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${dataYear}`;
+    // API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${dataYear}`;
     for (let i = 0, n = LAYERS.length; i < n; ++i) {
       EnergyMaps.showLayerAssetTotal(LAYERS[i], dataYear);
     }

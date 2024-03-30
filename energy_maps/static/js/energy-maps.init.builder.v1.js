@@ -69,7 +69,7 @@ EnergyMaps = (function (EnergyMaps) {
       // btnVal = btnVal;
       // data_year = EnergyMaps.get_data_year(btnVal)
       DATA_YEAR = btnVal
-      API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
+      // API_URL_PREFIX = `http://127.0.0.1:5000/api/v0.1.0/infrastructure/${DATA_YEAR}`
 
       // Add an asterisk if year is 2022
       if (DATA_YEAR === 2022) {
