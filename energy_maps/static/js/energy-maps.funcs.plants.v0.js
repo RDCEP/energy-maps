@@ -164,7 +164,9 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.clipRegion(ctx);
 
     let plants = queuedData[0];
-    let features = _getFuelType(plants, fuel);
+    let features = plants.features;
+    // No longer need to filter plants since each is its own collection
+    // let features = _getFuelType(plants, fuel);
     _drawWhiteLayer(plants, fuel, ctx, features);
     // Draw the standard layer
     features.forEach(function(d, i) {
