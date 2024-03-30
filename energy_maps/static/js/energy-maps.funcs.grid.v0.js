@@ -134,7 +134,6 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.beginPath();
     EnergyMaps.path(features);
     ctx.stroke();
-    EnergyMaps.finishLoadingLayer();
 
   };
 

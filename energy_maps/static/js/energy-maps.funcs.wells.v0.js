@@ -273,7 +273,6 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path(pipeData);
     ctx.stroke();
     ctx.setLineDash([]);
-    EnergyMaps.finishLoadingLayer();
   };
 
   const _drawOilProdPipes = function _drawOilProdPipes
@@ -294,7 +293,6 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path(oilProdPipeData);
     ctx.stroke();
     ctx.setLineDash([]);
-    EnergyMaps.finishLoadingLayer();
   }
 
   // TODO: Is there a railroad or other line drawing function that we can
@@ -311,7 +309,6 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.beginPath();
     EnergyMaps.path(oilPipeData);
     ctx.stroke();
-    EnergyMaps.finishLoadingLayer();
 
     // Commented out because it wasn't actually firing
     // Prod pipes
@@ -436,9 +433,6 @@ EnergyMaps = (function (EnergyMaps) {
           }
         }
       }
-      if (i === wells.length - 1) {
-        EnergyMaps.finishLoadingLayer();
-      }
     });
   };
 
@@ -457,9 +451,6 @@ EnergyMaps = (function (EnergyMaps) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
       if (xy !== null) {
         _drawGasProcessor(ctx, xy, EnergyMaps.gasProcessing.size);
-      }
-      if (i === gasProcessing.length - 1) {
-        EnergyMaps.finishLoadingLayer();
       }
     });
 
@@ -503,10 +494,6 @@ EnergyMaps = (function (EnergyMaps) {
         }
 
         d.r = r;
-
-        if (i === oilRefineries.length - 1) {
-          EnergyMaps.finishLoadingLayer();
-        }
       });
 
     } else if (DATA_YEAR === 2012) {
@@ -521,9 +508,6 @@ EnergyMaps = (function (EnergyMaps) {
           }
         }
         d.r = r;
-        if (i === oilRefineries.length - 1) {
-          EnergyMaps.finishLoadingLayer();
-        }
       });
     }
 

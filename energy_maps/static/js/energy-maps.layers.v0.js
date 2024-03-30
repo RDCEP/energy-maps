@@ -129,6 +129,8 @@ EnergyMaps = (function (EnergyMaps) {
           }).then(files => {
             EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
             lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
+          }).then(x => {
+            EnergyMaps.finishLoadingLayer()
           });
       }
     } else {
@@ -151,6 +153,8 @@ EnergyMaps = (function (EnergyMaps) {
             return files;
           }).then(files => {
             lyr.drawProps[i].drawLayer(lyr.context, files);
+          }).then(x => {
+            EnergyMaps.finishLoadingLayer()
           });
         } else {
           Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
@@ -163,6 +167,8 @@ EnergyMaps = (function (EnergyMaps) {
             return files;
           }).then(files => {
             lyr.drawProps[i].drawLayer(lyr.context, files);
+          }).then(x => {
+            EnergyMaps.finishLoadingLayer()
           });
         }
       }

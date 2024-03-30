@@ -174,9 +174,6 @@ EnergyMaps = (function (EnergyMaps) {
       } else {
         _drawStandardLayer(ctx, xy, fuel, d);
       }
-      if (i === features.length - 1) {
-        EnergyMaps.finishLoadingLayer();
-      }
     });
   };
 
