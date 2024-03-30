@@ -203,8 +203,6 @@ EnergyMaps = (function (EnergyMaps) {
       EnergyMaps.oilProductPipeline.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
       EnergyMaps.oilProductPipeline.active = false;
     }
-    // active_layers.pop(lyr);
-    // ACTIVE_LAYERS.indexOf(lyr);
     ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1);
     displayAssetTotal();
   };
@@ -261,7 +259,6 @@ EnergyMaps = (function (EnergyMaps) {
       }
       return layer;
     });
-    EnergyMaps.setCookieTransform();
   };
 
   LAYERS = setLayers();

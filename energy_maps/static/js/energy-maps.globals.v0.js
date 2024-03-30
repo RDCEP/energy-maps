@@ -35,6 +35,8 @@ const LEGEND_FONT = `bold ${LEGEND_FONT_SIZE}px Inter`;
 const VERTICAL_INCREMENT = 15 * SCALE;
 const VERTICAL_TYPE_INCREMENT = 5 * SCALE;
 
+const LAYERS_WIDTH = 320;
+
 EnergyMaps = (function (EnergyMaps) {
 
   'use strict';
@@ -160,16 +162,25 @@ EnergyMaps = (function (EnergyMaps) {
    */
   const _headerHeight = d3.select('header').node().offsetHeight;
 
+  const initialK = (localStorage.getItem('k') === null)
+    ? 1
+    : 1;
+
   /**
    * @description Map projection scale to fill content area.
    */
-  const projectionScale = _contentWidth * 1.2;
+  // const projectionScale = _contentWidth * 1.2;
+  const projectionScale = width - LAYERS_WIDTH;
 
   // Possible option -- Looks good on small laptop but terrible on monitors:
   // let projection_scale =  content_width * 0.7;
   const projectionWidth = width / 2;
   const projectionHeight = projectionWidth / 2
     + _headerHeight
+  const projectionOffsetX = (localStorage.getItem('x') === null)
+    ? LAYERS_WIDTH / 2 : +localStorage.x;
+  const projectionOffsetY = (localStorage.getItem('y') === null)
+    ? 0 : +localStorage.y;
 
   /**
    * @description D3 geoAlbersUsa projection object set to custom scale
@@ -178,12 +189,12 @@ EnergyMaps = (function (EnergyMaps) {
   const projection = d3.geoAlbersUsa()
     .scale(projectionScale)
     .translate([
-      projectionWidth,
+      projectionWidth + projectionOffsetX,
       // Half the width is the height, half of that gets us to the center, and
       // add the height of the header so that maps sits below it.
       // Then subtract a random and pointless amount because we've been
       // told to and are bone-fucking-tired.
-      projectionScale / 4 + _headerHeight - 30
+      projectionScale / 4 + _headerHeight + projectionOffsetY
     ]);
 
   const _path2D = new Path2D();
@@ -312,11 +323,11 @@ EnergyMaps = (function (EnergyMaps) {
    * @description For tracking the value of transform.k to improve
    * performance of simplification algorithms.
    */
-  EnergyMaps.transform = {x: 0, y: 0, k:1};
-  EnergyMaps.transform.x = (localStorage.getItem('x') === null) ? 0 : +localStorage.x;
-  EnergyMaps.transform.y = (localStorage.getItem('y') === null) ? 0 : +localStorage.y;
-  EnergyMaps.transform.z = (localStorage.getItem('k') === null) ? 0 : +localStorage.k;
-  setCookieTransform();
+  EnergyMaps.transform = {
+    x: (localStorage.getItem('x') === null) ? 0 : +localStorage.x,
+    y: (localStorage.getItem('y') === null) ? 0 : +localStorage.y,
+    k: (localStorage.getItem('k') === null) ? 1 : +localStorage.k
+  };
   EnergyMaps.dataYear = DATA_YEAR;
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;

@@ -15,24 +15,28 @@ EnergyMaps = (function (EnergyMaps) {
         return layer;
       }
     );
-    EnergyMaps.transform = d3.event.transform;
   };
 
   const _zooming = function _zoomed
     ()
   {
-    EnergyMaps.transform = d3.event.transform;
-    EnergyMaps.drawLand(EnergyMaps.baseCtx, [EnergyMaps.simpleMapBkgd], EnergyMaps.transform, false, true);
+    EnergyMaps.drawLand(EnergyMaps.baseCtx, [EnergyMaps.simpleMapBkgd],
+      d3.event.transform, false, true);
   };
 
-  const _zoomEnd = _.debounce(function(e) {
+  const _zoomEnd = function _zoomEnd
+    ()
+  {
+    EnergyMaps.transform = d3.event.transform
     EnergyMaps.kChanged = EnergyMaps.transform.k !== previousK;
     EnergyMaps.drawBaseMap(EnergyMaps.transform);
     EnergyMaps.drawActiveLayers(EnergyMaps.transform);
-  }, 500, false);
+  }
+
+  _.debounce(_zoomEnd, 500, false);
 
   const _zoom = d3.zoom()
-    .scaleExtent([0, 50])
+    .scaleExtent([1, 15])
     .on('start', _zoomStart)
     .on('zoom', _zooming)
     .on('end', _zoomEnd);
@@ -40,35 +44,13 @@ EnergyMaps = (function (EnergyMaps) {
   _targetCanvas.call(_zoom);
 
   d3.select('.zoom-in').on('click', function() {
-    let increment = .1;
-    let k = EnergyMaps.transform.k + increment;
-    let x = (
-      EnergyMaps.transform.x + EnergyMaps.projectionWidth * (EnergyMaps.transform.k - k) / 2) / k;
-    let y = (
-      EnergyMaps.transform.y + EnergyMaps.projectionHeight * (EnergyMaps.transform.k - k) / 2) / k;
-    let initial_transform = d3.zoomIdentity
-      .scale(k)
-      .translate(x, y);
-    _targetCanvas.call(_zoom.transform, initial_transform);
-    EnergyMaps.transform = {x: x, y: y, k: k};
-    EnergyMaps.setCookieTransform();
+    let that = _targetCanvas
+      .call(_zoom.scaleBy, Math.sqrt(2));
   });
 
   d3.select('.zoom-out').on('click', function() {
-    let increment = .1;
-    let k = EnergyMaps.transform.k - increment;
-    let x = (
-      EnergyMaps.transform.x + EnergyMaps.projectionWidth * (EnergyMaps.transform.k - k) / 2)
-      / k + EnergyMaps.transform.x;
-    let y = (
-      EnergyMaps.transform.y + EnergyMaps.projectionHeight * (EnergyMaps.transform.k - k) / 2)
-      / k + EnergyMaps.transform.y;
-    let initial_transform = d3.zoomIdentity
-      .scale(k)
-      .translate(x - EnergyMaps.transform.x, y - EnergyMaps.transform.y);
-    _targetCanvas.call(_zoom.transform, initial_transform);
-    EnergyMaps.transform = {x: x, y: y, k: k};
-    EnergyMaps.setCookieTransform();
+    let that = _targetCanvas
+      .call(_zoom.scaleBy, Math.sqrt(2) / 2);
   });
 
   const _windowResize = _.debounce(function(e) {
