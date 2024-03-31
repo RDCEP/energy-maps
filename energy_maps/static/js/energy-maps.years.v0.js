@@ -46,8 +46,8 @@ EnergyMaps = (function (EnergyMaps) {
     }
   };
 
-  createButton(2012);
-  createButton(2022);
+  // createButton(2012);
+  // createButton(2022);
   assetKludge();
 
   return EnergyMaps;
