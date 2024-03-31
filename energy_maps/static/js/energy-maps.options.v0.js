@@ -145,11 +145,11 @@ EnergyMaps = (function (EnergyMaps) {
     let checkbox = layer.checkbox._groups[0][0];
 
     if (checkbox.checked) {
-      EnergyMaps.addLayer(layer);
+      EnergyMaps.setCookieLayers(EnergyMaps.addLayer(layer));
     } else {
-      EnergyMaps.removeLayer(layer);
+      EnergyMaps.setCookieLayers(EnergyMaps.removeLayer(layer));
     }
-    // if (!(lyr instanceof StateBoundary)) {
+
     if (!(layer.name === 'state-boundaries')) {
       EnergyMaps.legendCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
       EnergyMaps.legendTmpCtx.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
@@ -158,7 +158,6 @@ EnergyMaps = (function (EnergyMaps) {
         EnergyMaps.legend.property('hidden', true);
       }
     }
-    EnergyMaps.setCookieLayers();
   };
 
   /**
@@ -222,6 +221,7 @@ EnergyMaps = (function (EnergyMaps) {
     d3.select('.base-map').lower();
     LAYERS = _sortOnTarget(LAYERS, target, 'name');
     ACTIVE_LAYERS = _sortOnTarget(ACTIVE_LAYERS, target, 'name');
+    EnergyMaps.setCookieLayers();
   };
 
   const _drawDefaultLayers = function _drawDefaultLayers

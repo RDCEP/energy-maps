@@ -319,9 +319,10 @@ EnergyMaps = (function (EnergyMaps) {
    * @return null
    */
   const setCookieLayers = function setCookieLayers
-    ()
+    (layers)
   {
-    localStorage.setItem('layers', ACTIVE_LAYERS.map(x => {
+    // localStorage.setItem('layers', ACTIVE_LAYERS.map(x => {
+    localStorage.setItem('layers', layers.map(x => {
       return x.name;
     }).join());
   };

@@ -118,11 +118,13 @@ EnergyMaps = (function (EnergyMaps) {
         EnergyMaps.processingLayers =
           EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
         // TODO: Figure out why prod pipes legend is no longer showing
-        Promise.all(
-          lyrs[i].drawProps[0].src.map(
-            x => lyrs[i].drawProps[0].d3Fetch(
-              `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}`,
-            )))
+        Promise.all(lyrs[i].drawProps[0].src.map(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
+            return lyrs[i].drawProps[0].d3Fetch(
+              `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}`
+            )
+          }
+        ))
           .then(function(files) {
             lyrs[i].context.restore();
             lyrs[i].context.save();
@@ -132,6 +134,7 @@ EnergyMaps = (function (EnergyMaps) {
             lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
           })
           .then(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
             EnergyMaps.processingLayers =
               EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
@@ -146,8 +149,11 @@ EnergyMaps = (function (EnergyMaps) {
           // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
           // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
 
-          Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(
-            `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`)))
+          Promise.all(lyr.drawProps[i].src.map(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
+            return lyr.drawProps[i].d3Fetch(
+              `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`)
+          }))
           .then(function(files) {
             lyr.context.restore();
             lyr.context.save();
@@ -159,6 +165,7 @@ EnergyMaps = (function (EnergyMaps) {
             lyr.drawProps[i].drawLayer(lyr.context, files);
           })
           .then(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
             EnergyMaps.processingLayers =
               EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
@@ -197,7 +204,7 @@ EnergyMaps = (function (EnergyMaps) {
     if (lyr === EnergyMaps.oilPipeline) {
       EnergyMaps.oilProductPipeline.active = true;
     }
-    ACTIVE_LAYERS.push(lyr);
+    ACTIVE_LAYERS.push(lyr)
     displayAssetTotal();
     return ACTIVE_LAYERS;
   };
@@ -210,15 +217,18 @@ EnergyMaps = (function (EnergyMaps) {
   const removeLayer = function removeLayer
     (lyr)
   {
-    EnergyMaps.hideSpinner();
+    // EnergyMaps.hideSpinner();
     lyr.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
     lyr.active = false;
     if (lyr === EnergyMaps.oilPipeline) {
       EnergyMaps.oilProductPipeline.context.clearRect(0, 0, EnergyMaps.width, EnergyMaps.height);
       EnergyMaps.oilProductPipeline.active = false;
     }
-    ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1);
+    EnergyMaps.setCookieLayers(
+      ACTIVE_LAYERS.splice(ACTIVE_LAYERS.indexOf(lyr), 1)
+    );
     displayAssetTotal();
+    return ACTIVE_LAYERS;
   };
 
   // initMenuAsteriskNote();
