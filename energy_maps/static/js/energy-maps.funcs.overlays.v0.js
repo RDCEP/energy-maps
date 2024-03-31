@@ -82,7 +82,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path(outputGeojson);
     ctx.stroke();
     // ctx.setLineDash([]);
-    EnergyMaps.finishLoadingLayer();
+    // EnergyMaps.finishLoadingLayer();
   };
 
   let presimplifiedData = null;
@@ -128,7 +128,7 @@ EnergyMaps = (function (EnergyMaps) {
       EnergyMaps.path(outputGeojson[i]);
       ctx.fill();
     }
-    EnergyMaps.finishLoadingLayer();
+    // EnergyMaps.finishLoadingLayer();
   };
 
   /** Draw wind capacity map legend **/

@@ -245,20 +245,27 @@ EnergyMaps = (function (EnergyMaps) {
    * @description Show the spinner and queue the layer for processing
    */
   const startLoadingLayer = function startLoadingLayer
-    ()
+    (n)
   {
     EnergyMaps.showSpinner();
     _processingLayers++;
+    return ++n;
   };
 
   const finishLoadingLayer = function finishLoadingLayer
-    ()
+    (n)
   {
     _processingLayers--;
     if (_processingLayers <= 0) {
       _processingLayers = 0;
-      EnergyMaps.hideSpinner();
+      // EnergyMaps.hideSpinner();
     }
+    n -= 1
+    if (n <= 0) {
+      EnergyMaps.hideSpinner();
+      return 0;
+    }
+    return n;
   };
 
   /**
@@ -340,6 +347,7 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.projectionHeight = projectionHeight;
   EnergyMaps.projection = projection;
   EnergyMaps.path = path;
+  EnergyMaps.processingLayers = 0
   EnergyMaps.getWidth = getWidth;
   EnergyMaps.getHeight = getHeight;
   EnergyMaps.getPath = getPath;
@@ -351,6 +359,7 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.setCookieTransform = setCookieTransform;
   EnergyMaps.setCookieLayers = setCookieLayers;
   EnergyMaps.InfrastructureSet = InfrastructureSet;
+
 
   return EnergyMaps;
 

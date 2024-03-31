@@ -115,7 +115,8 @@ EnergyMaps = (function (EnergyMaps) {
     if (lyr === EnergyMaps.oilPipeline) {
       let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
       for (let i = 0, lyrsLength = lyrs.length; i < lyrsLength; ++i) {
-        EnergyMaps.startLoadingLayer();
+        EnergyMaps.processingLayers =
+          EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
         // TODO: Figure out why prod pipes legend is no longer showing
         Promise.all(
           lyrs[i].drawProps[0].src.map(
@@ -129,13 +130,16 @@ EnergyMaps = (function (EnergyMaps) {
           }).then(files => {
             EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
             lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
-          }).then(x => {
-            EnergyMaps.finishLoadingLayer()
+          })
+          .then(x => {
+            EnergyMaps.processingLayers =
+              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
       }
     } else {
       for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
-        EnergyMaps.startLoadingLayer();
+        EnergyMaps.processingLayers =
+          EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
         if (lyr.name !== 'state-boundaries' && lyr.name !== 'wind-capacity') {
           // unused commented section for future reference
           // currently adding the entirety of the previous src string each time pressed
@@ -153,8 +157,10 @@ EnergyMaps = (function (EnergyMaps) {
             return files;
           }).then(files => {
             lyr.drawProps[i].drawLayer(lyr.context, files);
-          }).then(x => {
-            EnergyMaps.finishLoadingLayer()
+          })
+          .then(x => {
+            EnergyMaps.processingLayers =
+              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
         } else {
           Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
@@ -167,8 +173,10 @@ EnergyMaps = (function (EnergyMaps) {
             return files;
           }).then(files => {
             lyr.drawProps[i].drawLayer(lyr.context, files);
-          }).then(x => {
-            EnergyMaps.finishLoadingLayer()
+          })
+          .then(x => {
+            EnergyMaps.processingLayers =
+              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
         }
       }
@@ -254,8 +262,7 @@ EnergyMaps = (function (EnergyMaps) {
   const drawActiveLayers = function drawActiveLayers
     ()
   {
-    // const layers = EnergyMaps.setLayers();
-    ACTIVE_LAYERS.map(layer => {
+    const layers = ACTIVE_LAYERS.map(layer => {
       if (layer.active === true) {
         _loadLayerData(layer);
       } else {
