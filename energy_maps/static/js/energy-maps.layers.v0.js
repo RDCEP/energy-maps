@@ -153,8 +153,7 @@ EnergyMaps = (function (EnergyMaps) {
             d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
             return lyr.drawProps[i].d3Fetch(
               `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`)
-          }))
-          .then(function(files) {
+          })).then(function(files) {
             lyr.context.restore();
             lyr.context.save();
             return files;
@@ -170,8 +169,10 @@ EnergyMaps = (function (EnergyMaps) {
               EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
         } else {
-          Promise.all(lyr.drawProps[i].src.map(x => lyr.drawProps[i].d3Fetch(x)))
-          .then(function(files) {
+          Promise.all(lyr.drawProps[i].src.map(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
+            return lyr.drawProps[i].d3Fetch(x)
+          })).then(function(files) {
             lyr.context.restore();
             lyr.context.save();
             return files;
@@ -182,6 +183,7 @@ EnergyMaps = (function (EnergyMaps) {
             lyr.drawProps[i].drawLayer(lyr.context, files);
           })
           .then(x => {
+            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
             EnergyMaps.processingLayers =
               EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
           });
