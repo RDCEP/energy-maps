@@ -143,51 +143,26 @@ EnergyMaps = (function (EnergyMaps) {
       for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
         EnergyMaps.processingLayers =
           EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
-        if (lyr.name !== 'state-boundaries' && lyr.name !== 'wind-capacity') {
-          // unused commented section for future reference
-          // currently adding the entirety of the previous src string each time pressed
-          // let url_string = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
-          // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}${lyr.draw_props[0].src[0]}`
-
-          Promise.all(lyr.drawProps[i].src.map(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-            return lyr.drawProps[i].d3Fetch(
-              `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`)
-          })).then(function(files) {
-            lyr.context.restore();
-            lyr.context.save();
-            return files;
-          }).then(files => {
-            EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
-            return files;
-          }).then(files => {
-            lyr.drawProps[i].drawLayer(lyr.context, files);
-          })
-          .then(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
-            EnergyMaps.processingLayers =
-              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
-          });
-        } else {
-          Promise.all(lyr.drawProps[i].src.map(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-            return lyr.drawProps[i].d3Fetch(x)
-          })).then(function(files) {
-            lyr.context.restore();
-            lyr.context.save();
-            return files;
-          }).then(files => {
-            EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
-            return files;
-          }).then(files => {
-            lyr.drawProps[i].drawLayer(lyr.context, files);
-          })
-          .then(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
-            EnergyMaps.processingLayers =
-              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
-          });
-        }
+        Promise.all(lyr.drawProps[i].src.map(x => {
+          d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
+          let url = (lyr.drawProps[i].local)
+            ? x : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`
+          return lyr.drawProps[i].d3Fetch(url)
+        })).then(function(files) {
+          lyr.context.restore();
+          lyr.context.save();
+          return files;
+        }).then(files => {
+          EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
+          return files;
+        }).then(files => {
+          lyr.drawProps[i].drawLayer(lyr.context, files);
+        })
+        .then(x => {
+          d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
+          EnergyMaps.processingLayers =
+            EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
+        });
       }
     }
   };
