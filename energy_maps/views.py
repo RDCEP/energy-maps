@@ -9,7 +9,6 @@ main_views = Blueprint('base_views', __name__, static_folder='static')
 config_file = configparser.ConfigParser()
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 config_file.read(os.path.join(BASE_DIR, 'config.ini'))
-print([k for k in config_file.keys()])
 
 
 @main_views.route('/')
