@@ -112,34 +112,13 @@ EnergyMaps = (function (EnergyMaps) {
   const _loadLayerData = function _loadLayerData
     (lyr)
   {
+    let lyrs;
     if (lyr === EnergyMaps.oilPipeline) {
-      let lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
-      for (let i = 0, lyrsLength = lyrs.length; i < lyrsLength; ++i) {
-        EnergyMaps.processingLayers =
-          EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
-        // TODO: Figure out why prod pipes legend is no longer showing
-        Promise.all(lyrs[i].drawProps[0].src.map(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-            return lyrs[i].drawProps[0].d3Fetch(
-              `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}`
-            )
-          }
-        ))
-          .then(function(files) {
-            lyrs[i].context.restore();
-            lyrs[i].context.save();
-            return files;
-          }).then(files => {
-            EnergyMaps.transformLayer(lyrs[i].context, EnergyMaps.transform);
-            lyrs[i].drawProps[0].drawLayer(lyrs[i].context, files);
-          })
-          .then(x => {
-            d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
-            EnergyMaps.processingLayers =
-              EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
-          });
-      }
+      lyrs = [EnergyMaps.oilPipeline, EnergyMaps.oilProductPipeline];
     } else {
+      lyrs = [lyr];
+    }
+    lyrs.map(function(lyr) {
       for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
         EnergyMaps.processingLayers =
           EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
@@ -164,7 +143,7 @@ EnergyMaps = (function (EnergyMaps) {
             EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
         });
       }
-    }
+    });
   };
 
   /**
