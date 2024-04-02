@@ -45,10 +45,10 @@ EnergyMaps = (function (EnergyMaps) {
     (key, data)
   {
     let outputGeojson;
-    let presimplifiedData = topojson.presimplify(data[0]);
+    let presimplifiedData = topojson.presimplify(data);
     outputGeojson = topojson.feature(
       topojson.simplify(presimplifiedData, .01 / EnergyMaps.transform.k**2),
-      data[0].objects[key]);
+      data.objects[key]);
     return outputGeojson;
   }
 

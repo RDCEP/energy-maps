@@ -263,7 +263,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let pipeData = queuedData[0];
+    let pipeData = queuedData;
     // const path = get_path(ctx);
 
     ctx.lineCap = 'round';
@@ -283,7 +283,7 @@ EnergyMaps = (function (EnergyMaps) {
     //  that draw_oil_pipes() references the Transport object oilPipeline
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
-    let oilProdPipeData = queuedData[0];
+    let oilProdPipeData = queuedData;
     let OIL_PRODUCT_LINE_DASH = [ oilProduct.dash / EnergyMaps.transform.k,
       (oilProduct.dash + 2 * oilProduct.width) / EnergyMaps.transform.k ];
     ctx.lineWidth = oilProduct.width / EnergyMaps.transform.k;
@@ -303,7 +303,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let oilPipeData = queuedData[0];
+    let oilPipeData = queuedData;
     ctx.strokeStyle = EnergyMaps.oilPipeline.stroke;
     ctx.lineWidth = EnergyMaps.oilPipeline.width / EnergyMaps.transform.k;
     ctx.beginPath();
@@ -410,7 +410,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let wells = queuedData[0].features;
+    let wells = queuedData.features;
 
     wells = wells
       .filter(function(d) { return +d.properties.original.zoom <= +EnergyMaps.transform.k; });
@@ -445,7 +445,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let gasProcessing = queuedData[0].features;
+    let gasProcessing = queuedData.features;
 
     gasProcessing.forEach(function(d, i) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
@@ -462,7 +462,7 @@ EnergyMaps = (function (EnergyMaps) {
     (ctx, queuedData)
   {
 
-    let gasStorage = queuedData[0];
+    let gasStorage = queuedData;
 
     gasStorage.forEach(function(d, i) {
       let xy = EnergyMaps.projection([+d.lon, +d.lat]);

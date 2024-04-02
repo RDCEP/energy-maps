@@ -158,7 +158,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let mines = queuedData[0].features;
+    let mines = queuedData.features;
 
     // Sort in descending order so large mines don't
     // obscure small mines. Unary '+' operator used to return the numeric rather
@@ -196,7 +196,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let rrData = queuedData[0];
+    let rrData = queuedData;
     // const path = get_path(ctx);
 
     ctx.lineCap = 'round';

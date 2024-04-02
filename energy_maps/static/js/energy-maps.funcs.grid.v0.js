@@ -122,7 +122,7 @@ EnergyMaps = (function (EnergyMaps) {
 
     let features = {
       type: 'FeatureCollection',
-      features: _filterFeatures(queuedData[0], obj)
+      features: _filterFeatures(queuedData, obj)
     };
 
     EnergyMaps.path.context(ctx);

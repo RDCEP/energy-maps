@@ -128,8 +128,8 @@ EnergyMaps = (function (EnergyMaps) {
             ? x : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`
         })).then(function(url) {
           //TODO: Why is url an Array?!?!?
-          return EnergyMaps.getCachedData(lyr.drawProps[i].d3Fetch, url[0])
-          // return lyr.drawProps[i].d3Fetch(url)
+          // return EnergyMaps.getCachedData(lyr.drawProps[i].d3Fetch, url[0])
+          return lyr.drawProps[i].d3Fetch(url[0])
         }).then(function(files) {
           lyr.context.restore();
           lyr.context.save();

@@ -104,7 +104,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.clipRegion(ctx);
 
     if (presimplifiedData == null) {
-      presimplifiedData = topojson.presimplify(queuedData[0]);
+      presimplifiedData = topojson.presimplify(queuedData);
     }
     ctx.lineWidth = 0;
 
@@ -118,7 +118,7 @@ EnergyMaps = (function (EnergyMaps) {
       if (outputGeojson[i] === undefined || EnergyMaps.kChanged) {
         outputGeojson[i] = topojson.feature(
           topojson.simplify(presimplifiedData, .01 / EnergyMaps.transform.k**2),
-          queuedData[0].objects[bands[i]]
+          queuedData.objects[bands[i]]
         );
       }
       ctx.fillStyle = windMapColors[i];

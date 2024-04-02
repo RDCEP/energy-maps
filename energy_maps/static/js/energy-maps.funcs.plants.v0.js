@@ -95,8 +95,13 @@ EnergyMaps = (function (EnergyMaps) {
     features.forEach(function (d) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
       if (xy !== null) {
-          // TODO: Does this need a year conditional? Probably
-        _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
+        if (DATA_YEAR === 2012) {
+          // _drawPowerPlant(ctx, xy, color, +d.properties.original.totalCap);
+          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.total_cap);
+        }
+        else if (DATA_YEAR === 2022) {
+          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
+        }
       } else {
         console.log(xy)
       }
@@ -163,7 +168,7 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let plants = queuedData[0];
+    let plants = queuedData;
     let features = plants.features;
     // No longer need to filter plants since each is its own collection
     // let features = _getFuelType(plants, fuel);
