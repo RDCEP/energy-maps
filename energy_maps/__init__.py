@@ -39,6 +39,7 @@ assets.register('js_numeral',
                        output='gen/js_numeral.js'))
 assets.register('js_builderfucker',
                 Bundle('js/energy-maps.globals.v0.js',
+                       'js/energy-maps.cache.v0.js',
                        'js/energy-maps.draw.v0.js',
                        'js/energy-maps.funcs.overlays.v0.js',
                        'js/energy-maps.funcs.coal.v0.js',

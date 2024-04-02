@@ -124,10 +124,13 @@ EnergyMaps = (function (EnergyMaps) {
           EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
         Promise.all(lyr.drawProps[i].src.map(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-          let url = (lyr.drawProps[i].local)
+          return (lyr.drawProps[i].local)
             ? x : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/`
-          return lyr.drawProps[i].d3Fetch(url)
-        })).then(function(files) {
+        })).then(function(url) {
+          //TODO: Why is url an Array?!?!?
+          return EnergyMaps.getCachedData(lyr.drawProps[i].d3Fetch, url[0])
+          // return lyr.drawProps[i].d3Fetch(url)
+        }).then(function(files) {
           lyr.context.restore();
           lyr.context.save();
           return files;
