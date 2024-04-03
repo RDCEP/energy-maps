@@ -336,6 +336,7 @@ EnergyMaps = (function (EnergyMaps) {
     y: (localStorage.getItem('y') === null) ? 0 : +localStorage.y,
     k: (localStorage.getItem('k') === null) ? 1 : +localStorage.k
   };
+  EnergyMaps.k = (localStorage.getItem('k') === null) ? 1 : +localStorage.k;
   EnergyMaps.dataYear = DATA_YEAR;
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;

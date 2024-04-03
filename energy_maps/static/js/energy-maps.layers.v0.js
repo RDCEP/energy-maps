@@ -125,7 +125,9 @@ EnergyMaps = (function (EnergyMaps) {
         let name;
         Promise.all(lyr.drawProps[i].src.map(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-          name = x;
+          name = (['wells_gas', 'wells_oil'].indexOf(x) > -1)
+            ? `${x}_${EnergyMaps.k}`
+            : x;
           let docs = EnergyMaps.cache.layers.get(name)
             .then(result => {
               if (typeof result === 'undefined' ) {
@@ -257,6 +259,12 @@ EnergyMaps = (function (EnergyMaps) {
   };
 
   LAYERS = setLayers();
+
+  LAYERS.map(layer=>{
+    if (layer.drawProps) {
+      EnergyMaps.cache.layers.delete(layer.drawProps[0].src[0]);
+    }
+  })
 
   EnergyMaps.setLayers = setLayers;
   EnergyMaps.displayAssetTotal = displayAssetTotal;
