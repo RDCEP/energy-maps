@@ -20,6 +20,7 @@ EnergyMaps = (function (EnergyMaps) {
   const _zooming = function _zoomed
     ()
   {
+    EnergyMaps.k = d3.event.transform.k
     EnergyMaps.drawLand(EnergyMaps.baseCtx, [EnergyMaps.simpleMapBkgd],
       d3.event.transform, false, true);
   };
