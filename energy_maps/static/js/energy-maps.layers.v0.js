@@ -122,23 +122,35 @@ EnergyMaps = (function (EnergyMaps) {
       for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
         EnergyMaps.processingLayers =
           EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
+        let name;
         Promise.all(lyr.drawProps[i].src.map(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-          return (lyr.drawProps[i].local)
-            ? x : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
-        })).then(function(url) {
-          //TODO: Why is url an Array?!?!?
-          // return EnergyMaps.getCachedData(lyr.drawProps[i].d3Fetch, url[0])
-          return lyr.drawProps[i].d3Fetch(url[0])
-        }).then(function(files) {
-          console.log(files)
+          name = x;
+          let docs = EnergyMaps.cache.layers.get(name)
+            .then(result => {
+              if (typeof result === 'undefined' ) {
+                let url = (lyr.drawProps[i].local)
+                  ? x
+                  : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
+                return lyr.drawProps[i].d3Fetch(url)
+              } else {
+                return result.docs
+              }
+            })
+          return docs
+        })).then(function(files) {
+          EnergyMaps.cache.layers.put({
+            name: name,
+            docs: files[0]
+          })
           lyr.context.restore();
           lyr.context.save();
-          return files;
+          return files[0];
         }).then(files => {
           EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
           return files;
         }).then(files => {
+          console.log(files)
           lyr.drawProps[i].drawLayer(lyr.context, files);
         })
         .then(x => {
