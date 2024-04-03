@@ -236,15 +236,15 @@ EnergyMaps = (function (EnergyMaps) {
   /**
    * @description Get a set of xy coordinates on the map projection
    * for each element in the dataset.
-   * @param {array} queued_data - the supplied dataset
+   * @param {array} queuedData - the supplied dataset
    * @returns {Number[]} xy - Set of xy coordinates
    */
   const _getXY = function _getXY
-    (queued_data)
+    (queuedData)
   {
     // generalize it so it doesn't just apply to wells, and also strike
     // the queued data assignment bc some require two data sets
-    let data = queued_data[0];
+    let data = queuedData[0];
 
     data.forEach(function(d) {
       return EnergyMaps.projection([+d.lon, +d.lat]);
@@ -412,10 +412,11 @@ EnergyMaps = (function (EnergyMaps) {
 
     let wells = queuedData.features;
 
-    wells = wells
-      .filter(function(d) { return +d.properties.original.zoom <= +EnergyMaps.transform.k; });
+    // TODO: This filtering is done in the Mongo aggregation pipeline. Remove me.
+    // wells = wells
+    //   .filter(function(d) { return +d.properties.original.zoom <= +EnergyMaps.transform.k; });
     wells.forEach(function(d, i) {
-      let xy = EnergyMaps.projection([+d.properties.original.lon, +d.properties.original.lat]);
+      let xy = EnergyMaps.projection(d.geometry.coordinates.map(x => +x));
       if (xy === null) {
         return;
       } else {
@@ -475,13 +476,13 @@ EnergyMaps = (function (EnergyMaps) {
   }
 
   const _drawRefining = function _drawRefining
-    (ctx, queued_data)
+    (ctx, queuedData)
   {
 
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
-    let oilRefineries = queued_data[0].features;
+    let oilRefineries = queuedData.features;
 
     if (DATA_YEAR === 2022) {
 
