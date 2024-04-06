@@ -62,7 +62,7 @@ EnergyMaps = (function (EnergyMaps) {
     }
   }
 
-  _deleteOldCaches('energy-maps-1')
+  // _deleteOldCaches('energy-maps-1')
   EnergyMaps.getCachedData = getData;
   return EnergyMaps;
 
