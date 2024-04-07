@@ -266,6 +266,8 @@ EnergyMaps = (function (EnergyMaps) {
     [{
       drawLayer: _drawCoalPlants,
       src: [`power_plants_coal`],
+      primary: 'power_plants',
+      secondary: 'coal',
       d3Fetch: d3.json,
     }], 'coal', 'rgba(0, 0, 0, .5)', plantStroke);
 
@@ -274,6 +276,8 @@ EnergyMaps = (function (EnergyMaps) {
     [{
       drawLayer: _drawNgPlants,
       src: [`power_plants_natural_gas`],
+      primary: 'power_plants',
+      secondary: 'natural_gas',
       d3Fetch: d3.json,
     }], 'natural_gas', 'rgba(0, 191, 255, .5)', 'darkblue');
 
@@ -281,6 +285,8 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 64_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawPetroPlants,
       src: [`power_plants_petroleum`],
+      primary: 'power_plants',
+      secondary: 'petroleum',
       d3Fetch: d3.json,
     }], 'petroleum', 'rgba(34, 139, 34, .5)', plantStroke);
 
@@ -289,6 +295,8 @@ EnergyMaps = (function (EnergyMaps) {
     [{
       drawLayer: _drawNuclearPlants,
       src: [`power_plants_nuclear`],
+      primary: 'power_plants',
+      secondary: 'nuclear',
       d3Fetch: d3.json,
     }], 'nuclear', 'rgba(255, 0, 0, .5)', plantStroke);
 
@@ -296,6 +304,8 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 597_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawHydroPlants,
       src: [`power_plants_hydroelectric`],
+      primary: 'power_plants',
+      secondary: 'hydroelectric',
       d3Fetch: d3.json,
     }], 'hydroelectric', 'rgba(11, 36, 251, .5)', plantStroke);
 
@@ -303,6 +313,8 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 132_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawWindFarms,
       src: [`power_plants_wind`],
+      primary: 'power_plants',
+      secondary: 'wind',
       d3Fetch: d3.json,
     }], 'wind', 'rgba(144, 29, 143, .5)', plantStroke);
 
@@ -311,6 +323,8 @@ EnergyMaps = (function (EnergyMaps) {
     'electricity-generation', [{
       drawLayer: _drawSolarPlants,
       src: [`power_plants_solar`],
+      primary: 'power_plants',
+      secondary: 'solar',
       d3Fetch: d3.json,
     }], 'solar', 'rgba(255, 215, 0, .5)', 'darkorange');
 
@@ -318,6 +332,8 @@ EnergyMaps = (function (EnergyMaps) {
     {2012: 22_000_000_000, 2022: null}, 'electricity-generation', [{
       drawLayer: _drawGeoPlants,
       src: [`power_plants_geothermal`],
+      primary: 'power_plants',
+      secondary: 'geothermal',
       d3Fetch: d3.json,
     }], 'geothermal', 'rgba(210, 105, 30, .5)', plantStroke);
 

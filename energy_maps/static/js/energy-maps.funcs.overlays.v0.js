@@ -180,6 +180,9 @@ EnergyMaps = (function (EnergyMaps) {
       drawLayer: _drawStateBoundaries,
       src: ['/static/json/states-10m.json'],
       local: true,
+      file: '/static/json/states-10m.json',
+      primary: 'overlay',
+      secondary: 'state_boundaries',
       d3Fetch: d3.json
     }],
     'rgba(54, 54, 54, 1)',
@@ -195,6 +198,9 @@ EnergyMaps = (function (EnergyMaps) {
       drawLayer: _drawWindMap,
       src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
       local: true,
+      file: '/static/json/wind-map/ws-clipped-merged-simplify20.json',
+      primary: 'overlay',
+      secondary: 'wind_map',
       d3Fetch: d3.json
     }],
   );

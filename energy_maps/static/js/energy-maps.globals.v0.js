@@ -248,24 +248,25 @@ EnergyMaps = (function (EnergyMaps) {
     (n)
   {
     EnergyMaps.showSpinner();
-    _processingLayers++;
-    return ++n;
+    // _processingLayers++;
+    // return ++n;
   };
 
   const finishLoadingLayer = function finishLoadingLayer
     (n)
   {
-    _processingLayers--;
-    if (_processingLayers <= 0) {
-      _processingLayers = 0;
-      // EnergyMaps.hideSpinner();
-    }
-    n -= 1
-    if (n <= 0) {
-      EnergyMaps.hideSpinner();
-      return 0;
-    }
-    return n;
+    EnergyMaps.hideSpinner();
+    // _processingLayers--;
+    // if (_processingLayers <= 0) {
+    //   _processingLayers = 0;
+    //   // EnergyMaps.hideSpinner();
+    // }
+    // n -= 1
+    // if (n <= 0) {
+    //   EnergyMaps.hideSpinner();
+    //   return 0;
+    // }
+    // return n;
   };
 
   /**

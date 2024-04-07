@@ -275,6 +275,8 @@ EnergyMaps = (function (EnergyMaps) {
     'electricity-transmission-and-distribution', [{
       drawLayer: _drawGridClassAcUnkAndUnder100,
       src: [`electric_grid_under_100`],
+      primary: 'electric_grid',
+      secondary: 'under_100',
       d3Fetch: d3.json,
     }], _drawLegendAcNaAndUnder100); //, [AcNa, AcUnder100]);
 
@@ -314,6 +316,8 @@ EnergyMaps = (function (EnergyMaps) {
     'electricity-transmission-and-distribution', [{
       drawLayer: _drawGridClassAc100300,
       src: [`electric_grid_100_300_kV_AC`],
+      primary: 'electric_grid',
+      secondary: '100_300_kV_AC',
       d3Fetch: d3.json,
     }], _drawLegendAc100300);
 
@@ -361,6 +365,8 @@ EnergyMaps = (function (EnergyMaps) {
     'electricity-transmission-and-distribution', [{
       drawLayer: _drawGridClassAc345735,
       src: [`electric_grid_345_735_kV_AC`],
+      primary: 'electric_grid',
+      secondary: '345_735_kV_AC',
       d3Fetch: d3.json,
     }], _drawLegendAc345735);
 
@@ -369,6 +375,8 @@ EnergyMaps = (function (EnergyMaps) {
     'electricity-transmission-and-distribution', [{
       drawLayer: _drawGridClassDc,
       src: [`electric_grid_dc`],
+      primary: 'electric_grid',
+      secondary: 'dc',
       d3Fetch: d3.json,
     }], 'DC', 'black', 7, 1000);
 

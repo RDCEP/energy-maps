@@ -118,50 +118,45 @@ EnergyMaps = (function (EnergyMaps) {
     } else {
       lyrs = [lyr];
     }
-    lyrs.map(function(lyr) {
-      for (let i = 0, num_drawProps = lyr.drawProps.length; i < num_drawProps; ++i) {
-        EnergyMaps.processingLayers =
-          EnergyMaps.startLoadingLayer(EnergyMaps.processingLayers);
-        let name;
-        Promise.all(lyr.drawProps[i].src.map(x => {
-          d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
-          name = (['wells_gas', 'wells_oil'].indexOf(x) > -1)
-            ? `${x}_${EnergyMaps.k}`
-            : x;
-          let docs = EnergyMaps.cache.layers.get(name)
-            .then(result => {
-              if (typeof result === 'undefined' ) {
-                let url = (lyr.drawProps[i].local)
-                  ? x
-                  : `${API_URL_PREFIX}${x}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
-                return lyr.drawProps[i].d3Fetch(url)
-              } else {
-                return result.docs
-              }
-            })
-          return docs
-        })).then(function(files) {
+
+    return Promise.all(lyrs.map(lyr => {
+      d3.select(`.checkbox.${lyr.name}`).attr('disabled', true);
+      //FIXME: All drawProps have a length of one so get rid of the Arrays
+      // and indexing
+      let props = lyr.drawProps[0];
+      let name = (['wells_gas', 'wells_oil'].indexOf(lyr.name) > -1)
+        ? `${props.primary}_${props.secondary}_${EnergyMaps.k}`
+        : `${props.primary}_${props.secondary}`;
+      let docs = EnergyMaps.cache.layers.get(name)
+        .then(result => {
+          if (typeof result === 'undefined' ) {
+            let url = (props.local)
+              ? props.file
+              : `${API_URL_PREFIX}${props.primary}/${props.secondary}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
+            return props.d3Fetch(url)
+          } else {
+            return result.docs
+          }
+        }).then(files => {
           EnergyMaps.cache.layers.put({
             name: name,
-            docs: files[0]
+            docs: files
           })
           lyr.context.restore();
           lyr.context.save();
-          return files[0];
+          return files;
         }).then(files => {
           EnergyMaps.transformLayer(lyr.context, EnergyMaps.transform);
           return files;
         }).then(files => {
-          console.log(files)
-          lyr.drawProps[i].drawLayer(lyr.context, files);
+          props.drawLayer(lyr.context, files);
         })
         .then(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
-          EnergyMaps.processingLayers =
-            EnergyMaps.finishLoadingLayer(EnergyMaps.processingLayers);
         });
-      }
-    });
+      return docs
+    }))
+    //FIXME: Catch something
   };
 
   /**
@@ -172,7 +167,10 @@ EnergyMaps = (function (EnergyMaps) {
   const addLayer = function addLayer
     (lyr)
   {
-    _loadLayerData(lyr);
+    EnergyMaps.startLoadingLayer();
+    _loadLayerData(lyr).then(result => {
+      EnergyMaps.finishLoadingLayer()
+    });
     // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
     if (lyr === EnergyMaps.oilPipeline) {
@@ -246,16 +244,18 @@ EnergyMaps = (function (EnergyMaps) {
   const drawActiveLayers = function drawActiveLayers
     ()
   {
-    const layers = ACTIVE_LAYERS.map(layer => {
+    EnergyMaps.startLoadingLayer();
+    Promise.all(ACTIVE_LAYERS.map(layer => {
       if (layer.active === true) {
-        _loadLayerData(layer);
+        return _loadLayerData(layer);
       } else {
         layer.context.restore();
         layer.context.save();
         EnergyMaps.transformLayer(layer.context, EnergyMaps.transform);
       }
-      return layer;
-    });
+    })).then(result => {
+      EnergyMaps.finishLoadingLayer()
+    })
   };
 
   LAYERS = setLayers();

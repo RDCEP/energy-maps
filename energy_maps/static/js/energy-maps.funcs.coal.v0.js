@@ -213,6 +213,8 @@ EnergyMaps = (function (EnergyMaps) {
     'coal', [{
       drawLayer: _drawCoalMines,
       src: [ `mines_coal` ],
+      primary: 'mines',
+      secondary: 'coal',
       d3Fetch: d3.json
     }], .006 * SCALE);
 
@@ -225,6 +227,8 @@ EnergyMaps = (function (EnergyMaps) {
       // So this should look something like:
       // src: [ `${API_URL_PREFIX}/${data_year}/railroads` ],
       src: [ `railroads` ],
+      primary: 'railroads',
+      secondary: 'all',
       d3Fetch: d3.json
     }]);
 
