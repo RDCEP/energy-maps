@@ -211,7 +211,7 @@ EnergyMaps = (function (EnergyMaps) {
     wells: {
   //     width: SCALE / 6,
       cross: 5 * SCALE,
-      diameter: SCALE / 2,
+      diameter: SCALE,
       stroke: SCALE
     },
     processing: {
@@ -357,7 +357,8 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.lineWidth = oilAndGas.wells.stroke / EnergyMaps.transform.k ** .5;
     ctx.fillStyle = color;
     ctx.beginPath();
-    EnergyMaps.drawCircle(ctx, xy, oilAndGas.wells.diameter / EnergyMaps.transform.k ** .5);
+    EnergyMaps.drawCircle(ctx, xy,
+      oilAndGas.wells.diameter / EnergyMaps.transform.k ** .5);
     ctx.stroke();
   };
 
@@ -580,7 +581,7 @@ EnergyMaps = (function (EnergyMaps) {
       primary: 'wells',
       secondary: 'gas',
       d3Fetch: d3.json
-    }], 'rgba(0, 191, 255, .5)', 'rgba(0, 191, 255)');
+    }], 'rgba(0, 191, 255, .8)', 'rgba(0, 191, 255)');
 
   const oilWell = new Well('oil-wells', 'Oil wells',
     {2012: 654_000_000_000, 2022: 654_000_000_000}, 'oil-and-gas', [{
@@ -589,7 +590,7 @@ EnergyMaps = (function (EnergyMaps) {
       primary: 'wells',
       secondary: 'oil',
       d3Fetch: d3.json
-    }], 'rgba(34, 139, 34, .5)', 'rgba(34, 139, 34)');
+    }], 'rgba(34, 139, 34, .8)', 'rgba(34, 139, 34)');
 
   const foreignOilWells = {
     name: 'foreign-oil-wells',
