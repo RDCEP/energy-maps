@@ -124,7 +124,7 @@ EnergyMaps = (function (EnergyMaps) {
       //FIXME: All drawProps have a length of one so get rid of the Arrays
       // and indexing
       let props = lyr.drawProps[0];
-      let name = (['wells_gas', 'wells_oil'].indexOf(lyr.name) > -1)
+      let name = (['gas-wells', 'oil-wells'].indexOf(lyr.name) > -1)
         ? `${props.primary}_${props.secondary}_${EnergyMaps.k}`
         : `${props.primary}_${props.secondary}`;
       let docs = EnergyMaps.cache.layers.get(name)
@@ -133,6 +133,7 @@ EnergyMaps = (function (EnergyMaps) {
             let url = (props.local)
               ? props.file
               : `${API_URL_PREFIX}${props.primary}/${props.secondary}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
+            console.log(url)
             return props.d3Fetch(url)
           } else {
             return result.docs
