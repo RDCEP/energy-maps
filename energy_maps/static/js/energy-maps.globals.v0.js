@@ -110,11 +110,9 @@ EnergyMaps = (function (EnergyMaps) {
     this.zIndex = 0;
     this.drawProps = drawProps || [{
       drawLayer: '',
-      src: '',
       d3Fetch: ''
     }] || {
       drawLayer: '',
-      src: '',
       d3Fetch: ''
     }
   };

@@ -71,18 +71,11 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.path.context(ctx);
     let outputGeojson = EnergyMaps.simplify('states-no-overlap', queuedData);
 
-    // ctx.strokeStyle = state_boundaries.stroke;
     ctx.strokeStyle = '#c4c4c4';
     ctx.lineWidth = EnergyMaps.stateBoundaries.width / EnergyMaps.transform.k;
-    // ctx.setLineDash([
-    //   0,
-    //   state_boundaries.width / transform.k * 2
-    // ]);
     ctx.beginPath();
     EnergyMaps.path(outputGeojson);
     ctx.stroke();
-    // ctx.setLineDash([]);
-    // EnergyMaps.finishLoadingLayer();
   };
 
   let presimplifiedData = null;
@@ -128,7 +121,6 @@ EnergyMaps = (function (EnergyMaps) {
       EnergyMaps.path(outputGeojson[i]);
       ctx.fill();
     }
-    // EnergyMaps.finishLoadingLayer();
   };
 
   /** Draw wind capacity map legend **/
@@ -178,7 +170,6 @@ EnergyMaps = (function (EnergyMaps) {
     'layers',
     [{
       drawLayer: _drawStateBoundaries,
-      src: ['/static/json/states-10m.json'],
       local: true,
       file: '/static/json/states-10m.json',
       primary: 'overlay',
@@ -196,7 +187,6 @@ EnergyMaps = (function (EnergyMaps) {
     'layers',
     [{
       drawLayer: _drawWindMap,
-      src: ['/static/json/wind-map/ws-clipped-merged-simplify20.json'],
       local: true,
       file: '/static/json/wind-map/ws-clipped-merged-simplify20.json',
       primary: 'overlay',

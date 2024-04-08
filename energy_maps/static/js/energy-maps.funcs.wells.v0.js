@@ -209,17 +209,11 @@ EnergyMaps = (function (EnergyMaps) {
   // TODO: Add jsdoc
   const oilAndGas = {
     wells: {
-  //     width: SCALE / 6,
       cross: 5 * SCALE,
       diameter: SCALE,
       stroke: SCALE
     },
     processing: {
-  // Gas storage is left here because we may want this info to implement it later
-  //     gas_storage: {
-  //       fill: 'rgb(45, 45, 45, .9)',
-  //       size: 5 * SCALE
-  //     },
       stroke: {
         light: 'rgba(255, 255, 255, 1)',
         width: SCALE * .75
@@ -264,7 +258,6 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.clipRegion(ctx);
 
     let pipeData = queuedData;
-    // const path = get_path(ctx);
 
     ctx.lineCap = 'round';
     ctx.strokeStyle = EnergyMaps.gasPipeline.stroke;
@@ -309,44 +302,7 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.beginPath();
     EnergyMaps.path(oilPipeData);
     ctx.stroke();
-
-    // Commented out because it wasn't actually firing
-    // Prod pipes
-    // ('draw_oil_prod_pipes');
-    // ctx = oilProductPipeline.context;
-    // path.context(ctx);
-    // region = new Path2D();
-    // region.rect(0, 0, width, height);
-    // ctx.clip(region);
-    // let oil_prod_pipe_data = d3.json(oilProductPipeline.draw_props.src)[0];
-    // let OIL_PRODUCT_LINE_DASH = [ oilProduct.dash / transform.k,
-    //   (oilProduct.dash + 2 * oilProduct.width) / transform.k ];
-    // ctx.lineWidth = oilProduct.width / transform.k;
-    // ctx.strokeStyle = oilProduct.stroke;
-    // ctx.setLineDash(OIL_PRODUCT_LINE_DASH);
-    // ctx.beginPath();
-    // path(oil_prod_pipe_data);
-    // ctx.stroke();
-    // ctx.setLineDash([]);
-    // finish_loading_layer();
   };
-
-  // TODO: Simplify well drawing functions by adding relevant properties to nested objects
-  // Perhaps t his can include draw functions like draw_circle or draw_x to yield a single draw_well fcn
-  /**
-   * const draw_well = function draw_well(ctx, xy, color, function)
-   *  */
-
-  // const draw_well2 = function draw_well2(ctx, xy, obj, fill) { // use obj for color and function
-  //   ctx.strokeStyle = obj.color;
-  //   ctx.strokeWidth = oilAndGas.wells.stroke;;
-  //   if (fill) {
-  //     ctx.fillStyle = color;
-  //   }
-  //   ctx.beginPath();
-  //   obj.f;
-  //   ctx.stroke();
-  // }
 
   // TODO: Consider passing an obj so you can call its stroke, diameter,
   //  and color props
@@ -370,39 +326,6 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.beginPath();
     EnergyMaps.drawX(ctx, xy, oilAndGas.wells.cross / EnergyMaps.transform.k ** .5);
     ctx.stroke();
-  };
-
-  /**
-   * Draw gas wells to the infrastructure map.
-   * @param {Array} queuedData - readfile: '/static/csv/wells_gas1.csv'
-   * & '/static/csv/wells_gas2.csv'
-   */
-  const _drawGasWells = function _drawGasWells
-    (queuedData)
-  {
-
-    _getXY(queuedData);
-    _drawWell(xy, EnergyMaps.gasWell.color);
-
-  };
-
-  /**
-   * Draw oil wells to the infrastructure map.
-   * @param {Array} queuedData - readfile: '/static/csv/wells_oil1.csv'
-   * & '/static/csv/wells_oil2.csv'
-   */
-  const _drawOilWells = function _drawOilWells
-    (queuedData)
-  {
-
-    _getXY(queuedData)
-
-    if (d.class === 'Off') {
-      _drawOffshoreWell(xy);
-    } else {
-      _drawWell(xy, EnergyMaps.oilWell.color);
-    }
-
   };
 
   const _drawAllWells = function _drawAllWells
@@ -458,28 +381,9 @@ EnergyMaps = (function (EnergyMaps) {
 
   };
 
-  // TODO: Split up the JSON files based on whatever property marks
-  //  processing vs. storage
-  const _drawStorage = function _drawStorage
-    (ctx, queuedData)
-  {
-
-    let gasStorage = queuedData;
-
-    gasStorage.forEach(function(d, i) {
-      let xy = EnergyMaps.projection([+d.lon, +d.lat]);
-      _drawGasStorage(ctx, xy);
-      if (i === gasStorage.length - 1) {
-        EnergyMaps.hideSpinner();
-      }
-      return xy;
-    });
-  }
-
   const _drawRefining = function _drawRefining
     (ctx, queuedData)
   {
-
     EnergyMaps.path.context(ctx);
     EnergyMaps.clipRegion(ctx);
 
@@ -575,9 +479,6 @@ EnergyMaps = (function (EnergyMaps) {
   const gasWell = new Well('gas-wells', 'Gas wells',
     {2012: 1_059_000_000_000, 2022: 1_059_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawAllWells,
-      // src: [ `/static/csv/wells_gas.csv` ],
-      // d3_fetch: d3.csv
-      src: [ `wells_gas` ],
       primary: 'wells',
       secondary: 'gas',
       d3Fetch: d3.json
@@ -586,7 +487,6 @@ EnergyMaps = (function (EnergyMaps) {
   const oilWell = new Well('oil-wells', 'Oil wells',
     {2012: 654_000_000_000, 2022: 654_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawAllWells,
-      src: [ `wells_oil` ],
       primary: 'wells',
       secondary: 'oil',
       d3Fetch: d3.json
@@ -609,7 +509,6 @@ EnergyMaps = (function (EnergyMaps) {
   const gasPipeline = new Transport('gas-pipelines', 'Gas pipelines',
     {2012: 940_000_000_000, 2022: 940_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawGasPipes,
-      src: [`pipelines_gas`],
       primary: 'pipelines',
       secondary: 'gas',
       d3Fetch: d3.json
@@ -618,10 +517,8 @@ EnergyMaps = (function (EnergyMaps) {
   let oilProductPipeline = new Transport('oil-product-pipelines', 'Oil product pipelines',
     {2012: null, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawOilProdPipes,
-      src: [`pipelines_petroleum_product`],
       primary: 'pipelines',
       secondary: 'petroleum_product',
-      // src: [`/static/json/PetroleumProduct_Pipelines_US_Nov2014_clipped.geojson`],
       d3Fetch: d3.json
     }], '#3CB371', 2 * SCALE);
 
@@ -643,10 +540,8 @@ EnergyMaps = (function (EnergyMaps) {
   const oilPipeline = new Transport('oil-pipelines', 'Oil pipelines',
     {2012: 170_000_000_000, 2022: 170_000_000_000}, 'oil-and-gas', [{
       drawLayer: _drawOilPipes,
-      src: [`pipelines_oil`],
       primary: 'pipelines',
       secondary: 'oil',
-      // src: [`/static/json/CrudeOil_Pipelines_US_Nov2014_clipped.geojson`],
       d3Fetch: d3.json,
       next_layer: EnergyMaps.oilProductPipeline
     }], '#3CB371', 1.5 * SCALE);
@@ -654,7 +549,6 @@ EnergyMaps = (function (EnergyMaps) {
   const oilRefinery = new Refinery('oil-refineries', 'Oil refineries',
     {2012: 373_000_000_000, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawRefining,
-      src: [`refineries_petroleum`],
       primary: 'refineries',
       secondary: 'petroleum',
       d3Fetch: d3.json
@@ -663,7 +557,6 @@ EnergyMaps = (function (EnergyMaps) {
   const gasProcessing = new Processing('gas-processing', 'Gas processing',
     {2012: 45_000_000_000, 2022: null}, 'oil-and-gas', [{
       drawLayer: _drawProcessing,
-      src: [ `processing_plants_gas`],
       primary: 'processing_plants',
       secondary: 'gas',
       d3Fetch: d3.json
@@ -673,12 +566,6 @@ EnergyMaps = (function (EnergyMaps) {
     name: 'oil-and-gas-storage',
     assetValue: {2012: 181_000_000_000, 2022: null},
     drawProps: false,
-  // TODO: Split up the JSON files based on whatever property marks processing vs. storage
-  // drad3_fetch: {
-  //   draw_layer: draw_storage,
-  //   src: [ `/static/csv/nproc.csv`],
-  //   d3_fetch: d3.csv
-  // },
     column: 'oil-and-gas',
   };
 

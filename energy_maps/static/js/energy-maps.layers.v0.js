@@ -172,7 +172,6 @@ EnergyMaps = (function (EnergyMaps) {
     _loadLayerData(lyr).then(result => {
       EnergyMaps.finishLoadingLayer()
     });
-    // lyr.draw_props[0].src[0] = `${API_URL_PREFIX}/power_plants/coal`
     lyr.active = true;
     if (lyr === EnergyMaps.oilPipeline) {
       EnergyMaps.oilProductPipeline.active = true;
@@ -261,11 +260,12 @@ EnergyMaps = (function (EnergyMaps) {
 
   LAYERS = setLayers();
 
-  LAYERS.map(layer=>{
-    if (layer.drawProps) {
-      EnergyMaps.cache.layers.delete(layer.drawProps[0].src[0]);
-    }
-  })
+  // LAYERS.map(layer=>{
+  //   if (layer.drawProps) {
+  //     EnergyMaps.cache.layers.delete(
+  //       `${layer.drawProps[0].primary}_${layer.drawProps[0].secondary}`);
+  //   }
+  // })
 
   EnergyMaps.setLayers = setLayers;
   EnergyMaps.displayAssetTotal = displayAssetTotal;
