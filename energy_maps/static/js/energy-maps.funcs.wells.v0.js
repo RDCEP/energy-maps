@@ -210,7 +210,7 @@ EnergyMaps = (function (EnergyMaps) {
   const oilAndGas = {
     wells: {
       cross: 5 * SCALE,
-      diameter: SCALE,
+      diameter: SCALE * 2,
       stroke: SCALE
     },
     processing: {
@@ -315,6 +315,7 @@ EnergyMaps = (function (EnergyMaps) {
     ctx.beginPath();
     EnergyMaps.drawCircle(ctx, xy,
       oilAndGas.wells.diameter / EnergyMaps.transform.k ** .5);
+    ctx.fill();
     ctx.stroke();
   };
 
