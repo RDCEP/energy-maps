@@ -127,22 +127,36 @@ EnergyMaps = (function (EnergyMaps) {
       let name = (['gas-wells', 'oil-wells'].indexOf(lyr.name) > -1)
         ? `${props.primary}_${props.secondary}_${EnergyMaps.k}`
         : `${props.primary}_${props.secondary}`;
-      let docs = EnergyMaps.cache.layers.get(name)
-        .then(result => {
-          if (typeof result === 'undefined' ) {
-            let url = (props.local)
-              ? props.file
-              : `${API_URL_PREFIX}${props.primary}/${props.secondary}/${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`
-            console.log(url)
-            return props.d3Fetch(url)
-          } else {
-            return result.docs
-          }
-        }).then(files => {
-          EnergyMaps.cache.layers.put({
-            name: name,
-            docs: files
-          })
+      let BBox = EnergyMaps.getBBoxAsString(50);
+      let resolution = EnergyMaps.getResolutionInDegrees();
+      let url = (props.local)
+        ? props.file
+        :`${API_URL_PREFIX}${props.primary}/${props.secondary}/`+
+          `${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`+
+          `${resolution}/${BBox}`;
+      props.d3Fetch(url)
+      // let docs = EnergyMaps.cache.layers.get(name)
+      //   .then(result => {
+      //     if (typeof result === 'undefined' ) {
+      //       let resolution = EnergyMaps.getResolutionInDegrees();
+      //       console.log(resolution)
+      //       let BBox = EnergyMaps.getBBoxAsString(50);
+      //       let url = (props.local)
+      //         ? props.file
+      //         : `${API_URL_PREFIX}${props.primary}/${props.secondary}/`+
+      //           `${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`+
+      //           `${resolution}/${BBox}`;
+      //       console.log(url)
+      //       return props.d3Fetch(url)
+      //     } else {
+      //       return result.docs
+      //     }
+      //   })
+        .then(files => {
+          // EnergyMaps.cache.layers.put({
+          //   name: name,
+          //   docs: files
+          // })
           lyr.context.restore();
           lyr.context.save();
           return files;
@@ -155,7 +169,7 @@ EnergyMaps = (function (EnergyMaps) {
         .then(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
         });
-      return docs
+      // return docs
     }))
     //FIXME: Catch something
   };

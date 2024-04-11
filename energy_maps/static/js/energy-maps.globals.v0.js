@@ -267,6 +267,51 @@ EnergyMaps = (function (EnergyMaps) {
     // return n;
   };
 
+  const getCoordsFromPixel = function getCoordsFromPixel
+    (x, y)
+  {
+    return projection.invert([x, y]);
+  }
+
+  const getResolutionInDegrees = function getResolutionInDegrees
+    ()
+  {
+    let x = Math.floor(EnergyMaps.width/2);
+    let y = Math.floor(EnergyMaps.height/2);
+    let p0 = getCoordsFromPixel(x, y);
+    x += 1;
+    y += 1;
+    let p1 = getCoordsFromPixel(x, y);
+    return Math.abs(Math.min(p1[0] - p0[0], p1[1] - p0[1]));
+  };
+
+  const getResolutionPrecision = function getResolutionPrecision
+    ()
+  {
+    return Math.abs(Math.floor(Math.log10(getResolutionInDegrees()))) + 1
+  };
+
+  const getBBox = function getBBox
+    (offset)
+  {
+
+    let topLeft = getCoordsFromPixel(-offset, -offset);
+    let top = getCoordsFromPixel(EnergyMaps.width / 2, -offset);
+    let topRight = getCoordsFromPixel(EnergyMaps.width+offset, 0-offset);
+    let bottomRight = getCoordsFromPixel(EnergyMaps.width+offset, EnergyMaps.height+offset);
+    let bottom = getCoordsFromPixel(EnergyMaps.width / 2, EnergyMaps.height+offset);
+    let bottomLeft = getCoordsFromPixel(-offset, EnergyMaps.height+offset);
+    return {'type': 'Polygon', 'coordinates': [
+      bottomLeft, bottom, bottomRight, topRight, top, topLeft, bottomLeft
+    ].map(pair => pair.map(coord => Math.round(coord)))};
+  };
+
+  const getBBoxAsString = function getBBoxAsString
+    (offset)
+  {
+    return getBBox(offset)['coordinates'].map(coords => coords.join(',')).join(';');
+  };
+
   /**
    * Helper function for pipeline and railroad legend symbols
    * @param {Object} ctx - HTML5 canvas context
@@ -336,6 +381,7 @@ EnergyMaps = (function (EnergyMaps) {
     k: (localStorage.getItem('k') === null) ? 1 : +localStorage.k
   };
   EnergyMaps.k = (localStorage.getItem('k') === null) ? 1 : +localStorage.k;
+  EnergyMaps.resolution = getResolutionInDegrees()
   EnergyMaps.dataYear = DATA_YEAR;
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;
@@ -360,7 +406,10 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.setCookieTransform = setCookieTransform;
   EnergyMaps.setCookieLayers = setCookieLayers;
   EnergyMaps.InfrastructureSet = InfrastructureSet;
-
+  EnergyMaps.getResolutionInDegrees = getResolutionInDegrees;
+  EnergyMaps.getCoordsFromPixel = getCoordsFromPixel
+  EnergyMaps.getBBox = getBBox
+  EnergyMaps.getBBoxAsString = getBBoxAsString
 
   return EnergyMaps;
 
