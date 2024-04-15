@@ -278,11 +278,14 @@ EnergyMaps = (function (EnergyMaps) {
   {
     let x = Math.floor(EnergyMaps.width/2);
     let y = Math.floor(EnergyMaps.height/2);
-    let p0 = getCoordsFromPixel(x, y);
+    let centerLonLat = getCoordsFromPixel(x, y);
     x += 1;
     y += 1;
-    let p1 = getCoordsFromPixel(x, y);
-    return Math.abs(Math.min(p1[0] - p0[0], p1[1] - p0[1]));
+    let offsetLonLat = getCoordsFromPixel(x, y);
+    let resolution = Math.abs(offsetLonLat[1] - centerLonLat[1]);
+    let exponent = Math.round(Math.log10(resolution)) - 2;
+    let power = 10 ** exponent
+    return Math.round(resolution / power) * power;
   };
 
   const getResolutionPrecision = function getResolutionPrecision
@@ -291,25 +294,57 @@ EnergyMaps = (function (EnergyMaps) {
     return Math.abs(Math.floor(Math.log10(getResolutionInDegrees()))) + 1
   };
 
-  const getBBox = function getBBox
+  const getPerimeterPoints = function getPerimeterPoints
     (offset)
   {
-
     let topLeft = getCoordsFromPixel(-offset, -offset);
     let top = getCoordsFromPixel(EnergyMaps.width / 2, -offset);
     let topRight = getCoordsFromPixel(EnergyMaps.width+offset, 0-offset);
     let bottomRight = getCoordsFromPixel(EnergyMaps.width+offset, EnergyMaps.height+offset);
     let bottom = getCoordsFromPixel(EnergyMaps.width / 2, EnergyMaps.height+offset);
     let bottomLeft = getCoordsFromPixel(-offset, EnergyMaps.height+offset);
-    return {'type': 'Polygon', 'coordinates': [
-      bottomLeft, bottom, bottomRight, topRight, top, topLeft, bottomLeft
-    ].map(pair => pair.map(coord => Math.round(coord)))};
+    return [topLeft, top, topRight, bottomRight, bottom, bottomLeft];
   };
 
+  const getBBox = function getBBox
+    (offset)
+  {
+
+    let points = getPerimeterPoints(offset);
+    points.push(points[0]);
+    points.reverse();
+    return {'type': 'Polygon', 'coordinates': points
+        .map(pair => pair.map(coord => Math.round(coord)))};
+  };
+
+  const getExtents = function getExtents
+    (offset)
+  {
+    let points = getPerimeterPoints(offset);
+    return [
+      Math.min(...points.map(pair => pair[1])),  // minLat
+      Math.max(...points.map(pair => pair[1])),  // maxLat
+      Math.min(...points.map(pair => pair[0])),  // minLon
+      Math.max(...points.map(pair => pair[0])),  // maxLon
+    ];
+  };
+
+  const getExtentsAsString = function getExtentsAsString
+    (offset)
+  {
+    return getExtents(offset).map(x => Math.round(x)).join(',');
+  };
+
+  /**
+   * Returns bounding box as string suitable for URL used in REST API
+   * @param {Number} offset - Amount in degrees by which to expand the bounding box
+   * @returns {string} - lon0,lat0-lon1,lat1-lon2,lat2-lon3,lat3-lon4,lat4-lon5,lat5-lon0,lat0
+   */
   const getBBoxAsString = function getBBoxAsString
     (offset)
   {
-    return getBBox(offset)['coordinates'].map(coords => coords.join(',')).join(';');
+    return getBBox(offset)['coordinates']
+      .map(coords => coords.join(',')).join(';');
   };
 
   /**
@@ -381,13 +416,13 @@ EnergyMaps = (function (EnergyMaps) {
     k: (localStorage.getItem('k') === null) ? 1 : +localStorage.k
   };
   EnergyMaps.k = (localStorage.getItem('k') === null) ? 1 : +localStorage.k;
-  EnergyMaps.resolution = getResolutionInDegrees()
   EnergyMaps.dataYear = DATA_YEAR;
   EnergyMaps.kChanged = false;
   EnergyMaps.asteriskNote = asteriskNote;
   EnergyMaps.SCALE = SCALE;
   EnergyMaps.width = width;
   EnergyMaps.height = height;
+  EnergyMaps.resolution = getResolutionInDegrees();
   EnergyMaps.simpleMapBkgd = simpleMapBkgd;
   EnergyMaps.projectionScale = projectionScale;
   EnergyMaps.projectionWidth = projectionWidth;
@@ -407,9 +442,11 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.setCookieLayers = setCookieLayers;
   EnergyMaps.InfrastructureSet = InfrastructureSet;
   EnergyMaps.getResolutionInDegrees = getResolutionInDegrees;
-  EnergyMaps.getCoordsFromPixel = getCoordsFromPixel
-  EnergyMaps.getBBox = getBBox
-  EnergyMaps.getBBoxAsString = getBBoxAsString
+  EnergyMaps.getResolutionPrecision = getResolutionPrecision;
+  EnergyMaps.getCoordsFromPixel = getCoordsFromPixel;
+  EnergyMaps.getBBox = getBBox;
+  EnergyMaps.getExtentsAsString = getExtentsAsString;
+  EnergyMaps.getBBoxAsString = getBBoxAsString;
 
   return EnergyMaps;
 
