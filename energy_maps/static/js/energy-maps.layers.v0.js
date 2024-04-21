@@ -127,36 +127,15 @@ EnergyMaps = (function (EnergyMaps) {
       let name = (['gas-wells', 'oil-wells'].indexOf(lyr.name) > -1)
         ? `${props.primary}_${props.secondary}_${EnergyMaps.k}`
         : `${props.primary}_${props.secondary}`;
-      let BBox = EnergyMaps.getBBoxAsString(50);
+      let BBox = EnergyMaps.getBBoxAsString(8);
       let resolution = EnergyMaps.getResolutionInDegrees();
       let url = (props.local)
         ? props.file
         :`${API_URL_PREFIX}${props.primary}/${props.secondary}/`+
           `${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`+
           `${resolution}/${BBox}`;
-      props.d3Fetch(url)
-      // let docs = EnergyMaps.cache.layers.get(name)
-      //   .then(result => {
-      //     if (typeof result === 'undefined' ) {
-      //       let resolution = EnergyMaps.getResolutionInDegrees();
-      //       console.log(resolution)
-      //       let BBox = EnergyMaps.getBBoxAsString(50);
-      //       let url = (props.local)
-      //         ? props.file
-      //         : `${API_URL_PREFIX}${props.primary}/${props.secondary}/`+
-      //           `${EnergyMaps.dataYear}/${EnergyMaps.transform.k}/`+
-      //           `${resolution}/${BBox}`;
-      //       console.log(url)
-      //       return props.d3Fetch(url)
-      //     } else {
-      //       return result.docs
-      //     }
-      //   })
+      return props.d3Fetch(url)
         .then(files => {
-          // EnergyMaps.cache.layers.put({
-          //   name: name,
-          //   docs: files
-          // })
           lyr.context.restore();
           lyr.context.save();
           return files;
@@ -169,7 +148,6 @@ EnergyMaps = (function (EnergyMaps) {
         .then(x => {
           d3.select(`.checkbox.${lyr.name}`).attr('disabled', null);
         });
-      // return docs
     }))
     //FIXME: Catch something
   };
@@ -183,9 +161,10 @@ EnergyMaps = (function (EnergyMaps) {
     (lyr)
   {
     EnergyMaps.startLoadingLayer();
-    _loadLayerData(lyr).then(result => {
-      EnergyMaps.finishLoadingLayer()
-    });
+    _loadLayerData(lyr)
+      .then(result => {
+        EnergyMaps.finishLoadingLayer()
+      });
     lyr.active = true;
     if (lyr === EnergyMaps.oilPipeline) {
       EnergyMaps.oilProductPipeline.active = true;
@@ -251,6 +230,22 @@ EnergyMaps = (function (EnergyMaps) {
     lyr.active = false;
   };
 
+  const addLayersToActiveLayers = function addLayersToActiveLayers
+    (layers)
+  {
+    console.log(layers);
+    return Promise.all(layers.map(
+      layer => _addLayerToActiveLayers(layer)
+    ));
+  };
+
+  const _addLayerToActiveLayers = function _addLayerToActiveLayers
+    (layer)
+  {
+    layer.active = true;
+    ACTIVE_LAYERS.push(layer);
+  };
+
   /**
    * @description Iterates through layers and draws active layers. This is
    * called at the end of a zoom or window resize operation.
@@ -274,13 +269,6 @@ EnergyMaps = (function (EnergyMaps) {
 
   LAYERS = setLayers();
 
-  // LAYERS.map(layer=>{
-  //   if (layer.drawProps) {
-  //     EnergyMaps.cache.layers.delete(
-  //       `${layer.drawProps[0].primary}_${layer.drawProps[0].secondary}`);
-  //   }
-  // })
-
   EnergyMaps.setLayers = setLayers;
   EnergyMaps.displayAssetTotal = displayAssetTotal;
   EnergyMaps.drawActiveLayers = drawActiveLayers;
@@ -288,6 +276,7 @@ EnergyMaps = (function (EnergyMaps) {
   EnergyMaps.addLayer = addLayer;
   EnergyMaps.addLayerCanvas = addLayerCanvas;
   EnergyMaps.addCanvasContext = addCanvasContext;
+  EnergyMaps.addLayersToActiveLayers = addLayersToActiveLayers;
 
   return EnergyMaps;
 

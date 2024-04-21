@@ -239,8 +239,15 @@ EnergyMaps = (function (EnergyMaps) {
       }
     }
     layers.map(x => {
-      document.querySelector(`.option-li input.${x.name}`).click();
+      let checkbox = document.querySelector(`.option-li input.${x.name}`);
+      checkbox.enabled = false;
+      checkbox.checked = !checkbox.checked;
+      checkbox.enabled = true; // resume events
     });
+    EnergyMaps.addLayersToActiveLayers(layers)
+      .then(result => {
+        EnergyMaps.drawActiveLayers();
+      });
   };
 
   /**
