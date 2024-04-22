@@ -420,18 +420,14 @@ EnergyMaps = (function (EnergyMaps) {
       if (xy === null) {
         return;
       } else {
-        if (d.properties.original.oilgas === 'GAS') {
-          if (d.properties.original.class === 'Off') {
-            _drawOffshoreWell(ctx, xy, EnergyMaps.gasWell.color);
-          } else {
-            _drawWell(ctx, xy, EnergyMaps.gasWell.color);
-          }
-        } else {
-          if (d.properties.original.class === 'Off') {
-            _drawOffshoreWell(ctx, xy, EnergyMaps.oilWell.color);
-          } else {
-            _drawWell(ctx, xy, EnergyMaps.oilWell.color);
-          }
+        if (d.properties.value === 'GAS') {
+          _drawWell(ctx, xy, EnergyMaps.gasWell.color);
+        } else if (d.properties.value === 'OIL') {
+          _drawWell(ctx, xy, EnergyMaps.oilWell.color);
+        } else if (d.properties.value === 'GAS-Off') {
+          _drawOffshoreWell(ctx, xy, EnergyMaps.gasWell.color);
+        } else if (d.properties.value === 'OIL-Off') {
+          _drawOffshoreWell(ctx, xy, EnergyMaps.oilWell.color);
         }
       }
     });
