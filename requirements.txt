@@ -1,7 +1,0 @@
-flask
-flask-assets
-flask-compress
-jsmin
-cssmin
-numpy
-pandas
