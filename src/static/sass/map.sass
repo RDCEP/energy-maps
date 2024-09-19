@@ -1,0 +1,31 @@
+@import "vars"
+
+.main-map, .zoom-target, .layer, .base-map
+  position: absolute
+  height: 100%
+  width: 100%
+  top: 0
+  left: 0
+.main-map
+  z-index: 510
+  background-color: $sea_blue
+.zoom-target
+  z-index: 590
+.layer
+  fill: none
+.boundary.ocean
+  fill: white
+.boundary.land
+  fill: #eeeeee
+.feature.pipe
+  stroke-width: 0.5
+  fill: none
+.feature.pipe.oil
+  stroke: #222222
+.feature.pipe.gas
+  stroke: cornflowerblue
+.feature.dot
+  stroke: none
+  fill: #000000
+.feature.dot.plant
+  fill: #cccccc
