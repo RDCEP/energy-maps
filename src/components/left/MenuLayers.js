@@ -17,9 +17,10 @@ const MenuLayers = (props) => {
   return (
     <section>
       <StyledH6>Map Options</StyledH6>
-      <LayersList uk-sortable data-handle=".uk-sortable-handle" className="uk-sortable">
+      <LayersList data-uk-sortable data-handle=".uk-sortable-handle" className="uk-sortable">
         {layers.map((item, index) => (
           <MenuLayersItem
+            key={item.layer_slug}
             layer_slug={item.layer_slug}
             layer_name={item.layer_name}
           />

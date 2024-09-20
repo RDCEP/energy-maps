@@ -46,16 +46,29 @@ const LayersItemInput = styled.input`
   flex-basis: content;
 `
 
+const StyledDrag = styled.div`
+  width: 1em;
+  position: absolute;
+  // right: CssVars.options_width - 6.5rem
+  right: 13.5rem;
+  display: inline-block;
+  line-height: 1.45em;
+`;
+
 const MenuLayersItem = (props) => {
 
   return (
     <StyledMenuLayersItem data-layer={props.layer_slug} className="option-li">
+      <StyledDrag data-uk-icon="icon: list"
+           className="drag uk-sortable-handle uk-icon"
+           style={{userSelect: 'none', }}>
+      </StyledDrag>
       <StyledLabel>
         <OptionTitle>{props.layer_name}</OptionTitle>
         <AssetValue> ($41 B)</AssetValue>
         <Leader />
-        <LayersItemInput type="checkbox" className={props.layer_name}
-          data-layername={props.la} data-assetvalue={props.asset_value} />
+        <LayersItemInput type="checkbox" className={props.layer_slug}
+          data-layername={props.layer_slug} data-assetvalue={props.asset_value} />
       </StyledLabel>
     </StyledMenuLayersItem>
   );
