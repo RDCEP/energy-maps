@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {Fragment, useEffect} from 'react';
 import MainHeader from './components/header/MainHeader';
 import Main from './components/Main';
 import UIkit from 'uikit';
@@ -12,10 +12,11 @@ function App() {
   });
 
   return (
-    <div className="main-wrap">
+    <Fragment>
+      <GlobalStyle />
       <MainHeader />
       <Main />
-    </div>
+    </Fragment>
   );
 }
 
