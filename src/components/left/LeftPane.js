@@ -3,7 +3,7 @@ import CssVars from '../../const/CssVars';
 import Source from './Source';
 import MenuLayers from './MenuLayers';
 
-const Dialog = styled.dialog`
+const StyledDialog = styled.dialog`
   display: block;
   position: relative;
   width: ${CssVars.options_width};
@@ -32,14 +32,14 @@ const Container = styled.div`
 const LeftPane = (props) => {
 
   return (
-    <Dialog data-toggle-state="open">
+    <StyledDialog data-toggle-state="open">
       <Shim>
         <Container>
           <Source />
           <MenuLayers />
         </Container>
       </Shim>
-    </Dialog>
+    </StyledDialog>
   );
 };
 
