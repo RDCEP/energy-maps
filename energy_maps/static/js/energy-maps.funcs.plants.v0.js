@@ -95,12 +95,13 @@ EnergyMaps = (function (EnergyMaps) {
     features.forEach(function (d) {
       let xy = EnergyMaps.projection(d.geometry.coordinates);
       if (xy !== null) {
-        if (DATA_YEAR === 2012) {
-          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.total_cap);
-        }
-        else if (DATA_YEAR === 2022) {
-          _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
-        }
+        _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.value);
+        // if (DATA_YEAR === 2012) {
+        //   _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.total_cap);
+        // }
+        // else if (DATA_YEAR === 2022) {
+        //   _drawPowerPlant(ctx, xy, VIZ.white, +d.properties.original.SUMMER_CAP);
+        // }
       } else {
         console.log(xy)
       }
@@ -120,12 +121,13 @@ EnergyMaps = (function (EnergyMaps) {
     (ctx, xy, fuel, d)
   {
     let color = fuel.color;
-      if (DATA_YEAR === 2012) {
-        _drawPowerPlant(ctx, xy, color, +d.properties.original.total_cap);
-      }
-      else if (DATA_YEAR === 2022) {
-        _drawPowerPlant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
-      }
+    _drawPowerPlant(ctx, xy, color, +d.properties.value);
+    // if (DATA_YEAR === 2012) {
+    //   _drawPowerPlant(ctx, xy, color, +d.properties.original.total_cap);
+    // }
+    // else if (DATA_YEAR === 2022) {
+    //   _drawPowerPlant(ctx, xy, color, +d.properties.original.SUMMER_CAP);
+    // }
   }
 
   /**

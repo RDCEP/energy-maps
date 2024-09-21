@@ -385,34 +385,30 @@ EnergyMaps = (function (EnergyMaps) {
     EnergyMaps.clipRegion(ctx);
 
     let oilRefineries = queuedData.features;
+    d.r = +d.properties.value;
 
-    if (DATA_YEAR === 2022) {
-
-      oilRefineries.forEach(function(d, i) {
-        let r = 0;
-
-        if (d.properties.original.hasOwnProperty('QUANTITY')) {
-          // TODO: get scaling value
-          r += +d.properties.original.QUANTITY / 250; //  TODO: change the divisor here to get the scale
-        }
-
-        d.r = r;
-      });
-
-    } else if (DATA_YEAR === 2012) {
-
-      oilRefineries.forEach(function(d, i) {
-        let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
-          'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
-        let r = 0;
-        for (let i = 0, l = procs.length; i < l; ++i) {
-          if (d.properties.original.hasOwnProperty(procs[i])) {
-            r += +d.properties.original[procs[i]];
-          }
-        }
-        d.r = r;
-      });
-    }
+    // if (DATA_YEAR === 2022) {
+    //   oilRefineries.forEach(function(d, i) {
+    //     let r = 0;
+    //     if (d.properties.original.hasOwnProperty('QUANTITY')) {
+    //       // TODO: get scaling value
+    //       r += +d.properties.original.QUANTITY / 250; //  TODO: change the divisor here to get the scale
+    //     }
+    //     d.r = r;
+    //   });
+    // } else if (DATA_YEAR === 2012) {
+    //   oilRefineries.forEach(function(d, i) {
+    //     let procs = ['Atm_Dist', 'Vac_Dist', 'Cat_Crack', 'Visbreak',
+    //       'Cat_Reform', 'Desulfur', 'Coking', 'Hydro_Crac', 'Alky_Iso'];
+    //     let r = 0;
+    //     for (let i = 0, l = procs.length; i < l; ++i) {
+    //       if (d.properties.original.hasOwnProperty(procs[i])) {
+    //         r += +d.properties.original[procs[i]];
+    //       }
+    //     }
+    //     d.r = r;
+    //   });
+    // }
 
     oilRefineries.sort(function(a, b) {
       return d3.descending(a.r, b.r);

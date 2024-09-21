@@ -165,8 +165,8 @@ EnergyMaps = (function (EnergyMaps) {
     // than string values to totProd
     mines.sort(function(a, b) {
       return d3.descending(
-        +a.properties.original.totProd,
-        +b.properties.original.totProd
+        +a.properties.value,
+        +b.properties.value
       )});
 
     mines.forEach(function(d, i) {
@@ -178,7 +178,7 @@ EnergyMaps = (function (EnergyMaps) {
         //
       } else {
         // _drawMine(ctx, xy, VIZ.black, +d.properties.original.totalProd, false);
-        _drawMine(ctx, xy, VIZ.black, +d.properties.original.tot_prod, false);
+        _drawMine(ctx, xy, VIZ.black, +d.properties.value, false);
       }
     });
   };

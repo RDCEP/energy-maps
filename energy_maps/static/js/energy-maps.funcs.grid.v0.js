@@ -80,7 +80,7 @@ EnergyMaps = (function (EnergyMaps) {
     (infrastructure, grid_object)
   {
     return infrastructure.features.filter(function(d) {
-      return d.properties.original.class === grid_object.heading;
+      return d.properties.value === grid_object.heading;
     });
   }
 
