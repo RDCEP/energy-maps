@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
 import StyledH6 from '../../const/StyledBlocks';
-import layers from '../../const/Layers';
+// import layers from '../../const/Layers';
+import layers from '../map/Layers';
 import MenuLayersItem from './MenuLayersItem';
 
 const LayersSection = styled.section`
@@ -20,8 +21,8 @@ const MenuLayers = (props) => {
       <LayersList data-uk-sortable data-handle=".uk-sortable-handle" className="uk-sortable">
         {layers.map((item, index) => (
           <MenuLayersItem
-            key={item.layer_slug}
-            layer_slug={item.layer_slug}
+            key={item.id}
+            layer_slug={item.id}
             layer_name={item.layer_name}
           />
         ))}
