@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Map from './map/Map';
+import DeckGLMap from './map/DeckGLMap';
 import LeftPane from './left/LeftPane';
 
 const StyledMain = styled.main`
@@ -15,7 +15,7 @@ const Main = (props) => {
 
   return (
     <StyledMain>
-      <Map />
+      <DeckGLMap />
       <LeftPane />
     </StyledMain>
   );
