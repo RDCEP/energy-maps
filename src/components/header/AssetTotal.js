@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
 
-const H2 = styled.h2`
+const StyledH2 = styled.h2`
   line-height: 1.25em;
   display: inline-block;
   color: ${CssVars.white};
@@ -25,13 +25,13 @@ const AssetTotalTag = styled.span`
 const AssetTotal = (props) => {
 
   return (
-    <H2>
-      <AssetTotalSpan />
+    <StyledH2>
+      <AssetTotalSpan>$41 B</AssetTotalSpan>
       <AssetTotalTag>
         total asset value<br />
         <span id="value-year">out of $9.8T in 2012</span>
       </AssetTotalTag>
-    </H2>
+    </StyledH2>
   );
 };
 
