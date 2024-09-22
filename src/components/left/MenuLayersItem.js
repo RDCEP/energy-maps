@@ -18,33 +18,33 @@ const StyledMenuLayersItem = styled.li`
   &.uk-sortable-item {
     width: 13rem!important;    
   }
-`
+`;
 
 const StyledLabel = styled.label`
   display: flex;
   //flex-basis: content;
   align-items: baseline;
-`
+`;
 
 const OptionTitle = styled.span`
   flex-basis: content;
-`
+`;
 
 const AssetValue = styled.span`
   font-size: .8em!important;
   line-height: 1.25em;
   flex-basis: content;
-`
+`;
 
 const Leader = styled.span`
   flex-grow: 1;
   border-bottom: 1px solid black;
   margin: 0 .5em;
-`
+`;
 
 const LayersItemInput = styled.input`
   flex-basis: content;
-`
+`;
 
 const StyledDrag = styled.div`
   width: 1em;
@@ -68,7 +68,8 @@ const MenuLayersItem = (props) => {
         <AssetValue> ($41 B)</AssetValue>
         <Leader />
         <LayersItemInput type="checkbox" className={props.layer_slug}
-          data-layername={props.layer_slug} data-assetvalue={props.asset_value} />
+          data-layername={props.layer_slug} data-assetvalue={props.asset_value}
+          onChange={e => console.log(e) } />
       </StyledLabel>
     </StyledMenuLayersItem>
   );
