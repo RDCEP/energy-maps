@@ -8,11 +8,11 @@ const layers: LayersList = [
     data: `${api_url}/mines/coal/2012/1/1/${bbox}/`,
     loadOptions: {
     },
-    filled: true,
-    getFillColor: [0, 0, 0, 255],
-    pointType: 'circle',
-    pointRadiusUnits: 'pixels',
-    getPointRadius: 10,
+    stroked: false,
+    getPosition: (d) => d.geometry.coordinates,
+    getRadius: (d) => Math.sqrt(d.properties.original.tot_prod),
+    getFillColor: [255, 140, 0],
+    getLineColor: [0, 0, 0],
 
   })
 ];
