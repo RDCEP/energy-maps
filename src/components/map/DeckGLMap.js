@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import {Map} from 'react-map-gl/maplibre';
+
 import DeckGL from '@deck.gl/react';
-import {ScatterplotLayer} from '@deck.gl/layers';
+import {Map} from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import styled from 'styled-components';
+import layers from './Layers';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -20,12 +21,12 @@ const DeckGLMap = (props) => {
     <StyledMap className="main-map">
       <DeckGL
         initialViewState={{
-          longitude: 0.45,
+          longitude: -30,
           latitude: 51.47,
-          zoom: 11
+          zoom: 2
         }}
         controller
-        // layers={layers}
+        layers={layers}
       >
         <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
       </DeckGL>

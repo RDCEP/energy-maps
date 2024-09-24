@@ -1,17 +1,11 @@
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
 import StyledH6 from '../../const/StyledBlocks';
-// import layers from '../../const/Layers';
 import layers from '../map/Layers';
 import MenuLayersItem from './MenuLayersItem';
 
-const LayersSection = styled.section`
-  
-`
-
 const LayersList = styled.ul`
   padding: 0 3.5rem 0 2rem;
-`
+`;
 
 const MenuLayers = (props) => {
 

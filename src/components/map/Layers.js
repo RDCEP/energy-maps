@@ -1,17 +1,20 @@
-import {Deck} from '@deck.gl/core';
 import {LayersList} from '@deck.gl/core';
-import {ScatterplotLayer} from '@deck.gl/layers';
-
-
+import CoalMines from './layers/CoalMines';
+import {api_url, bbox} from '../../const/Api';
 
 const layers: LayersList = [
-  new ScatterplotLayer<Flight>({
-    id: 'mines_coal',
-    layer_name: 'Coal mines',
-    data: `${api}mines/coal/2012/`,
-    getPosition: d => d.geometry.coordinates,
-    getFillColor: [0, 0, 0, .8],
-  }
+  new CoalMines({
+    id: 'mines-coal',
+    data: `${api_url}/mines/coal/2012/1/1/${bbox}/`,
+    loadOptions: {
+    },
+    filled: true,
+    getFillColor: [0, 0, 0, 255],
+    pointType: 'circle',
+    pointRadiusUnits: 'pixels',
+    getPointRadius: 10,
+
+  })
 ];
 
 export default layers

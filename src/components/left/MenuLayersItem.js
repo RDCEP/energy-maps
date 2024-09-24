@@ -69,20 +69,10 @@ const MenuLayersItem = (props) => {
         <Leader />
         <LayersItemInput type="checkbox" className={props.layer_slug}
           data-layername={props.layer_slug} data-assetvalue={props.asset_value}
-          onChange={e => console.log(e) } />
+          onChange={e => console.log(props) } />
       </StyledLabel>
     </StyledMenuLayersItem>
   );
 }
-
-const layers = {
-  this_layer_name: {
-    layer_slug: 'coal-mines',
-    layer_name: 'Coal mines',
-    asset_value: 41_000_000_000,
-  }
-};
-
-// style={{background: `url(${props.src})`}}>
 
 export default MenuLayersItem;
