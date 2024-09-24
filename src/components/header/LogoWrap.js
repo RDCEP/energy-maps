@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
-import logo from '../images/rdcep_logo.png';
+import logo from '../../static/images/rdcep_logo.png';
 
 
 const LogoWrapDiv =styled.div`
