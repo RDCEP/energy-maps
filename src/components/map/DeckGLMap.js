@@ -1,9 +1,13 @@
-
+import React, {useCallback} from 'react';
 import DeckGL from '@deck.gl/react';
-import {Map} from 'react-map-gl/maplibre';
+import type, {PickingInfo} from '@deck.gl/core';
+import {Map, NavigationControl, Popup, useControl} from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import {MjolnirEvent} from 'mjolnir.js';
 import styled from 'styled-components';
 import layers from './Layers';
+import {Feature} from 'maplibre-gl';
+import {on} from 'uikit/src/js/util';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -17,6 +21,10 @@ const StyledMap = styled.div`
 
 const DeckGLMap = (props) => {
 
+  const onHover = useCallback((info: PickingInfo, event: MjolnirEvent) => {
+    if (info.picked) { console.log(info); }
+  }, []);
+
   return (
     <StyledMap className="main-map">
       <DeckGL
@@ -26,6 +34,10 @@ const DeckGLMap = (props) => {
           zoom: 2
         }}
         controller
+        // getTooltip={({object}: MVTLayerPickingInfo<PropertiesType>) => object && (object.properties.name || object.properties.layerName)}
+        // getTooltip={({object}: PickingInfo<Feature<Geometry, PropertiesType>>) => object && object.properties.original.tot_prod}
+        // getTooltip={({object}) => object && object.properties.original.tot_prod}
+        onHover={onHover}
         layers={layers}
       >
         <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />

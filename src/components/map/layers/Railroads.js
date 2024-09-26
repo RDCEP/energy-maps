@@ -1,9 +1,9 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 
-export default class CoalMinesLayer extends GeoJsonLayer{
+export default class RailroadsLayer extends GeoJsonLayer{
   constructor(props) {
     super(props);
-    this.layer_name = 'Coal Mines';
+    this.layer_name = 'Railroads';
   }
   initializeState(){
     super.initializeState();
