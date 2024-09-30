@@ -29,9 +29,9 @@ const DeckGLMap = (props) => {
     <StyledMap className="main-map">
       <DeckGL
         initialViewState={{
-          longitude: -30,
-          latitude: 51.47,
-          zoom: 2
+          longitude: -105,
+          latitude: 40,
+          zoom: 3,
         }}
         controller
         // getTooltip={({object}: MVTLayerPickingInfo<PropertiesType>) => object && (object.properties.name || object.properties.layerName)}
