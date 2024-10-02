@@ -26,23 +26,23 @@ const StyledLabel = styled.label`
   align-items: baseline;
 `;
 
-const OptionTitle = styled.span`
+const StyledOptionTitle = styled.span`
   flex-basis: content;
 `;
 
-const AssetValue = styled.span`
+const StyledAssetValue = styled.span`
   font-size: .8em!important;
   line-height: 1.25em;
   flex-basis: content;
 `;
 
-const Leader = styled.span`
+const StyledLeader = styled.span`
   flex-grow: 1;
   border-bottom: 1px solid black;
   margin: 0 .5em;
 `;
 
-const LayersItemInput = styled.input`
+const StyledLayersItemInput = styled.input`
   flex-basis: content;
 `;
 
@@ -64,10 +64,10 @@ const MenuLayersItem = (props) => {
            style={{userSelect: 'none', }}>
       </StyledDrag>
       <StyledLabel>
-        <OptionTitle>{props.layer_name}</OptionTitle>
-        <AssetValue> ($41 B)</AssetValue>
-        <Leader />
-        <LayersItemInput type="checkbox" className={props.layer_slug}
+        <StyledOptionTitle>{props.layer_name}</StyledOptionTitle>
+        <StyledAssetValue> ($41 B)</StyledAssetValue>
+        <StyledLeader />
+        <StyledLayersItemInput type="checkbox" className={props.layer_slug}
           data-layername={props.layer_slug} data-assetvalue={props.asset_value}
           onChange={e => console.log(props) } />
       </StyledLabel>

@@ -15,30 +15,30 @@ const StyledDialog = styled.dialog`
   border: none;
   border-right: 2px solid ${CssVars.darkblue};
   z-index: 910;
-`
+`;
 
-const Shim = styled.div`
+const StyledShim = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
   width: ${CssVars.options_width};
-`
+`;
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   padding: 6.75rem 0 2rem 0;
   width: ${CssVars.options_width};
-`
+`;
 
 const LeftPane = (props) => {
 
   return (
     <StyledDialog data-toggle-state="open">
-      <Shim>
-        <Container>
+      <StyledShim>
+        <StyledContainer>
           <Source />
           <MenuLayers />
-        </Container>
-      </Shim>
+        </StyledContainer>
+      </StyledShim>
     </StyledDialog>
   );
 };
