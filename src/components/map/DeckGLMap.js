@@ -19,6 +19,8 @@ const StyledMap = styled.div`
   left: 0;
 `;
 
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+
 const DeckGLMap = (props) => {
 
   const onHover = useCallback((info: PickingInfo, event: MjolnirEvent) => {
@@ -31,7 +33,7 @@ const DeckGLMap = (props) => {
         initialViewState={{
           longitude: -105,
           latitude: 40,
-          zoom: 3,
+          zoom: 4,
         }}
         controller
         // getTooltip={({object}: MVTLayerPickingInfo<PropertiesType>) => object && (object.properties.name || object.properties.layerName)}

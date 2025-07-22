@@ -1,3 +1,8 @@
+/*
+ CssVars.js
+ Constants for application-wide visual styles
+ */
+
 
 const dark_blue = '#024964';
 const white = '#ffffff';
