@@ -1,7 +1,9 @@
 import React, {useCallback} from 'react';
 import DeckGL from '@deck.gl/react';
 import type, {PickingInfo} from '@deck.gl/core';
-import {Map, NavigationControl, Popup, useControl} from 'react-map-gl/maplibre';
+import {ZoomWidget, FullscreenWidget} from '@deck.gl/widgets';
+import '@deck.gl/widgets/stylesheet.css';
+import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {MjolnirEvent} from 'mjolnir.js';
 import styled from 'styled-components';
@@ -21,7 +23,26 @@ const StyledMap = styled.div`
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
+const INITIAL_VIEW_STATE = {
+  longitude: -105,
+  latitude: 40,
+  zoom: 4,
+  minZoom: 1,
+  maxZoom: 10,
+}
+
 const DeckGLMap = (props) => {
+
+  const widgets = [
+    new ZoomWidget({
+      placement: 'top-right',
+      id: 'zoom-control',
+    }),
+    new FullscreenWidget({
+      placement: 'top-right',
+      id: 'fullscreen-control',
+    })
+  ];
 
   const onHover = useCallback((info: PickingInfo, event: MjolnirEvent) => {
     if (info.picked) { console.log(info); }
@@ -30,19 +51,16 @@ const DeckGLMap = (props) => {
   return (
     <StyledMap className="main-map">
       <DeckGL
-        initialViewState={{
-          longitude: -105,
-          latitude: 40,
-          zoom: 4,
-        }}
+        initialViewState={INITIAL_VIEW_STATE}
         controller
-        // getTooltip={({object}: MVTLayerPickingInfo<PropertiesType>) => object && (object.properties.name || object.properties.layerName)}
-        // getTooltip={({object}: PickingInfo<Feature<Geometry, PropertiesType>>) => object && object.properties.original.tot_prod}
-        // getTooltip={({object}) => object && object.properties.original.tot_prod}
-        onHover={onHover}
+        getTooltip={({object}: PickingInfo<Feature<Geometry, PropertiesType>>) => object && object.properties.original.tot_prod}
+        // onHover={onHover}
         layers={layers}
+        widgets={widgets}
       >
-        <Map mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" />
+
+        <Map mapStyle={MAP_STYLE} />
+
       </DeckGL>
     </StyledMap>
   );
