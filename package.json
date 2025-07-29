@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@deck.gl/widgets": "^9.1.13",
     "@loaders.gl/compression": "^4.2.4",
     "@loaders.gl/core": "^4.2.4",
     "@testing-library/jest-dom": "^5.17.0",

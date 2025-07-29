@@ -28,14 +28,13 @@ const Main = (props) => {
   //  is separate from the DeckGLMap, so can we not refer to the state variable in
   //  both elements????
 
-  const [coalMinesLayer, setCoalMinesLayer] = useState(true);
-
   return (
     <StyledMain>
       <DeckGLMap />
       <ToolTip visible={tooltip_visible} x={tooltip_x} y={tooltip_y}>
         {tooltip_text}
       </ToolTip>
+      <div></div>
       <LeftPane />
     </StyledMain>
   );

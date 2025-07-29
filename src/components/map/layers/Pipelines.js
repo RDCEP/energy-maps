@@ -1,10 +1,10 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 
-class RailroadsLayer extends GeoJsonLayer{
+class OilPipelinesLayer extends GeoJsonLayer{
   constructor(props) {
     super(props);
-    this.layer_name = 'Railroads';
+    this.layer_name = 'Oil Pipelines';
     this.visible = false;
   }
   initializeState(){
@@ -12,11 +12,10 @@ class RailroadsLayer extends GeoJsonLayer{
   }
 };
 
-const Railroads = new RailroadsLayer({
-  id: 'railroads',
-  data: `${api_url}/railroads//2012/1/1/${bbox}/`,
-  asset_value: 41_000_000_000,
+const OilPipelines = new OilPipelinesLayer({
+  id: 'pipelines_oil',
+  data: `${api_url}/pipelines/oil/2012/1/1/${bbox}/`,
   // componentName: 'railroads',
 });
 
-export default Railroads;
+export default OilPipelines;

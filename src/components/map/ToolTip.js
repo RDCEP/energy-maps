@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import ReactTooltip from 'react-tooltip';
+import {Tooltip as ReactTooltip} from 'react-tooltip';
 
 const StyledToolTip = styled(ReactTooltip)`
   position: fixed;
   background-color: black;
   padding: .5em;
   display: ${props => props.visible ? 'block' : 'none'};
-  left: ${props => console.log(props)};
+  left: ${props => `${props.x}px`};
   top: ${props => `${props.y}px`};
 `;
 
 const ToolTip = (props) => {
-  console.log(props);
+  console.log(1, props);
   return (
     <StyledToolTip className="tooltip"></StyledToolTip>
   )
