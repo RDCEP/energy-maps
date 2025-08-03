@@ -11,7 +11,6 @@ const StyledToolTip = styled(ReactTooltip)`
 `;
 
 const ToolTip = (props) => {
-  console.log(1, props);
   return (
     <StyledToolTip className="tooltip"></StyledToolTip>
   )

@@ -1,29 +1,59 @@
-import {LayersList} from '@deck.gl/core';
-import CoalMines from './layers/CoalMines';
-import Railroads from './layers/Railroads';
-import OilPipelines from './layers/Pipelines';
-// import {useState} from 'react';
-// import coalMineLayer from '../Main';
+import {CoalMines} from './layers/CoalMines';
+import {OilWells} from './layers/OilWells';
+import {GasPipelines} from './layers/GasPipelines';
+import {assetValues} from '../../const/asset_values/AssetValues';
 
 
-// const onHover = function(info) {
-//
-//   const {x, y, object} = info;
-//   if (object) {
-//     console.log(this)
-//     this.setState({
-//       visible: coalMineLayer, tooltip_x: x, tooltip_y: y,
-//       tooltip_text: object.properties.original.tot_prod,
-//     })
-//   } else {
-//     // ToolTip.innerHTML = '';
-//   }
+//FIXME: Need to make a function that takes a visibility object and zoomLevel
+// as args, build a layer list, and returns it. Eventually need to create
+// logic for updating data attributes as necessary. Each layer will have
+// some sort of scaling logic based on zoomLevel.
+
+// export const zoomLayers = (layers, zoomLevel) => {
+//   return [...layers].map((layer) => {
+//     return layer(zoomLevel)
+//   })
 // }
 
-const layers: LayersList = [
-  CoalMines,
-  Railroads,
-  OilPipelines,
-];
+const layerObjects = () => {
+  return [ OilWells, CoalMines, GasPipelines, ];
+}
 
-export default layers
+export const getLayers = (zoomLevel) => {
+
+  return [
+    OilWells(zoomLevel),
+    CoalMines(zoomLevel),
+    GasPipelines(zoomLevel),
+    // Railroads,
+    // OilPipelines,
+  ];
+
+};
+
+export const getLayersFromState = (layerState) => {
+
+
+  return [...layerState].map(layer => {
+
+  })
+
+};
+
+
+export const initializeLayerState = function(zoomLevel) {
+
+  const layers = [];
+  for (const layerObject of layerObjects()) {
+    layers.push({ func: layerObject})
+  }
+
+  return [...layers].map(layer => {
+    layer.visible = false;
+    layer.assetValue = assetValues[layer.func(zoomLevel).layerName]
+    return layer;
+  });
+
+}
+
+// export const reorderLayers = () {

@@ -1,5 +1,8 @@
+import {useContext} from 'react';
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
+import {ZoomLevelContext} from '../../ZoomContext';
+import {getLayers} from '../map/Layers';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -57,19 +60,44 @@ const StyledDrag = styled.div`
 
 const MenuLayersItem = (props) => {
 
+  // const {zoomLevel, setZoomLevel} = useContext(ZoomLevelContext);
+  const {contextZoomLevel, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
+  // const [zoomLevel, setZoomLevel] = contextZoomLevel;
+  const [mapLayers, setMapLayers] = contextMapLayers;
+  // const [dataYear, setDataYear] = contextDataYear;
+  const zoomLevel = contextZoomLevel[0];
+
+  const updateMapLayersVisibility = function(id, visible) {
+    console.log(id, visible)
+    const mapLayersRef = [...mapLayers]
+    let thisLayer = mapLayersRef.filter(obj => {
+      return obj.id === id
+    })
+    if (thisLayer) {
+      console.log(thisLayer)
+      thisLayer.visible = !(visible === true);
+    }
+    setMapLayers(mapLayersRef);
+  }
+
   return (
-    <StyledMenuLayersItem data-layer={props.layer_slug} className="option-li">
+    <StyledMenuLayersItem data-layer={props.layerName} className="option-li">
       <StyledDrag data-uk-icon="icon: list"
            className="drag uk-sortable-handle uk-icon"
            style={{userSelect: 'none', }}>
       </StyledDrag>
       <StyledLabel>
-        <StyledOptionTitle>{props.layer_name}</StyledOptionTitle>
+        <StyledOptionTitle>{props.displayName}</StyledOptionTitle>
         <StyledAssetValue> ($41 B)</StyledAssetValue>
         <StyledLeader />
-        <StyledLayersItemInput type="checkbox" className={props.layer_slug}
-          data-layername={props.layer_slug} data-assetvalue={props.asset_value}
-          onChange={e => console.log(props) } />
+        <StyledLayersItemInput
+          type="checkbox"
+          className={props.layerName}
+          data-layername={props.layerName}
+          // data-assetvalue={props.asset_value}
+          checked={props.checked}
+          onChange={() => updateMapLayersVisibility(props.id, props.checked)}
+        />
       </StyledLabel>
     </StyledMenuLayersItem>
   );

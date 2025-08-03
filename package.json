@@ -6,6 +6,7 @@
     "@deck.gl/widgets": "^9.1.13",
     "@loaders.gl/compression": "^4.2.4",
     "@loaders.gl/core": "^4.2.4",
+    "@luma.gl/constants": "^9.1.9",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
