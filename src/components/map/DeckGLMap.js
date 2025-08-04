@@ -1,13 +1,12 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import DeckGL from '@deck.gl/react';
 import {ZoomWidget, FullscreenWidget} from '@deck.gl/widgets';
 import '@deck.gl/widgets/stylesheet.css';
 import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styled from 'styled-components';
-import {getLayers} from './Layers';
+import {getLayersFromState} from './Layers';
 import {ZoomLevelContext} from '../../ZoomContext';
-import {layerObjects} from './Layers';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -35,13 +34,14 @@ const INITIAL_VIEW_STATE = {
 
 const DeckGLMap = (props) => {
 
-  const {contextZoomLevel, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
+  const {contextZoomLevel, contextLayerState, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
+  const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [dataYear, setDataYear] = contextDataYear;
 
   const updateMapLayers = function() {
-    setMapLayers(getLayers(zoomLevel));
+    setMapLayers(getLayersFromState(layerState, zoomLevel));
   }
 
   const updateViewState = function(view) {

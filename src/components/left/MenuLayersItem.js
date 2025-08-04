@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
 import {ZoomLevelContext} from '../../ZoomContext';
-import {getLayers} from '../map/Layers';
+import {getLayersFromState} from '../map/Layers';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -60,24 +60,20 @@ const StyledDrag = styled.div`
 
 const MenuLayersItem = (props) => {
 
-  // const {zoomLevel, setZoomLevel} = useContext(ZoomLevelContext);
-  const {contextZoomLevel, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
-  // const [zoomLevel, setZoomLevel] = contextZoomLevel;
+  const {contextZoomLevel, contextLayerState, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
   const [mapLayers, setMapLayers] = contextMapLayers;
   // const [dataYear, setDataYear] = contextDataYear;
-  const zoomLevel = contextZoomLevel[0];
+  const [layerState, setLayerState] = contextLayerState;
 
   const updateMapLayersVisibility = function(id, visible) {
-    console.log(id, visible)
-    const mapLayersRef = [...mapLayers]
-    let thisLayer = mapLayersRef.filter(obj => {
-      return obj.id === id
-    })
-    if (thisLayer) {
-      console.log(thisLayer)
-      thisLayer.visible = !(visible === true);
-    }
-    setMapLayers(mapLayersRef);
+    const layersRef = [...layerState]
+    setLayerState([...layersRef].map(layer => {
+      if (layer.func.id === id) {
+        layer.visible = !(visible === true);
+      }
+      return layer;
+    }));
+    setMapLayers(getLayersFromState(layerState));
   }
 
   return (

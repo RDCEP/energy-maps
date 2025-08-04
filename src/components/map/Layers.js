@@ -31,29 +31,29 @@ export const getLayers = (zoomLevel) => {
 
 };
 
-export const getLayersFromState = (layerState) => {
-
-
+export const getLayersFromState = (layerState, zoomLevel) => {
   return [...layerState].map(layer => {
-
+    return layer.func(zoomLevel, layer.visible);
   })
-
 };
 
+export const updateLayerState = function() {
+
+}
 
 export const initializeLayerState = function(zoomLevel) {
 
-  const layers = [];
-  for (const layerObject of layerObjects()) {
-    layers.push({ func: layerObject})
-  }
+  const layerState = [];
 
-  return [...layers].map(layer => {
+  for (const layerObject of layerObjects()) {
+    layerState.push({ func: layerObject})
+  }
+  [...layerState].map(layer => {
     layer.visible = false;
-    layer.assetValue = assetValues[layer.func(zoomLevel).layerName]
+    layer.assetValue = assetValues[layer.func.layerName]
     return layer;
   });
-
+  return layerState;
 }
 
 // export const reorderLayers = () {
