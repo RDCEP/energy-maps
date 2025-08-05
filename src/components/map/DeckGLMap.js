@@ -6,7 +6,10 @@ import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styled from 'styled-components';
 import {getLayersFromState} from './Layers';
-import {ZoomLevelContext} from '../../ZoomContext';
+import {InitialZoomLevel} from '../../const/InitialZoomLevel';
+import {ZoomLevelContext} from '../../contexts/ZoomContext';
+import {LayerContext} from '../../contexts/LayerContext';
+import {DataYearContext} from '../../contexts/DataYearContext';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -20,21 +23,22 @@ const StyledMap = styled.div`
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
 
-const initialZoom = 4;
 const minZoom = 1;
 const maxZoom = 10;
 
 const INITIAL_VIEW_STATE = {
   longitude: -105,
   latitude: 40,
-  zoom: initialZoom,
+  zoom: InitialZoomLevel,
   minZoom: minZoom,
   maxZoom: maxZoom,
 }
 
 const DeckGLMap = (props) => {
 
-  const {contextZoomLevel, contextLayerState, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
+  const {contextZoomLevel} = useContext(ZoomLevelContext);
+  const {contextDataYear} = useContext(DataYearContext);
+  const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
   const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;

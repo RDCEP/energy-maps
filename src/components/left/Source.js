@@ -16,8 +16,10 @@ const Source = (props) => {
   return (
     <StyledSourceSection>
       <StyledH6>Source</StyledH6>
-      <StyledSourceP><a href="">A Physical Inventory of the U.S. Energy System.</a>
-        Chen, Weisbach, Matteson, Brizius, Moyer, 2020.</StyledSourceP>
+      <StyledSourceP>
+        <a href="">A Physical Inventory of the U.S. Energy System.</a> Chen,
+          Weisbach, Matteson, Brizius, Moyer, 2020.
+      </StyledSourceP>
     </StyledSourceSection>
   )
 }

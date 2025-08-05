@@ -4,7 +4,9 @@ import Main from './components/Main';
 import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 import GlobalStyle from './components/GlobalStyle';
-import {ZoomLevelContextProvider} from './ZoomContext';
+import {ZoomLevelContextProvider} from './contexts/ZoomContext';
+import {LayerContextProvider} from './contexts/LayerContext';
+import {DataYearContextProvider} from './contexts/DataYearContext';
 
 function App() {
 
@@ -14,9 +16,13 @@ function App() {
 
   return (
     <ZoomLevelContextProvider>
-      <GlobalStyle />
-      <MainHeader />
-      <Main />
+      <LayerContextProvider>
+        <DataYearContextProvider>
+          <GlobalStyle />
+          <MainHeader />
+          <Main />
+        </DataYearContextProvider>
+      </LayerContextProvider>
     </ZoomLevelContextProvider>
   );
 }

@@ -1,6 +1,7 @@
 import {useState, useRef} from 'react';
 import styled from 'styled-components';
 import DeckGLMap from './map/DeckGLMap';
+import {DndContext} from '@dnd-kit/core';
 import LeftPane from './left/LeftPane';
 import ToolTip from './map/ToolTip';
 
@@ -35,7 +36,9 @@ const Main = (props) => {
         {tooltip_text}
       </ToolTip>
       <div></div>
-      <LeftPane />
+      <DndContext>
+        <LeftPane />
+      </DndContext>
     </StyledMain>
   );
 };

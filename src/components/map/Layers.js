@@ -50,7 +50,7 @@ export const initializeLayerState = function(zoomLevel) {
   }
   [...layerState].map(layer => {
     layer.visible = false;
-    layer.assetValue = assetValues[layer.func.layerName]
+    layer.assetValue = assetValues[layer.func.layerName]['2012']
     return layer;
   });
   return layerState;

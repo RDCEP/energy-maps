@@ -1,8 +1,10 @@
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import styled from 'styled-components';
+import {useDraggable} from '@dnd-kit/core';
 import CssVars from '../../const/CssVars';
-import {ZoomLevelContext} from '../../ZoomContext';
+import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
+import DragHandle from './DragHandle';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -56,14 +58,32 @@ const StyledDrag = styled.div`
   right: 13.5rem;
   display: inline-block;
   line-height: 1.45em;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  padding: 0;
+  background-color: transparent;
+  line-height: 0;
+  cursor: move;
 `;
 
 const MenuLayersItem = (props) => {
 
-  const {contextZoomLevel, contextLayerState, contextMapLayers, contextDataYear} = useContext(ZoomLevelContext);
+  const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [mapLayers, setMapLayers] = contextMapLayers;
-  // const [dataYear, setDataYear] = contextDataYear;
   const [layerState, setLayerState] = contextLayerState;
+  const [dragIdx, setDragIdx] = useState(null);
+
+  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+    id: props.id,
+  });
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined;
 
   const updateMapLayersVisibility = function(id, visible) {
     const layersRef = [...layerState]
@@ -76,11 +96,42 @@ const MenuLayersItem = (props) => {
     setMapLayers(getLayersFromState(layerState));
   }
 
+  const handleDragStart = function(idx) {
+    console.log(idx)
+    setDragIdx(idx)
+  }
+
+  const handleDragEnd = function(e) {
+    e.preventDefault();
+  }
+
+  const handleDragDrop = function(idx) {
+    const newLayerState = [...layerState];
+    const draggedLayer = newLayerState[dragIdx];
+    newLayerState.splice(dragIdx, 1);
+    newLayerState.splice(idx, 0, draggedLayer);
+    console.log(layerState, newLayerState);
+    setLayerState(newLayerState);
+    setDragIdx(null);
+  }
+
   return (
-    <StyledMenuLayersItem data-layer={props.layerName} className="option-li">
-      <StyledDrag data-uk-icon="icon: list"
-           className="drag uk-sortable-handle uk-icon"
-           style={{userSelect: 'none', }}>
+    <StyledMenuLayersItem
+      ref={setNodeRef}
+      data-layer={props.layerName}
+      data-id={props.id}
+      className="option-li"
+    >
+      <StyledDrag
+        className="drag"
+        // style={{userSelect: 'none', }}
+        {...listeners}
+        {...attributes}
+        // onDragStart={() => handleDragStart(props.index)}
+        // onDragOver={handleDragEnd}
+        // onDrop={() => handleDragDrop(props.index)}
+      >
+        <DragHandle />
       </StyledDrag>
       <StyledLabel>
         <StyledOptionTitle>{props.displayName}</StyledOptionTitle>
