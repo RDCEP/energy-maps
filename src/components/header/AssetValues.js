@@ -51,13 +51,3 @@ export const assetValues = {
     '2012': 132_000_000_000,
   }
 }
-
-export const getAssetValue = function(layerName, dataYear) {
-  return assetValues[layerName][String(dataYear)];
-}
-
-export const prettyAssetValue = function(assetValue) {
-  const magnitude = Math.floor(Math.log10(assetValue) / 3);
-  const unit = {1: 'k', 2: 'M', 3: 'B', 4: 'T'}[magnitude]
-  return `$${Math.round(assetValue / Math.pow(10, magnitude * 3) * 10) / 10} ${unit}`
-}

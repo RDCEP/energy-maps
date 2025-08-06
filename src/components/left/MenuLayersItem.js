@@ -5,6 +5,7 @@ import CssVars from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
 import DragHandle from './DragHandle';
+import {prettyAssetValue} from '../header/AssetTotal';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -134,7 +135,7 @@ const MenuLayersItem = (props) => {
       </StyledDrag>
       <StyledLabel>
         <StyledOptionTitle>{props.displayName}</StyledOptionTitle>&nbsp;
-        <StyledAssetValue>(${Math.round(props.assetValue / 1000000000)} B)</StyledAssetValue>
+        <StyledAssetValue>({prettyAssetValue(props.assetValue)})</StyledAssetValue>
         <StyledLeader />
         <StyledLayersItemInput
           type="checkbox"

@@ -2,9 +2,7 @@ import {useContext} from 'react';
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
-import {DataYearContext} from '../../contexts/DataYearContext';
-import {getLayersFromState} from '../map/Layers';
-import {prettyAssetValue} from '../../const/asset_values/AssetValues';
+import {assetValues} from './AssetValues';
 
 
 const StyledH2 = styled.h2`
@@ -27,6 +25,17 @@ const AssetTotalTag = styled.span`
   font-weight: normal;
   padding: 0 2rem 0 0;
 `
+
+
+export const getAssetValue = function(layerName, dataYear) {
+  return assetValues[layerName][String(dataYear)];
+}
+
+export const prettyAssetValue = function(assetValue) {
+  const magnitude = Math.floor(Math.log10(assetValue) / 3);
+  const unit = {1: 'k', 2: 'M', 3: 'B', 4: 'T'}[magnitude]
+  return `$${Math.round(assetValue / Math.pow(10, magnitude * 3) * 10) / 10} ${unit}`
+}
 
 const AssetTotal = (props) => {
 

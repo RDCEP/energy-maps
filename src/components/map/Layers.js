@@ -2,7 +2,7 @@ import {CoalMines} from './layers/CoalMines';
 import {OilWells} from './layers/OilWells';
 import {GasPipelines} from './layers/GasPipelines';
 import {WindFarms} from './layers/WindFarms';
-import {getAssetValue} from '../../const/asset_values/AssetValues';
+import {getAssetValue} from '../header/AssetTotal';
 
 const layerObjects = () => {
   return [ OilWells, CoalMines, GasPipelines, WindFarms];
