@@ -21,7 +21,7 @@ const MenuLayers = (props) => {
   const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [dataYear, setDataYear] = contextDataYear;
-  const layers = getLayersFromState(layerState, zoomLevel);
+  const layers = getLayersFromState(layerState, zoomLevel, dataYear);
 
   return (
     <section>
@@ -34,7 +34,7 @@ const MenuLayers = (props) => {
             index={index}
             layerName={item.props.layerName}
             displayName={item.props.displayName}
-            // assetValue={item.props.assetValue}
+            assetValue={item.props.assetValue}
             checked={item.props.visible}
           />
         ))}

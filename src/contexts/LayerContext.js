@@ -1,12 +1,12 @@
 import { createContext, useState } from 'react';
 import {initializeLayerState, getLayersFromState} from '../components/map/Layers';
-import {InitialZoomLevel} from '../const/InitialZoomLevel';
+import {initialDataYear, InitialState} from '../const/InitialState';
 
 export const LayerContext = createContext(null);
 
 export const LayerContextProvider = ({ children }) => {
-  const [layerState, setLayerState] = useState(initializeLayerState());
-  const [mapLayers, setMapLayers] = useState(getLayersFromState(layerState, InitialZoomLevel));
+  const [layerState, setLayerState] = useState(initializeLayerState(initialDataYear));
+  const [mapLayers, setMapLayers] = useState(getLayersFromState(layerState, InitialState, initialDataYear));
 
   return (
     <LayerContext.Provider value={{

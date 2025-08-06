@@ -6,7 +6,7 @@ import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styled from 'styled-components';
 import {getLayersFromState} from './Layers';
-import {InitialZoomLevel} from '../../const/InitialZoomLevel';
+import {InitialState} from '../../const/InitialState';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {LayerContext} from '../../contexts/LayerContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
@@ -29,7 +29,7 @@ const maxZoom = 10;
 const INITIAL_VIEW_STATE = {
   longitude: -105,
   latitude: 40,
-  zoom: InitialZoomLevel,
+  zoom: InitialState,
   minZoom: minZoom,
   maxZoom: maxZoom,
 }
