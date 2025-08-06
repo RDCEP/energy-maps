@@ -1,7 +1,8 @@
 import {CoalMines} from './layers/CoalMines';
 import {OilWells} from './layers/OilWells';
 import {GasPipelines} from './layers/GasPipelines';
-import {assetValues} from '../../const/asset_values/AssetValues';
+import {WindFarms} from './layers/WindFarms';
+import {getAssetValue} from '../../const/asset_values/AssetValues';
 
 
 //FIXME: Need to make a function that takes a visibility object and zoomLevel
@@ -16,7 +17,7 @@ import {assetValues} from '../../const/asset_values/AssetValues';
 // }
 
 const layerObjects = () => {
-  return [ OilWells, CoalMines, GasPipelines, ];
+  return [ OilWells, CoalMines, GasPipelines, WindFarms];
 }
 
 export const getLayers = (zoomLevel) => {
@@ -31,9 +32,13 @@ export const getLayers = (zoomLevel) => {
 
 };
 
-export const getLayersFromState = (layerState, zoomLevel) => {
+export const getLayersFromState = (layerState, zoomLevel, dataYear) => {
   return [...layerState].map(layer => {
-    return layer.func(zoomLevel, layer.visible);
+    return layer.func(
+      zoomLevel,
+      layer.visible,
+      getAssetValue(layer.func.layerName, dataYear)
+    );
   })
 };
 
@@ -41,7 +46,7 @@ export const updateLayerState = function() {
 
 }
 
-export const initializeLayerState = function(zoomLevel) {
+export const initializeLayerState = function(dataYear) {
 
   const layerState = [];
 
@@ -50,7 +55,7 @@ export const initializeLayerState = function(zoomLevel) {
   }
   [...layerState].map(layer => {
     layer.visible = false;
-    layer.assetValue = assetValues[layer.func.layerName]['2012']
+    layer.assetValue = getAssetValue(layer.func.layerName, dataYear)
     return layer;
   });
   return layerState;

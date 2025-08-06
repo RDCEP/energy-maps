@@ -110,7 +110,6 @@ const MenuLayersItem = (props) => {
     const draggedLayer = newLayerState[dragIdx];
     newLayerState.splice(dragIdx, 1);
     newLayerState.splice(idx, 0, draggedLayer);
-    console.log(layerState, newLayerState);
     setLayerState(newLayerState);
     setDragIdx(null);
   }
@@ -134,14 +133,14 @@ const MenuLayersItem = (props) => {
         <DragHandle />
       </StyledDrag>
       <StyledLabel>
-        <StyledOptionTitle>{props.displayName}</StyledOptionTitle>
-        <StyledAssetValue> ($41 B)</StyledAssetValue>
+        <StyledOptionTitle>{props.displayName}</StyledOptionTitle>&nbsp;
+        <StyledAssetValue>(${Math.round(props.assetValue / 1000000000)} B)</StyledAssetValue>
         <StyledLeader />
         <StyledLayersItemInput
           type="checkbox"
           className={props.layerName}
           data-layername={props.layerName}
-          // data-assetvalue={props.asset_value}
+          data-assetvalue={props.assetValue}
           checked={props.checked}
           onChange={() => updateMapLayersVisibility(props.id, props.checked)}
         />

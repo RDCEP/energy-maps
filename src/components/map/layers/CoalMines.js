@@ -1,5 +1,5 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
-import {GL} from '@luma.gl/constants';
+// import {GL} from '@luma.gl/constants';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../../../const/MapIcons';
 import {extendLayer} from './extendLayer';
@@ -12,13 +12,14 @@ export const CoalMines = extendLayer(
     id: ID,
     layerName: LAYER_NAME,
   },
-  function(zoomLevel, visible) {
+  function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Coal Mines',
+      assetValue: assetValue,
       visible: visible,
       data: `${api_url}/mines/coal/2012/1/1/${bbox}/`,
       pickable: true,

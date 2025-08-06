@@ -1,5 +1,11 @@
+import {useContext} from 'react';
 import styled from 'styled-components';
 import CssVars from '../../const/CssVars';
+import {LayerContext} from '../../contexts/LayerContext';
+import {DataYearContext} from '../../contexts/DataYearContext';
+import {getLayersFromState} from '../map/Layers';
+import {prettyAssetValue} from '../../const/asset_values/AssetValues';
+
 
 const StyledH2 = styled.h2`
   line-height: 1.25em;
@@ -24,9 +30,19 @@ const AssetTotalTag = styled.span`
 
 const AssetTotal = (props) => {
 
+  // const {contextDataYear} = useContext(DataYearContext);
+  const {contextLayerState, contextMapLayers} = useContext(LayerContext);
+  const [layerState, setLayerState] = contextLayerState;
+  // const [mapLayers, setMapLayers] = contextMapLayers;
+  // const [dataYear, setDataYear] = contextDataYear;
+
+  const totalAssetValue = prettyAssetValue(
+    layerState.reduce((acc, val) => acc + val.assetValue, 0)
+  );
+
   return (
     <StyledH2>
-      <AssetTotalSpan>$41 B</AssetTotalSpan>
+      <AssetTotalSpan>{totalAssetValue}</AssetTotalSpan>
       <AssetTotalTag>
         total asset value<br />
         <span id="value-year">out of $9.8T in 2012</span>

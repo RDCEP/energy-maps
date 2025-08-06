@@ -11,13 +11,14 @@ export const GasPipelines = extendLayer(
     id: ID,
     layerName: LAYER_NAME,
   },
-  function(zoomLevel, visible) {
+  function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Gas Pipelines',
+      assetValue: assetValue,
       visible: visible,
       data: `${api_url}/pipelines/gas/2012/1/1/${bbox}/`,
       pickable: true,
