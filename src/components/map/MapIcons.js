@@ -1,4 +1,4 @@
-import icons from '../static/images/icons.png'
+import icons from '../../static/images/icons.png'
 
 export const iconAtlas = icons
 
