@@ -30,11 +30,8 @@ const AssetTotalTag = styled.span`
 
 const AssetTotal = (props) => {
 
-  // const {contextDataYear} = useContext(DataYearContext);
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [layerState, setLayerState] = contextLayerState;
-  // const [mapLayers, setMapLayers] = contextMapLayers;
-  // const [dataYear, setDataYear] = contextDataYear;
 
   const totalAssetValue = prettyAssetValue(
     layerState.reduce((acc, val) => acc + val.assetValue, 0)
