@@ -14,6 +14,13 @@ const StyledMain = styled.main`
   overflow: hidden;
 `;
 
+/**
+ * The main wrapper around the header, left pane, map, legend, etc.
+ *
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
 const Main = (props) => {
 
   const [tooltip_visible, setTooltipVisible] = useState(false);

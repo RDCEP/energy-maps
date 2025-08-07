@@ -72,6 +72,16 @@ const StyledDrag = styled.div`
   cursor: move;
 `;
 
+/**
+ * An item in the list of map layers in the interface on the left side of
+ * the application. Each item has a checkbox to toggle the visibility
+ * of a map layer, and can be dragged and reordered within the list
+ * to reorder the layers in the map.
+ *
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
 const MenuLayersItem = (props) => {
 
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);

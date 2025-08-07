@@ -13,13 +13,20 @@ const LayersList = styled.ul`
   position: relative;
 `;
 
+/**
+ * The list of map layers that appear in the left side of the interface.
+ * The user manipulates this list to control the map display.
+ *
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
 const MenuLayers = (props) => {
   const {contextZoomLevel} = useContext(ZoomLevelContext);
-  const {contextDataYear} = useContext(DataYearContext);
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
+  const {contextDataYear} = useContext(DataYearContext)
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
   const [layerState, setLayerState] = contextLayerState;
-  const [mapLayers, setMapLayers] = contextMapLayers;
   const [dataYear, setDataYear] = contextDataYear;
   const layers = getLayersFromState(layerState, zoomLevel, dataYear);
 

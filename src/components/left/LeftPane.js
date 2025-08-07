@@ -29,8 +29,15 @@ const StyledContainer = styled.div`
   width: ${CssVars.options_width};
 `;
 
+/**
+ * The interface on the left side of the screen through which the
+ * user controls the map layers.
+ *
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
 const LeftPane = (props) => {
-
   return (
     <StyledDialog data-toggle-state="open">
       <StyledShim>
