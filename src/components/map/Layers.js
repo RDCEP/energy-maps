@@ -3,6 +3,7 @@ import {OilWells} from './layers/OilWells';
 import {GasPipelines} from './layers/GasPipelines';
 import {WindFarms} from './layers/WindFarms';
 import {getAssetValue} from '../header/AssetTotal';
+import {data} from 'uikit/src/js/util';
 
 const layerObjects = () => {
   return [ OilWells, CoalMines, GasPipelines, WindFarms];
@@ -26,6 +27,7 @@ export const initializeLayerState = function(dataYear) {
     layerState.push({ func: layerObject})
   }
   [...layerState].map(layer => {
+    layer.id = layer.func.id;
     layer.visible = false;
     layer.assetValue = getAssetValue(layer.func.layerName, dataYear)
     return layer;

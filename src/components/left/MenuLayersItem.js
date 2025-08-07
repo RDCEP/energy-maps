@@ -1,11 +1,13 @@
 import {useContext, useState} from 'react';
+import {useSortable} from '@dnd-kit/sortable';
 import styled from 'styled-components';
-import {useDraggable} from '@dnd-kit/core';
 import CssVars from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
 import DragHandle from './DragHandle';
 import {prettyAssetValue} from '../header/AssetTotal';
+import {ZoomLevelContext} from '../../contexts/ZoomContext';
+import {DataYearContext} from '../../contexts/DataYearContext';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -68,7 +70,7 @@ const StyledDrag = styled.div`
   text-transform: none;
   padding: 0;
   background-color: transparent;
-  line-height: 0;
+  line-height: 1.4;
   cursor: move;
 `;
 
@@ -85,11 +87,14 @@ const StyledDrag = styled.div`
 const MenuLayersItem = (props) => {
 
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
-  const [mapLayers, setMapLayers] = contextMapLayers;
+  const {contextZoomLevel} = useContext(ZoomLevelContext);
+  const {contextDataYear} = useContext(DataYearContext);
   const [layerState, setLayerState] = contextLayerState;
-  // const [dragIdx, setDragIdx] = useState(null);
+  const [mapLayers, setMapLayers] = contextMapLayers;
+  const [zoomLevel, setZoomLevel] = contextZoomLevel;
+  const [dataYear, setDataYear] = contextDataYear;
 
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: props.id,
   });
   const style = transform ? {
@@ -104,12 +109,14 @@ const MenuLayersItem = (props) => {
       }
       return layer;
     }));
-    setMapLayers(getLayersFromState(layerState));
+    setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
   return (
     <StyledMenuLayersItem
       ref={setNodeRef}
+      style={style}
+      {...attributes}
       data-layer={props.layerName}
       data-id={props.id}
       className="option-li"
@@ -118,7 +125,6 @@ const MenuLayersItem = (props) => {
         className="drag"
         // style={{userSelect: 'none', }}
         {...listeners}
-        {...attributes}
         // onDragStart={() => handleDragStart(props.index)}
         // onDragOver={handleDragEnd}
         // onDrop={() => handleDragDrop(props.index)}

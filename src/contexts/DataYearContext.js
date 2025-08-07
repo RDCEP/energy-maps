@@ -1,11 +1,11 @@
 import { createContext, useState } from 'react';
 import {initializeLayerState, getLayersFromState} from '../components/map/Layers';
-import {InitialState} from '../const/InitialState';
+import {initialDataYear} from '../const/InitialState';
 
 export const DataYearContext = createContext(null);
 
 export const DataYearContextProvider = ({ children }) => {
-  const [dataYear, setDataYear] = useState(2012);
+  const [dataYear, setDataYear] = useState(initialDataYear);
 
   return (
     <DataYearContext.Provider

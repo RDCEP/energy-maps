@@ -10,6 +10,7 @@ import {InitialState} from '../../const/InitialState';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {LayerContext} from '../../contexts/LayerContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
+import {data} from 'uikit/src/js/util';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -45,7 +46,7 @@ const DeckGLMap = (props) => {
   const [dataYear, setDataYear] = contextDataYear;
 
   const updateMapLayers = function() {
-    setMapLayers(getLayersFromState(layerState, zoomLevel));
+    setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
   const updateViewState = function(view) {
