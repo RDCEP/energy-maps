@@ -2,6 +2,7 @@ import {useContext} from 'react';
 import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
+import {AssetValueContext} from '../../contexts/AssetValueContext';
 import {assetValues} from './AssetValues';
 
 
@@ -26,24 +27,25 @@ const AssetTotalTag = styled.span`
   padding: 0 2rem 0 0;
 `
 
-
 export const getAssetValue = function(layerName, dataYear) {
   return assetValues[layerName][String(dataYear)];
 }
 
 export const prettyAssetValue = function(assetValue) {
-  const magnitude = Math.floor(Math.log10(assetValue) / 3);
-  const unit = {1: 'k', 2: 'M', 3: 'B', 4: 'T'}[magnitude]
+  const magnitude = assetValue === 0 ? 0 : Math.floor(Math.log10(assetValue) / 3);
+  const unit = assetValue === 0 ? '' : {1: 'k', 2: 'M', 3: 'B', 4: 'T'}[magnitude]
   return `$${Math.round(assetValue / Math.pow(10, magnitude * 3) * 10) / 10} ${unit}`
 }
 
 export const AssetTotal = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [layerState, setLayerState] = contextLayerState;
+  const {contextAssetValue} = useContext(AssetValueContext)
+  const [totalAssetValue, setTotalAssetValue] = contextAssetValue;
 
-  const totalAssetValue = prettyAssetValue(
-    layerState.reduce((acc, val) => acc + val.assetValue, 0)
-  );
+  setTotalAssetValue(prettyAssetValue(
+    layerState.reduce((acc, val) => val.visible ? acc + val.assetValue : acc, 0)
+  ));
 
   return (
     <StyledH2>

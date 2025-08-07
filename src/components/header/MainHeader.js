@@ -7,7 +7,7 @@ const Header = styled.header`
   background-color: ${CssVars.darkblue};
   color: ${CssVars.white};
   position: relative;
-  width: 45rem;
+  width: 46rem;
   display: inline-block;
   margin: 1rem 0 0 0;
   padding: 1rem 3rem 1rem 2rem;

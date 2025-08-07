@@ -7,6 +7,7 @@ import {GlobalStyle} from './components/GlobalStyle';
 import {ZoomLevelContextProvider} from './contexts/ZoomContext';
 import {LayerContextProvider} from './contexts/LayerContext';
 import {DataYearContextProvider} from './contexts/DataYearContext';
+import {AssetValueContextProvider} from './contexts/AssetValueContext';
 
 function App() {
 
@@ -18,9 +19,11 @@ function App() {
     <ZoomLevelContextProvider>
       <LayerContextProvider>
         <DataYearContextProvider>
-          <GlobalStyle />
-          <MainHeader />
-          <Main />
+          <AssetValueContextProvider>
+            <GlobalStyle />
+            <MainHeader />
+            <Main />
+          </AssetValueContextProvider>
         </DataYearContextProvider>
       </LayerContextProvider>
     </ZoomLevelContextProvider>

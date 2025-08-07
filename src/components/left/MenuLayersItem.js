@@ -8,6 +8,7 @@ import {DragHandle} from './DragHandle';
 import {prettyAssetValue} from '../header/AssetTotal';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
+import {AssetValueContext} from '../../contexts/AssetValueContext';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -89,10 +90,12 @@ export const MenuLayersItem = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextDataYear} = useContext(DataYearContext);
+  const {contextAssetValue} = useContext(AssetValueContext);
   const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
   const [dataYear, setDataYear] = contextDataYear;
+  const [totalAssetValue, setTotalAssetValue] = contextAssetValue;
 
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: props.id,
@@ -109,6 +112,9 @@ export const MenuLayersItem = (props) => {
       }
       return layer;
     }));
+    setTotalAssetValue(prettyAssetValue(
+      layerState.reduce((acc, val) => acc + val.assetValue, 0)
+    ));
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
