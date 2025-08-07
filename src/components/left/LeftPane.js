@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
-import Source from './Source';
-import MenuLayers from './MenuLayers';
+import {CssVars} from '../../const/CssVars';
+import {Source} from './Source';
+import {MenuLayers} from './MenuLayers';
 
 const StyledDialog = styled.dialog`
   display: block;
@@ -37,7 +37,7 @@ const StyledContainer = styled.div`
  * @return {JSX.Element}
  * @constructor
  */
-const LeftPane = (props) => {
+export const LeftPane = (props) => {
   return (
     <StyledDialog data-toggle-state="open">
       <StyledShim>
@@ -49,5 +49,3 @@ const LeftPane = (props) => {
     </StyledDialog>
   );
 };
-
-export default LeftPane;

@@ -1,9 +1,9 @@
-import {useState, useRef} from 'react';
+import {useState} from 'react';
 import styled from 'styled-components';
-import DeckGLMap from './map/DeckGLMap';
+import {DeckGLMap} from './map/DeckGLMap';
 import {DndContext} from '@dnd-kit/core';
-import LeftPane from './left/LeftPane';
-import ToolTip from './map/ToolTip';
+import {LeftPane} from './left/LeftPane';
+import {ToolTip} from './map/ToolTip';
 
 const StyledMain = styled.main`
   position: absolute;
@@ -21,7 +21,7 @@ const StyledMain = styled.main`
  * @return {JSX.Element}
  * @constructor
  */
-const Main = (props) => {
+export const Main = (props) => {
 
   const [tooltip_visible, setTooltipVisible] = useState(false);
   const [tooltip_x, setTooltipX] = useState(0);
@@ -49,5 +49,3 @@ const Main = (props) => {
     </StyledMain>
   );
 };
-
-export default Main;

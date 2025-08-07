@@ -6,11 +6,10 @@ import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styled from 'styled-components';
 import {getLayersFromState} from './Layers';
-import {InitialState} from '../../const/InitialState';
+import {initialZoom} from '../../const/InitialZoom';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {LayerContext} from '../../contexts/LayerContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
-import {data} from 'uikit/src/js/util';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -30,12 +29,12 @@ const maxZoom = 10;
 const INITIAL_VIEW_STATE = {
   longitude: -105,
   latitude: 40,
-  zoom: InitialState,
+  zoom: initialZoom,
   minZoom: minZoom,
   maxZoom: maxZoom,
 }
 
-const DeckGLMap = (props) => {
+export const DeckGLMap = (props) => {
 
   const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextDataYear} = useContext(DataYearContext);
@@ -83,5 +82,3 @@ const DeckGLMap = (props) => {
     </StyledMap>
   );
 };
-
-export default DeckGLMap;

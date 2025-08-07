@@ -10,10 +10,8 @@ const StyledToolTip = styled(ReactTooltip)`
   top: ${props => `${props.y}px`};
 `;
 
-const ToolTip = (props) => {
+export const ToolTip = (props) => {
   return (
     <StyledToolTip className="tooltip"></StyledToolTip>
   )
-}
-
-export default ToolTip;
+};

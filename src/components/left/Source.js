@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import StyledH6 from '../../const/StyledBlocks';
+import {StyledH6} from '../../const/StyledBlocks';
 
 const StyledSourceSection = styled.section`
 `;
@@ -11,7 +11,7 @@ const StyledSourceP = styled.p`
   padding: 0 2rem;
 `;
 
-const Source = (props) => {
+export const Source = (props) => {
 
   return (
     <StyledSourceSection>
@@ -22,6 +22,4 @@ const Source = (props) => {
       </StyledSourceP>
     </StyledSourceSection>
   )
-}
-
-export default Source;
+};

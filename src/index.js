@@ -1,7 +1,6 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom';
-// import './static/css/main.css';
 import App from './App';
 import "uikit/dist/css/uikit.min.css";
 import "uikit/dist/js/uikit.min.js";

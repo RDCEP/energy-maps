@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
+import {CssVars} from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
 import {assetValues} from './AssetValues';
 
@@ -37,8 +37,7 @@ export const prettyAssetValue = function(assetValue) {
   return `$${Math.round(assetValue / Math.pow(10, magnitude * 3) * 10) / 10} ${unit}`
 }
 
-const AssetTotal = (props) => {
-
+export const AssetTotal = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [layerState, setLayerState] = contextLayerState;
 
@@ -56,5 +55,3 @@ const AssetTotal = (props) => {
     </StyledH2>
   );
 };
-
-export default AssetTotal;

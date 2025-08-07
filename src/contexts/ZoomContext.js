@@ -1,11 +1,11 @@
 import { createContext, useState } from 'react';
 import {initializeLayerState, getLayersFromState} from '../components/map/Layers';
-import {InitialState} from '../const/InitialState';
+import {initialZoom} from '../const/InitialZoom';
 
 export const ZoomLevelContext = createContext(null);
 
 export const ZoomLevelContextProvider = ({ children }) => {
-  const [zoomLevel, setZoomLevel] = useState(InitialState);
+  const [zoomLevel, setZoomLevel] = useState(initialZoom);
 
   return (
     <ZoomLevelContext.Provider

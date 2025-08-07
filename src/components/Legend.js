@@ -1,4 +1,4 @@
-const Legend = (props) => {
+export const Legend = (props) => {
 
   return (
     <div className="legend" data-toggle-state="load">
@@ -18,5 +18,3 @@ const Legend = (props) => {
     </div>
   );
 };
-
-export default Legend;

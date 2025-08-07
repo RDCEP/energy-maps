@@ -1,10 +1,10 @@
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import {useSortable} from '@dnd-kit/sortable';
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
+import {CssVars} from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
-import DragHandle from './DragHandle';
+import {DragHandle} from './DragHandle';
 import {prettyAssetValue} from '../header/AssetTotal';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
@@ -84,7 +84,7 @@ const StyledDrag = styled.div`
  * @return {JSX.Element}
  * @constructor
  */
-const MenuLayersItem = (props) => {
+export const MenuLayersItem = (props) => {
 
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const {contextZoomLevel} = useContext(ZoomLevelContext);
@@ -123,11 +123,7 @@ const MenuLayersItem = (props) => {
     >
       <StyledDrag
         className="drag"
-        // style={{userSelect: 'none', }}
         {...listeners}
-        // onDragStart={() => handleDragStart(props.index)}
-        // onDragOver={handleDragEnd}
-        // onDrop={() => handleDragDrop(props.index)}
       >
         <DragHandle />
       </StyledDrag>
@@ -147,5 +143,3 @@ const MenuLayersItem = (props) => {
     </StyledMenuLayersItem>
   );
 }
-
-export default MenuLayersItem;

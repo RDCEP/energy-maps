@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
+import {CssVars} from '../../const/CssVars';
 import logo from '../../static/images/rdcep_logo.png';
 
 
@@ -25,8 +25,7 @@ const Image = styled.img`
   width: 3.5rem;
 `
 
-const LogoWrap = (props) => {
-
+export const LogoWrap = (props) => {
   return (
     <LogoWrapDiv>
       <FlexShim>
@@ -35,5 +34,3 @@ const LogoWrap = (props) => {
     </LogoWrapDiv>
   );
 };
-
-export default LogoWrap;

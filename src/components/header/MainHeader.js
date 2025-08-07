@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import CssVars from '../../const/CssVars';
-import AssetTotal from './AssetTotal';
-import LogoWrap from './LogoWrap';
+import {CssVars} from '../../const/CssVars';
+import {AssetTotal} from './AssetTotal';
+import {LogoWrap} from './LogoWrap';
 
 const Header = styled.header`
   background-color: ${CssVars.darkblue};
@@ -24,8 +24,7 @@ const H1 = styled.h1`
   padding: 0 3rem 0 0;
 `
 
-const MainHeader = (props) => {
-
+export const MainHeader = (props) => {
   return (
     <Header>
       <LogoWrap />
@@ -34,5 +33,3 @@ const MainHeader = (props) => {
     </Header>
   );
 };
-
-export default MainHeader;

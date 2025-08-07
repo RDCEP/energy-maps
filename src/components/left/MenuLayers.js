@@ -1,16 +1,13 @@
-import {useRef, useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useContext} from 'react';
 import {DndContext, closestCenter, KeyboardSensor, PointerSensor,
   useSensor, useSensors,} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy,
   arrayMove, } from '@dnd-kit/sortable';
 import styled from 'styled-components';
-import StyledH6 from '../../const/StyledBlocks';
-import {ZoomLevelContext} from '../../contexts/ZoomContext';
+import {StyledH6} from '../../const/StyledBlocks';
 import {LayerContext} from '../../contexts/LayerContext';
-import {DataYearContext} from '../../contexts/DataYearContext';
-import {getLayersFromState} from '../map/Layers';
-import MenuLayersItem from './MenuLayersItem';
+import {MenuLayersItem} from './MenuLayersItem';
 
 const LayersList = styled.ul`
   padding: 0 3.5rem 0 2rem;
@@ -25,11 +22,7 @@ const LayersList = styled.ul`
  * @return {JSX.Element}
  * @constructor
  */
-const MenuLayers = (props) => {
-  // const {contextZoomLevel} = useContext(ZoomLevelContext);
-  // const {contextDataYear} = useContext(DataYearContext)
-  // const [zoomLevel, setZoomLevel] = contextZoomLevel;
-  // const [dataYear, setDataYear] = contextDataYear;
+export const MenuLayers = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
@@ -60,10 +53,12 @@ const MenuLayers = (props) => {
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd} >
+        onDragEnd={handleDragEnd}
+      >
       <SortableContext
         items={mapLayers}
-        strategy={verticalListSortingStrategy} >
+        strategy={verticalListSortingStrategy}
+      >
         <LayersList>
           {[...mapLayers].reverse().map((item, index) => (
             <MenuLayersItem
@@ -81,5 +76,3 @@ const MenuLayers = (props) => {
     </section>
   );
 };
-
-export default MenuLayers;

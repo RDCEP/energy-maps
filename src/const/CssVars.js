@@ -8,7 +8,7 @@ const dark_blue = '#024964';
 const white = '#ffffff';
 const black = '#000000';
 
-const CssVars = {
+export const CssVars = {
   darkblue: dark_blue,
   white: white,
   light_grey: '#E7EFF2',
@@ -31,6 +31,4 @@ const CssVars = {
   z_options_toggle: 780,
   z_main_map: 510,
   z_zoom_target: 590,
-}
-
-export default CssVars;
+};
