@@ -22,19 +22,14 @@ const LayersList = styled.ul`
  * @constructor
  */
 const MenuLayers = (props) => {
-  const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
-  const {contextDataYear} = useContext(DataYearContext)
-  const [zoomLevel, setZoomLevel] = contextZoomLevel;
-  const [layerState, setLayerState] = contextLayerState;
-  const [dataYear, setDataYear] = contextDataYear;
-  const layers = getLayersFromState(layerState, zoomLevel, dataYear);
+  const [mapLayers, setMapLayers] = contextMapLayers;
 
   return (
     <section>
       <StyledH6>Map Options</StyledH6>
       <LayersList>
-        {[...layers].reverse().map((item, index) => (
+        {[...mapLayers].reverse().map((item, index) => (
           <MenuLayersItem
             key={item.id}
             id={item.id}

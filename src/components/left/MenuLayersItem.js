@@ -87,7 +87,7 @@ const MenuLayersItem = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [layerState, setLayerState] = contextLayerState;
-  const [dragIdx, setDragIdx] = useState(null);
+  // const [dragIdx, setDragIdx] = useState(null);
 
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
     id: props.id,
@@ -105,24 +105,6 @@ const MenuLayersItem = (props) => {
       return layer;
     }));
     setMapLayers(getLayersFromState(layerState));
-  }
-
-  const handleDragStart = function(idx) {
-    console.log(idx)
-    setDragIdx(idx)
-  }
-
-  const handleDragEnd = function(e) {
-    e.preventDefault();
-  }
-
-  const handleDragDrop = function(idx) {
-    const newLayerState = [...layerState];
-    const draggedLayer = newLayerState[dragIdx];
-    newLayerState.splice(dragIdx, 1);
-    newLayerState.splice(idx, 0, draggedLayer);
-    setLayerState(newLayerState);
-    setDragIdx(null);
   }
 
   return (
