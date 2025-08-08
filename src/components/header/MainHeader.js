@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
-import {AssetTotal} from './AssetTotal';
+import {AssetTotal, prettyAssetValue} from './AssetTotal';
 import {LogoWrap} from './LogoWrap';
 
 const Header = styled.header`
@@ -25,6 +25,7 @@ const H1 = styled.h1`
 `
 
 export const MainHeader = (props) => {
+
   return (
     <Header>
       <LogoWrap />

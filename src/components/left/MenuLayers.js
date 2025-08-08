@@ -53,12 +53,10 @@ export const MenuLayers = (props) => {
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      >
+        onDragEnd={handleDragEnd} >
       <SortableContext
         items={mapLayers}
-        strategy={verticalListSortingStrategy}
-      >
+        strategy={verticalListSortingStrategy} >
         <LayersList>
           {[...mapLayers].reverse().map((item, index) => (
             <MenuLayersItem

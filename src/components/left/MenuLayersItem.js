@@ -8,7 +8,7 @@ import {DragHandle} from './DragHandle';
 import {prettyAssetValue} from '../header/AssetTotal';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
-import {AssetValueContext} from '../../contexts/AssetValueContext';
+import {TotalAssetValueContext} from '../../contexts/TotalAssetValueContext';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -90,12 +90,12 @@ export const MenuLayersItem = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextDataYear} = useContext(DataYearContext);
-  const {contextAssetValue} = useContext(AssetValueContext);
+  const {contextTotalAssetValue} = useContext(TotalAssetValueContext);
   const [layerState, setLayerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
   const [dataYear, setDataYear] = contextDataYear;
-  const [totalAssetValue, setTotalAssetValue] = contextAssetValue;
+  const [totalAssetValue, setTotalAssetValue] = contextTotalAssetValue;
 
   const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
     id: props.id,
@@ -113,7 +113,10 @@ export const MenuLayersItem = (props) => {
       return layer;
     }));
     setTotalAssetValue(prettyAssetValue(
-      layerState.reduce((acc, val) => acc + val.assetValue, 0)
+      layerState.reduce((accumulator, layer) => {
+        return (layer.visible) ? accumulator + layer.assetValue : accumulator
+        }, 0
+      )
     ));
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
@@ -125,12 +128,10 @@ export const MenuLayersItem = (props) => {
       {...attributes}
       data-layer={props.layerName}
       data-id={props.id}
-      className="option-li"
-    >
+      className='option-li' >
       <StyledDrag
-        className="drag"
-        {...listeners}
-      >
+        className='drag'
+        {...listeners} >
         <DragHandle />
       </StyledDrag>
       <StyledLabel>
@@ -138,7 +139,7 @@ export const MenuLayersItem = (props) => {
         <StyledAssetValue>({prettyAssetValue(props.assetValue)})</StyledAssetValue>
         <StyledLeader />
         <StyledLayersItemInput
-          type="checkbox"
+          type='checkbox'
           className={props.layerName}
           data-layername={props.layerName}
           data-assetvalue={props.assetValue}

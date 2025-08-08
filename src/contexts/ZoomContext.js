@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
-import {initializeLayerState, getLayersFromState} from '../components/map/Layers';
-import {initialZoom} from '../const/InitialZoom';
+import {initialZoom} from '../const/InitialState';
 
 export const ZoomLevelContext = createContext(null);
 

@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import {initializeLayerState, getLayersFromState} from '../components/map/Layers';
-import {initialDataYear, initialZoom} from '../const/InitialZoom';
+import {initialDataYear, initialZoom} from '../const/InitialState';
 
 export const LayerContext = createContext(null);
 
