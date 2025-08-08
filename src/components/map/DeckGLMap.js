@@ -9,6 +9,7 @@ import {getLayersFromState} from './Layers';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {LayerContext} from '../../contexts/LayerContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
+import {initialZoom} from '../../const/InitialState';
 
 const StyledMap = styled.div`
   z-index: 510;
@@ -21,6 +22,17 @@ const StyledMap = styled.div`
 `;
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+
+const minZoom = 1;
+const maxZoom = 10;
+
+const INITIAL_VIEW_STATE = {
+  longitude: -105,
+  latitude: 40,
+  zoom: initialZoom,
+  minZoom: minZoom,
+  maxZoom: maxZoom,
+}
 
 export const DeckGLMap = (props) => {
   const {contextZoomLevel} = useContext(ZoomLevelContext);
@@ -54,13 +66,7 @@ export const DeckGLMap = (props) => {
   return (
     <StyledMap className="main-map">
       <DeckGL
-        initialViewState={{
-          longitude: -105,
-          latitude: 40,
-          zoom: zoomLevel,
-          minZoom: 1,
-          maxZoom: 10,
-        }}
+        initialViewState={INITIAL_VIEW_STATE}
         controller
         layers={mapLayers}
         widgets={widgets}
