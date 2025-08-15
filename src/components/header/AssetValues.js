@@ -3,9 +3,6 @@ export const assetValues = {
   CoalMines: {
     '2012': 41_474_000_000,
   },
-  GasPipelines: {
-    '2012': 41_474_000_000,
-  },
   Railroads: {
     '2012': 137_000_000_000,
     '2022': 137_000_000_000,
@@ -57,13 +54,10 @@ export const assetValues = {
   NuclearPlants: {
     '2012': 597_000_000_000,
   },
-  HydroPlants: {
-    '2012': 597_000_000_000,
-  },
   WindFarms: {
     '2012': 132_000_000_000,
   },
-  SolarPlants: {
+  SolarPV: {
     '2012': 14_000_000_000,
   },
   GeothermalPlants: {
