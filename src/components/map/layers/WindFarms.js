@@ -1,6 +1,5 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {iconAtlas, iconMapping} from '../MapIcons';
 import {extendLayer} from './extendLayer';
 
 const ID = 'power-wind';
@@ -28,11 +27,11 @@ export const WindFarms = extendLayer(
       stroked: false,
       filled: true,
       getPointRadius: function (d) {
-        return Math.sqrt(d.properties.original.total_cap);
+        return Math.sqrt(d.properties.original.total_cap / Math.PI) * .3;
       },
       getFillColor: () => [144, 29, 143, 128],
-      pointRadiusUnits: 'meters',
-      pointRadiusScale: 2000 / Math.sqrt(zoomLevel),
+      pointRadiusUnits: 'pixels',
+      pointRadiusScale: 1 / Math.sqrt(zoomLevel),
 
     });
   });

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useContext} from 'react';
-import {DndContext, closestCenter, KeyboardSensor, PointerSensor,
+import {DndContext, closestCenter, PointerSensor,
   useSensor, useSensors,} from '@dnd-kit/core';
 import {SortableContext, verticalListSortingStrategy,
   arrayMove, } from '@dnd-kit/sortable';
@@ -24,9 +24,9 @@ const LayersList = styled.ul`
  */
 export const MenuLayers = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
-  const [layerState, setLayerState] = contextLayerState;
-  const [mapLayers, setMapLayers] = contextMapLayers;
-  const [activeId, setActiveId] = useState(null);
+  const [, setLayerState] = contextLayerState;
+  const [mapLayers] = contextMapLayers;
+  const [, setActiveId] = useState(null);
   const sensors = useSensors(useSensor(PointerSensor), );
 
   function handleDragStart(event) {

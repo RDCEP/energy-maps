@@ -3,9 +3,10 @@ import {OilWells} from './layers/OilWells';
 import {GasPipelines} from './layers/GasPipelines';
 import {WindFarms} from './layers/WindFarms';
 import {getAssetValue} from '../header/AssetTotal';
+import {SolarPV} from './layers/SolarPV';
 
 const layerObjects = () => {
-  return [ OilWells, CoalMines, GasPipelines, WindFarms];
+  return [ OilWells, CoalMines, GasPipelines, WindFarms, SolarPV].reverse();
 }
 
 export const getLayersFromState = (layerState, zoomLevel, dataYear) => {

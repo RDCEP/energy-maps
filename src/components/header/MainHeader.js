@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
-import {AssetTotal, prettyAssetValue} from './AssetTotal';
+import {AssetTotal} from './AssetTotal';
 import {LogoWrap} from './LogoWrap';
 
 const Header = styled.header`

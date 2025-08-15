@@ -92,12 +92,12 @@ export const MenuLayersItem = (props) => {
   const {contextDataYear} = useContext(DataYearContext);
   const {contextTotalAssetValue} = useContext(TotalAssetValueContext);
   const [layerState, setLayerState] = contextLayerState;
-  const [mapLayers, setMapLayers] = contextMapLayers;
-  const [zoomLevel, setZoomLevel] = contextZoomLevel;
-  const [dataYear, setDataYear] = contextDataYear;
-  const [totalAssetValue, setTotalAssetValue] = contextTotalAssetValue;
+  const [, setMapLayers] = contextMapLayers;
+  const [zoomLevel] = contextZoomLevel;
+  const [dataYear] = contextDataYear;
+  const [, setTotalAssetValue] = contextTotalAssetValue;
 
-  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({
+  const {attributes, listeners, setNodeRef, transform} = useSortable({
     id: props.id,
   });
   const style = transform ? {

@@ -39,9 +39,9 @@ export const DeckGLMap = (props) => {
   const {contextDataYear} = useContext(DataYearContext);
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const [zoomLevel, setZoomLevel] = contextZoomLevel;
-  const [layerState, setLayerState] = contextLayerState;
+  const [layerState] = contextLayerState;
   const [mapLayers, setMapLayers] = contextMapLayers;
-  const [dataYear, setDataYear] = contextDataYear;
+  const [dataYear] = contextDataYear;
 
   const updateMapLayers = function() {
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));

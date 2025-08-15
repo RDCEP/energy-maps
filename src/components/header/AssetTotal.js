@@ -38,7 +38,7 @@ export const prettyAssetValue = (assetValue) => {
 
 export const AssetTotal = (props) => {
   const {contextTotalAssetValue} = useContext(TotalAssetValueContext)
-  const [totalAssetValue, setTotalAssetValue] = contextTotalAssetValue;
+  const [totalAssetValue] = contextTotalAssetValue;
 
   return (
     <StyledH2>
