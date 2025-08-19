@@ -4,17 +4,20 @@ import {extendLayer} from './extendLayer';
 
 const ID = 'power-wind';
 const LAYER_NAME = 'WindFarms';
+const DISABLED = false;
 
 export const WindFarms = extendLayer(
   {
     id: ID,
     layerName: LAYER_NAME,
+    disabled: DISABLED,
   },
   function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
+      disabled: DISABLED,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Wind Farms',
       assetValue: assetValue,

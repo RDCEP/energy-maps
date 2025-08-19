@@ -4,17 +4,20 @@ import {extendLayer} from './extendLayer';
 
 const ID = 'pipelines-gas';
 const LAYER_NAME = 'GasPipelines';
+const DISABLED = false;
 
 export const GasPipelines = extendLayer(
   {
     id: ID,
     layerName: LAYER_NAME,
+    disabled: DISABLED,
   },
   function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
+      disabled: DISABLED,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Gas Pipelines',
       assetValue: assetValue,
@@ -29,7 +32,7 @@ export const GasPipelines = extendLayer(
       getLineColor: () => [0, 191, 255, 200],
       getLineWidth: () => 1,
       lineWidthUnits: 'pixels',
-      lineWidthScale: Math.pow(zoomLevel, 2) / 16,
+      lineWidthScale: 1 + (zoomLevel - 4) / 3,
       lineWidthMinPixels: 1,
       lineWidthMaxPixels: 20,
       lineCapRounded: true,

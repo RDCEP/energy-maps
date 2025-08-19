@@ -4,17 +4,20 @@ import {extendLayer} from './extendLayer';
 
 const ID = 'power-geo';
 const LAYER_NAME = 'GeothermalPlants';
+const DISABLED = false;
 
 export const GeothermalPlants = extendLayer(
   {
     id: ID,
     layerName: LAYER_NAME,
+    disabled: DISABLED,
   },
   function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
+      disabled: DISABLED,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Geothermal Plants',
       assetValue: assetValue,

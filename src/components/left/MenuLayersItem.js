@@ -27,6 +27,10 @@ const StyledMenuLayersItem = styled.li`
   &.uk-sortable-item {
     width: 13rem!important;    
   }
+  
+  &[data-disabled=true] {
+    color: #bcbcbc;
+  }
 `;
 
 const StyledLabel = styled.label`
@@ -128,6 +132,7 @@ export const MenuLayersItem = (props) => {
       {...attributes}
       data-layer={props.layerName}
       data-id={props.id}
+      data-disabled={props.disabled}
       className='option-li' >
       <StyledDrag
         className='drag'
@@ -144,6 +149,7 @@ export const MenuLayersItem = (props) => {
           data-layername={props.layerName}
           data-assetvalue={props.assetValue}
           checked={props.checked}
+          disabled={props.disabled}
           onChange={() => updateMapLayersVisibility(props.id, props.checked)}
         />
       </StyledLabel>

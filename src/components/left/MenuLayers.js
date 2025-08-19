@@ -66,7 +66,8 @@ export const MenuLayers = (props) => {
               layerName={item.props.layerName}
               displayName={item.props.displayName}
               assetValue={item.props.assetValue}
-              checked={item.props.visible} />
+              checked={item.props.visible}
+              disabled={item.props.disabled} />
           ))}
         </LayersList>
       </SortableContext>
