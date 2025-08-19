@@ -26,13 +26,13 @@ export const SolarPV = extendLayer(
       pointType: 'circle',
       stroked: true,
       filled: true,
-      getPointRadius: function (d) {
-        return Math.sqrt(d.properties.original.total_cap / Math.PI) * .3;
-      },
+      getPointRadius: (d) =>
+        (d.properties.original.total_cap / Math.PI) ** .5,
       getFillColor: () => [255, 215, 0, 128],
       getLineColor: () => [139, 64, 0],
-      pointRadiusUnits: 'pixels',
-      pointRadiusScale: 1 / Math.sqrt(zoomLevel),
-
+      pointRadiusUnits: 'meters',
+      lineWidthUnits: 'pixels',
+      pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
+      lineWidthScale: .66,
     });
   });

@@ -24,14 +24,15 @@ export const WindFarms = extendLayer(
       autoHighlight: true,
 
       pointType: 'circle',
-      stroked: false,
+      stroked: true,
       filled: true,
       getPointRadius: function (d) {
-        return Math.sqrt(d.properties.original.total_cap / Math.PI) * .3;
+        return Math.sqrt(d.properties.original.total_cap / Math.PI);
       },
       getFillColor: () => [144, 29, 143, 128],
+      getLineColor: () => [255, 255, 255],
       pointRadiusUnits: 'pixels',
-      pointRadiusScale: 1 / Math.sqrt(zoomLevel),
+      pointRadiusScale: 1 / Math.sqrt(2 ^ (zoomLevel - 3)),
 
     });
   });
