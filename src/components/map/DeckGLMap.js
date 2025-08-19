@@ -49,7 +49,7 @@ export const DeckGLMap = (props) => {
 
   const updateViewState = function(viewState, interactionState, oldViewState) {
     setZoomLevel(viewState.viewState.zoom);
-    // updateMapLayers();
+    updateMapLayers();
   }
 
   const widgets = [
