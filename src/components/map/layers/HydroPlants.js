@@ -27,7 +27,7 @@ export const HydroPlants = extendLayer(
       autoHighlight: true,
 
       pointType: 'circle',
-      stroked: false,
+      stroked: true,
       filled: true,
       getPointRadius: (d) =>
         (d.properties.original.total_cap / Math.PI) ** .5,

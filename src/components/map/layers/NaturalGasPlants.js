@@ -2,11 +2,11 @@ import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 import {extendLayer} from './extendLayer';
 
-const ID = 'power-nuclear';
-const LAYER_NAME = 'NuclearPlants';
+const ID = 'power-gas';
+const LAYER_NAME = 'NaturalGasPlants';
 const DISABLED = false;
 
-export const NuclearPlants = extendLayer(
+export const NaturalGasPlants = extendLayer(
   {
     id: ID,
     layerName: LAYER_NAME,
@@ -19,10 +19,10 @@ export const NuclearPlants = extendLayer(
       layerName: LAYER_NAME,
       disabled: DISABLED,
       componentName: `${LAYER_NAME}Layer`,
-      displayName: 'Nuclear Plants',
+      displayName: 'Nat. Gas Plants',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/power_plants/nuclear/2012/1/1/${bbox}/`,
+      data: `${api_url}/power_plants/natural_gas/2012/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 
@@ -31,8 +31,8 @@ export const NuclearPlants = extendLayer(
       filled: true,
       getPointRadius: (d) =>
         (d.properties.original.total_cap / Math.PI) ** .5,
-      getFillColor: () => [255, 0, 0, 128],
-      getLineColor: () => [255, 255, 255],
+      getFillColor: () => [0, 191, 255, 128],
+      getLineColor: () => [0, 0, 139],
       pointRadiusUnits: 'meters',
       lineWidthUnits: 'pixels',
       pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),

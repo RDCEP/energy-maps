@@ -9,9 +9,15 @@ import {HydroPlants} from './layers/HydroPlants';
 import {SolarPV} from './layers/SolarPV';
 import {GeothermalPlants} from './layers/GeothermalPlants';
 import {BiofuelPlants} from './layers/BiofuelPlants';
+import {GasProcessing} from './layers/GasProcessing';
+import {NaturalGasPlants} from './layers/NaturalGasPlants';
+import {PetroleumPlants} from './layers/PetroleumPlants';
 
 const layerObjects = () => {
-  return [ CoalMines, OilWells, GasPipelines, CoalPlants, NuclearPlants,
+  return [ CoalMines,
+    OilWells,
+    GasPipelines, GasProcessing,
+    CoalPlants, NaturalGasPlants, PetroleumPlants, NuclearPlants,
     HydroPlants, WindFarms, SolarPV, GeothermalPlants, BiofuelPlants,
   ].reverse();
 }
