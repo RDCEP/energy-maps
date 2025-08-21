@@ -1,7 +1,7 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'wells-oil';
 const LAYER_NAME = 'OilWells';
@@ -38,5 +38,7 @@ export const OilWells = extendLayer(
       getIconColor: () => [34, 139, 34, 204],
       iconSizeUnits: 'pixels',
       iconSizeScale: 1 * zoomLevel / 10,
+
+      onDataLoad: onLoadLayerData,
     });
   });

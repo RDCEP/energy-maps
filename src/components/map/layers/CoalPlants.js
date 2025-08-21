@@ -1,6 +1,6 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'power-coal';
 const LAYER_NAME = 'CoalPlants';
@@ -39,5 +39,6 @@ export const CoalPlants = extendLayer(
       lineWidthScale: .66,
       // lineWidthScale: .66 / (2 ** (zoomLevel - 3)) ** .71,
 
+      onDataLoad: onLoadLayerData,
     });
   });

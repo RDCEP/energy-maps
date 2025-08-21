@@ -1,6 +1,6 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'power-hydro';
 const LAYER_NAME = 'HydroPlants';
@@ -37,5 +37,7 @@ export const HydroPlants = extendLayer(
       lineWidthUnits: 'pixels',
       pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
       lineWidthScale: .66,
+
+      onDataLoad: onLoadLayerData,
     });
   });

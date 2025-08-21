@@ -7,3 +7,11 @@ export const extendLayer = function(args, func) {
   }
   return func;
 };
+
+export const onLoadLayerData = function(data, obj) {
+  const layerName = obj.layer.props.layerName;
+  const element = document
+    .querySelector(`.option-li input.${layerName}`)
+    .removeAttribute('disabled');
+}
+

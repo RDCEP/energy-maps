@@ -1,6 +1,6 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'grid-345735';
 const LAYER_NAME = 'Ac345735';
@@ -44,5 +44,7 @@ export const Ac345735 = extendLayer(
       lineWidthMaxPixels: 20,
       lineCapRounded: true,
       lineJointRounded: true,
+
+      onDataLoad: onLoadLayerData,
     });
   });

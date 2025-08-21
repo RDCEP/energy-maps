@@ -2,7 +2,7 @@ import {GeoJsonLayer} from '@deck.gl/layers';
 // import {GL} from '@luma.gl/constants';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'mines-coal';
 const LAYER_NAME = 'CoalMines';
@@ -40,6 +40,8 @@ export const CoalMines = extendLayer(
       getIconColor: () => [0, 0, 0, 128],
       iconSizeUnits: 'meters',
       iconSizeScale: 20 / Math.sqrt(zoomLevel),
+
+      onDataLoad: onLoadLayerData,
 
       // pointAntialiasing: false,
       // textureParameters: {

@@ -1,6 +1,6 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'pipelines-gas';
 const LAYER_NAME = 'GasPipelines';
@@ -37,5 +37,7 @@ export const GasPipelines = extendLayer(
       lineWidthMaxPixels: 20,
       lineCapRounded: true,
       lineJointRounded: true,
+
+      onDataLoad: onLoadLayerData,
     });
   });

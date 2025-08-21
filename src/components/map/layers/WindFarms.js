@@ -1,6 +1,6 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer} from './extendLayer';
+import {extendLayer, onLoadLayerData} from './extendLayer';
 
 const ID = 'power-wind';
 const LAYER_NAME = 'WindFarms';
@@ -36,6 +36,8 @@ export const WindFarms = extendLayer(
       getLineColor: () => [255, 255, 255],
       pointRadiusUnits: 'pixels',
       pointRadiusScale: 1 / Math.sqrt(2 ^ (zoomLevel - 3)),
+
+      onDataLoad: onLoadLayerData,
 
     });
   });

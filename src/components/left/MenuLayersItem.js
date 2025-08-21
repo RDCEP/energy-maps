@@ -149,7 +149,8 @@ export const MenuLayersItem = (props) => {
           data-layername={props.layerName}
           data-assetvalue={props.assetValue}
           checked={props.checked}
-          disabled={props.disabled}
+          // disabled={props.disabled}
+          disabled={true}
           onChange={() => updateMapLayersVisibility(props.id, props.checked)}
         />
       </StyledLabel>
