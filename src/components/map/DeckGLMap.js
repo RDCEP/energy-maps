@@ -5,6 +5,7 @@ import '@deck.gl/widgets/stylesheet.css';
 import Map from 'react-map-gl/maplibre';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styled from 'styled-components';
+import debounce from 'lodash.debounce';
 import {getLayersFromState} from './Layers';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {LayerContext} from '../../contexts/LayerContext';
@@ -52,6 +53,8 @@ export const DeckGLMap = (props) => {
     updateMapLayers();
   }
 
+  const debouncedUpdateViewState = debounce(updateViewState, 100);
+
   const widgets = [
     new ZoomWidget({
       placement: 'top-right',
@@ -72,7 +75,7 @@ export const DeckGLMap = (props) => {
         widgets={widgets}
         // onViewStateChange={zoomMap}
         onBeforeRender={updateMapLayers}
-        onViewStateChange={updateViewState} >
+        onViewStateChange={debouncedUpdateViewState} >
         <Map mapStyle={MAP_STYLE} />
       </DeckGL>
     </StyledMap>
