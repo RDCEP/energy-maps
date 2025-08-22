@@ -16,16 +16,29 @@ import {AcUnder100} from './layers/AcUnder100';
 import {Ac100300} from './layers/Ac100300';
 import {Ac345735} from './layers/Ac345735';
 
+/**
+ * Sets the available layers and their order in the UI.
+ *
+ * @return {*[]}
+ */
 const layerObjects = () => {
   return [ CoalMines,
-    AcUnder100, Ac100300, Ac345735,
-    OilWells,
-    GasPipelines, GasProcessing,
+    // AcUnder100, Ac100300, Ac345735,
+    // OilWells,
+    // GasPipelines, GasProcessing,
     CoalPlants, NaturalGasPlants, PetroleumPlants, NuclearPlants,
     HydroPlants, WindFarms, SolarPV, GeothermalPlants, BiofuelPlants,
   ].reverse();
 }
 
+/**
+ * Return an array of Deck.GL map layers based on the layerState
+ *
+ * @param layerState {Array} This is the state variable that tracks map layers
+ * @param zoomLevel {Number} The current value of the Deck.GL map's viewState.zoom
+ * @param dataYear {Number} The current year selected in the UI
+ * @return {*[]}
+ */
 export const getLayersFromState = (layerState, zoomLevel, dataYear) => {
   return [...layerState].map(layer => {
     return layer.func(
@@ -36,6 +49,12 @@ export const getLayersFromState = (layerState, zoomLevel, dataYear) => {
   })
 };
 
+/**
+ * Initialize the map layers when the application loads
+ *
+ * @param dataYear {Number} The current year selected in the UI
+ * @return {*[]}
+ */
 export const initializeLayerState = function(dataYear) {
   const layerState = [];
   for (const layerObject of layerObjects()) {

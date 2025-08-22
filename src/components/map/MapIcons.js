@@ -1,7 +1,17 @@
 import icons from '../../static/images/icons.png'
 
+/**
+ * SVG graphic supplying icon shapes for the map layers.
+ *
+ * @type {{}}
+ */
 export const iconAtlas = icons
 
+/**
+ * Icon mapping used by map layers whose `pointType` property = 'icon'
+ *
+ * @type {{square: {x: number, y: number, width: number, height: number, mask: boolean}, triangle: {x: number, y: number, width: number, height: number, mask: boolean}, hexagon: {x: number, y: number, width: number, height: number, mask: boolean}, pentagon: {x: number, y: number, width: number, height: number, mask: boolean}, '+': {x: number, y: number, width: number, height: number, mask: boolean}, x: {x: number, y: number, width: number, height: number, mask: boolean}, triangle_down: {x: number, y: number, width: number, height: number, mask: boolean}, hex_vertical: {x: number, y: number, width: number, height: number, mask: boolean}}}
+ */
 export const iconMapping = {
   'square': {
     x: 300, y: 240, width: 360, height: 360, mask: true

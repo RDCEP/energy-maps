@@ -29,11 +29,20 @@ export const MenuLayers = (props) => {
   const [, setActiveId] = useState(null);
   const sensors = useSensors(useSensor(PointerSensor), );
 
+  /**
+   * Passes the id of the currently dragged UI layer to the state
+   * @param event
+   */
   function handleDragStart(event) {
     const {active} = event;
     setActiveId(active.id);
   }
 
+  /**
+   * Updates the layer menu in the UI while the user is dragging and
+   * reordering the layers.
+   * @param event
+   */
   function handleDragEnd(event) {
     const {active, over} = event;
     if (active.id !== over.id) {

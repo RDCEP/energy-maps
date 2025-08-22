@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'power-hydro';
 const LAYER_NAME = 'HydroPlants';
 const DISABLED = false;
 
-export const HydroPlants = extendLayer(
+export const HydroPlants = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

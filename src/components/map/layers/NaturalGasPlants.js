@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'power-gas';
 const LAYER_NAME = 'NaturalGasPlants';
 const DISABLED = false;
 
-export const NaturalGasPlants = extendLayer(
+export const NaturalGasPlants = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

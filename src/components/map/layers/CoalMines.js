@@ -2,13 +2,13 @@ import {GeoJsonLayer} from '@deck.gl/layers';
 // import {GL} from '@luma.gl/constants';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'mines-coal';
 const LAYER_NAME = 'CoalMines';
 const DISABLED = false;
 
-export const CoalMines = extendLayer(
+export const CoalMines = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

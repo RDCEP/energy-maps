@@ -108,6 +108,14 @@ export const MenuLayersItem = (props) => {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined;
 
+  /**
+   * Handles the toggling of the checkboxes in the menu layer UI. Updates map
+   * layer visibility and total asset value in the header based on checkbox
+   * state.
+   *
+   * @param id {String} The id of the map layer being toggled
+   * @param visible {Boolean} The state of the checkbox
+   */
   const updateMapLayersVisibility = function(id, visible) {
     const layersRef = [...layerState]
     setLayerState([...layersRef].map(layer => {

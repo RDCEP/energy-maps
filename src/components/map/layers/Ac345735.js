@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'grid-345735';
 const LAYER_NAME = 'Ac345735';
 const DISABLED = false;
 
-export const Ac345735 = extendLayer(
+export const Ac345735 = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

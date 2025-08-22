@@ -1,17 +1,29 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'grid-100300';
 const LAYER_NAME = 'Ac100300';
 const DISABLED = false;
 
-export const Ac100300 = extendLayer(
+/**
+ * Map Layer showing AC lines between 100 and 300 kV
+ */
+export const Ac100300 = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
+
+  /**
+   * Return a Deck.GL GeoJsonLayer to display AC lines between 100–300 kV.
+   * zoomLevel controls
+   * @param zoomLevel {Number} Adjusts scaling of lines, circles, and icons
+   * @param visible {Boolean} Toggled by checkboxes in the left UI pane
+   * @param assetValue {Number}
+   * @return {GeoJsonLayer<FeaturePropertiesT, {id: string, layerName: string, disabled: boolean, componentName: string, displayName: string, assetValue, visible, data: string, pickable: boolean, autoHighlight: boolean, pointType: string, stroked: boolean, filled: boolean, getLineColor: (function(*): number[]), getLineWidth: (function(*): number), lineWidthUnits: string, lineWidthMinPixels: number, lineWidthMaxPixels: number, lineCapRounded: boolean, lineJointRounded: boolean, onDataLoad: onLoadLayerData}>}
+   */
   function(zoomLevel, visible, assetValue) {
 
     return new GeoJsonLayer({

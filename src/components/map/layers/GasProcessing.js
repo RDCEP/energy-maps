@@ -1,13 +1,13 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'processing-gas';
 const LAYER_NAME = 'GasProcessing';
 const DISABLED = false;
 
-export const GasProcessing = extendLayer(
+export const GasProcessing = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

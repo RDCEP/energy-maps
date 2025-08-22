@@ -1,5 +1,9 @@
-
-export const DragHandle = (props) => {
+/**
+ * SVG for the burger-like handles used to drag the menu layers in the UI
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const DragHandle = () => {
 
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">

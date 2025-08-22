@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'power-geo';
 const LAYER_NAME = 'GeothermalPlants';
 const DISABLED = false;
 
-export const GeothermalPlants = extendLayer(
+export const GeothermalPlants = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

@@ -1,11 +1,11 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'power-bio';
 const LAYER_NAME = 'BiofuelPlants';
 const DISABLED = true;
 
-export const BiofuelPlants = extendLayer(
+export const BiofuelPlants = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

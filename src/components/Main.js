@@ -16,11 +16,10 @@ const StyledMain = styled.main`
 /**
  * The main wrapper around the header, left pane, map, legend, etc.
  *
- * @param props
  * @return {JSX.Element}
  * @constructor
  */
-export const Main = (props) => {
+export const Main = () => {
   return (
     <StyledMain>
       <DeckGLMap />

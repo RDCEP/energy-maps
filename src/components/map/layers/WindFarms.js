@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'power-wind';
 const LAYER_NAME = 'WindFarms';
 const DISABLED = false;
 
-export const WindFarms = extendLayer(
+export const WindFarms = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

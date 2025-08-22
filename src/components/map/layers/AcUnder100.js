@@ -1,12 +1,12 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'grid-under100';
 const LAYER_NAME = 'AcUnder100';
 const DISABLED = false;
 
-export const AcUnder100 = extendLayer(
+export const AcUnder100 = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

@@ -1,13 +1,13 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
-import {extendLayer, onLoadLayerData} from './extendLayer';
+import {layerWrapper, onLoadLayerData} from './layerWrapper';
 
 const ID = 'wells-oil';
 const LAYER_NAME = 'OilWells';
 const DISABLED = false;
 
-export const OilWells = extendLayer(
+export const OilWells = layerWrapper(
   {
     id: ID,
     layerName: LAYER_NAME,

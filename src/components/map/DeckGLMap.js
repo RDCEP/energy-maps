@@ -35,7 +35,14 @@ const INITIAL_VIEW_STATE = {
   maxZoom: maxZoom,
 }
 
-export const DeckGLMap = (props) => {
+/**
+ * Deck.GL map component. Handles the drawing of all map layers and the
+ * basic map interactions (panning, zooming).
+ *
+ * @return {Element}
+ * @constructor
+ */
+export const DeckGLMap = () => {
   const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextDataYear} = useContext(DataYearContext);
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
@@ -44,17 +51,40 @@ export const DeckGLMap = (props) => {
   const [mapLayers, setMapLayers] = contextMapLayers;
   const [dataYear] = contextDataYear;
 
+  /**
+   * Updates map layers after user interactions. Updates current zoom level
+   * to adjust scaling of map objects. Updates dataYear to trigger refreshed
+   * data and asset totals.
+   */
   const updateMapLayers = function() {
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
+  /**
+   * Updates the map during changes of the map view (e.g. during panning,
+   * zooming).
+   *
+   * @param viewState
+   * @param interactionState
+   * @param oldViewState
+   */
   const updateViewState = function(viewState, interactionState, oldViewState) {
     setZoomLevel(viewState.viewState.zoom);
     updateMapLayers();
   }
 
+  /**
+   * Debounced version of `updateViewState()`
+   *
+   * @type {(function(): (*))|*}
+   */
   const debouncedUpdateViewState = debounce(updateViewState, 100);
 
+  /**
+   * Configuration of Deck.GL map widgets.
+   *
+   * @type {(ZoomWidget|FullscreenWidget)[]}
+   */
   const widgets = [
     new ZoomWidget({
       placement: 'top-right',

@@ -1,6 +1,4 @@
-import {useState} from 'react';
 import styled from 'styled-components';
-import {ChevronLeft} from '../../const/SvgIcons';
 
 const StyledOptionsToggle = styled.div`
   position: absolute;
