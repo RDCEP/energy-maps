@@ -55,7 +55,7 @@ export const getLayersFromState = (layerState, zoomLevel, dataYear) => {
  * @param dataYear {Number} The current year selected in the UI
  * @return {*[]}
  */
-export const initializeLayerState = function(dataYear) {
+export const initializeLayerState = (dataYear) => {
   const layerState = [];
   for (const layerObject of layerObjects()) {
     layerState.push({ func: layerObject})

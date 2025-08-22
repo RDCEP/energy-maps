@@ -15,7 +15,7 @@ const LayersList = styled.ul`
 `;
 
 /**
- * The list of map layers that appear in the left side of the interface.
+ * The list of map layers that appear in the LEftPane of the UI.
  * The user manipulates this list to control the map display.
  *
  * @param props
@@ -33,17 +33,17 @@ export const MenuLayers = (props) => {
    * Passes the id of the currently dragged UI layer to the state
    * @param event
    */
-  function handleDragStart(event) {
+  const handleDragStart = (event) => {
     const {active} = event;
     setActiveId(active.id);
-  }
+  };
 
   /**
    * Updates the layer menu in the UI while the user is dragging and
    * reordering the layers.
    * @param event
    */
-  function handleDragEnd(event) {
+  const handleDragEnd = (event) => {
     const {active, over} = event;
     if (active.id !== over.id) {
       setLayerState((items) => {

@@ -13,9 +13,9 @@ export const GasProcessing = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -32,13 +32,12 @@ export const GasProcessing = layerWrapper(
       iconAtlas: iconAtlas,
       iconMapping: iconMapping,
       getIcon: ()=> 'triangle',
-      getIconSize: function (d) {
-        return 20000;
-      },
-      getIconColor: () => [0, 0, 139, 128],
+      getIconSize: 20000,
+      getIconColor: [0, 0, 139, 128],
       iconSizeUnits: 'meters',
       iconSizeScale: 1 / (zoomLevel - 3),
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+  );

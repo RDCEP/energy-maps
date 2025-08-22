@@ -1,5 +1,5 @@
 
-export const layerWrapper = function(args, func) {
+export const layerWrapper = (args, func) => {
   if (Array.isArray(args) || (args !== null && typeof args === 'object')) {
     for (const i in args) {
       func[i] = args[i];
@@ -8,11 +8,13 @@ export const layerWrapper = function(args, func) {
   return func;
 };
 
-export const onLoadLayerData = function(data, obj) {
+// noinspection JSVoidFunctionReturnValueUsed
+export const onLoadLayerData = (data, obj) => {
   const layerName = obj.layer.props.layerName;
-  const element = document
-    .querySelector(`.option-li input.${layerName}`)
-    .removeAttribute('disabled');
+  // noinspection JSVoidFunctionReturnValueUsed
+  const element = document.querySelector(`.option-li input.${layerName}`);
+  element.removeAttribute('disabled');
+  return true;
 };
 
 /**
@@ -21,7 +23,7 @@ export const onLoadLayerData = function(data, obj) {
  *
  * @param data {Object} GeoJSON object
  */
-export const reorderDataBySize = function(data) {
+export const reorderDataBySize = (data) => {
 
 };
 
@@ -29,9 +31,12 @@ export const reorderDataBySize = function(data) {
  * This is a stub. Retrieve locally cached data. This is used by the
  * map layer's dataComparator property.
  *
+ * #TODO: If data layers' visibility states are stored in local cache, also
+ * need to maintain total asset value.
+ *
  * @param layerName
  */
-export const getLocalDataCache = function(layerName) {
+export const getLocalDataCache = (layerName) => {
 
 };
 
@@ -43,10 +48,10 @@ export const getLocalDataCache = function(layerName) {
  * @param layerName
  */
 
-export const setLocalDataCache = function(layerName, data) {
+export const setLocalDataCache = (layerName, data) => {
 
 };
 
-export const clearLocalDataCache = function(layerName) {
+export const clearLocalDataCache = (layerName) => {
 
 };

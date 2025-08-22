@@ -12,9 +12,9 @@ export const AcUnder100 = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -31,7 +31,7 @@ export const AcUnder100 = layerWrapper(
       filled: false,
       getLineColor: (d) =>
         (d.properties.original.class === 'NOT AVAILABLE') ? [255, 255, 255] : [255, 255, 170],
-      getLineWidth: (d) => 1,
+      getLineWidth: 1,
       lineWidthUnits: 'pixels',
       // lineWidthScale: 1 / 2 ** (zoomLevel - 3),
       lineWidthMinPixels: .5,
@@ -40,5 +40,6 @@ export const AcUnder100 = layerWrapper(
       lineJointRounded: true,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+  );

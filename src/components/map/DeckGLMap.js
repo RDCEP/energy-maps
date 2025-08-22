@@ -56,7 +56,7 @@ export const DeckGLMap = () => {
    * to adjust scaling of map objects. Updates dataYear to trigger refreshed
    * data and asset totals.
    */
-  const updateMapLayers = function() {
+  const updateMapLayers = ()=> {
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
@@ -68,7 +68,7 @@ export const DeckGLMap = () => {
    * @param interactionState
    * @param oldViewState
    */
-  const updateViewState = function(viewState, interactionState, oldViewState) {
+  const updateViewState = (viewState, interactionState, oldViewState) => {
     setZoomLevel(viewState.viewState.zoom);
     updateMapLayers();
   }

@@ -12,9 +12,9 @@ export const GasPipelines = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -29,8 +29,8 @@ export const GasPipelines = layerWrapper(
       pointType: 'circle',
       stroked: true,
       filled: false,
-      getLineColor: () => [0, 191, 255, 200],
-      getLineWidth: () => 1,
+      getLineColor: [0, 191, 255, 200],
+      getLineWidth: 1,
       lineWidthUnits: 'pixels',
       lineWidthScale: 1 + (zoomLevel - 4) / 3,
       lineWidthMinPixels: 1,
@@ -39,5 +39,6 @@ export const GasPipelines = layerWrapper(
       lineJointRounded: true,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+);

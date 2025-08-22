@@ -37,12 +37,26 @@ const StyledOptionsToggleArrow = styled.div`
   line-height: 0;
 `
 
-export const OptionsToggle = () => {
+/**
+ * The graphical arrow that the user clicks to toggle visibility of the
+ * LeftPane UI.
+ *
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const OptionsToggle = ({toggleState, setToggleState}) => {
+
+  const toggleOptions = ()=> {
+    setToggleState((toggleState === 'closed') ? 'open' : 'closed')
+  }
+
   return (
-    <StyledOptionsToggle>
-      <StyledShade></StyledShade>
+    <StyledOptionsToggle
+      onClick={toggleOptions}
+      className='options-toggle' >
+      <StyledShade className='shade'></StyledShade>
       <StyledOptionsToggleArrow
-        className='uk-icon'
+        className='uk-icon options-toggle-arrow'
         data-uk-icon='icon: chevron-left; ratio: 3;' >
       </StyledOptionsToggleArrow>
     </StyledOptionsToggle>

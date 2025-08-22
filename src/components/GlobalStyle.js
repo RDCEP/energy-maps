@@ -1,5 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
+/**
+ * Global CSS styles that aren't specific to individual components.
+ *
+ * @type {React.NamedExoticComponent<ExecutionProps & object>}
+ */
 export const GlobalStyle = createGlobalStyle`
 * {
   padding: 0;

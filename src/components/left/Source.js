@@ -11,7 +11,13 @@ const StyledSourceP = styled.p`
   padding: 0 2rem;
 `;
 
-export const Source = (props) => {
+/**
+ * Source reference that appears at the top of LeftPane UI
+ *
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const Source = () => {
 
   return (
     <StyledSourceSection>

@@ -13,9 +13,9 @@ export const OilWells = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -33,12 +33,12 @@ export const OilWells = layerWrapper(
       pointType: 'icon',
       iconAtlas: iconAtlas,
       iconMapping: iconMapping,
-      getIcon: () => 'square',
-      getIconSize: () => 10,
-      getIconColor: () => [34, 139, 34, 204],
+      getIcon: 'square',
+      getIconSize: 10,
+      getIconColor: [34, 139, 34, 204],
       iconSizeUnits: 'pixels',
       iconSizeScale: 1 * zoomLevel / 10,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+  );

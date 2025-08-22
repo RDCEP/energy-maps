@@ -12,9 +12,9 @@ export const WindFarms = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -29,15 +29,14 @@ export const WindFarms = layerWrapper(
       pointType: 'circle',
       stroked: true,
       filled: true,
-      getPointRadius: function (d) {
-        return Math.sqrt(d.properties.original.total_cap / Math.PI);
-      },
-      getFillColor: () => [144, 29, 143, 128],
-      getLineColor: () => [255, 255, 255],
+      getPointRadius: (d) =>
+        Math.sqrt(d.properties.original.total_cap / Math.PI),
+      getFillColor: [144, 29, 143, 128],
+      getLineColor: [255, 255, 255],
       pointRadiusUnits: 'pixels',
       pointRadiusScale: 1 / Math.sqrt(2 ^ (zoomLevel - 3)),
 
       onDataLoad: onLoadLayerData,
 
-    });
-  });
+    })
+  );

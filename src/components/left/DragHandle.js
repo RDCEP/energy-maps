@@ -1,5 +1,7 @@
 /**
- * SVG for the burger-like handles used to drag the menu layers in the UI
+ * SVG for the burger-like handles used to drag the menu layers
+ * in the LeftPane UI
+ *
  * @return {JSX.Element}
  * @constructor
  */

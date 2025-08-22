@@ -19,14 +19,15 @@ export const Ac100300 = layerWrapper(
   /**
    * Return a Deck.GL GeoJsonLayer to display AC lines between 100–300 kV.
    * zoomLevel controls
+   *
    * @param zoomLevel {Number} Adjusts scaling of lines, circles, and icons
    * @param visible {Boolean} Toggled by checkboxes in the left UI pane
    * @param assetValue {Number}
-   * @return {GeoJsonLayer<FeaturePropertiesT, {id: string, layerName: string, disabled: boolean, componentName: string, displayName: string, assetValue, visible, data: string, pickable: boolean, autoHighlight: boolean, pointType: string, stroked: boolean, filled: boolean, getLineColor: (function(*): number[]), getLineWidth: (function(*): number), lineWidthUnits: string, lineWidthMinPixels: number, lineWidthMaxPixels: number, lineCapRounded: boolean, lineJointRounded: boolean, onDataLoad: onLoadLayerData}>}
+   * @return {GeoJsonLayer}
    */
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -53,5 +54,6 @@ export const Ac100300 = layerWrapper(
       lineJointRounded: true,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+  );

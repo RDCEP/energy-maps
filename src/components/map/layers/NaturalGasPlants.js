@@ -12,9 +12,9 @@ export const NaturalGasPlants = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -31,13 +31,13 @@ export const NaturalGasPlants = layerWrapper(
       filled: true,
       getPointRadius: (d) =>
         (d.properties.original.total_cap / Math.PI) ** .5,
-      getFillColor: () => [0, 191, 255, 128],
-      getLineColor: () => [0, 0, 139],
+      getFillColor: [0, 191, 255, 128],
+      getLineColor: [0, 0, 139],
       pointRadiusUnits: 'meters',
       lineWidthUnits: 'pixels',
       pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
       lineWidthScale: .66,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+  );

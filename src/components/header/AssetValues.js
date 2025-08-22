@@ -1,4 +1,8 @@
-
+/**
+ * Object containing all known asset values, organized by map layer and year.
+ *
+ * @type {{CoalMines: {'2012': number}, Railroads: {'2012': number, '2022': number}, GasWells: {'2012': number, '2022': number}, ForeignGasWells: {'2012': number}, GasPipelines: {'2012': number, '2022': number}, OilWells: {'2012': number, '2022': number}, ForeignOilWells: {'2012': number}, OilPipelines: {'2012': number, '2022': number}, OilProductPipelines: {}, OilRefineries: {'2012': number}, GasProcessing: {'2012': number}, OilGasStorage: {'2012': number}, CoalPlants: {'2012': number, '2022': number}, NaturalGasPlants: {'2012': number, '2022': number}, PetroleumPlants: {'2012': number}, NuclearPlants: {'2012': number}, WindFarms: {'2012': number}, SolarPV: {'2012': number}, GeothermalPlants: {'2012': number}, HydroPlants: {'2012': number}, BiofuelPlants: {'2012': number}, AcUnder100: {'2012': number, '2022': number}, Ac100300: {'2012': number, '2022': number}, Ac345735: {'2012': number, '2022': number}, Dc5001000: {'2012': number, '2022': number}}}
+ */
 export const assetValues = {
   CoalMines: {
     '2012': 41_474_000_000,

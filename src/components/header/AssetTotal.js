@@ -26,17 +26,41 @@ const AssetTotalTag = styled.span`
   padding: 0 2rem 0 0;
 `
 
+/**
+ * Return asset value based on layer and year.
+ *
+ * @param layerName {String}
+ * @param dataYear {Number}
+ * @return {*}
+ */
 export const getAssetValue = (layerName, dataYear) => {
   return assetValues[layerName][String(dataYear)];
 }
 
+/**
+ * Return prettified two-sigfig version of assetValue with unit
+ *
+ * @param assetValue {Number} The asset value to prettify
+ * @return {string}
+ */
 export const prettyAssetValue = (assetValue) => {
-  const magnitude = assetValue === 0 ? 0 : Math.floor(Math.log10(assetValue) / 3);
-  const unit = assetValue === 0 ? '' : {1: 'k', 2: 'M', 3: 'B', 4: 'T'}[magnitude]
-  return `$${Math.round(assetValue / Math.pow(10, magnitude * 3) * 10) / 10} ${unit}`
+  const units = {1: 'k', 2: 'M', 3: 'B', 4: 'T'}
+  const magnitude = Math.floor(Math.log10(assetValue));
+  const unitMagnitude = assetValue === 0 ? 0 : Math.floor(magnitude / 3);
+  const unit = assetValue === 0 ? '' : units[unitMagnitude]
+  const significantDigits = 2;
+  const significantValue = (assetValue === 0) ? 0 : Math.round(assetValue / 10 ** (magnitude - (significantDigits - 1))) * 10 ** (magnitude - (significantDigits - 1))
+  // return `$${Math.round(assetValue / Math.pow(10, unitMagnitude * 3) * 10) / 10} ${unit}`
+  return `$${Math.round(significantValue / Math.pow(10, unitMagnitude * 3) * 10) / 10} ${unit}`
 }
 
-export const AssetTotal = (props) => {
+/**
+ * Asset total in an <h2> element for the MainHeader.
+ *
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const AssetTotal = () => {
   const {contextTotalAssetValue} = useContext(TotalAssetValueContext)
   const [totalAssetValue] = contextTotalAssetValue;
 

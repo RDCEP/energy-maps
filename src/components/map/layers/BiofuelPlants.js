@@ -11,9 +11,9 @@ export const BiofuelPlants = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -30,13 +30,14 @@ export const BiofuelPlants = layerWrapper(
       filled: true,
       getPointRadius: (d) =>
         (d.properties.original.total_cap / Math.PI) ** .5,
-      getFillColor: () => [11, 36, 251, 128],
-      getLineColor: () => [255, 255, 255],
+      getFillColor: [11, 36, 251, 128],
+      getLineColor: [255, 255, 255],
       pointRadiusUnits: 'meters',
       lineWidthUnits: 'pixels',
       pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
       lineWidthScale: .66,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+  );

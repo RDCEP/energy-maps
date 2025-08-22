@@ -12,9 +12,10 @@ export const Ac345735 = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
 
-    return new GeoJsonLayer({
+  (zoomLevel, visible, assetValue) =>
+
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -46,5 +47,6 @@ export const Ac345735 = layerWrapper(
       lineJointRounded: true,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+
+  );

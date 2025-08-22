@@ -24,7 +24,13 @@ const H1 = styled.h1`
   padding: 0 3rem 0 0;
 `
 
-export const MainHeader = (props) => {
+/**
+ * Main site header.
+ *
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const MainHeader = () => {
 
   return (
     <Header>

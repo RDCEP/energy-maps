@@ -25,7 +25,13 @@ const Image = styled.img`
   width: 3.5rem;
 `
 
-export const LogoWrap = (props) => {
+/**
+ * RDCEP logo displayed in the MainHeder.
+ *
+ * @return {JSX.Element}
+ * @constructor
+ */
+export const LogoWrap = () => {
   return (
     <LogoWrapDiv>
       <FlexShim>

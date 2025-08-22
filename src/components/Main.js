@@ -14,7 +14,7 @@ const StyledMain = styled.main`
 `;
 
 /**
- * The main wrapper around the header, left pane, map, legend, etc.
+ * The main wrapper around the header, LeftPane UI, Deck.GL map, legend, etc.
  *
  * @return {JSX.Element}
  * @constructor

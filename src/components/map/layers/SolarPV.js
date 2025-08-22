@@ -12,9 +12,9 @@ export const SolarPV = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -31,13 +31,13 @@ export const SolarPV = layerWrapper(
       filled: true,
       getPointRadius: (d) =>
         (d.properties.original.total_cap / Math.PI) ** .5,
-      getFillColor: () => [255, 215, 0, 128],
-      getLineColor: () => [139, 64, 0],
+      getFillColor: [255, 215, 0, 128],
+      getLineColor: [139, 64, 0],
       pointRadiusUnits: 'meters',
       lineWidthUnits: 'pixels',
       pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
       lineWidthScale: .66,
 
       onDataLoad: onLoadLayerData,
-    });
-  });
+    })
+  );

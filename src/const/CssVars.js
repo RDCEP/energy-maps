@@ -1,24 +1,24 @@
-/*
- CssVars.js
- Constants for application-wide visual styles
+
+const DARK_BLUE = '#024964';
+const WHITE = '#ffffff';
+const BLACK = '#000000';
+
+/**
+ * Constants for application-wide visual styles
+ * @type {{darkblue: string, white: string, light_grey: string, dark_grey: string, black: string, sea_blue: string, dark_background: string, light_foreground: string, light_background: string, dark_foreground: string, options_width: string, options_left: string, options_right: string, legend_width: string, z_header: number, z_options: number, z_options_zoom: number, z_options_dragging: number, z_legend: number, z_options_toggle: number, z_main_map: number, z_zoom_target: number}}
  */
 
-
-const dark_blue = '#024964';
-const white = '#ffffff';
-const black = '#000000';
-
 export const CssVars = {
-  darkblue: dark_blue,
-  white: white,
+  darkblue: DARK_BLUE,
+  white: WHITE,
   light_grey: '#E7EFF2',
   dark_grey: '#BCBCBC',
   black: '#000000',
   sea_blue: '#e7eff2',
-  dark_background: dark_blue,
-  light_foreground: white,
-  light_background: white,
-  dark_foreground: black,
+  dark_background: DARK_BLUE,
+  light_foreground: WHITE,
+  light_background: WHITE,
+  dark_foreground: BLACK,
   options_width: '20rem',
   options_left: '2rem',
   options_right: '3.5rem',

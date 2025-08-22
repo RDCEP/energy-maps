@@ -14,9 +14,9 @@ export const CoalMines = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  function(zoomLevel, visible, assetValue) {
+  (zoomLevel, visible, assetValue) =>
 
-    return new GeoJsonLayer({
+    new GeoJsonLayer({
       id: ID,
       layerName: LAYER_NAME,
       disabled: DISABLED,
@@ -33,27 +33,16 @@ export const CoalMines = layerWrapper(
       filled: true,
       iconAtlas: iconAtlas,
       iconMapping: iconMapping,
-      getIcon: () => 'pentagon',
-      getIconSize: function (d) {
-        return Math.sqrt(d.properties.original.tot_prod);
-      },
-      getIconColor: () => [0, 0, 0, 128],
+      getIcon: 'pentagon',
+      getIconSize: (d) =>
+        Math.sqrt(d.properties.original.tot_prod)
+      ,
+      getIconColor: [0, 0, 0, 128],
       iconSizeUnits: 'meters',
       iconSizeScale: 20 / Math.sqrt(zoomLevel),
 
       onDataLoad: onLoadLayerData,
 
-      // pointAntialiasing: false,
-      // textureParameters: {
-      //   [GL.TEXTURE_MIN_FILTER]: GL.LINEAR,
-      //   [GL.TEXTURE_MAG_FILTER]: GL.LINEAR
-      // },
-      // loadOptions: {
-      //   imagebitmap: {
-      //     // resizeWidth: 150,
-      //     resizeHeight: 1200
-      //   }
-      // },
+    })
 
-    });
-  });
+);
