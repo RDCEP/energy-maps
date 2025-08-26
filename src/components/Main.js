@@ -3,6 +3,7 @@ import {DeckGLMap} from './map/DeckGLMap';
 import {DndContext} from '@dnd-kit/core';
 import {LeftPane} from './left/LeftPane';
 import {ToolTip} from './map/ToolTip';
+import {Legend} from './legend/Legend';
 
 const StyledMain = styled.main`
   position: absolute;
@@ -27,6 +28,7 @@ export const Main = () => {
       <div></div>
       <DndContext>
         <LeftPane />
+        <Legend />
       </DndContext>
     </StyledMain>
   );
