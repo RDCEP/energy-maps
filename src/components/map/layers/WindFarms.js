@@ -12,7 +12,7 @@ export const WindFarms = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -22,7 +22,7 @@ export const WindFarms = layerWrapper(
       displayName: 'Wind Farms',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/power_plants/wind/2012/1/1/${bbox}/`,
+      data: `${api_url}/power_plants/wind/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 

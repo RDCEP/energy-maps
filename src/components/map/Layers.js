@@ -15,6 +15,7 @@ import {PetroleumPlants} from './layers/PetroleumPlants';
 import {AcUnder100} from './layers/AcUnder100';
 import {Ac100300} from './layers/Ac100300';
 import {Ac345735} from './layers/Ac345735';
+import {data} from 'uikit/src/js/util';
 
 /**
  * Sets the available layers and their order in the UI.
@@ -22,8 +23,9 @@ import {Ac345735} from './layers/Ac345735';
  * @return {*[]}
  */
 const layerObjects = () => {
-  return [ CoalMines,
-    // AcUnder100, Ac100300, Ac345735,
+  return [
+    // CoalMines,
+    AcUnder100, Ac100300, Ac345735,
     // OilWells,
     // GasPipelines, GasProcessing,
     CoalPlants, NaturalGasPlants, PetroleumPlants, NuclearPlants,
@@ -43,6 +45,7 @@ export const getLayersFromState = (layerState, zoomLevel, dataYear) => {
   return [...layerState].map(layer => {
     return layer.func(
       zoomLevel,
+      dataYear,
       layer.visible,
       getAssetValue(layer.func.layerName, dataYear)
     );

@@ -3,7 +3,7 @@ import {DeckGLMap} from './map/DeckGLMap';
 import {DndContext} from '@dnd-kit/core';
 import {LeftPane} from './left/LeftPane';
 import {ToolTip} from './map/ToolTip';
-import {Legend} from './legend/Legend';
+import {YearPicker} from './header/YearPicker';
 
 const StyledMain = styled.main`
   position: absolute;
@@ -24,11 +24,11 @@ export const Main = () => {
   return (
     <StyledMain>
       <DeckGLMap />
+      <YearPicker></YearPicker>
       <ToolTip></ToolTip>
       <div></div>
       <DndContext>
         <LeftPane />
-        <Legend />
       </DndContext>
     </StyledMain>
   );

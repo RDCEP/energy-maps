@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
 import {AssetTotal} from './AssetTotal';
 import {LogoWrap} from './LogoWrap';
+import {YearPicker} from './YearPicker';
 
 const Header = styled.header`
   background-color: ${CssVars.darkblue};

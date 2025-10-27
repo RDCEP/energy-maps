@@ -12,7 +12,7 @@ export const AcUnder100 = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -22,7 +22,7 @@ export const AcUnder100 = layerWrapper(
       displayName: 'AC < 100 kV',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/electric_grid/under_100/2012/1/1/${bbox}/`,
+      data: `${api_url}/electric_grid/under_100/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 

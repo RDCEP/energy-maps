@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
 import {TotalAssetValueContext} from '../../contexts/TotalAssetValueContext';
 import {assetValues} from './AssetValues';
+import {DataYearContext} from '../../contexts/DataYearContext';
 
 
 const StyledH2 = styled.h2`
@@ -61,8 +62,10 @@ export const prettyAssetValue = (assetValue) => {
  * @constructor
  */
 export const AssetTotal = () => {
-  const {contextTotalAssetValue} = useContext(TotalAssetValueContext)
+  const {contextTotalAssetValue} = useContext(TotalAssetValueContext);
   const [totalAssetValue] = contextTotalAssetValue;
+  const {contextDataYear} = useContext(DataYearContext);
+  const [dataYear] = contextDataYear;
 
   return (
     <StyledH2>
@@ -71,7 +74,7 @@ export const AssetTotal = () => {
       </AssetTotalSpan>
       <AssetTotalTag>
         total asset value<br />
-        <span id="value-year">out of $9.8T in 2012</span>
+        <span id="value-year">out of $9.8T in {dataYear}</span>
       </AssetTotalTag>
     </StyledH2>
   );

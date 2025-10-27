@@ -13,7 +13,7 @@ export const Ac345735 = layerWrapper(
     disabled: DISABLED,
   },
 
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -23,7 +23,7 @@ export const Ac345735 = layerWrapper(
       displayName: 'AC 345–735 kV',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/electric_grid/345_735_kV_AC/2012/1/1/${bbox}/`,
+      data: `${api_url}/electric_grid/345_735_kV_AC/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 

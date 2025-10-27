@@ -13,7 +13,7 @@ export const CoalPlants = layerWrapper(
     disabled: DISABLED,
   },
 
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -23,7 +23,7 @@ export const CoalPlants = layerWrapper(
       displayName: 'Coal Plants',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/power_plants/coal/2012/1/1/${bbox}/`,
+      data: `${api_url}/power_plants/coal/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 

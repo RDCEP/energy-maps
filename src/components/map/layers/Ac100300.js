@@ -21,11 +21,12 @@ export const Ac100300 = layerWrapper(
    * zoomLevel controls
    *
    * @param zoomLevel {Number} Adjusts scaling of lines, circles, and icons
+   * @param dataYear {Number}
    * @param visible {Boolean} Toggled by checkboxes in the left UI pane
    * @param assetValue {Number}
    * @return {GeoJsonLayer}
    */
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -35,7 +36,7 @@ export const Ac100300 = layerWrapper(
       displayName: 'AC 100–300 kV',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/electric_grid/100_300_kV_AC/2012/1/1/${bbox}/`,
+      data: `${api_url}/electric_grid/100_300_kV_AC/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 
