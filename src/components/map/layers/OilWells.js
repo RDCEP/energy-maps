@@ -2,6 +2,7 @@ import {GeoJsonLayer} from '@deck.gl/layers';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
 import {layerWrapper, onLoadLayerData} from './layerWrapper';
+import {data} from 'uikit/src/js/util';
 
 const ID = 'wells-oil';
 const LAYER_NAME = 'OilWells';
@@ -13,7 +14,7 @@ export const OilWells = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -23,7 +24,7 @@ export const OilWells = layerWrapper(
       displayName: 'Oil Wells',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/wells/oil/2012/1/1/${bbox}/`,
+      data: `${api_url}/wells/oil/${dataYear}/1/1/${bbox}/`,
       stroked: false,
       filled: true,
       pickable: true,

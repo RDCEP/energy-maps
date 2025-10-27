@@ -1,5 +1,4 @@
 import {GeoJsonLayer} from '@deck.gl/layers';
-// import {GL} from '@luma.gl/constants';
 import {api_url, bbox} from '../../../const/Api';
 import {iconAtlas, iconMapping} from '../MapIcons';
 import {layerWrapper, onLoadLayerData} from './layerWrapper';
@@ -14,7 +13,7 @@ export const CoalMines = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -24,7 +23,7 @@ export const CoalMines = layerWrapper(
       displayName: 'Coal Mines',
       assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/mines/coal/2012/1/1/${bbox}/`,
+      data: `${api_url}/mines/coal/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 
@@ -35,11 +34,10 @@ export const CoalMines = layerWrapper(
       iconMapping: iconMapping,
       getIcon: 'pentagon',
       getIconSize: (d) =>
-        Math.sqrt(d.properties.original.tot_prod)
-      ,
+        Math.sqrt(d.properties.original.tot_prod),
       getIconColor: [0, 0, 0, 128],
       iconSizeUnits: 'meters',
-      iconSizeScale: 20 / Math.sqrt(zoomLevel),
+      iconSizeScale: 2000 / Math.sqrt(zoomLevel),
 
       onDataLoad: onLoadLayerData,
 

@@ -13,7 +13,7 @@ export const GasProcessing = layerWrapper(
     layerName: LAYER_NAME,
     disabled: DISABLED,
   },
-  (zoomLevel, visible, assetValue) =>
+  (zoomLevel, dataYear, visible, assetValue) =>
 
     new GeoJsonLayer({
       id: ID,
@@ -21,8 +21,9 @@ export const GasProcessing = layerWrapper(
       disabled: DISABLED,
       componentName: `${LAYER_NAME}Layer`,
       displayName: 'Gas Processing',
+      assetValue: assetValue,
       visible: visible,
-      data: `${api_url}/processing_plants/gas/2012/1/1/${bbox}/`,
+      data: `${api_url}/processing_plants/gas/${dataYear}/1/1/${bbox}/`,
       pickable: true,
       autoHighlight: true,
 
@@ -36,6 +37,7 @@ export const GasProcessing = layerWrapper(
       getIconColor: [0, 0, 139, 128],
       iconSizeUnits: 'meters',
       iconSizeScale: 1 / (zoomLevel - 3),
+
 
       onDataLoad: onLoadLayerData,
     })
