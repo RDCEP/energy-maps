@@ -32,12 +32,12 @@ export const CoalMines = layerWrapper(
       filled: true,
       iconAtlas: iconAtlas,
       iconMapping: iconMapping,
-      getIcon: 'pentagon',
+      getIcon: () => 'pentagon',
       getIconSize: (d) =>
         Math.sqrt(d.properties.original.tot_prod),
       getIconColor: [0, 0, 0, 128],
       iconSizeUnits: 'meters',
-      iconSizeScale: 2000 / Math.sqrt(zoomLevel),
+      iconSizeScale: 50 / Math.sqrt(zoomLevel),
 
       onDataLoad: onLoadLayerData,
 

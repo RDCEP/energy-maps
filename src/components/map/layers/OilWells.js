@@ -34,7 +34,7 @@ export const OilWells = layerWrapper(
       pointType: 'icon',
       iconAtlas: iconAtlas,
       iconMapping: iconMapping,
-      getIcon: 'square',
+      getIcon: () => 'square',
       getIconSize: 10,
       getIconColor: [34, 139, 34, 204],
       iconSizeUnits: 'pixels',

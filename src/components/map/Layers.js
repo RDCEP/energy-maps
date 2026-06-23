@@ -24,10 +24,11 @@ import {data} from 'uikit/src/js/util';
  */
 const layerObjects = () => {
   return [
-    // CoalMines,
+    CoalMines,
     AcUnder100, Ac100300, Ac345735,
     // OilWells,
-    // GasPipelines, GasProcessing,
+    // GasPipelines,
+    GasProcessing,
     CoalPlants, NaturalGasPlants, PetroleumPlants, NuclearPlants,
     HydroPlants, WindFarms, SolarPV, GeothermalPlants, BiofuelPlants,
   ].reverse();
