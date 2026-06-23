@@ -6,7 +6,7 @@ const StyledOptionsToggle = styled.div`
   justify-content: center;
   right: 0;
   align-items: center;
-  height: 4rem;
+  height: 4rem; 
   width: 2rem;
   top: 14.5rem;
   z-index: 999;

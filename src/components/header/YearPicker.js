@@ -5,6 +5,7 @@ import {CssVars} from '../../const/CssVars';
 import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
+import {disableAllLayers} from '../map/layers/layerWrapper';
 
 const StyledYearPickerWrap = styled.div`
   background-color: ${CssVars.darkblue};
@@ -52,7 +53,9 @@ export const YearPicker = () => {
 
   const onYearChange = (e) => {
     setDataYear(e.target.value);
+    disableAllLayers();
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear))
+    //TODO: Need to update total asset value in header
   };
 
   return <StyledYearPickerWrap>

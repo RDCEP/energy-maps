@@ -17,6 +17,11 @@ export const onLoadLayerData = (data, obj) => {
   return true;
 };
 
+export const disableAllLayers = () => {
+  const elements = document.querySelectorAll(`.option-li input`);
+  elements.forEach((element) => element.setAttribute('disabled', true));
+}
+
 /**
  * This is stub. Reorders data returned to map layers in descending order
  * so that large icons are drawn underneath small icons.

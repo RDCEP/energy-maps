@@ -124,13 +124,15 @@ export const MenuLayersItem = (props) => {
       }
       return layer;
     }));
+
+    setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
+
     setTotalAssetValue(prettyAssetValue(
       layerState.reduce((accumulator, layer) => {
         return (layer.visible) ? accumulator + layer.assetValue : accumulator
         }, 0
       )
     ));
-    setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
   }
 
   return (
