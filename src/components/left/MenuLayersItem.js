@@ -8,7 +8,7 @@ import {DragHandle} from './DragHandle';
 import {prettyAssetValue} from '../header/AssetTotal';
 import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import {DataYearContext} from '../../contexts/DataYearContext';
-import {TotalAssetValueContext} from '../../contexts/TotalAssetValueContext';
+import {AssetValueContext} from '../../contexts/AssetValueContext';
 
 const StyledMenuLayersItem = styled.li`
   display: block;
@@ -94,12 +94,12 @@ export const MenuLayersItem = (props) => {
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
   const {contextZoomLevel} = useContext(ZoomLevelContext);
   const {contextDataYear} = useContext(DataYearContext);
-  const {contextTotalAssetValue} = useContext(TotalAssetValueContext);
+  const {contextSelectedAssetValue} = useContext(AssetValueContext);
   const [layerState, setLayerState] = contextLayerState;
   const [, setMapLayers] = contextMapLayers;
   const [zoomLevel] = contextZoomLevel;
   const [dataYear] = contextDataYear;
-  const [, setTotalAssetValue] = contextTotalAssetValue;
+  const [, setSelectedAssetValue] = contextSelectedAssetValue;
 
   const {attributes, listeners, setNodeRef, transform} = useSortable({
     id: props.id,
@@ -127,7 +127,7 @@ export const MenuLayersItem = (props) => {
 
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear));
 
-    setTotalAssetValue(prettyAssetValue(
+    setSelectedAssetValue(prettyAssetValue(
       layerState.reduce((accumulator, layer) => {
         return (layer.visible) ? accumulator + layer.assetValue : accumulator
         }, 0

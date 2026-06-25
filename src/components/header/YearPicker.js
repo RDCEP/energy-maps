@@ -1,10 +1,12 @@
 import {useContext} from 'react';
 import {DataYearContext} from '../../contexts/DataYearContext';
+import {AssetValueContext} from '../../contexts/AssetValueContext';
+import {LayerContext} from '../../contexts/LayerContext';
+import {ZoomLevelContext} from '../../contexts/ZoomContext';
 import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
-import {LayerContext} from '../../contexts/LayerContext';
 import {getLayersFromState} from '../map/Layers';
-import {ZoomLevelContext} from '../../contexts/ZoomContext';
+import {prettyAssetValue} from './AssetTotal';
 import {disableAllLayers} from '../map/layers/layerWrapper';
 
 const StyledYearPickerWrap = styled.div`
@@ -44,18 +46,41 @@ const StyledMaxYear = styled.span`
 export const YearPicker = () => {
 
   const {contextDataYear} = useContext(DataYearContext);
-  const [dataYear, setDataYear] = contextDataYear;
   const {contextLayerState, contextMapLayers} = useContext(LayerContext);
+  const {contextZoomLevel} = useContext(ZoomLevelContext);
+  const {contextSelectedAssetValue, contextTotalAssetValue} = useContext(AssetValueContext);
+  const [dataYear, setDataYear] = contextDataYear;
   const [, setMapLayers] = contextMapLayers;
   const [layerState, ] = contextLayerState;
-  const {contextZoomLevel} = useContext(ZoomLevelContext);
   const [zoomLevel, ] = contextZoomLevel;
+  const [, setSelectedAssetValue] = contextSelectedAssetValue;
+  const [, setTotalAssetValue] = contextTotalAssetValue;
+
+
+  const getTotalAssetValue = (layerState) => {
+    return prettyAssetValue(
+      layerState.reduce((accumulator, layer) => {
+        return accumulator + layer.assetValue
+        }, 0
+      )
+    );
+  }
+
+  const getSelectedAssetValue = (layerState) => {
+    return prettyAssetValue(
+      layerState.reduce((accumulator, layer) => {
+        return (layer.visible) ? accumulator + layer.assetValue : accumulator
+        }, 0
+      )
+    );
+  }
 
   const onYearChange = (e) => {
     setDataYear(e.target.value);
     disableAllLayers();
     setMapLayers(getLayersFromState(layerState, zoomLevel, dataYear))
-    //TODO: Need to update total asset value in header
+    setSelectedAssetValue(getSelectedAssetValue(layerState));
+    setTotalAssetValue(getTotalAssetValue(layerState));
   };
 
   return <StyledYearPickerWrap>

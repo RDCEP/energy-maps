@@ -17,4 +17,5 @@ export const initialDataYear = 2012;
  *
  * @type {string}
  */
-export const initialTotalAssetValue = '$0';
+export const initialSelectedAssetValue = '$0';
+export const initialTotalAssetValue = '$9.8T';

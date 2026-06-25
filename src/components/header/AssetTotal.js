@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import styled from 'styled-components';
 import {CssVars} from '../../const/CssVars';
-import {TotalAssetValueContext} from '../../contexts/TotalAssetValueContext';
+import {AssetValueContext} from '../../contexts/AssetValueContext';
 import {assetValues} from './AssetValues';
 import {DataYearContext} from '../../contexts/DataYearContext';
 
@@ -38,6 +38,8 @@ export const getAssetValue = (layerName, dataYear) => {
   return assetValues[layerName][String(dataYear)];
 }
 
+
+
 /**
  * Return prettified two-sigfig version of assetValue with unit
  *
@@ -62,7 +64,8 @@ export const prettyAssetValue = (assetValue) => {
  * @constructor
  */
 export const AssetTotal = () => {
-  const {contextTotalAssetValue} = useContext(TotalAssetValueContext);
+  const {contextSelectedAssetValue, contextTotalAssetValue} = useContext(AssetValueContext);
+  const [selectedAssetValue] = contextSelectedAssetValue;
   const [totalAssetValue] = contextTotalAssetValue;
   const {contextDataYear} = useContext(DataYearContext);
   const [dataYear] = contextDataYear;
@@ -70,11 +73,11 @@ export const AssetTotal = () => {
   return (
     <StyledH2>
       <AssetTotalSpan>
-        {totalAssetValue}
+        {selectedAssetValue}
       </AssetTotalSpan>
       <AssetTotalTag>
         total asset value<br />
-        <span id="value-year">out of $9.8T in {dataYear}</span>
+        <span id="value-year">out of {totalAssetValue} in {dataYear}</span>
       </AssetTotalTag>
     </StyledH2>
   );
