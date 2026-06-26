@@ -33,8 +33,10 @@ export const WindFarms = layerWrapper(
         Math.sqrt(d.properties.original.total_cap / Math.PI),
       getFillColor: [144, 29, 143, 128],
       getLineColor: [255, 255, 255],
-      pointRadiusUnits: 'pixels',
-      pointRadiusScale: 1 / Math.sqrt(2 ^ (zoomLevel - 3)),
+      pointRadiusUnits: 'meters',
+      lineWidthUnits: 'pixels',
+      pointRadiusScale: 3000 / (2 ** ((zoomLevel - 3) / 2)),
+      lineWidthScale: .66,
 
       onDataLoad: onLoadLayerData,
 
