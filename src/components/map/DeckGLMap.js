@@ -104,7 +104,7 @@ export const DeckGLMap = () => {
         layers={mapLayers}
         widgets={widgets}
         // onViewStateChange={zoomMap}
-        onBeforeRender={updateMapLayers}
+        // onBeforeRender={updateMapLayers}
         onViewStateChange={debouncedUpdateViewState} >
         <Map mapStyle={MAP_STYLE} />
       </DeckGL>
